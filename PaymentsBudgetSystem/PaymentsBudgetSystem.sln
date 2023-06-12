@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem", "PaymentsBudgetSystem.csproj", "{E782885A-F4AB-4106-9EF5-ED59EC14D3F0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A} = {A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}
+		{E4C675C0-6E17-4FE7-9CF8-BD4763A67C31} = {E4C675C0-6E17-4FE7-9CF8-BD4763A67C31}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Core", "..\PaymentsBudgetSystem.Core\PaymentsBudgetSystem.Core.csproj", "{E4C675C0-6E17-4FE7-9CF8-BD4763A67C31}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A} = {A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}
+		{DB7B51E9-38C1-4417-97BA-608818FC6297} = {DB7B51E9-38C1-4417-97BA-608818FC6297}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Data", "..\PaymentsBudgetSystem.Data\PaymentsBudgetSystem.Data.csproj", "{DB7B51E9-38C1-4417-97BA-608818FC6297}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Common", "..\PaymentsBudgetSystem.Common\PaymentsBudgetSystem.Common.csproj", "{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E782885A-F4AB-4106-9EF5-ED59EC14D3F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E782885A-F4AB-4106-9EF5-ED59EC14D3F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E782885A-F4AB-4106-9EF5-ED59EC14D3F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E782885A-F4AB-4106-9EF5-ED59EC14D3F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4C675C0-6E17-4FE7-9CF8-BD4763A67C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C675C0-6E17-4FE7-9CF8-BD4763A67C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C675C0-6E17-4FE7-9CF8-BD4763A67C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C675C0-6E17-4FE7-9CF8-BD4763A67C31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB7B51E9-38C1-4417-97BA-608818FC6297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB7B51E9-38C1-4417-97BA-608818FC6297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB7B51E9-38C1-4417-97BA-608818FC6297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB7B51E9-38C1-4417-97BA-608818FC6297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACBBB194-78C8-4CA3-AC38-F6C1736D4C76}
+	EndGlobalSection
+EndGlobal
