@@ -1,2 +1,2 @@
 # Payments-Budget-System
-Project with educational purposes
+This is a project with educational purposes. More information will be listed upon completion.
