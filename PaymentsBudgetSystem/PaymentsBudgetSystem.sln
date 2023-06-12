@@ -16,6 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Core",
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Data", "..\PaymentsBudgetSystem.Data\PaymentsBudgetSystem.Data.csproj", "{DB7B51E9-38C1-4417-97BA-608818FC6297}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A} = {A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Common", "..\PaymentsBudgetSystem.Common\PaymentsBudgetSystem.Common.csproj", "{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}"
 EndProject

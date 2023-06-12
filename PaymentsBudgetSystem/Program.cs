@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PaymentsBudgetSystem.Data;
 
 namespace PaymentsBudgetSystem
 {
+    using Data;
+    using Data.Entities;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -16,7 +18,7 @@ namespace PaymentsBudgetSystem
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<PBSystemDbContext>();
             builder.Services.AddControllersWithViews();
 
