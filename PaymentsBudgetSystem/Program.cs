@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PaymentsBudgetSystem.Data;
 
 namespace PaymentsBudgetSystem
 {

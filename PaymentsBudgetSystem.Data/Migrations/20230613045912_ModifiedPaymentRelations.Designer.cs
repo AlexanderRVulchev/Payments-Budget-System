@@ -12,8 +12,8 @@ using PaymentsBudgetSystem.Data;
 namespace PaymentsBudgetSystem.Data.Migrations
 {
     [DbContext(typeof(PBSystemDbContext))]
-    [Migration("20230612171712_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230613045912_ModifiedPaymentRelations")]
+    partial class ModifiedPaymentRelations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -233,22 +233,21 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.CashPaymentDetails", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("CashPaymentId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CashOrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CashOrderNumber")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PaymentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("CashPaymentId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("PaymentId")
-                        .IsUnique();
 
                     b.ToTable("CashPaymentDetails");
                 });
@@ -437,22 +436,24 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.PaymentAssetsDetails", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("AssetPaymentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("BeneficiaryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PaymentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InvoiceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AssetPaymentId");
 
                     b.HasIndex("BeneficiaryId");
-
-                    b.HasIndex("PaymentId")
-                        .IsUnique();
 
                     b.ToTable("PaymentAssetsDetails");
                 });
@@ -496,25 +497,21 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.PaymentSupportDetails", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("SupportPaymentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("BeneficiaryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Paragraph")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("InvoiceDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PaymentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("InvoiceNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SupportPaymentId");
 
                     b.HasIndex("BeneficiaryId");
-
-                    b.HasIndex("PaymentId")
-                        .IsUnique();
 
                     b.ToTable("PaymentSupportDetails");
                 });
@@ -791,16 +788,16 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.CashPaymentDetails", b =>
                 {
+                    b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
+                        .WithOne("CashDetails")
+                        .HasForeignKey("PaymentsBudgetSystem.Data.Entities.CashPaymentDetails", "CashPaymentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("PaymentsBudgetSystem.Data.Entities.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
-                        .WithOne("CashDetails")
-                        .HasForeignKey("PaymentsBudgetSystem.Data.Entities.CashPaymentDetails", "PaymentId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -873,16 +870,16 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.PaymentAssetsDetails", b =>
                 {
+                    b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
+                        .WithOne("AssetsDetails")
+                        .HasForeignKey("PaymentsBudgetSystem.Data.Entities.PaymentAssetsDetails", "AssetPaymentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("PaymentsBudgetSystem.Data.Entities.Beneficiary", "Beneficiary")
                         .WithMany("AssetsDetails")
                         .HasForeignKey("BeneficiaryId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
-                        .WithOne("AssetsDetails")
-                        .HasForeignKey("PaymentsBudgetSystem.Data.Entities.PaymentAssetsDetails", "PaymentId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Beneficiary");
@@ -919,7 +916,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
                         .WithOne("SupportDetails")
-                        .HasForeignKey("PaymentsBudgetSystem.Data.Entities.PaymentSupportDetails", "PaymentId")
+                        .HasForeignKey("PaymentsBudgetSystem.Data.Entities.PaymentSupportDetails", "SupportPaymentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

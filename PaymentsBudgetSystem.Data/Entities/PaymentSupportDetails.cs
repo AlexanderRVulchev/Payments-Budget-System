@@ -8,11 +8,9 @@ namespace PaymentsBudgetSystem.Data.Entities
     public class PaymentSupportDetails
     {
         [Key]
-        public Guid Id { get; set; } = new();
-
         [Required]
         [ForeignKey(nameof(Payment))]
-        public Guid PaymentId { get; set; }
+        public Guid SupportPaymentId { get; set; }
         public Payment Payment { get; set; } = null!;
 
         [Required]
@@ -20,6 +18,8 @@ namespace PaymentsBudgetSystem.Data.Entities
         public Guid BeneficiaryId { get; set; }
         public Beneficiary Beneficiary { get; set; } = null!;
 
-        public ParagraphType Paragraph { get; set; }
+        public string? InvoiceNumber { get; set; } = null!;
+
+        public DateTime? InvoiceDate { get; set; }
     }
 }

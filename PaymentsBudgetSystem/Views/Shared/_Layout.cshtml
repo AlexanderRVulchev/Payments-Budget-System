@@ -26,15 +26,55 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+
+@*                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown button
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>*@
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <style>
+        .btn {
+            margin: 15px;
+        }
+    </style>
+
+
+    <div class="row">
+        <div class="navbar-expand-md btn-group-vertical col-md-2">
+            <button class="btn btn-lg">Click button with long text</button>
+            <button class="btn btn-lg">Click button</button>
+            <button class="btn btn-lg">Click button</button>
+            <button class="btn btn-lg">Click button</button>
+            <button class="btn btn-lg">Click button</button>
+            <button class="btn btn-lg">Click button</button>
+            <button class="btn btn-lg">Click button</button>
+        </div>
+
+        <style>
+            .pb-3 {
+                background-color: lightpink;
+            }
+        </style>
+
+
+        <div class="container col-md-10">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
     </div>
 
     <footer class="border-top footer text-muted">

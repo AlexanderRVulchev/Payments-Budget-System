@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentsBudgetSystem.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class ModifiedPaymentRelations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -380,13 +380,14 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "CashPaymentDetails",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CashPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CashOrderNumber = table.Column<int>(type: "int", nullable: false),
+                    CashOrderDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CashPaymentDetails", x => x.Id);
+                    table.PrimaryKey("PK_CashPaymentDetails", x => x.CashPaymentId);
                     table.ForeignKey(
                         name: "FK_CashPaymentDetails_Employees_EmployeeId",
                         column: x => x.EmployeeId,
@@ -394,8 +395,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CashPaymentDetails_Payments_PaymentId",
-                        column: x => x.PaymentId,
+                        name: "FK_CashPaymentDetails_Payments_CashPaymentId",
+                        column: x => x.CashPaymentId,
                         principalTable: "Payments",
                         principalColumn: "Id");
                 });
@@ -404,13 +405,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "PaymentAssetsDetails",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BeneficiaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AssetPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BeneficiaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PaymentAssetsDetails", x => x.Id);
+                    table.PrimaryKey("PK_PaymentAssetsDetails", x => x.AssetPaymentId);
                     table.ForeignKey(
                         name: "FK_PaymentAssetsDetails_Beneficiaries_BeneficiaryId",
                         column: x => x.BeneficiaryId,
@@ -418,8 +421,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PaymentAssetsDetails_Payments_PaymentId",
-                        column: x => x.PaymentId,
+                        name: "FK_PaymentAssetsDetails_Payments_AssetPaymentId",
+                        column: x => x.AssetPaymentId,
                         principalTable: "Payments",
                         principalColumn: "Id");
                 });
@@ -458,14 +461,14 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "PaymentSupportDetails",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SupportPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeneficiaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Paragraph = table.Column<int>(type: "int", nullable: false)
+                    InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PaymentSupportDetails", x => x.Id);
+                    table.PrimaryKey("PK_PaymentSupportDetails", x => x.SupportPaymentId);
                     table.ForeignKey(
                         name: "FK_PaymentSupportDetails_Beneficiaries_BeneficiaryId",
                         column: x => x.BeneficiaryId,
@@ -473,8 +476,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PaymentSupportDetails_Payments_PaymentId",
-                        column: x => x.PaymentId,
+                        name: "FK_PaymentSupportDetails_Payments_SupportPaymentId",
+                        column: x => x.SupportPaymentId,
                         principalTable: "Payments",
                         principalColumn: "Id");
                 });
@@ -505,7 +508,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         name: "FK_Assets_PaymentAssetsDetails_PaymentAssetDetailsId",
                         column: x => x.PaymentAssetDetailsId,
                         principalTable: "PaymentAssetsDetails",
-                        principalColumn: "Id");
+                        principalColumn: "AssetPaymentId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -568,12 +571,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CashPaymentDetails_PaymentId",
-                table: "CashPaymentDetails",
-                column: "PaymentId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ConsolidatedBudgets_UserId",
                 table: "ConsolidatedBudgets",
                 column: "UserId");
@@ -604,12 +601,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 column: "BeneficiaryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentAssetsDetails_PaymentId",
-                table: "PaymentAssetsDetails",
-                column: "PaymentId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Payments_UserId",
                 table: "Payments",
                 column: "UserId");
@@ -623,12 +614,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "IX_PaymentSupportDetails_BeneficiaryId",
                 table: "PaymentSupportDetails",
                 column: "BeneficiaryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PaymentSupportDetails_PaymentId",
-                table: "PaymentSupportDetails",
-                column: "PaymentId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_UserId",
