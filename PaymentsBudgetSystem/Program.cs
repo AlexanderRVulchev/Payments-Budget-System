@@ -10,6 +10,7 @@ namespace PaymentsBudgetSystem
     using Core.Services;
 
     using static Common.DataConstants.User;
+    using PaymentsBudgetSystem.Extensions;
 
     public class Program
     {
@@ -65,6 +66,8 @@ namespace PaymentsBudgetSystem
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            app.SeedRoles();
 
             app.Run();
         }

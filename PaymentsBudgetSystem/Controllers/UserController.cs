@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentsBudgetSystem.Controllers
 {
+    using Core.Contracts;
     using Core.Models.User;
     using Data.Entities;
-    using Core.Contracts;
+
     using static Common.RoleNames;
-    using System.Collections.Specialized;
+    using static Common.ValidationErrors.General;
 
     public class UserController : Controller
     {
@@ -62,10 +63,9 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
 
-            if (model.IsSecondary &&
-                (model.InputForPrimary < 0 || model.InputForPrimary >= primaryUsersIdsAndNames.Count()))
+            if (model.InputForPrimary < 0 || model.InputForPrimary >= primaryUsersIdsAndNames.Count())
             {
-                ModelState.AddModelError("", "Моля въведете валиден номер на Първостепенен РБ");
+                ModelState.AddModelError("", InvalidPrimaryNumberForRegister);
 
                 var primaryUsersNames = await userService
                     .GetPrimaryNamesAsync();
@@ -73,21 +73,6 @@ namespace PaymentsBudgetSystem.Controllers
                 model.PrimaryInstitutionName = primaryUsersNames.ToList();
 
                 return View(model);
-            }
-
-            if (!await roleManager.RoleExistsAsync(PrimaryRoleName))
-            {
-                await roleManager.CreateAsync(new IdentityRole(PrimaryRoleName));
-            }
-
-            if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
-            {
-                await roleManager.CreateAsync(new IdentityRole(SecondaryRoleName));
-            }
-
-            if (!await roleManager.RoleExistsAsync(AdminRoleName))
-            {
-                await roleManager.CreateAsync(new IdentityRole(AdminRoleName));
             }
 
             User user;
@@ -100,7 +85,7 @@ namespace PaymentsBudgetSystem.Controllers
                     IsPrimary = true,
                     Name = model.Name
                 };
-
+                
                 result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -173,7 +158,7 @@ namespace PaymentsBudgetSystem.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            
             ModelState.AddModelError(string.Empty, "Login failed");
             return View(model);
         }

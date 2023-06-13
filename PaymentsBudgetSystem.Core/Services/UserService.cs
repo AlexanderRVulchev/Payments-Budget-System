@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace PaymentsBudgetSystem.Core.Services
 {
@@ -64,9 +65,9 @@ namespace PaymentsBudgetSystem.Core.Services
                 }
             }
 
-            return users
-                .OrderBy(u => u.Name)
-                .ToDictionary(u => u.Id, u => u.Name);
+            return primaryIdsAndNames
+                .OrderBy(u => u.Value)
+                .ToDictionary(u => u.Key, u => u.Value);
         }
 
         public async Task RelateSecondaryToPrimaryUserAsync(string primaryId, string secondaryId)
