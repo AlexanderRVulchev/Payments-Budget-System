@@ -15,6 +15,9 @@ namespace PaymentsBudgetSystem.Data.Entities
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
+
+        [Required]
+        public bool IsPrimary;
         
         public HashSet<Payment> Payments { get; set; } = new();
         

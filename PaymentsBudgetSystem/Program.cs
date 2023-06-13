@@ -6,6 +6,10 @@ namespace PaymentsBudgetSystem
 {
     using Data;
     using Data.Entities;
+    using Core.Contracts;
+    using Core.Services;
+
+    using static Common.DataConstants.User;
 
     public class Program
     {
@@ -19,8 +23,20 @@ namespace PaymentsBudgetSystem
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = PasswordMinLength;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PBSystemDbContext>();
+
+            builder.Services.AddScoped<IUserService, UserService>();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

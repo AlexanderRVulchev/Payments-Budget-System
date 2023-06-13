@@ -5,64 +5,143 @@ namespace PaymentsBudgetSystem.Controllers
 {
     using Core.Models.User;
     using Data.Entities;
+    using Core.Contracts;
+    using static Common.RoleNames;
+    using System.Collections.Specialized;
 
     public class UserController : Controller
     {
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
+        private RoleManager<IdentityRole> roleManager;
+        private IUserService userService;
 
         public UserController(
             UserManager<User> _userManager,
-            SignInManager<User> _signInManager)
+            SignInManager<User> _signInManager,
+            RoleManager<IdentityRole> _roleManager,
+            IUserService _userService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+            roleManager = _roleManager;
+            userService = _userService;
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             if (UserIsLoggedIn())
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            var primaryUsersNames = await userService
+                .GetPrimaryNamesAsync();
+
             RegisterViewModel model = new()
             {
-                PrimaryInstitution = new Dictionary<string, string>
-                {
-                    {"1234552", "MS" },
-                    {"asdasdas", "NS" }
-                }
+                PrimaryInstitutionName = primaryUsersNames.ToList()
             };
+
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            var primaryUsersIdsAndNames = await userService.GetPrimaryIdsAndNamesAsync();
+
             if (!ModelState.IsValid)
             {
+                model.PrimaryInstitutionName = primaryUsersIdsAndNames
+                    .Select(x => x.Value)
+                    .ToList();
+
                 return View(model);
             }
 
-            User user = new()
-            {
-                UserName = model.UserName,
-                
-            };
 
-            var result = await userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
+            if (model.IsSecondary &&
+                (model.InputForPrimary < 0 || model.InputForPrimary >= primaryUsersIdsAndNames.Count()))
             {
-                return RedirectToAction("Login");
+                ModelState.AddModelError("", "Моля въведете валиден номер на Първостепенен РБ");
+
+                var primaryUsersNames = await userService
+                    .GetPrimaryNamesAsync();
+
+                model.PrimaryInstitutionName = primaryUsersNames.ToList();
+
+                return View(model);
+            }
+
+            if (!await roleManager.RoleExistsAsync(PrimaryRoleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(PrimaryRoleName));
+            }
+
+            if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(SecondaryRoleName));
+            }
+
+            if (!await roleManager.RoleExistsAsync(AdminRoleName))
+            {
+                await roleManager.CreateAsync(new IdentityRole(AdminRoleName));
+            }
+
+            User user;
+            IdentityResult result;
+            if (model.InputForPrimary == 0)
+            {
+                user = new()
+                {
+                    UserName = model.UserName,
+                    IsPrimary = true,
+                    Name = model.Name
+                };
+
+                result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, PrimaryRoleName);
+
+                    return RedirectToAction(nameof(Login));
+                }
+            }
+            else
+            {
+                user = new()
+                {
+                    UserName = model.UserName,
+                    IsPrimary = false,
+                    Name = model.Name
+                };
+
+                result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, SecondaryRoleName);
+
+                    string primaryId = primaryUsersIdsAndNames
+                        .Skip(model.InputForPrimary - 1)
+                        .Select(p => p.Key)
+                        .First();
+
+                    await userService.RelateSecondaryToPrimaryUserAsync(primaryId, user.Id);
+
+                    return RedirectToAction(nameof(Login));
+                }
             }
 
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+
+            model.PrimaryInstitutionName = primaryUsersIdsAndNames
+                .Select(x => x.Value)
+                .ToList();
 
             return View(model);
         }

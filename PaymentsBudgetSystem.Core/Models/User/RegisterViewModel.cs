@@ -16,7 +16,10 @@ namespace PaymentsBudgetSystem.Core.Models.User
         [Compare("Password")]
         public string ConfirmPassword { get; set; } = null!;
 
-        public Dictionary<string, string> PrimaryInstitution { get; set; } = new();
+        [Required]
+        public string Name { get; set; } = null!;
+
+        public List<string> PrimaryInstitutionName { get; set; } = new();
 
         public bool IsSecondary { get; set; }
 

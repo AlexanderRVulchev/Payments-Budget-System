@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentsBudgetSystem.Data.Migrations
 {
-    public partial class ModifiedPaymentRelations : Migration
+    public partial class AddedRoles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,7 +1,7 @@
 ﻿@model RegisterViewModel
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Регистрация";
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -12,38 +12,49 @@
     <div class="col-md-4 offset-md-4">
         <form id="registerForm" method="post">
             <hr />
+            <div class="text-center mb-3">
+                <label asp-for="@Model.Name">Име на институцията</label>
+                <input class="form-control " autocomplete="username" aria-required="true" asp-for="@Model.Name" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="text-center mb-3">
-                <label asp-for="@Model.UserName">Username</label>
+                <label asp-for="@Model.UserName">Потребителско име</label>
                 <input class="form-control " autocomplete="username" aria-required="true" asp-for="@Model.UserName" />
                 <span asp-validation-for="@Model.UserName" class="text-danger"></span>
             </div>
             <div class="text-center mb-3">
-                <label asp-for="@Model.Password">Password</label>
+                <label asp-for="@Model.Password">Парола</label>
                 <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.Password" />
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
             <div class="text-center mb-3">
-                <label asp-for="@Model.ConfirmPassword">Confirm Password</label>
+                <label asp-for="@Model.ConfirmPassword">Повторете парола</label>
                 <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.ConfirmPassword" />
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <input type="checkbox" id="checkbox1" name="checkbox1" class="exclusive-checkbox" />
+            <input type="checkbox" id="checkbox1" name="checkbox1" class="exclusive-checkbox" checked/>
             <label for="checkbox1">Първостепенен РБ</label>
 
             <input type="checkbox" id="checkbox2" name="checkbox2" class="exclusive-checkbox" />
             <label for="checkbox2">Второстепенен РБ</label>
 
             <div id="additionalField" style="display: none;">
+                <p></p>
+                <p class="text-center"><strong>Изберете Вашият Първостепенен РБ</strong></p>
                 <ol>
-                    @foreach (var item in Model.PrimaryInstitution)
+                    @foreach (var item in Model.PrimaryInstitutionName)
                     {
-                        <li>@item.Value</li>
+                        <li> @item</li>
                     }
                 </ol>
-                <label asp-for="@Model.InputForPrimary">Избор на ПРБ</label>
-                <input type="text" id="inputField" name="inputField" />
+                <div class="text-center mb-3">
+                    <label asp-for="@Model.InputForPrimary">Въведете номер на Вашият Първостепенен РБ</label>
+                    <input class="form-control" aria-required="true" asp-for="@Model.InputForPrimary" />
+                    <span asp-validation-for="@Model.InputForPrimary" class="text-danger"></span>
+                </div>
+                @*<input type="text" id="inputField" name="inputField" />*@
             </div>
 
             <script>
@@ -52,7 +63,7 @@
                         if (this.checked) {
                             $("#checkbox2").prop("checked", false);
                             $("#additionalField").hide();
-                            $@Model.IsSecondary = false;
+                            $@Model.IsSecondary = true;
                         }
                     });
 
@@ -60,7 +71,7 @@
                         if (this.checked) {
                             $("#checkbox1").prop("checked", false);
                             $("#additionalField").show();
-                            $@Model.IsSecondary = true;
+                            $@Model.IsSecondary = false;
                         } else {
                             $("#additionalField").hide();
                         }
@@ -68,11 +79,8 @@
                 });
             </script>
 
-
-
-
             <div class="text-center">
-                <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
+                <button id="registerSubmit" type="submit" class="btn btn-primary">Регистрация</button>
             </div>
         </form>
     </div>

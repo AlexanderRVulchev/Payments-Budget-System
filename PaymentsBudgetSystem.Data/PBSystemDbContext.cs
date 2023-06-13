@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace PaymentsBudgetSystem.Data
 {
     using Data.Entities;
+    using Microsoft.AspNetCore.Identity;
 
     public class PBSystemDbContext : IdentityDbContext<User>
     {
