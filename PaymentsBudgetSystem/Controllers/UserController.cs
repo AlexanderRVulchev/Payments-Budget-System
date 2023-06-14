@@ -63,7 +63,7 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
 
-            if (model.InputForPrimary < 0 || model.InputForPrimary >= primaryUsersIdsAndNames.Count())
+            if (model.InputForPrimary < 0 || model.InputForPrimary > primaryUsersIdsAndNames.Count())
             {
                 ModelState.AddModelError("", InvalidPrimaryNumberForRegister);
 
@@ -85,8 +85,9 @@ namespace PaymentsBudgetSystem.Controllers
                     IsPrimary = true,
                     Name = model.Name
                 };
-                
+
                 result = await userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, PrimaryRoleName);
@@ -152,13 +153,16 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
             var user = await userManager.FindByNameAsync(model.UserName);
-            var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-            if (result.Succeeded)
+            if (user != null)
             {
-                return RedirectToAction("Index", "Home");
+                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            
+
             ModelState.AddModelError(string.Empty, "Login failed");
             return View(model);
         }

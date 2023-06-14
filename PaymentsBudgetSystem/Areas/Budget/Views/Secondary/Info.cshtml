@@ -1,0 +1,43 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Budget;
+
+@model IEnumerable<BudgetViewModel>
+
+@{
+    ViewBag.Title = "Годишни Бюджети";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    <div class="col-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Година</th>
+                    <th scope="col">Лимит Заплати</th>
+                    <th scope="col">Лимит Издръжка</th>
+                    <th scope="col">Лимит Капиталови</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @foreach (var budget in Model)
+                {
+                    <tr>
+                        <th scope="row"></th>
+                        <td>@budget.FiscalYear</td>
+                        <td>@budget.SalariesLimit.ToString("0,0") лв.</td>
+                        <td>@budget.SupportLimit.ToString("0,0") лв.</td>
+                        <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

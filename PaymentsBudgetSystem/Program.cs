@@ -11,6 +11,7 @@ namespace PaymentsBudgetSystem
 
     using static Common.DataConstants.User;
     using PaymentsBudgetSystem.Extensions;
+    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Program
     {
@@ -26,7 +27,8 @@ namespace PaymentsBudgetSystem
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = false;
+                options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
@@ -36,9 +38,9 @@ namespace PaymentsBudgetSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PBSystemDbContext>();
 
-            builder.Services.AddScoped<IUserService, UserService>();
-
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddApplicationServices();
 
             var app = builder.Build();
 
@@ -62,9 +64,16 @@ namespace PaymentsBudgetSystem
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "MyAreas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            });
+
             app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
             app.SeedRoles();

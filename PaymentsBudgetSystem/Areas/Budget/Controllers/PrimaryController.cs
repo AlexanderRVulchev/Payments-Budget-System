@@ -1,0 +1,37 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
+namespace PaymentsBudgetSystem.Areas.Budget.Controllers
+{
+    using Core.Contracts;
+    using Core.Models.Budget;
+    using Extensions;
+    using static Common.RoleNames;
+
+    [Area("Budget")]
+    [Authorize(Roles = PrimaryRoleName)]
+    public class PrimaryController : Controller
+    {
+        private readonly IBudgetService budgetService;
+
+        public PrimaryController(IBudgetService _budgetService)
+        {
+            this.budgetService = _budgetService;
+        }
+
+        public async Task<IActionResult> Info()
+        {
+            IEnumerable<BudgetViewModel> individualBudgets = await budgetService.GetIndividualBudgetsAsync(User.Id());
+            IEnumerable<BudgetViewModel> consolidatedBudgets = await budgetService.GetConsolidatedBudgetsAsync(User.Id());
+
+            var model = new PrimaryBudgetsViewModel
+            {
+                IndividualBudgets = individualBudgets.ToList(),
+                ConsolidatedBudgets = consolidatedBudgets.ToList()
+            };
+
+            return View(model);
+        }
+    }
+}
+
