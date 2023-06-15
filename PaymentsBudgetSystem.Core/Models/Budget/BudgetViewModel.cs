@@ -6,6 +6,8 @@
 
         public string UserId { get; set; } = null!;
 
+        public string Name { get; set; } = null!;
+
         public int FiscalYear { get; set; }
 
         public decimal SalariesLimit { get; set; }

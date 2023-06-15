@@ -7,6 +7,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
     using Core.Models.Budget;
     using Extensions;
     using static Common.RoleNames;
+    using static Common.ExceptionMessages.Budget;
 
     [Area("Budget")]
     [Authorize(Roles = PrimaryRoleName)]
@@ -31,6 +32,23 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditBudget(int year)
+        {
+            EditBudgetFormModel model;
+            
+            try
+            {
+                model = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), year);
+                return View(model);
+            }
+            catch (InvalidOperationException)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotRetrieveConsolidatedBudget});
+            }
+
         }
     }
 }

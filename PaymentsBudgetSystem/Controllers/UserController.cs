@@ -6,7 +6,8 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Contracts;
     using Core.Models.User;
     using Data.Entities;
-
+    using PaymentsBudgetSystem.Extensions;
+    using System.Security.Claims;
     using static Common.RoleNames;
     using static Common.ValidationErrors.General;
 
@@ -83,7 +84,8 @@ namespace PaymentsBudgetSystem.Controllers
                 {
                     UserName = model.UserName,
                     IsPrimary = true,
-                    Name = model.Name
+                    Name = model.Name,    
+                    Email = model.Name
                 };
 
                 result = await userManager.CreateAsync(user, model.Password);
@@ -105,6 +107,9 @@ namespace PaymentsBudgetSystem.Controllers
                 };
 
                 result = await userManager.CreateAsync(user, model.Password);
+
+                await userManager.AddClaimAsync(user, new Claim("Name", user.Name));
+
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, SecondaryRoleName);
@@ -115,6 +120,7 @@ namespace PaymentsBudgetSystem.Controllers
                         .First();
 
                     await userService.RelateSecondaryToPrimaryUserAsync(primaryId, user.Id);
+
 
                     return RedirectToAction(nameof(Login));
                 }
@@ -163,7 +169,7 @@ namespace PaymentsBudgetSystem.Controllers
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Login failed");
+            ModelState.AddModelError(string.Empty, "Грешка при автентикацията");
             return View(model);
         }
 

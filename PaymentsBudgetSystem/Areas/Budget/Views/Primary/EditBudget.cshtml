@@ -1,6 +1,6 @@
 ﻿@using PaymentsBudgetSystem.Core.Models.Budget;
 
-@model PrimaryBudgetsViewModel
+@model EditBudgetFormModel
 
 @{
     ViewBag.Title = "Годишни Бюджети";
@@ -11,7 +11,41 @@
 <hr />
 
 <div class="text-center row">
-    <div class="col-5">
+    <div class="col-lg-6 col-sm-12">
+        <h4 class="text-center">Консолидиран бюджет</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Година</th>
+                    <th scope="col">Лимит Заплати</th>
+                    <th scope="col">Лимит Издръжка</th>
+                    <th scope="col">Лимит Капиталови</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr>
+                    <th scope="row"></th>
+                    <td>@Model.ConsolidatedBudget.FiscalYear</td>
+                    <td>@Model.ConsolidatedBudget.SalariesLimit.ToString("0,0") лв.</td>
+                    <td>@Model.ConsolidatedBudget.SupportLimit.ToString("0,0") лв.</td>
+                    <td>@Model.ConsolidatedBudget.AssetsLimit.ToString("0,0") лв.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        #picture {
+            height: 400px;
+        }
+    </style>
+
+    <div class="col-lg-6 col-sm-12 container">
+        <img id="picture" src="/Background.png" />
+    </div>
+
+   @* <div class="col-7">
         <h4 class="text-center">Индивидуални бюджети</h4>
         <table class="table">
             <thead>
@@ -21,38 +55,11 @@
                     <th scope="col">Лимит Заплати</th>
                     <th scope="col">Лимит Издръжка</th>
                     <th scope="col">Лимит Капиталови</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                @foreach (var budget in Model.IndividualBudgets)
-                {
-                    <tr>
-                        <th scope="row"></th>
-                        <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("0,0") лв.</td>
-                        <td>@budget.SupportLimit.ToString("0,0") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-    <div class="col-7">
-        <h4 class="text-center">Консолидирани бюджети</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Година</th>
-                    <th scope="col">Лимит Заплати</th>
-                    <th scope="col">Лимит Издръжка</th>
-                    <th scope="col">Лимит Капиталови</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                @foreach (var budget in Model.ConsolidatedBudgets)
+                @foreach (var budget in Model.IndividualBudgetsData)
                 {
                     <tr>
                         <th scope="row"></th>
@@ -62,17 +69,16 @@
                         <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
                         <td>
                             <span style="float:left">
-@*                                <form class="input-group-sm" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-id="@budget.FiscalYear">
+                                <form class="input-group-sm" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-id="@budget.FiscalYear">
                                     <input type="submit" value="Промяна" class="fs-6 btn btn-success mb-3 p-2" />
-                                </form>*@
-                                <a class="nav-link btn-warning" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-year="@budget.FiscalYear">Промяна</a>
+                                </form>
                             </span>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
+    </div>*@
 </div>
 
 @section Scripts {

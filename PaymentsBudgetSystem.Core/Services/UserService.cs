@@ -81,6 +81,5 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.UsersDependancies.AddAsync(userPair);
             await context.SaveChangesAsync();
         }
-
     }
 }

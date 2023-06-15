@@ -1,25 +1,68 @@
 ﻿@model ErrorViewModel
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Грешка!";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+@*<h1 class="text-danger">Грешка</h1>
+<h2 class="text-danger">Възникна проблем при обработката на Вашата заявка</h2>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+<br />
+<h3 class="text-danger">
+    @Model.ErrorMessage
+</h3>*@
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .error-container {
+            margin-top: 50px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            background-color: #fff;
+        }
+
+        .error-heading {
+            color: red;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+
+        .buttonBack {
+            border-color: darkred;
+            border-width: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 error-container">
+                <h3 class="error-heading">Грешка!</h3>
+                <h4 class="error-heading">Възникна проблем при обработката на Вашата заявка</h4>
+                <p class="error-message">@Model.ErrorMessage</p>
+                <div class="buttonBack">
+                <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

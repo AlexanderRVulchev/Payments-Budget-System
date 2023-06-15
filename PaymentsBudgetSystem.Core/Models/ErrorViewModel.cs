@@ -5,5 +5,7 @@ namespace PaymentsBudgetSystem.Core.Models
         public string? RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+        public string ErrorMessage { get; set; }
     }
 }

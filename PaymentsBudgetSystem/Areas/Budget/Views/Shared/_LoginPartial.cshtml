@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using PaymentsBudgetSystem.Data.Entities
+@using System.Security.Claims
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
@@ -7,6 +8,9 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        <li class="navbar-text">
+            @User.FindFirstValue(ClaimTypes.Email)
+        </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="User" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
                 <button type="submit" class="nav-link btn btn-link text-dark">Изход</button>
