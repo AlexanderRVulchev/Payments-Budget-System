@@ -34,11 +34,31 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Info(PrimaryBudgetsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = InvalidBudgetYearOrFunds });
+            }
+
+            try
+            {
+                await budgetService.AddNewConsolidatedBudget(User.Id(), model.NewBudgetYear, model.NewBudgetFunds);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
+
+            return RedirectToAction(nameof(Info));
+        }
+
         [HttpGet]
         public async Task<IActionResult> EditBudget(int year)
         {
             EditBudgetFormModel model;
-            
+
             try
             {
                 model = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), year);
@@ -46,10 +66,10 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             }
             catch (InvalidOperationException)
             {
-                return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotRetrieveConsolidatedBudget});
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotRetrieveConsolidatedBudget });
             }
-
         }
+
     }
 }
 

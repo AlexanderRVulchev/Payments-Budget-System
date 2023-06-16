@@ -1,24 +1,65 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
     using Core.Models.Budget;
     using Data;
-    using Microsoft.EntityFrameworkCore;
+    using Data.Entities;
 
-    using static PaymentsBudgetSystem.Common.ExceptionMessages.Budget;
+    using static Common.ExceptionMessages.Budget;
 
     public class BudgetService : IBudgetService
     {
-
-
         private readonly PBSystemDbContext context;
 
         public BudgetService(PBSystemDbContext _context)
         {
             this.context = _context;
+        }
+
+        public async Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds)
+        {
+            bool budgetAlreadyExists = context.ConsolidatedBudgets
+                .Any(cb => cb.UserId == userId && cb.FiscalYear == newBudgetYear);
+
+            if (budgetAlreadyExists)
+            {
+                throw new InvalidOperationException(TheBudgetAlreadyExists);
+            }
+
+            var budgetToAdd = new ConsolidatedBudget
+            {
+                UserId = userId,
+                FiscalYear = newBudgetYear,
+                TotalLimit = newBudgetFunds
+            };
+
+            await context.ConsolidatedBudgets.AddAsync(budgetToAdd);
+
+            string[] secondaryIds = await context.UsersDependancies
+                .Where(ud => ud.PrimaryUserId == userId)
+                .Select(ud => ud.SecondaryUserId)
+                .ToArrayAsync();
+
+            var newBudgetEntities = new List<IndividualBudget>();
+            newBudgetEntities.Add( new IndividualBudget
+            {
+                UserId = userId,
+                FiscalYear = newBudgetYear
+            });
+
+            foreach (var secondaryId in secondaryIds)
+            {
+                newBudgetEntities.Add(new IndividualBudget
+                {
+                    UserId = secondaryId,
+                    FiscalYear = newBudgetYear
+                });
+            }
+
+            await context.IndividualBudgets.AddRangeAsync(newBudgetEntities);
+            await context.SaveChangesAsync();
         }
 
         public async Task<EditBudgetFormModel> GetConsolidatedBudgetDataForEditAsync(string userId, int year)

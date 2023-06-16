@@ -2,7 +2,7 @@
 {
     public class General
     {
-        public const string DecimalMoneyMinValue = "0.0m";
-        public const string DecimalMoneyMaxValue = "99_999_999_999.0m";
+        public const string DecimalMoneyMinValue = "0.0";
+        public const string DecimalMoneyMaxValue = "99999999999.0";
     }
 }

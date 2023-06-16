@@ -33,13 +33,13 @@
 
         .error-heading {
             color: red;
-            font-size: 36px;
+            font-size: 24px;
             margin-bottom: 20px;
         }
 
         .error-message {
             color: #dc3545;
-            font-size: 24px;
+            font-size: 32px;
             margin-bottom: 40px;
         }
 
@@ -54,9 +54,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2 error-container">
-                <h3 class="error-heading">Грешка!</h3>
-                <h4 class="error-heading">Възникна проблем при обработката на Вашата заявка</h4>
-                <p class="error-message">@Model.ErrorMessage</p>
+                <h6 class="error-heading">Грешка!</h6>
+                <h6 class="error-heading">Възникна проблем при обработката на Вашата заявка</h6>
+                <h4 class="error-message">@Model.ErrorMessage</h4>
                 <div class="buttonBack">
                 <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                 </div>

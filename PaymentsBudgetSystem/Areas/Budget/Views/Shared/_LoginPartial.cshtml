@@ -10,6 +10,7 @@
     {
         <li class="navbar-text">
             @User.FindFirstValue(ClaimTypes.Email)
+            @User.Identity?.Name
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="User" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">

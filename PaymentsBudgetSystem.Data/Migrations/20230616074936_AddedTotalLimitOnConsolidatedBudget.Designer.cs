@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentsBudgetSystem.Data;
 
@@ -11,9 +12,10 @@ using PaymentsBudgetSystem.Data;
 namespace PaymentsBudgetSystem.Data.Migrations
 {
     [DbContext(typeof(PBSystemDbContext))]
-    partial class PBSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230616074936_AddedTotalLimitOnConsolidatedBudget")]
+    partial class AddedTotalLimitOnConsolidatedBudget
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

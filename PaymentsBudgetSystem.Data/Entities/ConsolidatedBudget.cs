@@ -23,5 +23,8 @@ namespace PaymentsBudgetSystem.Data.Entities
 
         [Column(TypeName = "DECIMAL(18, 2)")]
         public decimal AssetsLimit { get; set; }
+
+        [Column(TypeName = "DECIMAL(18, 2)")]
+        public decimal TotalLimit { get; set; }
     }
 }

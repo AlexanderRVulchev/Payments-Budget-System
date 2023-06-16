@@ -10,5 +10,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task<IEnumerable<BudgetViewModel>> GetConsolidatedBudgetsAsync(string userId);
 
         Task<EditBudgetFormModel> GetConsolidatedBudgetDataForEditAsync(string userId, int year);
+
+        Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds);
     }
 }

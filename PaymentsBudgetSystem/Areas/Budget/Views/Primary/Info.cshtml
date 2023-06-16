@@ -29,9 +29,9 @@
                     <tr>
                         <th scope="row"></th>
                         <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("0,0") лв.</td>
-                        <td>@budget.SupportLimit.ToString("0,0") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
+                        <td>@budget.SalariesLimit.ToString("N") лв.</td>
+                        <td>@budget.SupportLimit.ToString("N") лв.</td>
+                        <td>@budget.AssetsLimit.ToString("N") лв.</td>
                     </tr>
                 }
             </tbody>
@@ -57,14 +57,11 @@
                     <tr>
                         <th scope="row"></th>
                         <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("0,0") лв.</td>
-                        <td>@budget.SupportLimit.ToString("0,0") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
+                        <td>@budget.SalariesLimit.ToString("N") лв.</td>
+                        <td>@budget.SupportLimit.ToString("N") лв.</td>
+                        <td>@budget.AssetsLimit.ToString("N") лв.</td>
                         <td>
                             <span style="float:left">
-@*                                <form class="input-group-sm" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-id="@budget.FiscalYear">
-                                    <input type="submit" value="Промяна" class="fs-6 btn btn-success mb-3 p-2" />
-                                </form>*@
                                 <a class="nav-link btn-warning" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-year="@budget.FiscalYear">Промяна</a>
                             </span>
                         </td>
@@ -72,6 +69,29 @@
                 }
             </tbody>
         </table>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-lg-2 col-md-4">
+                <p class="align-content-lg-start">Добавяне на нов бюджет</p>
+            </div>
+            <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+                <div class="col-lg-2 col-md-4">
+                    <label asp-for="NewBudgetYear" class="form-label">Година: </label>
+                    <input type="number" asp-for="NewBudgetYear" class="form-control" value="" />
+                    <span asp-validation-for="NewBudgetYear" class="text-danger"></span>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <label asp-for="NewBudgetFunds" class="form-label">Средства: </label>
+                    <input type="number" asp-for="NewBudgetFunds" class="form-control" value="" />
+                    <span asp-validation-for="NewBudgetFunds" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 col-lg-3 align-items-start">
+                    <input class="btn btn-primary" type="submit" value="Добавяне" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
