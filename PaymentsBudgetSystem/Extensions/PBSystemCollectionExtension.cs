@@ -12,6 +12,7 @@ namespace PaymentsBudgetSystem.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBudgetService, BudgetService>();
             services.AddScoped<UserController, UserController>();
+            services.AddScoped<IBeneficiaryService, BeneficiaryService>();
 
             return services;
         }
