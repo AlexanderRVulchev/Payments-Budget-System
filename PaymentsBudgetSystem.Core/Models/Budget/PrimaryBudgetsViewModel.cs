@@ -3,6 +3,7 @@
 namespace PaymentsBudgetSystem.Core.Models.Budget
 {
     using static Common.DataConstants.General;
+    using static Common.ValidationErrors.General;
 
     public class PrimaryBudgetsViewModel
     {
@@ -10,10 +11,11 @@ namespace PaymentsBudgetSystem.Core.Models.Budget
 
         public List<ConsolidatedBudgetViewModel> ConsolidatedBudgets { get; set; } = new();
 
-        [Range(1990, 2100)]
+        [Range(1990, 2100, ErrorMessage = InvalidYearError)]
         public int NewBudgetYear { get; set; }
 
-        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue)]
+        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
+        [Display(Name = "Средства")]
         public decimal NewBudgetFunds { get; set; }
     }
 }

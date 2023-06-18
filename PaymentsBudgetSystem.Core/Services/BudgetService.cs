@@ -6,7 +6,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Budget;
     using Data;
     using Data.Entities;
-
+    using System.Runtime.InteropServices;
     using static Common.ExceptionMessages.Budget;
 
     public class BudgetService : IBudgetService
@@ -62,7 +62,7 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<EditBudgetFormModel> GetConsolidatedBudgetDataForEditAsync(string userId, int year)
+        public async Task<EditBudgetFormModel> GetFullConsolidatedBudgetForPrimaryAsync(string userId, int year)
         {
             var consolidatedBudget = await context.ConsolidatedBudgets
                .Include(b => b.User)
@@ -76,7 +76,8 @@ namespace PaymentsBudgetSystem.Core.Services
                .ToArrayAsync();
 
             var individualBudgets = await context.IndividualBudgets
-                .Where(b => secondaryUsersIds.Contains(b.UserId) && b.FiscalYear == year)
+                .Where(b => secondaryUsersIds.Contains(b.UserId) && b.FiscalYear == year
+                    || b.UserId == userId && b.FiscalYear == year)
                 .Include(b => b.User)
                 .ToArrayAsync();
 
@@ -122,7 +123,7 @@ namespace PaymentsBudgetSystem.Core.Services
                .ToArrayAsync();
 
             var individualBudgets = await context.IndividualBudgets
-                .Where(b => secondaryUsersIds.Contains(b.UserId))
+                .Where(b => secondaryUsersIds.Contains(b.UserId) || b.UserId == userId)
                 .Include(b => b.User)
                 .ToArrayAsync();
 
@@ -176,5 +177,19 @@ namespace PaymentsBudgetSystem.Core.Services
                 Allocated = totalAllocatedFunds,
                 Unallocated = consolidatedBudget.TotalLimit - totalAllocatedFunds
             };
+
+        public async Task EditBudgetAsync(EditBudgetFormModel model)
+        {
+            IndividualBudget individualBudget = await context
+                .IndividualBudgets
+                .FindAsync(model.Id)
+                    ?? throw new ArgumentNullException("", CannotRetrieveIndividualBudget);
+
+            individualBudget.SalariesLimit = model.NewSalaryLimit;
+            individualBudget.SupportLimit = model.NewSupportLimit;
+            individualBudget.AssetsLimit = model.NewAssetsLimit;
+
+            await context.SaveChangesAsync();
+        }
     }
 }

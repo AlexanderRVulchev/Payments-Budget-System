@@ -9,8 +9,10 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
         Task<IEnumerable<ConsolidatedBudgetViewModel>> GetConsolidatedBudgetsAsync(string userId);
 
-        Task<EditBudgetFormModel> GetConsolidatedBudgetDataForEditAsync(string userId, int year);
+        Task<EditBudgetFormModel> GetFullConsolidatedBudgetForPrimaryAsync(string userId, int year);
 
         Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds);
+
+        Task EditBudgetAsync(EditBudgetFormModel model);
     }
 }

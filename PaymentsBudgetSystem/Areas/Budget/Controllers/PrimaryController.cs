@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentsBudgetSystem.Areas.Budget.Controllers
 {
     using Core.Contracts;
     using Core.Models.Budget;
     using Extensions;
-    using static Common.RoleNames;
     using static Common.ExceptionMessages.Budget;
-    using Microsoft.CodeAnalysis.Operations;
+    using static Common.ValidationErrors.Budget;
+    using static Common.RoleNames;
+    using PaymentsBudgetSystem.Data.Migrations;
 
     [Area("Budget")]
     [Authorize(Roles = PrimaryRoleName)]
@@ -62,7 +63,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
         {
             try
             {
-                EditBudgetFormModel model = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), year);
+                EditBudgetFormModel model = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(User.Id(), year);
                 return View(model);
             }
             catch (InvalidOperationException)
@@ -76,14 +77,31 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBudget(EditBudgetFormModel model)
         {
+            var fullConsolidatedBudget = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(User.Id(), model.FiscalYear);
+
             if (!ModelState.IsValid)
             {
-                var returnModel = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), model.FiscalYear);                
-                return View(returnModel);
+                return View(fullConsolidatedBudget);
             }
 
-            var retModel = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), model.ConsolidatedBudget.FiscalYear);
-            return View(retModel);
+            var totalAllocatedFunds = model.IndividualBudgetsData
+                .Where(b => b.Id != model.Id)
+                .Sum(b => b.SupportLimit + b.SalariesLimit + b.AssetsLimit);
+
+            totalAllocatedFunds += model.NewSalaryLimit + model.NewSupportLimit + model.NewAssetsLimit;
+            decimal totalLimit = fullConsolidatedBudget.ConsolidatedBudget.TotalLimit;
+
+            if (totalAllocatedFunds > totalLimit)
+            {
+                ModelState.AddModelError("", String.Format(ConsolidatedBudgetLimitExceeded, totalAllocatedFunds - totalLimit));
+                return View(fullConsolidatedBudget);
+            }
+
+            await budgetService.EditBudgetAsync(model);
+                             
+            model = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(User.Id(), model.FiscalYear);
+
+            return View(model);
         }
 
         private async Task<PrimaryBudgetsViewModel> GetPrimaryBudgetsModel()
