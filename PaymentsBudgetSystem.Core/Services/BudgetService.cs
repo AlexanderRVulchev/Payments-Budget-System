@@ -64,37 +64,48 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<EditBudgetFormModel> GetConsolidatedBudgetDataForEditAsync(string userId, int year)
         {
-            BudgetViewModel consolidatedBudget = await context
-                .ConsolidatedBudgets
-                .Include(x => x.User)
-                .Where(b => b.FiscalYear == year)
-                .Select(b => new BudgetViewModel
+            var consolidatedBudget = await context.ConsolidatedBudgets
+               .Include(b => b.User)
+               .Where(b => b.UserId == userId && b.FiscalYear == year)
+               .FirstOrDefaultAsync()
+                    ?? throw new ArgumentNullException("", CannotRetrieveConsolidatedBudget);
+
+            string[] secondaryUsersIds = await context.UsersDependancies
+               .Where(ud => ud.PrimaryUserId == userId)
+               .Select(ud => ud.SecondaryUserId)
+               .ToArrayAsync();
+
+            var individualBudgets = await context.IndividualBudgets
+                .Where(b => secondaryUsersIds.Contains(b.UserId) && b.FiscalYear == year)
+                .Include(b => b.User)
+                .ToArrayAsync();
+
+            decimal totalAllocatedFunds = 0;
+
+            foreach (var individualBudget in individualBudgets
+                    .Where(b => b.FiscalYear == consolidatedBudget.FiscalYear))
+            {
+                totalAllocatedFunds += individualBudget.SalariesLimit + individualBudget.SupportLimit + individualBudget.AssetsLimit;
+            }
+
+            var budgetModel = GenerateConsolidatedBudget(consolidatedBudget, totalAllocatedFunds, userId);
+
+            List<IndividualBudgetFormData> secondaryBudgetModels = individualBudgets
+                .Select(b => new IndividualBudgetFormData
                 {
                     Id = b.Id,
                     FiscalYear = b.FiscalYear,
-                    AssetsLimit = b.AssetsLimit,
+                    Name = b.User.Name,
                     SalariesLimit = b.SalariesLimit,
                     SupportLimit = b.SupportLimit,
-                    UserId = userId,
-                    Name = b.User.Name,
-                })
-                .FirstAsync()
-                    ?? throw new InvalidOperationException();
-
-            string[] secondaryUsersIds = await context.UsersDependancies
-                .Where(ud => ud.PrimaryUserId == userId)
-                .Select(ud => ud.SecondaryUserId)
-                .ToArrayAsync();
-
-            var primaryBudgets = new List<IndividualBudgetFormData>();
-
-            //TODO: A report builder class
+                    AssetsLimit = b.AssetsLimit
+                }).ToList();
 
             return new EditBudgetFormModel
             {
-                ConsolidatedBudget = consolidatedBudget,
-
-
+                ConsolidatedBudget = budgetModel,
+                IndividualBudgetsData = secondaryBudgetModels,
+                FiscalYear = consolidatedBudget.FiscalYear
             };
         }
 
@@ -127,16 +138,7 @@ namespace PaymentsBudgetSystem.Core.Services
                     totalAllocatedFunds += individualBudget.SalariesLimit + individualBudget.SupportLimit + individualBudget.AssetsLimit;
                 }
 
-                ConsolidatedBudgetViewModel budgetModel = new()
-                {
-                    Name = consolidatedBudget.User.Name,
-                    FiscalYear = consolidatedBudget.FiscalYear,
-                    Id = consolidatedBudget.Id,
-                    TotalLimit = consolidatedBudget.TotalLimit,
-                    UserId = userId,
-                    Allocated = totalAllocatedFunds,
-                    Unallocated = consolidatedBudget.TotalLimit - totalAllocatedFunds
-                };
+                var budgetModel = GenerateConsolidatedBudget(consolidatedBudget, totalAllocatedFunds, userId);
 
                 consolidatedBudgetViewModels.Add(budgetModel);
             }
@@ -159,5 +161,20 @@ namespace PaymentsBudgetSystem.Core.Services
                     Name = b.User.Name
                 })
                 .ToArrayAsync();
+
+        private ConsolidatedBudgetViewModel GenerateConsolidatedBudget(
+                ConsolidatedBudget consolidatedBudget,
+                decimal totalAllocatedFunds,
+                string userId)
+            => new ConsolidatedBudgetViewModel
+            {
+                Name = consolidatedBudget.User.Name,
+                FiscalYear = consolidatedBudget.FiscalYear,
+                Id = consolidatedBudget.Id,
+                TotalLimit = consolidatedBudget.TotalLimit,
+                UserId = userId,
+                Allocated = totalAllocatedFunds,
+                Unallocated = consolidatedBudget.TotalLimit - totalAllocatedFunds
+            };
     }
 }

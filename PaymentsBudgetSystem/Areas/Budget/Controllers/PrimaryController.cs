@@ -8,6 +8,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
     using Extensions;
     using static Common.RoleNames;
     using static Common.ExceptionMessages.Budget;
+    using Microsoft.CodeAnalysis.Operations;
 
     [Area("Budget")]
     [Authorize(Roles = PrimaryRoleName)]
@@ -59,17 +60,30 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBudget(int year)
         {
-            EditBudgetFormModel model;
-
             try
             {
-                model = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), year);
+                EditBudgetFormModel model = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), year);
                 return View(model);
             }
             catch (InvalidOperationException)
             {
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotRetrieveConsolidatedBudget });
             }
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditBudget(EditBudgetFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var returnModel = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), model.FiscalYear);                
+                return View(returnModel);
+            }
+
+            var retModel = await budgetService.GetConsolidatedBudgetDataForEditAsync(User.Id(), model.ConsolidatedBudget.FiscalYear);
+            return View(retModel);
         }
 
         private async Task<PrimaryBudgetsViewModel> GetPrimaryBudgetsModel()
@@ -85,7 +99,6 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
 
             return model;
         }
-
     }
 }
 

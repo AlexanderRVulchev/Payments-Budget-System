@@ -9,35 +9,34 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="text-center row">
+<div class="row">
     <div class="col-lg-6 col-sm-12">
-
         <h4 class="text-center">Консолидиран бюджет</h4>
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col"></th>
                     <th scope="col">Година</th>
-                    <th scope="col">Лимит Заплати</th>
-                    <th scope="col">Лимит Издръжка</th>
-                    <th scope="col">Лимит Капиталови</th>
+                    <th scope="col">Разпределен лимит</th>
+                    <th scope="col">Неразпределен лимит</th>
+                    <th scope="col">Общо</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 <tr>
                     <th scope="row"></th>
                     <td>@Model.ConsolidatedBudget.FiscalYear</td>
-                    <td>@Model.ConsolidatedBudget.SalariesLimit.ToString("n") лв.</td>
-                    <td>@Model.ConsolidatedBudget.SupportLimit.ToString("n") лв.</td>
-                    <td>@Model.ConsolidatedBudget.AssetsLimit.ToString("n") лв.</td>
+                    <td>@Model.ConsolidatedBudget.Allocated.ToString("N") лв.</td>
+                    <td>@Model.ConsolidatedBudget.Unallocated.ToString("N") лв.</td>
+                    <td>@Model.ConsolidatedBudget.TotalLimit.ToString("N") лв.</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-<div class="col-lg-6 col-sm-12 container">
-    <img id="picture" src="/Fin.png" />
-</div>
+    <div class="col-lg-6 col-sm-12 container">
+        <img id="picture" src="/Fin.png" />
+    </div>
 </div>
 
 
@@ -47,41 +46,79 @@
     }
 </style>
 
-@* <div class="col-7">
-        <h4 class="text-center">Индивидуални бюджети</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Година</th>
-                    <th scope="col">Лимит Заплати</th>
-                    <th scope="col">Лимит Издръжка</th>
-                    <th scope="col">Лимит Капиталови</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                @foreach (var budget in Model.IndividualBudgetsData)
-                {
-                    <tr>
-                        <th scope="row"></th>
-                        <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("0,0") лв.</td>
-                        <td>@budget.SupportLimit.ToString("0,0") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
-                        <td>
-                            <span style="float:left">
-                                <form class="input-group-sm" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-id="@budget.FiscalYear">
-                                    <input type="submit" value="Промяна" class="fs-6 btn btn-success mb-3 p-2" />
-                                </form>
-                            </span>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>*@
+
+<h4 class="text-center">Индивидуални бюджети за @Model.ConsolidatedBudget.FiscalYear г.</h4>
+
+<div class="row border border-2 border-dashed border-success">
+    @foreach (var budget in Model.IndividualBudgetsData)
+    {
+        <form class="input-group-sm col-3" asp-action="EditBudget" method="post">
+            <div class="pbs-box">
+                <h6>@budget.Name</h6>
+                <p>Усвоени заплати: @budget.SalariesExpenses</p>
+                <p>
+                    <label asp-for="@budget.SalariesLimit" class="form-label">Лимит заплати: </label>
+                    <input type="number" asp-for="@Model.NewSalaryLimit" class="form-control" value="@budget.SalariesLimit" />
+                    <span asp-validation-for="@budget.SalariesLimit" class="text-danger"></span>
+                </p>
+                <p>Усвоена издръжка: @budget.SupportExpenses</p>
+                <p>
+                    <label asp-for="@budget.SupportLimit" class="form-label">Лимит издръжка: </label>
+                    <input type="number" asp-for="@Model.NewSupportLimit" class="form-control" value="@budget.SupportLimit" />
+                    <span asp-validation-for="@budget.SalariesLimit" class="text-danger"></span>
+                </p>
+                <p>Усвоени капиталови: @budget.AssetsExpenses</p>
+                <p>
+                    <label asp-for="@budget.AssetsLimit" class="form-label">Лимит капиталови: </label>
+                    <input type="number" asp-for="@Model.NewAssetsLimit" class="form-control" value="@budget.AssetsLimit" />
+                    <span asp-validation-for="@budget.SalariesLimit" class="text-danger"></span>
+                </p>
+                <p>
+                    <input type="hidden" asp-for="@Model.FiscalYear" class="form-control" value="@Model.FiscalYear" />
+                    <input type="hidden" asp-for="@Model.Id" class="form-control" value="@budget.Id.ToString()" />
+                </p>
+                <div class="mb-3 text-center">
+                    <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Преразпредели бюджет" />
+                </div>
+            </div>
+        </form>
+    }
+
+</div>
+
+
+@*<table class="table">
+    <thead>
+    <tr>
+    <th scope="col"></th>
+    <th scope="col">Година</th>
+    <th scope="col">Лимит Заплати</th>
+    <th scope="col">Лимит Издръжка</th>
+    <th scope="col">Лимит Капиталови</th>
+    <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    @foreach (var budget in Model.IndividualBudgetsData)
+    {
+    <tr>
+    <th scope="row"></th>
+    <td>@budget.FiscalYear</td>
+    <td>@budget.SalariesLimit.ToString("0,0") лв.</td>
+    <td>@budget.SupportLimit.ToString("0,0") лв.</td>
+    <td>@budget.AssetsLimit.ToString("0,0") лв.</td>
+    <td>
+    <span style="float:left">
+    <form class="input-group-sm" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-id="@budget.FiscalYear">
+    <input type="submit" value="Промяна" class="fs-6 btn btn-success mb-3 p-2" />
+    </form>
+    </span>
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table>*@
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

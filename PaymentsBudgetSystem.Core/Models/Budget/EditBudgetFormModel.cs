@@ -2,10 +2,18 @@
 {
     public class EditBudgetFormModel
     {
-        public BudgetViewModel ConsolidatedBudget { get; set; } = null!;
+        public ConsolidatedBudgetViewModel ConsolidatedBudget { get; set; } = null!;
 
         public List<IndividualBudgetFormData> IndividualBudgetsData { get; set; } = new();
 
-        public decimal UnallocatedFunds { get; set; }
+        public int FiscalYear { get; set; }
+
+        public Guid Id { get; set; }
+
+        public decimal NewSalaryLimit { get; set; }
+
+        public decimal NewSupportLimit { get; set; }
+
+        public decimal NewAssetsLimit { get; set; }
     }
 }
