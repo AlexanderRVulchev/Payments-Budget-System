@@ -6,12 +6,12 @@
     ViewBag.Title = "Годишни Бюджети";
 }
 
-
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <div class="text-center row">
     <div class="col-lg-6 col-sm-12">
+
         <h4 class="text-center">Консолидиран бюджет</h4>
         <table class="table">
             <thead>
@@ -27,25 +27,27 @@
                 <tr>
                     <th scope="row"></th>
                     <td>@Model.ConsolidatedBudget.FiscalYear</td>
-                    <td>@Model.ConsolidatedBudget.SalariesLimit.ToString("0,0") лв.</td>
-                    <td>@Model.ConsolidatedBudget.SupportLimit.ToString("0,0") лв.</td>
-                    <td>@Model.ConsolidatedBudget.AssetsLimit.ToString("0,0") лв.</td>
+                    <td>@Model.ConsolidatedBudget.SalariesLimit.ToString("n") лв.</td>
+                    <td>@Model.ConsolidatedBudget.SupportLimit.ToString("n") лв.</td>
+                    <td>@Model.ConsolidatedBudget.AssetsLimit.ToString("n") лв.</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <style>
-        #picture {
-            height: 400px;
-        }
-    </style>
+<div class="col-lg-6 col-sm-12 container">
+    <img id="picture" src="/Fin.png" />
+</div>
+</div>
 
-    <div class="col-lg-6 col-sm-12 container">
-        <img id="picture" src="/Background.png" />
-    </div>
 
-   @* <div class="col-7">
+<style>
+    #picture {
+        height: 400px;
+    }
+</style>
+
+@* <div class="col-7">
         <h4 class="text-center">Индивидуални бюджети</h4>
         <table class="table">
             <thead>
@@ -78,8 +80,8 @@
                 }
             </tbody>
         </table>
-    </div>*@
-</div>
+    </div>
+</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

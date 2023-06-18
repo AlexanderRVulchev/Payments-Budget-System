@@ -10,6 +10,8 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
 <div class="text-center row">
     <div class="col-5">
         <h4 class="text-center">Индивидуални бюджети</h4>
@@ -45,9 +47,9 @@
                 <tr>
                     <th scope="col"></th>
                     <th scope="col">Година</th>
-                    <th scope="col">Лимит Заплати</th>
-                    <th scope="col">Лимит Издръжка</th>
-                    <th scope="col">Лимит Капиталови</th>
+                    <th scope="col">Разпределен лимит</th>
+                    <th scope="col">Неразпределен лимит</th>
+                    <th scope="col">Общо</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -57,9 +59,9 @@
                     <tr>
                         <th scope="row"></th>
                         <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("N") лв.</td>
-                        <td>@budget.SupportLimit.ToString("N") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("N") лв.</td>
+                        <td>@budget.Allocated.ToString("N") лв.</td>
+                        <td>@budget.Unallocated.ToString("N") лв.</td>
+                        <td>@budget.TotalLimit.ToString("N") лв.</td>
                         <td>
                             <span style="float:left">
                                 <a class="nav-link btn-warning" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-year="@budget.FiscalYear">Промяна</a>
@@ -72,28 +74,39 @@
     </div>
     <div>
         <div class="row">
-            <div class="col-lg-2 col-md-4">
-                <p class="align-content-lg-start">Добавяне на нов бюджет</p>
-            </div>
-            <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
-                <div class="col-lg-2 col-md-4">
-                    <label asp-for="NewBudgetYear" class="form-label">Година: </label>
-                    <input type="number" asp-for="NewBudgetYear" class="form-control" value="" />
-                    <span asp-validation-for="NewBudgetYear" class="text-danger"></span>
+            <div class="pbs-box col-lg-3 offset-1">
+                <div>
+                    <p class="align-content-lg-start">Добавяне на нов бюджет</p>
                 </div>
-                <div class="col-lg-2 col-md-4">
-                    <label asp-for="NewBudgetFunds" class="form-label">Средства: </label>
-                    <input type="number" asp-for="NewBudgetFunds" class="form-control" value="" />
-                    <span asp-validation-for="NewBudgetFunds" class="text-danger"></span>
-                </div>
+                <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+                    <div>
+                        <label asp-for="NewBudgetYear" class="form-label">Година: </label>
+                        <input type="number" asp-for="NewBudgetYear" class="form-control" value="" />
+                        <span asp-validation-for="NewBudgetYear" class="text-danger"></span>
 
-                <div class="col-md-6 col-lg-3 align-items-start">
-                    <input class="btn btn-primary" type="submit" value="Добавяне" />
-                </div>
-            </form>
+                        <label asp-for="NewBudgetFunds" class="form-label">Средства: </label>
+                        <input type="number" asp-for="NewBudgetFunds" class="form-control" value="" />
+                        <span asp-validation-for="NewBudgetFunds" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <input class="btn btn-primary" type="submit" value="Добавяне" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .form-control {
+        width: 150px;        
+        margin: 0 auto;
+    }
+
+
+</style>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

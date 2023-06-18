@@ -6,6 +6,6 @@
 
         public const string InvalidBudgetYearOrFunds = "Въведете правилна година или стойност на новият бюджет.";
 
-        public const string TheBudgetAlreadyExists = "Бюджетът вече съществува.";
+        public const string TheBudgetAlreadyExists = "Бюджетът за посочената година вече е създаден.";
     }
 }

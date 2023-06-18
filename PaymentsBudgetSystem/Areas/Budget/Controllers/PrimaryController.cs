@@ -22,14 +22,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
 
         public async Task<IActionResult> Info()
         {
-            IEnumerable<BudgetViewModel> individualBudgets = await budgetService.GetIndividualBudgetsAsync(User.Id());
-            IEnumerable<BudgetViewModel> consolidatedBudgets = await budgetService.GetConsolidatedBudgetsAsync(User.Id());
-
-            var model = new PrimaryBudgetsViewModel
-            {
-                IndividualBudgets = individualBudgets.ToList(),
-                ConsolidatedBudgets = consolidatedBudgets.ToList()
-            };
+            var model = await GetPrimaryBudgetsModel();
 
             return View(model);
         }
@@ -39,7 +32,10 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Error", "Home", new { area = "", errorMessage = InvalidBudgetYearOrFunds });
+                var returnModel = await GetPrimaryBudgetsModel();
+                returnModel.NewBudgetYear = model.NewBudgetYear;
+                returnModel.NewBudgetFunds = model.NewBudgetFunds;
+                return View(returnModel);
             }
 
             try
@@ -48,7 +44,13 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+                var returnModel = await GetPrimaryBudgetsModel();
+
+                returnModel.NewBudgetYear = model.NewBudgetYear;
+                returnModel.NewBudgetFunds = model.NewBudgetFunds;
+
+                ModelState.AddModelError("", ex.Message);
+                return View(returnModel);
             }
 
             return RedirectToAction(nameof(Info));
@@ -68,6 +70,20 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             {
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotRetrieveConsolidatedBudget });
             }
+        }
+
+        private async Task<PrimaryBudgetsViewModel> GetPrimaryBudgetsModel()
+        {
+            IEnumerable<BudgetViewModel> individualBudgets = await budgetService.GetIndividualBudgetsAsync(User.Id());
+            IEnumerable<ConsolidatedBudgetViewModel> consolidatedBudgets = await budgetService.GetConsolidatedBudgetsAsync(User.Id());
+
+            var model = new PrimaryBudgetsViewModel
+            {
+                IndividualBudgets = individualBudgets.ToList(),
+                ConsolidatedBudgets = consolidatedBudgets.ToList()
+            };
+
+            return model;
         }
 
     }

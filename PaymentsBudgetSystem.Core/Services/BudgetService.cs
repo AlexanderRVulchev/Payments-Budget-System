@@ -43,7 +43,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 .ToArrayAsync();
 
             var newBudgetEntities = new List<IndividualBudget>();
-            newBudgetEntities.Add( new IndividualBudget
+            newBudgetEntities.Add(new IndividualBudget
             {
                 UserId = userId,
                 FiscalYear = newBudgetYear
@@ -76,7 +76,7 @@ namespace PaymentsBudgetSystem.Core.Services
                     SalariesLimit = b.SalariesLimit,
                     SupportLimit = b.SupportLimit,
                     UserId = userId,
-                    Name = b.User.Name
+                    Name = b.User.Name,
                 })
                 .FirstAsync()
                     ?? throw new InvalidOperationException();
@@ -92,27 +92,57 @@ namespace PaymentsBudgetSystem.Core.Services
 
             return new EditBudgetFormModel
             {
-                ConsolidatedBudget = consolidatedBudget
+                ConsolidatedBudget = consolidatedBudget,
+
 
             };
         }
 
-        public async Task<IEnumerable<BudgetViewModel>> GetConsolidatedBudgetsAsync(string userId)
-            => await context
-                .ConsolidatedBudgets
-                .Where(b => b.UserId == userId)
+        public async Task<IEnumerable<ConsolidatedBudgetViewModel>> GetConsolidatedBudgetsAsync(string userId)
+        {
+            var consolidatedBudgets = await context.ConsolidatedBudgets
+               .Include(b => b.User)
+               .Where(b => b.UserId == userId)
+               .ToArrayAsync();
+
+            string[] secondaryUsersIds = await context.UsersDependancies
+               .Where(ud => ud.PrimaryUserId == userId)
+               .Select(ud => ud.SecondaryUserId)
+               .ToArrayAsync();
+
+            var individualBudgets = await context.IndividualBudgets
+                .Where(b => secondaryUsersIds.Contains(b.UserId))
                 .Include(b => b.User)
-                .Select(b => new BudgetViewModel
-                {
-                    AssetsLimit = b.AssetsLimit,
-                    FiscalYear = b.FiscalYear,
-                    Id = b.Id,
-                    SalariesLimit = b.SalariesLimit,
-                    SupportLimit = b.SupportLimit,
-                    UserId = userId,
-                    Name = b.User.Name
-                })
                 .ToArrayAsync();
+
+            var consolidatedBudgetViewModels = new List<ConsolidatedBudgetViewModel>();
+
+            foreach (var consolidatedBudget in consolidatedBudgets)
+            {
+                decimal totalAllocatedFunds = 0;
+
+                foreach (var individualBudget in individualBudgets
+                    .Where(b => b.FiscalYear == consolidatedBudget.FiscalYear))
+                {
+                    totalAllocatedFunds += individualBudget.SalariesLimit + individualBudget.SupportLimit + individualBudget.AssetsLimit;
+                }
+
+                ConsolidatedBudgetViewModel budgetModel = new()
+                {
+                    Name = consolidatedBudget.User.Name,
+                    FiscalYear = consolidatedBudget.FiscalYear,
+                    Id = consolidatedBudget.Id,
+                    TotalLimit = consolidatedBudget.TotalLimit,
+                    UserId = userId,
+                    Allocated = totalAllocatedFunds,
+                    Unallocated = consolidatedBudget.TotalLimit - totalAllocatedFunds
+                };
+
+                consolidatedBudgetViewModels.Add(budgetModel);
+            }
+
+            return consolidatedBudgetViewModels;
+        }
 
         public async Task<IEnumerable<BudgetViewModel>> GetIndividualBudgetsAsync(string userId)
             => await context

@@ -8,7 +8,7 @@ namespace PaymentsBudgetSystem.Core.Models.Budget
     {
         public List<BudgetViewModel> IndividualBudgets { get; set; } = new();
 
-        public List<BudgetViewModel> ConsolidatedBudgets { get; set; } = new();
+        public List<ConsolidatedBudgetViewModel> ConsolidatedBudgets { get; set; } = new();
 
         [Range(1990, 2100)]
         public int NewBudgetYear { get; set; }
