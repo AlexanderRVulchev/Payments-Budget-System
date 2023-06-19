@@ -27,7 +27,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 throw new InvalidOperationException(BeneficiaryAlreadyExists);
             }
 
-            Beneficiary entry = new Beneficiary
+            var entry = new Beneficiary
             {
                 Name = model.Name,
                 Identifier = model.Identifier,
@@ -36,6 +36,28 @@ namespace PaymentsBudgetSystem.Core.Services
             };
 
             await context.Beneficiaries.AddAsync(entry);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task EditBeneficiary(string userId, BeneficiaryFormModel model)
+        {
+            var entity = await context
+                .Beneficiaries
+                .FindAsync(model.Id);
+
+            if (entity == null)
+            {
+                throw new InvalidOperationException(BeneficiaryDoesNotExist);
+            }
+            if (entity.UserId != userId)
+            {
+                throw new InvalidOperationException(BeneficiaryAccessDenied);
+            }
+
+            entity.Address = model.Address;
+            entity.Identifier = model.Identifier;
+            entity.Name = model.Name;
+
             await context.SaveChangesAsync();
         }
 
@@ -49,7 +71,7 @@ namespace PaymentsBudgetSystem.Core.Services
             if (model.IdentifierFilter != null)
             {
                 beneficiaries = beneficiaries
-                    .Where(b => b.Name.Contains(model.IdentifierFilter.ToLower()))
+                    .Where(b => b.Identifier.Contains(model.IdentifierFilter.ToLower()))
                     .AsQueryable();
             }
             if (model.NameFilter != null)
@@ -104,6 +126,30 @@ namespace PaymentsBudgetSystem.Core.Services
                 .ToListAsync();
 
             return model;
+        }
+
+        public async Task<BeneficiaryFormModel> GetBeneficiaryAsync(string userId, Guid beneficiaryId)
+        {
+            var entity = await context
+                .Beneficiaries
+                .FindAsync(beneficiaryId);
+                    
+            if (entity == null)
+            {
+                throw new InvalidOperationException(BeneficiaryDoesNotExist);
+            }
+            if (entity.UserId != userId)
+            {
+                throw new InvalidOperationException(BeneficiaryAccessDenied);
+            }
+
+            return new BeneficiaryFormModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Address = entity.Address,
+                Identifier = entity.Identifier
+            };
         }
     }
 }

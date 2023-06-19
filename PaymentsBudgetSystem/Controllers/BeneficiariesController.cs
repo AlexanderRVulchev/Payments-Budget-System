@@ -75,5 +75,39 @@ namespace PaymentsBudgetSystem.Controllers
 
             return RedirectToAction(nameof(Info));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            try
+            {
+                var model = await beneficiaryService.GetBeneficiaryAsync(User.Id(), id);
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(BeneficiaryFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                await beneficiaryService.EditBeneficiary(User.Id(), model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
+
+            return RedirectToAction(nameof(Info));
+        }
     }
 }

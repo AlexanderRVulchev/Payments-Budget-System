@@ -11,7 +11,6 @@ namespace PaymentsBudgetSystem.Core.Models.Beneficiaries
         public string? NameFilter { get; set; }
 
         [Display(Name = "Булстат")]
-        [StringLength(9, MinimumLength = 9)]
         public string? IdentifierFilter { get; set; }
 
         [Display(Name = "Адрес")]
