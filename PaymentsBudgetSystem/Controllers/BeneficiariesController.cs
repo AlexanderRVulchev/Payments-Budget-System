@@ -100,7 +100,7 @@ namespace PaymentsBudgetSystem.Controllers
 
             try
             {
-                await beneficiaryService.EditBeneficiary(User.Id(), model);
+                await beneficiaryService.EditBeneficiaryAsync(User.Id(), model);
             }
             catch (InvalidOperationException ex)
             {

@@ -39,7 +39,7 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task EditBeneficiary(string userId, BeneficiaryFormModel model)
+        public async Task EditBeneficiaryAsync(string userId, BeneficiaryFormModel model)
         {
             var entity = await context
                 .Beneficiaries
@@ -71,20 +71,20 @@ namespace PaymentsBudgetSystem.Core.Services
             if (model.IdentifierFilter != null)
             {
                 beneficiaries = beneficiaries
-                    .Where(b => b.Identifier.Contains(model.IdentifierFilter.ToLower()))
+                    .Where(b => b.Identifier.Contains(model.IdentifierFilter))
                     .AsQueryable();
             }
             if (model.NameFilter != null)
             {
                 beneficiaries = beneficiaries
-                    .Where(b => b.Name.Contains(model.NameFilter.ToLower()))
+                    .Where(b => b.Name.Contains(model.NameFilter))
                     .AsQueryable();
             }
             if (model.AddressFilter != null)
             {
                 beneficiaries = beneficiaries
                     .Where(b => b.Address != null
-                            && b.Address.Contains(model.AddressFilter.ToLower()))
+                            && b.Address.Contains(model.AddressFilter))
                     .AsQueryable();
             }
 

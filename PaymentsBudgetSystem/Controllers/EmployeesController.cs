@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentsBudgetSystem.Controllers
 {
+    using Core.Models.Employees;
+
+    [Authorize]
     public class EmployeesController : Controller
     {
+        [HttpGet]
         public IActionResult Info()
         {
-            return View();
+            var model = new AllEmployeesViewModel();
+
+
+
+            return View(model);
         }
     }
 }

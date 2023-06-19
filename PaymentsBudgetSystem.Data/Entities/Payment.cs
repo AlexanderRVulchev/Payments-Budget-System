@@ -35,7 +35,7 @@ namespace PaymentsBudgetSystem.Data.Entities
 
         public PaymentAssetsDetails AssetsDetails { get; set; } = null!;
 
-        public List<PaymentSalaryDetails> SalariesDetails { get; set; } = null!;
+        public List<PaymentSalaryDetails> SalariesDetails { get; set; } = new();
 
         public CashPaymentDetails CashDetails { get; set; } = null!;
     }

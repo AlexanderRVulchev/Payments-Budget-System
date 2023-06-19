@@ -11,6 +11,6 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
         Task<BeneficiaryFormModel> GetBeneficiaryAsync(string userId, Guid beneficiaryId);
 
-        Task EditBeneficiary(string userId, BeneficiaryFormModel model);
+        Task EditBeneficiaryAsync(string userId, BeneficiaryFormModel model);
     }
 }

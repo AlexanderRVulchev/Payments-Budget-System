@@ -1,0 +1,122 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Employees;
+
+@model AllEmployeesViewModel
+
+@{
+    ViewBag.Title = "Служители";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="row">
+    <div class="col-lg-3 col-md-6 align-items-baseline">
+        <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+            Търсене<br />
+            <div>
+                <div>
+                    <label asp-for="FirstName" class="form-label">Име: </label>
+                    <input type="text" asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="LastName" class="form-label">Фамилия: </label>
+                    <input type="number" asp-for="LastName" class="form-control" value="@Model.LastName" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="MonthlySalary" class="form-label">Брутна заплата: </label>
+                    <input type="text" asp-for="MonthlySalary" class="form-control" value="@Model.MonthlySalary" />
+                    <span asp-validation-for="MonthlySalary" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
+                    <select asp-for="SortAttribute" class="form-control" aria-required="true">
+                        <option value="0">Име</option>
+                        <option value="1">Фамилия</option>
+                        <option value="2">ЕГН</option>
+                        <option value="3">Брутна заплата</option>
+                        <option value="4">Дата на назначаване</option>
+                        <option value="5">Общо възнаграждения</option>
+                    </select>
+                    <span asp-validation-for="SortAttribute" class="text-danger"></span>
+                </div>
+                <div>
+                    <label class="form-label-add-edit"></label>
+                    <select asp-for="SortBy" class="form-control" aria-required="true">
+                        <option value="0">Възходящ ред</option>
+                        <option value="1">Низходящ ред</option>
+                    </select>
+                    <span asp-validation-for="SortBy" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div>
+                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Beneficiaries" asp-action="Info">
+            </div>
+            <div>
+                <span style="float:left">
+                    <a class="btn btn-success" asp-area="" asp-controller="Beneficiaries" asp-action="Add">Добави нов служител</a>
+                </span>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-lg-9 col-md-6">
+        <h4 class="text-center">Контрагенти</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">ЕГН</th>
+                    <th scope="col">Брутна заплата</th>
+                    <th scope="col">Дата на назначаване</th>
+                    <th scope="col">Дата на освобождаване</th>
+                    <th scope="col">Общо възнаграждения</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+
+                @foreach (var beneficiary in Model.Employees)
+                {
+                    <tr>
+                        <th scope="row"></th>
+                        <td>@beneficiary.FirstName</td>
+                        <td>@beneficiary.LastName</td>
+                        <td>@beneficiary.Egn</td>
+                        <td>@beneficiary.MonthlySalary</td>
+                        <td>@beneficiary.DateEmployed</td>
+                        <td>
+                            @if (beneficiary.DateLeft != null)
+                            {
+                                @beneficiary.DateLeft
+                            }
+                            else
+                            {
+                                <div>няма</div>
+                            }
+                        </td>
+                        <td>@beneficiary.TotalIncome</td>
+                        <td>
+                            <span style="float:left">
+                                <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.EmployeeId">Промяна</a>
+                            </span>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
