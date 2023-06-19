@@ -1,11 +1,14 @@
-﻿namespace PaymentsBudgetSystem.Core.Services
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PaymentsBudgetSystem.Core.Services
 {
     using Core.Contracts;
     using Core.Models.Beneficiaries;
     using Core.Models.Enums;
     using Data;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
+    using Data.Entities;
+
+    using static Common.ExceptionMessages.Beneficiary;
 
     public class BeneficiaryService : IBeneficiaryService
     {
@@ -14,6 +17,26 @@
         public BeneficiaryService(PBSystemDbContext _context)
         {
             context = _context;
+        }
+
+        public async Task AddBeneficiaryAsync(string userId, BeneficiaryFormModel model)
+        {
+            if (await context.Beneficiaries
+                .AnyAsync(b => b.Name == model.Name || b.Identifier == model.Identifier))
+            {
+                throw new InvalidOperationException(BeneficiaryAlreadyExists);
+            }
+
+            Beneficiary entry = new Beneficiary
+            {
+                Name = model.Name,
+                Identifier = model.Identifier,
+                Address = model.Address,
+                UserId = userId
+            };
+
+            await context.Beneficiaries.AddAsync(entry);
+            await context.SaveChangesAsync();
         }
 
         public async Task<AllBeneficiariesViewModel> GetAllBeneficiariesAsync(string userId, AllBeneficiariesViewModel model)
@@ -26,19 +49,20 @@
             if (model.IdentifierFilter != null)
             {
                 beneficiaries = beneficiaries
-                    .Where(b => b.Identifier == model.IdentifierFilter)
+                    .Where(b => b.Name.Contains(model.IdentifierFilter.ToLower()))
                     .AsQueryable();
             }
             if (model.NameFilter != null)
             {
                 beneficiaries = beneficiaries
-                    .Where(b => b.Name == model.NameFilter)
+                    .Where(b => b.Name.Contains(model.NameFilter.ToLower()))
                     .AsQueryable();
             }
             if (model.AddressFilter != null)
             {
                 beneficiaries = beneficiaries
-                    .Where(b => b.Address == model.AddressFilter)
+                    .Where(b => b.Address != null
+                            && b.Address.Contains(model.AddressFilter.ToLower()))
                     .AsQueryable();
             }
 
@@ -78,7 +102,7 @@
                     Identifier = b.Identifier
                 })
                 .ToListAsync();
-                        
+
             return model;
         }
     }

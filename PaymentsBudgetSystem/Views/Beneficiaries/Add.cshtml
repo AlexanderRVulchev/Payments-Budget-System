@@ -1,0 +1,39 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Beneficiaries
+
+@model BeneficiaryFormModel
+
+@{
+    ViewBag.Title = "Нов контрагент";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Add" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Name" class="form-label-add-edit">Име на контрагента</label>
+                <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Address" class="form-label-add-edit">Адрес</label>
+                <textarea asp-for="@Model.Address" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="@Model.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Identifier" class="form-label-add-edit">Булстат</label>
+                <input asp-for="@Model.Identifier" class="form-control" />
+                <span asp-validation-for="@Model.Identifier" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Създаване" />
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -18,6 +18,7 @@ namespace PaymentsBudgetSystem.Controllers
             this.beneficiaryService = _beneficiaryService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Info(string? name, string? identifier, string? address, int sortBy, int attribute)
         {
             var model = new AllBeneficiariesViewModel
@@ -45,6 +46,34 @@ namespace PaymentsBudgetSystem.Controllers
                 sortBy = (int)model.SortBy,
                 attribute = (int)model.SortAttribute
             });
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var model = new BeneficiaryFormModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(BeneficiaryFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                await beneficiaryService.AddBeneficiaryAsync(User.Id(), model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            return RedirectToAction(nameof(Info));
         }
     }
 }
