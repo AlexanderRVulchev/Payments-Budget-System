@@ -1,0 +1,64 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Employees;
+@using PaymentsBudgetSystem.Data.Entities.Enums
+
+@model EmployeeFormModel
+
+@{
+    ViewBag.Title = "Промяна на служител";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Edit" method="post">
+            <p>Име: @Model.FirstName</p>
+            <input type="hidden" asp-for="@Model.FirstName" class="form-control" value="@Model.FirstName" />
+            <p>Фамилия: @Model.LastName</p>
+            <input type="hidden" asp-for="@Model.LastName" class="form-control" value="@Model.LastName" />
+            <p>ЕГН: @Model.Egn</p>
+            <input type="hidden" asp-for="@Model.Egn" class="form-control" value="@Model.Egn" />
+            <div>
+                @{
+                    string type = "Вид трудово правоотношение: ";
+                    if (Model.ContractType == ContractType.JobContract)
+                    {
+                        type += "Трудов договор";
+                    }
+                    else
+                    {
+                        type += "Държавен служител";
+                    }
+                    <p>@type</p>
+                }
+                <input type="hidden" asp-for="@Model.ContractType" class="form-control" value="@Model.ContractType" />
+            </div>
+            
+            <p>Дата на назначаване: @Model.DateEmployed.ToString("dd-MM-yyyy") г.</p>
+            <input type="hidden" asp-for="@Model.DateEmployed" class="form-control" value="@Model.DateEmployed" />
+            <div class="mb-3">
+                <label asp-for="@Model.MonthlySalary" class="form-label-add-edit">Брутна заплата</label>
+                <input asp-for="@Model.MonthlySalary" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.MonthlySalary" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.DateLeft" class="form-label-add-edit text-danger">Дата на освобождаване</label>
+                <input asp-for="@Model.DateLeft" class="form-control" type="date" value="@Model.DateLeftToString" />
+                <span asp-validation-for="@Model.DateLeft" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="@Model.Id" class="form-control" value="@Model.Id" />
+            <div class="mb-3">
+                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Запазване на промените" />
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    }

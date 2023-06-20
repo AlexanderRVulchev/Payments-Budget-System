@@ -30,5 +30,7 @@ namespace PaymentsBudgetSystem.Core.Models.Employees
         public decimal TotalIncome { get; set; }
 
         public ContractType ContractType { get; set; }
+
+        public string DateLeftToString => this.DateLeft?.ToShortDateString() ?? string.Empty;
     }
 }

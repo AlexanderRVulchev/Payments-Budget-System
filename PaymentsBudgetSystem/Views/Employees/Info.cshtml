@@ -83,29 +83,29 @@
             </thead>
             <tbody class="table-group-divider">
 
-                @foreach (var beneficiary in Model.Employees)
+                @foreach (var employee in Model.Employees)
                 {
                     <tr>
                         <th scope="row"></th>
-                        <td>@beneficiary.FirstName</td>
-                        <td>@beneficiary.LastName</td>
-                        <td>@beneficiary.Egn</td>
-                        <td>@beneficiary.MonthlySalary лв.</td>
-                        <td>@beneficiary.DateEmployed.ToShortDateString()</td>
+                        <td>@employee.FirstName</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.Egn</td>
+                        <td>@employee.MonthlySalary лв.</td>
+                        <td>@employee.DateEmployed.ToShortDateString()</td>
                         <td>
-                            @if (beneficiary.DateLeft != null)
+                            @if (employee.DateLeft != null)
                             {
-                                @beneficiary.DateLeft
+                                @employee.DateLeftToString;
                             }
                             else
                             {
                                 <div>няма</div>
                             }
                         </td>
-                        <td>@beneficiary.TotalIncome лв.</td>
+                        <td>@employee.TotalIncome лв.</td>
                         <td>
                             <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.EmployeeId">Промяна</a>
+                                <a class="nav-link btn-warning" asp-area="" asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.EmployeeId">Промяна</a>
                             </span>
                         </td>
                     </tr>

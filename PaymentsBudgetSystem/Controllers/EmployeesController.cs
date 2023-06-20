@@ -8,6 +8,8 @@ namespace PaymentsBudgetSystem.Controllers
     using Extensions;
     using Core.Models.Enums;
 
+    using static Common.ExceptionMessages.Employee;
+
     [Authorize]
     public class EmployeesController : Controller
     {
@@ -69,6 +71,46 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
             await employeeService.AddEmployeeAsync(User.Id(), model);
+
+            return RedirectToAction(nameof(Info));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            try
+            {
+                var model = await employeeService.GetEmployeesAsync(User.Id(), id);
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EmployeeFormModel model)
+        {
+            if (model.DateLeft != null &&
+                model.DateLeft < model.DateEmployed)
+            {
+                ModelState.AddModelError("", EmployeeInvalidDateLeft);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                await employeeService.EditEmployeeAsync(User.Id(), model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
 
             return RedirectToAction(nameof(Info));
         }
