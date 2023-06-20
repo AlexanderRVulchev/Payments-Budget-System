@@ -195,7 +195,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Assets", (string)null);
+                    b.ToTable("Assets");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.Beneficiary", b =>
@@ -226,7 +226,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Beneficiaries", (string)null);
+                    b.ToTable("Beneficiaries");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.CashPaymentDetails", b =>
@@ -247,7 +247,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("CashPaymentDetails", (string)null);
+                    b.ToTable("CashPaymentDetails");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.ConsolidatedBudget", b =>
@@ -279,7 +279,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ConsolidatedBudgets", (string)null);
+                    b.ToTable("ConsolidatedBudgets");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.Employee", b =>
@@ -323,7 +323,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.GlobalSetting", b =>
@@ -336,7 +336,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GlobalSettings", (string)null);
+                    b.ToTable("GlobalSettings");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.IndividualBudget", b =>
@@ -365,7 +365,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IndividualBudgets", (string)null);
+                    b.ToTable("IndividualBudgets");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.Message", b =>
@@ -396,7 +396,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.Payment", b =>
@@ -432,7 +432,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.PaymentAssetsDetails", b =>
@@ -456,7 +456,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("BeneficiaryId");
 
-                    b.ToTable("PaymentAssetsDetails", (string)null);
+                    b.ToTable("PaymentAssetsDetails");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.PaymentSalaryDetails", b =>
@@ -493,7 +493,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("PaymentSalariesDetails", (string)null);
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("PaymentSalariesDetails");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.PaymentSupportDetails", b =>
@@ -514,7 +516,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("BeneficiaryId");
 
-                    b.ToTable("PaymentSupportDetails", (string)null);
+                    b.ToTable("PaymentSupportDetails");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.Report", b =>
@@ -591,7 +593,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports", (string)null);
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.User", b =>
@@ -677,7 +679,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasKey("PrimaryUserId", "SecondaryUserId");
 
-                    b.ToTable("UsersDependancies", (string)null);
+                    b.ToTable("UsersDependancies");
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.UserFile", b =>
@@ -703,7 +705,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("UserFiles", (string)null);
+                    b.ToTable("UserFiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -898,7 +900,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
                         .WithMany("SalariesDetails")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-6 align-items-baseline">
-        <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+        <form class="input-group-sm" method="post" asp-area="" asp-controller="Employees" asp-action="Info">
             Търсене<br />
             <div>
                 <div>
@@ -24,13 +24,13 @@
                 </div>
                 <div>
                     <label asp-for="LastName" class="form-label">Фамилия: </label>
-                    <input type="number" asp-for="LastName" class="form-control" value="@Model.LastName" />
+                    <input type="text" asp-for="LastName" class="form-control" value="@Model.LastName" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div>
-                    <label asp-for="MonthlySalary" class="form-label">Брутна заплата: </label>
-                    <input type="text" asp-for="MonthlySalary" class="form-control" value="@Model.MonthlySalary" />
-                    <span asp-validation-for="MonthlySalary" class="text-danger"></span>
+                    <label asp-for="Egn" class="form-label">ЕГН: </label>
+                    <input type="number" asp-for="Egn" class="form-control" value="@Model.Egn" />
+                    <span asp-validation-for="Egn" class="text-danger"></span>
                 </div>
                 <div>
                     <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
@@ -55,7 +55,7 @@
             </div>
 
             <div>
-                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Beneficiaries" asp-action="Info">
+                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Employees" asp-action="Info">
             </div>
             <div>
                 <span style="float:left">
@@ -90,8 +90,8 @@
                         <td>@beneficiary.FirstName</td>
                         <td>@beneficiary.LastName</td>
                         <td>@beneficiary.Egn</td>
-                        <td>@beneficiary.MonthlySalary</td>
-                        <td>@beneficiary.DateEmployed</td>
+                        <td>@beneficiary.MonthlySalary лв.</td>
+                        <td>@beneficiary.DateEmployed.ToShortDateString()</td>
                         <td>
                             @if (beneficiary.DateLeft != null)
                             {
@@ -102,7 +102,7 @@
                                 <div>няма</div>
                             }
                         </td>
-                        <td>@beneficiary.TotalIncome</td>
+                        <td>@beneficiary.TotalIncome лв.</td>
                         <td>
                             <span style="float:left">
                                 <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.EmployeeId">Промяна</a>

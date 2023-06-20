@@ -12,8 +12,8 @@ using PaymentsBudgetSystem.Data;
 namespace PaymentsBudgetSystem.Data.Migrations
 {
     [DbContext(typeof(PBSystemDbContext))]
-    [Migration("20230616074936_AddedTotalLimitOnConsolidatedBudget")]
-    partial class AddedTotalLimitOnConsolidatedBudget
+    [Migration("20230620044105_FixedPaymentTable")]
+    partial class FixedPaymentTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -495,6 +495,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("PaymentId");
+
                     b.ToTable("PaymentSalariesDetails");
                 });
 
@@ -900,7 +902,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.HasOne("PaymentsBudgetSystem.Data.Entities.Payment", "Payment")
                         .WithMany("SalariesDetails")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

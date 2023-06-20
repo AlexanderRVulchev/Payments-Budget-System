@@ -9,7 +9,6 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
     using static Common.ExceptionMessages.Budget;
     using static Common.ValidationErrors.Budget;
     using static Common.RoleNames;
-    using PaymentsBudgetSystem.Data.Migrations;
 
     [Area("Budget")]
     [Authorize(Roles = PrimaryRoleName)]

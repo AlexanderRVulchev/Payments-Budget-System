@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentsBudgetSystem.Data.Migrations
 {
-    public partial class AddedRoles : Migration
+    public partial class FixedPaymentTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -209,7 +209,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     FiscalYear = table.Column<int>(type: "int", nullable: false),
                     SalariesLimit = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     SupportLimit = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
-                    AssetsLimit = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false)
+                    AssetsLimit = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    TotalLimit = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -451,8 +452,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PaymentSalariesDetails_Payments_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_PaymentSalariesDetails_Payments_PaymentId",
+                        column: x => x.PaymentId,
                         principalTable: "Payments",
                         principalColumn: "Id");
                 });
@@ -609,6 +610,11 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "IX_PaymentSalariesDetails_EmployeeId",
                 table: "PaymentSalariesDetails",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentSalariesDetails_PaymentId",
+                table: "PaymentSalariesDetails",
+                column: "PaymentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PaymentSupportDetails_BeneficiaryId",

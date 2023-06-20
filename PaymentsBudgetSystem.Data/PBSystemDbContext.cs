@@ -35,7 +35,7 @@ namespace PaymentsBudgetSystem.Data
 
             builder
                 .Entity<CashPaymentDetails>()
-                .HasOne(c => c.Payment)
+                .HasOne(c => c.Payment)                
                 .WithOne(p => p.CashDetails)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -43,7 +43,7 @@ namespace PaymentsBudgetSystem.Data
                 .Entity<PaymentSalaryDetails>()
                 .HasOne(c => c.Payment)
                 .WithMany(p => p.SalariesDetails)
-                .HasForeignKey(c => c.EmployeeId)
+                .HasForeignKey(c => c.PaymentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
