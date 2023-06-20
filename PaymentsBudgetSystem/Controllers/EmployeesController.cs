@@ -52,5 +52,25 @@ namespace PaymentsBudgetSystem.Controllers
                 sortBy = (int)model.SortBy
             });
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var model = new EmployeeFormModel();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Add(EmployeeFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await employeeService.AddEmployeeAsync(User.Id(), model);
+
+            return RedirectToAction(nameof(Info));
+        }
     }
 }

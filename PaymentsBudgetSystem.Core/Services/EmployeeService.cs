@@ -6,6 +6,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Employees;
     using Data;
     using Core.Models.Enums;
+    using Data.Entities;
 
     public class EmployeeService : IEmployeeService
     {
@@ -14,6 +15,24 @@ namespace PaymentsBudgetSystem.Core.Services
         public EmployeeService(PBSystemDbContext _context)
         {
             context = _context;
+        }
+
+        public async Task AddEmployeeAsync(string userId, EmployeeFormModel model)
+        {
+            var entry = new Employee
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Egn = model.Egn,
+                DateEmployed = model.DateEmployed,
+                MonthlySalary = model.MonthlySalary,
+                DateLeft = null,
+                UserId = userId,
+                ContractType = model.ContractType
+            };
+
+            await context.Employees.AddAsync(entry);
+            await context.SaveChangesAsync();
         }
 
         public async Task<AllEmployeesViewModel> GetAllEmployeesAsync(string userId, AllEmployeesViewModel model)
