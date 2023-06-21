@@ -19,7 +19,13 @@ namespace PaymentsBudgetSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Info(string? name, string? identifier, string? address, int sortBy, int attribute)
+        public async Task<IActionResult> Info(
+            string? name, 
+            string? identifier,
+            string? address,
+            string? bankAccount,
+            int sortBy, 
+            int attribute)
         {
             var model = new AllBeneficiariesViewModel
             {
@@ -27,7 +33,8 @@ namespace PaymentsBudgetSystem.Controllers
                 SortBy = (SortBy)sortBy,
                 AddressFilter = address,
                 IdentifierFilter = identifier,
-                NameFilter = name
+                NameFilter = name,
+                BankAccountFilter = bankAccount
             };
 
             model = await beneficiaryService.GetAllBeneficiariesAsync(User.Id(), model);
@@ -44,7 +51,8 @@ namespace PaymentsBudgetSystem.Controllers
                 identifier = model.IdentifierFilter,
                 address = model.AddressFilter,
                 sortBy = (int)model.SortBy,
-                attribute = (int)model.SortAttribute
+                attribute = (int)model.SortAttribute,
+                bankAccount = model.BankAccountFilter
             });
         }
 

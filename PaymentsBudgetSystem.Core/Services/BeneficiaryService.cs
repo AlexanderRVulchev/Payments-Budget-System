@@ -22,7 +22,8 @@ namespace PaymentsBudgetSystem.Core.Services
         public async Task AddBeneficiaryAsync(string userId, BeneficiaryFormModel model)
         {
             if (await context.Beneficiaries
-                .AnyAsync(b => b.Name == model.Name || b.Identifier == model.Identifier))
+                .AnyAsync(b => (b.Name == model.Name && b.UserId == userId)
+                    || (b.Identifier == model.Identifier && b.UserId == userId)))
             {
                 throw new InvalidOperationException(BeneficiaryAlreadyExists);
             }
@@ -32,7 +33,8 @@ namespace PaymentsBudgetSystem.Core.Services
                 Name = model.Name,
                 Identifier = model.Identifier,
                 Address = model.Address,
-                UserId = userId
+                UserId = userId,
+                BankAccount = model.BankAccount
             };
 
             await context.Beneficiaries.AddAsync(entry);
@@ -57,6 +59,7 @@ namespace PaymentsBudgetSystem.Core.Services
             entity.Address = model.Address;
             entity.Identifier = model.Identifier;
             entity.Name = model.Name;
+            entity.BankAccount = model.BankAccount;
 
             await context.SaveChangesAsync();
         }
@@ -87,6 +90,13 @@ namespace PaymentsBudgetSystem.Core.Services
                             && b.Address.Contains(model.AddressFilter))
                     .AsQueryable();
             }
+            if (model.BankAccountFilter != null)
+            {
+                beneficiaries = beneficiaries
+                    .Where(b => b.BankAccount.Contains(model.BankAccountFilter))
+                    .AsQueryable();
+            }
+
 
             if (model.SortBy == SortBy.Ascending)
             {
@@ -98,6 +108,8 @@ namespace PaymentsBudgetSystem.Core.Services
                         beneficiaries = beneficiaries.OrderBy(b => b.Identifier); break;
                     case BeneficiarySort.Address:
                         beneficiaries = beneficiaries.OrderBy(b => b.Address); break;
+                    case BeneficiarySort.BankAccount:
+                        beneficiaries = beneficiaries.OrderBy(b => b.BankAccount); break;
                     default: break;
                 }
             }
@@ -111,6 +123,8 @@ namespace PaymentsBudgetSystem.Core.Services
                         beneficiaries = beneficiaries.OrderByDescending(b => b.Identifier); break;
                     case BeneficiarySort.Address:
                         beneficiaries = beneficiaries.OrderByDescending(b => b.Address); break;
+                    case BeneficiarySort.BankAccount:
+                        beneficiaries = beneficiaries.OrderByDescending(b => b.BankAccount); break;
                     default: break;
                 }
             }
@@ -121,7 +135,8 @@ namespace PaymentsBudgetSystem.Core.Services
                     Name = b.Name,
                     Address = b.Address,
                     BeneficiaryId = b.Id,
-                    Identifier = b.Identifier
+                    Identifier = b.Identifier,
+                    BankAccount = b.BankAccount
                 })
                 .ToListAsync();
 
@@ -148,7 +163,8 @@ namespace PaymentsBudgetSystem.Core.Services
                 Id = entity.Id,
                 Name = entity.Name,
                 Address = entity.Address,
-                Identifier = entity.Identifier
+                Identifier = entity.Identifier,
+                BankAccount = entity.BankAccount
             };
         }
     }

@@ -5,5 +5,6 @@
         Name = 0,
         Identifier = 1,
         Address = 2,
+        BankAccount = 3
     }
 }

@@ -27,12 +27,6 @@ namespace PaymentsBudgetSystem.Data.Entities
         
         public HashSet<Asset> Assets { get; set; } = new();
 
-        [InverseProperty(nameof(Message.Sender))]
-        public HashSet<Message> SentMessages { get; set; } = new();
-
-        [InverseProperty(nameof(Message.Receiver))]
-        public HashSet<Message> ReceivedMessages { get; set; } = new();
-
         public HashSet<IndividualBudget> IndividualBudgets { get; set; } = new();
         
         public HashSet<ConsolidatedBudget> ConsolidatedBudgets { get; set; } = new();

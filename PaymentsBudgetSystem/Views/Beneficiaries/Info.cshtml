@@ -33,11 +33,17 @@
                     <span asp-validation-for="AddressFilter" class="text-danger"></span>
                 </div>
                 <div>
+                    <label asp-for="BankAccountFilter" class="form-label">Банкова сметка: </label>
+                    <input type="text" asp-for="BankAccountFilter" class="form-control" value="@Model.BankAccountFilter" />
+                    <span asp-validation-for="BankAccountFilter" class="text-danger"></span>
+                </div>
+                <div>
                     <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
                     <select asp-for="SortAttribute" class="form-control" aria-required="true">
                         <option value="0">Име на контрагент</option>
                         <option value="1">Булстат</option>
                         <option value="2">Адрес</option>
+                        <option value="3">Банкова сметка</option>
                     </select>
                     <span asp-validation-for="SortAttribute" class="text-danger"></span>
                 </div>
@@ -71,6 +77,7 @@
                     <th scope="col">Име</th>
                     <th scope="col">Булстат</th>
                     <th scope="col">Адрес</th>
+                    <th scope="col">Банкова сметка</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -83,6 +90,7 @@
                         <td>@beneficiary.Name</td>
                         <td>@beneficiary.Identifier</td>
                         <td>@beneficiary.Address</td>
+                        <td>@beneficiary.BankAccount</td>
                         <td>
                             <span style="float:left">
                                 <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.BeneficiaryId">Промяна</a>

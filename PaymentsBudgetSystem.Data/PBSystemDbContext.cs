@@ -20,20 +20,6 @@ namespace PaymentsBudgetSystem.Data
                 .HasKey(ud => new { ud.PrimaryUserId, ud.SecondaryUserId });
 
             builder
-                .Entity<Message>()
-                .HasOne(m => m.Sender)
-                .WithMany(u => u.SentMessages)
-                .HasForeignKey(m => m.SenderId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .Entity<Message>()
-                .HasOne(m => m.Receiver)
-                .WithMany(u => u.ReceivedMessages)
-                .HasForeignKey(m => m.ReceiverId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
                 .Entity<CashPaymentDetails>()
                 .HasOne(c => c.Payment)                
                 .WithOne(p => p.CashDetails)
@@ -82,8 +68,6 @@ namespace PaymentsBudgetSystem.Data
         
         public DbSet<IndividualBudget> IndividualBudgets { get; set; } = null!;
         
-        public DbSet<Message> Messages { get; set; } = null!;
-        
         public DbSet<Payment> Payments { get; set; } = null!;
         
         public DbSet<PaymentAssetsDetails> PaymentAssetsDetails { get; set; } = null!;
@@ -94,8 +78,6 @@ namespace PaymentsBudgetSystem.Data
         
         public DbSet<Report> Reports { get; set; } = null!;
         
-        public DbSet<UserFile> UserFiles { get; set; } = null!;
-
         public DbSet<UserDependancy> UsersDependancies { get; set; } = null!;
     }
 }

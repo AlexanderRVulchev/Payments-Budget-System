@@ -16,6 +16,9 @@ namespace PaymentsBudgetSystem.Core.Models.Beneficiaries
         [Display(Name = "Адрес")]
         public string? AddressFilter { get; set; }
 
+        [Display(Name = "Банкова сметка")]
+        public string? BankAccountFilter { get; set; }
+
         public BeneficiarySort SortAttribute { get; set; }
 
         public SortBy SortBy { get; set; }

@@ -9,5 +9,7 @@
         public string Identifier { get; set; } = null!;
 
         public string? Address { get; set; }
+
+        public string BankAccount { get; set; } = null!;
     }
 }

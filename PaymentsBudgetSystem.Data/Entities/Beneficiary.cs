@@ -23,6 +23,10 @@ namespace PaymentsBudgetSystem.Data.Entities
         [MaxLength(BeneficiaryIdentifierFixedLength)]
         public string Identifier { get; set; } = null!;
 
+        [Required]
+        [MaxLength(BeneficiaryBankAccountMaxLength)]
+        public string BankAccount { get; set; } = null!;
+
         [MaxLength(BeneficiaryAddressMaxLength)]
         public string? Address { get; set; }
 
