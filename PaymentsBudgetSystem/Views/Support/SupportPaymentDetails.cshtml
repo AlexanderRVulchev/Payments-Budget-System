@@ -1,0 +1,45 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Support
+@using PaymentsBudgetSystem.Data.Entities.Enums
+
+@model SupportPaymentDetailsViewModel
+
+@{
+    ViewBag.Title = "Извършено плащане за Издръжка";
+}
+
+
+<h2 class="text-center text-success">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+
+<div class="pbs-box">
+    <p>Име на получателя: @Model.Beneficiary.Name</p>
+    <p>IBAN: @Model.Beneficiary.BankAccount</p>
+    <p>Булстат: @Model.Beneficiary.Identifier</p>
+    <p>Адрес: @Model.Beneficiary.Address</p>
+    @{
+        if (Model.ParagraphType == ParagraphType.Materials1015)
+        {
+            <p>Вид плащане: Материали</p>
+        }
+        else if (Model.ParagraphType == ParagraphType.Materials1015)
+        {
+            <p>Вид плащане: Разходи за външни услуги</p>
+        }
+        else if (Model.ParagraphType == ParagraphType.Materials1015)
+        {
+            <p>Вид плащане: Командировки</p>
+        }
+    }
+    <p>Стойност: @Model.Amount</p>
+    <p>Описание:  @Model.Description</p>
+    <p>Група: Издръжка</p>
+    <p>Дата на извършване на плащането: @Model.Date</p>
+    <p>Фактура номер: @Model.InvoiceNumber</p>
+    <p>Дата на фактура: @Model.InvoiceDate</p>
+
+</div>
+
+

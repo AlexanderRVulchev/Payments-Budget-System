@@ -13,15 +13,21 @@ namespace PaymentsBudgetSystem.Controllers
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
     using static Common.ValidationErrors.General;
+    using static Common.DataConstants.General;
+    using PaymentsBudgetSystem.Data.Entities;
 
     [Authorize]
     public class SupportController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;
+        private readonly IPaymentService paymentService;
 
-        public SupportController(IBeneficiaryService _beneficiaryService)
+        public SupportController(
+            IBeneficiaryService _beneficiaryService,
+            IPaymentService _paymentService)
         {
             beneficiaryService = _beneficiaryService;
+            paymentService = _paymentService;
         }
 
         [HttpGet]
@@ -95,7 +101,7 @@ namespace PaymentsBudgetSystem.Controllers
         {
             if (model.InvoiceDate != null)
             {
-                var invoiceDateIsValid = DateTime.TryParseExact(model.InvoiceDate, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                var invoiceDateIsValid = DateTime.TryParseExact(model.InvoiceDate, ValidDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
 
                 if (!invoiceDateIsValid)
                 {
@@ -104,13 +110,34 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
             if (!ModelState.IsValid)
-            {                
+            {
                 var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
                 model.Beneficiary = beneficiary;
                 return View(model);
             }
 
-            return View();
+            try
+            {
+                Guid paymentId = await paymentService.AddNewSupportPayment(User.Id(), model);
+                return RedirectToAction(nameof(SupportPaymentDetails), new { id = paymentId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotAddPayment });
+            }
+        }
+
+        public async Task<IActionResult> SupportPaymentDetails(Guid id)
+        {
+            try
+            {
+                SupportPaymentDetailsViewModel model = await paymentService.GetSupportPaymentDetailsById(User.Id(), id);
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
         }
     }
 }
