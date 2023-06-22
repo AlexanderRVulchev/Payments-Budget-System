@@ -38,13 +38,14 @@
     <style>
         .btn {
             margin: 15px;
+            border-color: green;
         }
     </style>
 
 
     <div class="row align-items-md-baseline">
         <div class="navbar-expand-md btn-group-vertical col-md-2">
-            <button class="btn btn-lg">
+            <button class="btn btn-lg btn-outline-info">
                 @if (User.IsInRole(PrimaryRoleName))
                 {
                     <a class="nav-link text-dark" asp-area="Budget" asp-controller="Primary" asp-action="Info">Бюджет</a>
@@ -54,11 +55,15 @@
                     <a class="nav-link text-dark" asp-area="Budget" asp-controller="Secondary" asp-action="Info">Бюджет</a>
                 }
             </button>
-            <button class="btn btn-lg">
+            <button class="btn btn-lg btn-outline-info">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Beneficiaries" asp-action="Info">Контрагенти</a>
             </button>
-            <button class="btn btn-lg">
+            <button class="btn btn-lg btn-outline-info">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Info">Персонал</a>
+            </button>
+            <hr />
+            <button class="btn btn-lg btn-outline-info">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Support" asp-action="New">Плащане за Издръжка</a>
             </button>
 
             <button class="btn btn-lg">Click button</button>
