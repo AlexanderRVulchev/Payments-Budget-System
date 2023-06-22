@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace PaymentsBudgetSystem.Controllers
 {
@@ -7,10 +8,11 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Contracts;
     using Extensions;
     using Core.Models.Beneficiaries;
+    using Data.Entities.Enums;
 
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
-    using PaymentsBudgetSystem.Data.Entities.Enums;
+    using static Common.ValidationErrors.General;
 
     [Authorize]
     public class SupportController : Controller
@@ -47,6 +49,7 @@ namespace PaymentsBudgetSystem.Controllers
             return RedirectToAction(nameof(Payment), new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
         }
 
+        [HttpGet]
         public async Task<IActionResult> Payment(Guid? id, ParagraphType? type)
         {
             if (id == null)
@@ -54,10 +57,10 @@ namespace PaymentsBudgetSystem.Controllers
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = BeneficiaryDoesNotExist });
             }
             if (type == null ||
-                new List<ParagraphType> 
+                new List<ParagraphType>
                 {
-                    ParagraphType.Materials1015, 
-                    ParagraphType.Services1020, 
+                    ParagraphType.Materials1015,
+                    ParagraphType.Services1020,
                     ParagraphType.BusinessTrips1051
                 }.Contains((ParagraphType)type) == false)
             {
@@ -85,6 +88,29 @@ namespace PaymentsBudgetSystem.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Payment(SupportPaymentFormModel model)
+        {
+            if (model.InvoiceDate != null)
+            {
+                var invoiceDateIsValid = DateTime.TryParseExact(model.InvoiceDate, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+
+                if (!invoiceDateIsValid)
+                {
+                    ModelState.AddModelError("", DateIsInvalid);
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {                
+                var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
+                model.Beneficiary = beneficiary;
+                return View(model);
+            }
+
+            return View();
         }
     }
 }

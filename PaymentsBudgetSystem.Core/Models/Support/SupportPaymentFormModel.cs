@@ -6,21 +6,30 @@ namespace PaymentsBudgetSystem.Core.Models.Support
     using System.ComponentModel.DataAnnotations;
 
     using static Common.DataConstants.Payment;
+    using static Common.DataConstants.General;
+    using static Common.ValidationErrors.General;
 
     public class SupportPaymentFormModel
     {
-        public BeneficiaryFormModel Beneficiary { get; set; } = null!;
+        public BeneficiaryFormModel? Beneficiary { get; set; }
 
         public ParagraphType ParagraphType { get; set; }
 
+        public Guid BeneficiaryId { get; set; }
+
+        [Display(Name = "Сума")]
+        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         public decimal Amount { get; set; }
 
-        [MaxLength(InvoiceNumberMaxLength)]
+        [MaxLength(InvoiceNumberMaxLength, ErrorMessage = StringMaxLengthValidationError)]
+        [Display(Name = "Номер на фактура")]
         public string? InvoiceNumber { get; set; }
 
-        public DateTime? InvoiceDate { get; set; }
+        [Display(Name = "Дата на фактура")]
+        public string? InvoiceDate { get; set; }
 
         [MaxLength(DescriptionMaxLength)]
+        [Display(Name = "Описание")]
         public string? Description { get; set; }
     }
 }

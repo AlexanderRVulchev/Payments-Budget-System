@@ -14,5 +14,7 @@
 
         public const string InvalidYearError = "Годината трябва да бъде между {1} и {2}";
 
+        public const string DateIsInvalid = "Моля, въведете дата във формат дд-мм-гггг";
+
     }
 }
