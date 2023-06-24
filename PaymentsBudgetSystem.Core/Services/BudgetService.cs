@@ -6,7 +6,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Budget;
     using Data;
     using Data.Entities;
-    using System.Runtime.InteropServices;
+
     using static Common.ExceptionMessages.Budget;
 
     public class BudgetService : IBudgetService
@@ -99,7 +99,7 @@ namespace PaymentsBudgetSystem.Core.Services
                     Name = b.User.Name,
                     SalariesLimit = b.SalariesLimit,
                     SupportLimit = b.SupportLimit,
-                    AssetsLimit = b.AssetsLimit
+                    AssetsLimit = b.AssetsLimit                    
                 }).ToList();
 
             return new EditBudgetFormModel

@@ -31,31 +31,6 @@ namespace PaymentsBudgetSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> New()
-        {
-            var allUserBeneficiaries = await beneficiaryService
-                .GetAllBeneficiariesAsync(User.Id(), new AllBeneficiariesViewModel());
-
-            var model = new NewSupportPaymentViewModel
-            {
-                Beneficiaries = allUserBeneficiaries.Beneficiaries
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult New(NewSupportPaymentViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            return RedirectToAction(nameof(Payment), new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Payment(Guid? id, ParagraphType? type)
         {
             if (id == null)

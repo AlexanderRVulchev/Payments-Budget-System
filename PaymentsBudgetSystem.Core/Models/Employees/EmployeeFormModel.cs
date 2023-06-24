@@ -23,7 +23,7 @@ namespace PaymentsBudgetSystem.Core.Models.Employees
         public string LastName { get; set; } = null!;
 
         [Required]
-        [StringLength(EgnFixedLength, MinimumLength = EgnFixedLength, ErrorMessage = StringLengthValidationError)]
+        [StringLength(EgnFixedLength, MinimumLength = EgnFixedLength, ErrorMessage = StringFixedLength)]
         [Display(Name = "ЕГН")]
         public string Egn { get; set; } = null!;
 

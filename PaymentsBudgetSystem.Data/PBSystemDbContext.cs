@@ -51,6 +51,8 @@ namespace PaymentsBudgetSystem.Data
                 .HasForeignKey(a => a.PaymentAssetDetailsId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
+
             base.OnModelCreating(builder);
         }
 

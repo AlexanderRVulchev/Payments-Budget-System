@@ -2,9 +2,11 @@
 {
     public class General
     {
-        public const string StringLengthValidationError = "{0} трябва да бъде с дължина между {2} и {1} символа.";
+        public const string StringLengthValidationError = "Полето {0} трябва да бъде с дължина между {2} и {1} символа.";
 
         public const string StringMaxLengthValidationError = "Полето {0} може да съдържа най-много {1} символа.";
+
+        public const string StringFixedLength = "Полето {0} трябва да съдържа точно {1} символа.";
 
         public const string MoneyValidationError = "Полето {0} трябва да бъде със стойност между {1} и {2}.";
 
@@ -14,7 +16,7 @@
 
         public const string InvalidYearError = "Годината трябва да бъде между {1} и {2}";
 
-        public const string DateIsInvalid = "Моля, въведете дата във формат дд-мм-гггг";
+        public const string DateIsInvalid = "Моля, въведете дата във формат дд.мм.гггг";
 
     }
 }
