@@ -40,5 +40,15 @@ namespace PaymentsBudgetSystem.Controllers
 
             return RedirectToAction("Payment", "Support", new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
         }
+
+        public IActionResult NewAssetPayment(ChoosePaymentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(ChoosePayment));
+            }
+
+            return RedirectToAction("Payment", "AssetPayment", new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
+        }
     }
 }

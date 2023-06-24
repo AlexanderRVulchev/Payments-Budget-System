@@ -17,7 +17,7 @@ namespace PaymentsBudgetSystem.Data.Entities
         public string UserId { get; set; } = null!;
         public User User { get; set; } = null!;
 
-        public DateTime? DateAquired { get; set; }
+        public DateTime DateAquired { get; set; }
 
         public DateTime? DateDisposed { get; set; }
 

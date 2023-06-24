@@ -2,7 +2,7 @@
 {
     public class Payment
     {
-        public const string InvalidParagarph = "Посоченият Вид плащане е невалиден!";
+        public const string InvalidParagraph = "Посоченият Вид плащане е невалиден!";
 
         public const string CannotAddPayment = "Вашето плащане не може да бъде извършено!";
 

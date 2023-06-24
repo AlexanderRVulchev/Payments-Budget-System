@@ -45,7 +45,7 @@ namespace PaymentsBudgetSystem.Controllers
                     ParagraphType.BusinessTrips1051
                 }.Contains((ParagraphType)type) == false)
             {
-                return RedirectToAction("Error", "Home", new { area = "", errorMessage = InvalidParagarph });
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = InvalidParagraph });
             }
 
             BeneficiaryFormModel? beneficiary = null;
