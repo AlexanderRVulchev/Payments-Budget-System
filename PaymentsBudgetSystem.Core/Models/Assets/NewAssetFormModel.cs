@@ -8,26 +8,30 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
     using static Common.DataConstants.Asset;
     using static Common.DataConstants.General;
     using static Common.ValidationErrors.General;
+    using static Common.DataConstants.Payment;
 
     public class NewAssetFormModel
     {
-        public Guid? BeneficiaryId { get; set; }
+        public Guid BeneficiaryId { get; set; }
 
         public BeneficiaryFormModel? Beneficiary { get; set; }
 
         public ParagraphType ParagraphType { get; set; }
 
+        [MaxLength(InvoiceNumberMaxLength, ErrorMessage = StringMaxLengthValidationError)]
         public string? InvoiceNumber { get; set; }
 
         public DateTime? InvoiceDate { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal Amount
+            => (Position1Quantity * Position1SingleAssetValue) +
+            (Position2Quantity * Position2SingleAssetValue) +
+            (Position3Quantity * Position3SingleAssetValue) +
+            (Position4Quantity * Position4SingleAssetValue) +
+            (Position5Quantity * Position5SingleAssetValue);
 
         [StringLength(AssetDescriptionMaxLength, MinimumLength = AssetDescriptionMinLength)]
         public string? Description { get; set; } = null!;
-
-        [Required]
-        public DateTime DeliveryDate { get; set; }
 
         // Position 1 data
 
@@ -41,7 +45,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         [Display(Name = "Единична стойност на актива")]
-        public decimal? Position1SingleAssetValue { get; set; }
+        public decimal Position1SingleAssetValue { get; set; }
 
         // Position 2 data
 
@@ -55,7 +59,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         [Display(Name = "Единична стойност на актива")]
-        public decimal? Position2SingleAssetValue { get; set; }
+        public decimal Position2SingleAssetValue { get; set; }
 
         // Position 3 data
 
@@ -69,7 +73,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         [Display(Name = "Единична стойност на актива")]
-        public decimal? Position3SingleAssetValue { get; set; }
+        public decimal Position3SingleAssetValue { get; set; }
 
         // Position 4 data
 
@@ -83,7 +87,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         [Display(Name = "Единична стойност на актива")]
-        public decimal? Position4SingleAssetValue { get; set; }
+        public decimal Position4SingleAssetValue { get; set; }
 
         // Position 5 data
 
@@ -97,6 +101,6 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         [Display(Name = "Единична стойност на актива")]
-        public decimal? Position5SingleAssetValue { get; set; }
+        public decimal Position5SingleAssetValue { get; set; }
     }
 }

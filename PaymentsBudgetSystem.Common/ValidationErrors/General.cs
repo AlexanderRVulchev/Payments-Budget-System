@@ -18,5 +18,8 @@
 
         public const string DateIsInvalid = "Моля, въведете дата във формат дд.мм.гггг";
 
+        public const string PaymentMoneyCannotBeZeroOrLess = "Стойността на плащането трябва да бъде най-малко 0.01 лв.";
+
+        public const string AssetMustHaveAName = "Всеки актив с поне 1 брой трябва да има име.";
     }
 }

@@ -22,7 +22,7 @@ namespace PaymentsBudgetSystem.Data.Entities
         public DateTime? DateDisposed { get; set; }
 
         [Required]
-        public AssetType AssetType { get; set; }
+        public ParagraphType Type { get; set; }
 
         [Column(TypeName = "DECIMAL(18, 2)")]
         public decimal ReportValue { get; set; }

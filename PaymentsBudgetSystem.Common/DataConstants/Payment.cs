@@ -7,6 +7,6 @@
 
         public const int DescriptionMaxLength = 1000;
 
-        public const int InvoiceNumberMaxLength = 12;
+        public const int InvoiceNumberMaxLength = 10;
     }
 }

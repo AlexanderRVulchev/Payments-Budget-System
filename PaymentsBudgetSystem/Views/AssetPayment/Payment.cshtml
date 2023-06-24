@@ -48,13 +48,8 @@
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.InvoiceDate" class="form-label-add-edit">Дата на фактура: </label>
-                <input type="text" asp-for="@Model.InvoiceDate" class="form-control" aria-required="true">
+                <input type="date" asp-for="@Model.InvoiceDate" class="form-control" aria-required="true">
                 <span asp-validation-for="@Model.InvoiceDate" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="@Model.Amount" class="form-label-add-edit">Сума: </label>
-                <input type="number" asp-for="@Model.Amount" class="form-control" aria-required="true">
-                <span asp-validation-for="@Model.Amount" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.Description" class="form-label-add-edit">Описание: </label>
@@ -97,25 +92,19 @@
                         <td>                            
                             <span id="sum1"></span> лв.
                             <script>
-                                // Get references to the input fields and the span element
                                 var input11 = document.getElementById('quantity1');
                                 var input12 = document.getElementById('value1');
                                 var sumElement1 = document.getElementById('sum1');
 
-                                // Add an event listener to listen for changes in the input fields
                                 input11.addEventListener('input', calculateSum1);
                                 input12.addEventListener('input', calculateSum1);
 
-                                // Function to calculate the sum and update the span element
                                 function calculateSum1() {
-                                    // Get the values from the input fields
                                     var value1 = parseInt(input11.value) || 0;
                                     var value2 = parseFloat(input12.value) || 0;
 
-                                    // Calculate the sum
                                     var sum = value1 * value2;
 
-                                    // Update the span element with the sum
                                     sumElement1.textContent = sum;
                                 }
                             </script>
@@ -140,25 +129,19 @@
                         <td>
                             <span id="sum2"></span> лв.
                             <script>
-                                //// Get references to the input fields and the span element
                                 var input21 = document.getElementById('quantity2');
                                 var input22 = document.getElementById('value2');
                                 var sumElement2 = document.getElementById('sum2');
 
-                                // Add an event listener to listen for changes in the input fields
                                 input21.addEventListener('input', calculateSum);
                                 input22.addEventListener('input', calculateSum);
 
-                                //// Function to calculate the sum and update the span element
                                 function calculateSum() {
-                                    // Get the values from the input fields
                                     var value1 = parseInt(input21.value) || 0;
                                     var value2 = parseFloat(input22.value) || 0;
 
-                                    // Calculate the sum
                                     var sum = value1 * value2;
 
-                                    // Update the span element with the sum
                                     sumElement2.textContent = sum;
                                 }
                             </script>
@@ -183,25 +166,19 @@
                         <td>
                             <span id="sum3"></span> лв.
                             <script>
-                                //// Get references to the input fields and the span element
                                 var input31 = document.getElementById('quantity3');
                                 var input32 = document.getElementById('value3');
                                 var sumElement3 = document.getElementById('sum3');
 
-                                // Add an event listener to listen for changes in the input fields
                                 input31.addEventListener('input', calculateSum);
                                 input32.addEventListener('input', calculateSum);
 
-                                //// Function to calculate the sum and update the span element
                                 function calculateSum() {
-                                    // Get the values from the input fields
                                     var value1 = parseInt(input31.value) || 0;
                                     var value2 = parseFloat(input32.value) || 0;
 
-                                    // Calculate the sum
                                     var sum = value1 * value2;
 
-                                    // Update the span element with the sum
                                     sumElement3.textContent = sum;
                                 }
                             </script>
@@ -226,25 +203,19 @@
                         <td>
                             <span id="sum4"></span> лв.
                             <script>
-                                //// Get references to the input fields and the span element
                                 var input41 = document.getElementById('quantity4');
                                 var input42 = document.getElementById('value4');
                                 var sumElement4 = document.getElementById('sum4');
 
-                                // Add an event listener to listen for changes in the input fields
                                 input41.addEventListener('input', calculateSum);
                                 input42.addEventListener('input', calculateSum);
 
-                                //// Function to calculate the sum and update the span element
                                 function calculateSum() {
-                                    // Get the values from the input fields
                                     var value1 = parseInt(input41.value) || 0;
                                     var value2 = parseFloat(input42.value) || 0;
 
-                                    // Calculate the sum
                                     var sum = value1 * value2;
 
-                                    // Update the span element with the sum
                                     sumElement4.textContent = sum;
                                 }
                             </script>
@@ -269,25 +240,19 @@
                         <td>
                             <span id="sum5"></span> лв.
                             <script>
-                                //// Get references to the input fields and the span element
                                 var input51 = document.getElementById('quantity5');
                                 var input52 = document.getElementById('value5');
                                 var sumElement5 = document.getElementById('sum5');
 
-                                // Add an event listener to listen for changes in the input fields
                                 input51.addEventListener('input', calculateSum);
                                 input52.addEventListener('input', calculateSum);
 
-                                //// Function to calculate the sum and update the span element
                                 function calculateSum() {
-                                    // Get the values from the input fields
                                     var value1 = parseInt(input51.value) || 0;
                                     var value2 = parseFloat(input52.value) || 0;
 
-                                    // Calculate the sum
                                     var sum = value1 * value2;
 
-                                    // Update the span element with the sum
                                     sumElement5.textContent = sum;
                                 }
                             </script>
@@ -299,7 +264,6 @@
                         <td colspan="12" style="text-align: center">
                             Обща сума на поръчката: <span id="total"></span> лв.
                             <script>
-                                //// Get references to the input fields and the span element
                                 var inputSum11 = document.getElementById('quantity1');
                                 var inputSum12 = document.getElementById('value1');
                                 var inputSum21 = document.getElementById('quantity2');
@@ -312,7 +276,6 @@
                                 var inputSum52 = document.getElementById('value5');
                                 var total = document.getElementById('total');
 
-                                // Add an event listener to listen for changes in the input fields
                                 inputSum11.addEventListener('input', calculateSum);
                                 inputSum12.addEventListener('input', calculateSum);
                                 inputSum21.addEventListener('input', calculateSum);
@@ -324,9 +287,7 @@
                                 inputSum51.addEventListener('input', calculateSum);
                                 inputSum52.addEventListener('input', calculateSum);
 
-                                //// Function to calculate the sum and update the span element
                                 function calculateSum() {
-                                    // Get the values from the input fields
                                     var value11 = parseInt(inputSum11.value) || 0;
                                     var value12 = parseFloat(inputSum12.value) || 0;
                                     var value21 = parseInt(inputSum21.value) || 0;
@@ -338,14 +299,12 @@
                                     var value51 = parseInt(inputSum51.value) || 0;
                                     var value52 = parseFloat(inputSum52.value) || 0;
                                     
-                                    // Calculate the sum
                                     var sum = (value11 * value12) + 
                                         (value21 * value22) + 
                                         (value31 * value32) +
                                         (value41 * value42) + 
                                         (value51 * value52);
 
-                                    // Update the span element with the sum
                                     total.textContent = sum;
                                 }
                             </script>
@@ -356,7 +315,7 @@
             </table>
 
             <div class="col-4 offset-4">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на разхода ->" />
             </div>
         </form>
 

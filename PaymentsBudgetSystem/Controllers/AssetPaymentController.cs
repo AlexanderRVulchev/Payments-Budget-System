@@ -1,25 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace PaymentsBudgetSystem.Controllers
 {
+    using Core.Contracts;
     using Core.Models.Beneficiaries;
     using Data.Entities.Enums;
-    using Core.Contracts;
     using Extensions;
+    using Core.Models.Assets;
 
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
-    using Microsoft.AspNetCore.Authorization;
-    using PaymentsBudgetSystem.Core.Models.Assets;
+    using static Common.ValidationErrors.General;
+
 
     [Authorize]
     public class AssetPaymentController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;
 
-        public AssetPaymentController(IBeneficiaryService _beneficiaryService)
+        private readonly IPaymentService paymentService;
+
+        public AssetPaymentController(
+            IBeneficiaryService _beneficiaryService,
+            IPaymentService _paymentService)
         {
-            this.beneficiaryService = _beneficiaryService;
+            beneficiaryService = _beneficiaryService;
+            paymentService = _paymentService;
         }
 
         [HttpGet]
@@ -40,7 +48,7 @@ namespace PaymentsBudgetSystem.Controllers
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = InvalidParagraph });
             }
 
-            BeneficiaryFormModel? beneficiary = null;
+            BeneficiaryFormModel beneficiary;
             try
             {
                 beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), (Guid)id);
@@ -57,9 +65,43 @@ namespace PaymentsBudgetSystem.Controllers
             NewAssetFormModel model = new NewAssetFormModel
             {
                 Beneficiary = beneficiary,
-                BeneficiaryId = id,
+                BeneficiaryId = (Guid)id,
                 ParagraphType = (ParagraphType)type,
             };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Payment(NewAssetFormModel model)
+        {
+            if (model.InvoiceDate > DateTime.Now)
+            {
+                ModelState.AddModelError("", InvoiceDateCannotBeInTheFuture);
+            }
+
+            if (model.Position1Name == null && model.Position1Quantity != 0 ||
+                model.Position2Name == null && model.Position2Quantity != 0 ||
+                model.Position3Name == null && model.Position3Quantity != 0 ||
+                model.Position4Name == null && model.Position4Quantity != 0 ||
+                model.Position5Name == null && model.Position5Quantity != 0)
+            {
+                ModelState.AddModelError("", AssetMustHaveAName);
+            }
+
+            if (model.Amount <= 0)
+            {
+                ModelState.AddModelError("", PaymentMoneyCannotBeZeroOrLess);
+            }
+
+            model.Beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), (Guid)model.BeneficiaryId);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Guid assetPaymentId = await paymentService.AddNewAssetPayment(User.Id(), model);
 
             return View(model);
         }

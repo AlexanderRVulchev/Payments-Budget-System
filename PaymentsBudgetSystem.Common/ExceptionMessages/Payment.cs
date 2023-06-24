@@ -9,5 +9,7 @@
         public const string InvalidPayment = "Плащането не съществува!";
 
         public const string PaymentAccessDenied = "Нямате достъп до това плащане!";
+
+        public const string InvoiceDateCannotBeInTheFuture = "Датата на фактурата не може да бъде след плащането по нея";
     }
 }

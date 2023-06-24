@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentsBudgetSystem.Data.Migrations
 {
-    public partial class FixedPaymentTable : Migration
+    public partial class AlteredAssetsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "GlobalSettings",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SettingName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     SettingValue = table.Column<decimal>(type: "DECIMAL(12,4)", nullable: false)
                 },
                 constraints: table =>
@@ -187,6 +189,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Identifier = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
+                    BankAccount = table.Column<string>(type: "nvarchar(22)", maxLength: 22, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
@@ -271,31 +274,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_ReceiverId",
-                        column: x => x.ReceiverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
@@ -353,26 +331,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         name: "FK_Reports_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserFiles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    FilePath = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserFiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserFiles_Messages_MessageId",
-                        column: x => x.MessageId,
-                        principalTable: "Messages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -489,9 +447,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DateAquired = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateAquired = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateDisposed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AssetType = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     ReportValue = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PaymentAssetDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -587,16 +545,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_ReceiverId",
-                table: "Messages",
-                column: "ReceiverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_SenderId",
-                table: "Messages",
-                column: "SenderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PaymentAssetsDetails_BeneficiaryId",
                 table: "PaymentAssetsDetails",
                 column: "BeneficiaryId");
@@ -625,11 +573,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "IX_Reports_UserId",
                 table: "Reports",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserFiles_MessageId",
-                table: "UserFiles",
-                column: "MessageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -674,9 +617,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "UserFiles");
-
-            migrationBuilder.DropTable(
                 name: "UsersDependancies");
 
             migrationBuilder.DropTable(
@@ -687,9 +627,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Beneficiaries");

@@ -11,6 +11,8 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Beneficiaries;
     using static Common.DataConstants.General;
     using static Common.ExceptionMessages.Payment;
+    using PaymentsBudgetSystem.Core.Models.Assets;
+    using Microsoft.IdentityModel.Tokens;
 
     public class PaymentService : IPaymentService
     {
@@ -19,6 +21,62 @@ namespace PaymentsBudgetSystem.Core.Services
         public PaymentService(PBSystemDbContext _context)
         {
             context = _context;
+        }
+
+        public async Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model)
+        {
+            var assetPayment = new Payment
+            {
+                Amount = model.Amount,
+                Date = DateTime.Now,
+                Paragraph = model.ParagraphType,
+                PaymentType = PaymentType.Assets,
+                UserId = userId,
+                Description = model.Description,
+                AssetsDetails = new PaymentAssetsDetails
+                {
+                    BeneficiaryId = model.BeneficiaryId,
+                    DeliveryDate = DateTime.Now,
+                    InvoiceNumber = model.InvoiceNumber,
+                    InvoiceDate = model.InvoiceDate
+                }
+            };
+
+            await context.Payments.AddAsync(assetPayment);
+            await context.SaveChangesAsync();
+
+            List<Asset> newAssets = new();
+
+            if (model.Position1Name != null && model.Position1Quantity > 0 && model.Position1SingleAssetValue > 0)
+            {
+                newAssets.AddRange(
+                    CreateAssets(model.Position1Name, model.Position1Quantity, model.Position1SingleAssetValue, userId, assetPayment.Id, model.ParagraphType));
+            }
+            if (model.Position2Name != null && model.Position2Quantity > 0 && model.Position2SingleAssetValue > 0)
+            {
+                newAssets.AddRange(
+                    CreateAssets(model.Position2Name, model.Position2Quantity, model.Position2SingleAssetValue, userId, assetPayment.Id, model.ParagraphType));
+            }
+            if (model.Position3Name != null && model.Position3Quantity > 0 && model.Position3SingleAssetValue > 0)
+            {
+                newAssets.AddRange(
+                    CreateAssets(model.Position3Name, model.Position3Quantity, model.Position3SingleAssetValue, userId, assetPayment.Id, model.ParagraphType));
+            }
+            if (model.Position4Name != null && model.Position4Quantity > 0 && model.Position4SingleAssetValue > 0)
+            {
+                newAssets.AddRange(
+                    CreateAssets(model.Position4Name, model.Position4Quantity, model.Position4SingleAssetValue, userId, assetPayment.Id, model.ParagraphType));
+            }
+            if (model.Position5Name != null && model.Position5Quantity > 0 && model.Position5SingleAssetValue > 0)
+            {
+                newAssets.AddRange(
+                    CreateAssets(model.Position5Name, model.Position5Quantity, model.Position5SingleAssetValue, userId, assetPayment.Id, model.ParagraphType));
+            }
+
+            await context.Assets.AddRangeAsync(newAssets);
+            await context.SaveChangesAsync();
+
+            return assetPayment.Id;
         }
 
         public async Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model)
@@ -94,6 +152,27 @@ namespace PaymentsBudgetSystem.Core.Services
                     Name = entity.SupportDetails.Beneficiary.Name
                 }
             };
+        }
+
+        private List<Asset> CreateAssets(string description, int quantity, decimal reportValue, string userId, Guid paymentId, ParagraphType paragraph)
+        {
+            List<Asset> assets = new();
+
+            for (int i = 0; i < quantity; i++)
+            {
+                assets.Add(new Asset
+                {
+                    DateAquired = DateTime.Now,
+                    DateDisposed = null,
+                    Description = description,
+                    ReportValue = reportValue,
+                    UserId = userId,
+                    PaymentAssetDetailsId = paymentId,
+                    Type = paragraph
+                });
+            }
+
+            return assets;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PaymentsBudgetSystem.Core.Models.Support;
+﻿using PaymentsBudgetSystem.Core.Models.Assets;
+using PaymentsBudgetSystem.Core.Models.Support;
 
 namespace PaymentsBudgetSystem.Core.Contracts
 {
@@ -7,5 +8,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model);
 
         Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsById(string userId, Guid paymentId);
+
+        Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model);
     }
 }

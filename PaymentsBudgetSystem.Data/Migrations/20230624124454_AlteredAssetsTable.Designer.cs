@@ -12,8 +12,8 @@ using PaymentsBudgetSystem.Data;
 namespace PaymentsBudgetSystem.Data.Migrations
 {
     [DbContext(typeof(PBSystemDbContext))]
-    [Migration("20230621144951_AddedBankAccount")]
-    partial class AddedBankAccount
+    [Migration("20230624124454_AlteredAssetsTable")]
+    partial class AlteredAssetsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -167,10 +167,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AssetType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DateAquired")
+                    b.Property<DateTime>("DateAquired")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateDisposed")
@@ -186,6 +183,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
                     b.Property<decimal>("ReportValue")
                         .HasColumnType("DECIMAL(18,2)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -335,8 +335,16 @@ namespace PaymentsBudgetSystem.Data.Migrations
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.GlobalSetting", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("SettingName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<decimal>("SettingValue")
                         .HasColumnType("DECIMAL(12,4)");
