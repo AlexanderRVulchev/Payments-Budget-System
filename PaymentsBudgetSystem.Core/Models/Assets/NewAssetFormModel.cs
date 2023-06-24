@@ -36,7 +36,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         public string? Position1Name { get; set; }
 
         [Range(AssetQuantityMinValue, AssetQuantityMaxValue, ErrorMessage = MoneyValidationError)]
-        [Display(Name = "Количество")]]
+        [Display(Name = "Количество")]
         public int Position1Quantity { get; set; }
 
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]

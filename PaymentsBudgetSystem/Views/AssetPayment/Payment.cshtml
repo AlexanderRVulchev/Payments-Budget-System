@@ -22,18 +22,21 @@
     @{
         if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
         {
-            <p>Вид плащане: Стопански инвентар</p>
+                <p>Вид плащане: Стопански инвентар</p>
         }
         else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
         {
-            <p>Вид плащане: Техника и оборудване</p>
+                <p>Вид плащане: Техника и оборудване</p>
         }
         else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
         {
-            <p>Вид плащане: Нематериални дълготрайни активи</p>
+                <p>Вид плащане: Нематериални дълготрайни активи</p>
         }
     }
 </div>
+
+
+
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
@@ -71,7 +74,7 @@
                         <th scope="col">Име на актива</th>
                         <th scope="col">Количество</th>
                         <th scope="col">Единична цена</th>
-
+                        <th scope="col">Обща стойност</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -84,12 +87,38 @@
                             <span asp-validation-for="@Model.Position1Name" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position1Quantity" class="form-control" aria-required="true">
+                            <input type="number" id="quantity1" asp-for="@Model.Position1Quantity" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position1Quantity" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position1SingleAssetValue" class="form-control" aria-required="true">
+                            <input type="number" id="value1" asp-for="@Model.Position1SingleAssetValue" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position1SingleAssetValue" class="text-danger"></span>
+                        </td>
+                        <td>                            
+                            <span id="sum1"></span> лв.
+                            <script>
+                                // Get references to the input fields and the span element
+                                var input11 = document.getElementById('quantity1');
+                                var input12 = document.getElementById('value1');
+                                var sumElement1 = document.getElementById('sum1');
+
+                                // Add an event listener to listen for changes in the input fields
+                                input11.addEventListener('input', calculateSum1);
+                                input12.addEventListener('input', calculateSum1);
+
+                                // Function to calculate the sum and update the span element
+                                function calculateSum1() {
+                                    // Get the values from the input fields
+                                    var value1 = parseInt(input11.value) || 0;
+                                    var value2 = parseFloat(input12.value) || 0;
+
+                                    // Calculate the sum
+                                    var sum = value1 * value2;
+
+                                    // Update the span element with the sum
+                                    sumElement1.textContent = sum;
+                                }
+                            </script>
                         </td>
                     </tr>
 
@@ -101,12 +130,38 @@
                             <span asp-validation-for="@Model.Position2Name" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position2Quantity" class="form-control" aria-required="true">
+                            <input type="number" id="quantity2" asp-for="@Model.Position2Quantity" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position2Quantity" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position2SingleAssetValue" class="form-control" aria-required="true">
+                            <input type="number" id="value2" asp-for="@Model.Position2SingleAssetValue" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position2SingleAssetValue" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <span id="sum2"></span> лв.
+                            <script>
+                                //// Get references to the input fields and the span element
+                                var input21 = document.getElementById('quantity2');
+                                var input22 = document.getElementById('value2');
+                                var sumElement2 = document.getElementById('sum2');
+
+                                // Add an event listener to listen for changes in the input fields
+                                input21.addEventListener('input', calculateSum);
+                                input22.addEventListener('input', calculateSum);
+
+                                //// Function to calculate the sum and update the span element
+                                function calculateSum() {
+                                    // Get the values from the input fields
+                                    var value1 = parseInt(input21.value) || 0;
+                                    var value2 = parseFloat(input22.value) || 0;
+
+                                    // Calculate the sum
+                                    var sum = value1 * value2;
+
+                                    // Update the span element with the sum
+                                    sumElement2.textContent = sum;
+                                }
+                            </script>
                         </td>
                     </tr>
 
@@ -118,12 +173,38 @@
                             <span asp-validation-for="@Model.Position3Name" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position3Quantity" class="form-control" aria-required="true">
+                            <input type="number" id="quantity3" asp-for="@Model.Position3Quantity" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position3Quantity" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position3SingleAssetValue" class="form-control" aria-required="true">
+                            <input type="number" id="value3" asp-for="@Model.Position3SingleAssetValue" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position3SingleAssetValue" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <span id="sum3"></span> лв.
+                            <script>
+                                //// Get references to the input fields and the span element
+                                var input31 = document.getElementById('quantity3');
+                                var input32 = document.getElementById('value3');
+                                var sumElement3 = document.getElementById('sum3');
+
+                                // Add an event listener to listen for changes in the input fields
+                                input31.addEventListener('input', calculateSum);
+                                input32.addEventListener('input', calculateSum);
+
+                                //// Function to calculate the sum and update the span element
+                                function calculateSum() {
+                                    // Get the values from the input fields
+                                    var value1 = parseInt(input31.value) || 0;
+                                    var value2 = parseFloat(input32.value) || 0;
+
+                                    // Calculate the sum
+                                    var sum = value1 * value2;
+
+                                    // Update the span element with the sum
+                                    sumElement3.textContent = sum;
+                                }
+                            </script>
                         </td>
                     </tr>
 
@@ -135,12 +216,38 @@
                             <span asp-validation-for="@Model.Position4Name" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position4Quantity" class="form-control" aria-required="true">
+                            <input type="number" id="quantity4" asp-for="@Model.Position4Quantity" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position4Quantity" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position4SingleAssetValue" class="form-control" aria-required="true">
+                            <input type="number" id="value4" asp-for="@Model.Position4SingleAssetValue" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position4SingleAssetValue" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <span id="sum4"></span> лв.
+                            <script>
+                                //// Get references to the input fields and the span element
+                                var input41 = document.getElementById('quantity4');
+                                var input42 = document.getElementById('value4');
+                                var sumElement4 = document.getElementById('sum4');
+
+                                // Add an event listener to listen for changes in the input fields
+                                input41.addEventListener('input', calculateSum);
+                                input42.addEventListener('input', calculateSum);
+
+                                //// Function to calculate the sum and update the span element
+                                function calculateSum() {
+                                    // Get the values from the input fields
+                                    var value1 = parseInt(input41.value) || 0;
+                                    var value2 = parseFloat(input42.value) || 0;
+
+                                    // Calculate the sum
+                                    var sum = value1 * value2;
+
+                                    // Update the span element with the sum
+                                    sumElement4.textContent = sum;
+                                }
+                            </script>
                         </td>
                     </tr>
 
@@ -152,16 +259,99 @@
                             <span asp-validation-for="@Model.Position5Name" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position5Quantity" class="form-control" aria-required="true">
+                            <input type="number" id="quantity5" asp-for="@Model.Position5Quantity" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position5Quantity" class="text-danger"></span>
                         </td>
                         <td>
-                            <input type="number" asp-for="@Model.Position5SingleAssetValue" class="form-control" aria-required="true">
+                            <input type="number" id="value5" asp-for="@Model.Position5SingleAssetValue" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position5SingleAssetValue" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <span id="sum5"></span> лв.
+                            <script>
+                                //// Get references to the input fields and the span element
+                                var input51 = document.getElementById('quantity5');
+                                var input52 = document.getElementById('value5');
+                                var sumElement5 = document.getElementById('sum5');
+
+                                // Add an event listener to listen for changes in the input fields
+                                input51.addEventListener('input', calculateSum);
+                                input52.addEventListener('input', calculateSum);
+
+                                //// Function to calculate the sum and update the span element
+                                function calculateSum() {
+                                    // Get the values from the input fields
+                                    var value1 = parseInt(input51.value) || 0;
+                                    var value2 = parseFloat(input52.value) || 0;
+
+                                    // Calculate the sum
+                                    var sum = value1 * value2;
+
+                                    // Update the span element with the sum
+                                    sumElement5.textContent = sum;
+                                }
+                            </script>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"></th>
+                        <td colspan="12" style="text-align: center">
+                            Обща сума на поръчката: <span id="total"></span> лв.
+                            <script>
+                                //// Get references to the input fields and the span element
+                                var inputSum11 = document.getElementById('quantity1');
+                                var inputSum12 = document.getElementById('value1');
+                                var inputSum21 = document.getElementById('quantity2');
+                                var inputSum22 = document.getElementById('value2');
+                                var inputSum31 = document.getElementById('quantity3');
+                                var inputSum32 = document.getElementById('value3');
+                                var inputSum41 = document.getElementById('quantity4');
+                                var inputSum42 = document.getElementById('value4');
+                                var inputSum51 = document.getElementById('quantity5');
+                                var inputSum52 = document.getElementById('value5');
+                                var total = document.getElementById('total');
+
+                                // Add an event listener to listen for changes in the input fields
+                                inputSum11.addEventListener('input', calculateSum);
+                                inputSum12.addEventListener('input', calculateSum);
+                                inputSum21.addEventListener('input', calculateSum);
+                                inputSum22.addEventListener('input', calculateSum);
+                                inputSum31.addEventListener('input', calculateSum);
+                                inputSum32.addEventListener('input', calculateSum);
+                                inputSum41.addEventListener('input', calculateSum);
+                                inputSum42.addEventListener('input', calculateSum);
+                                inputSum51.addEventListener('input', calculateSum);
+                                inputSum52.addEventListener('input', calculateSum);
+
+                                //// Function to calculate the sum and update the span element
+                                function calculateSum() {
+                                    // Get the values from the input fields
+                                    var value11 = parseInt(inputSum11.value) || 0;
+                                    var value12 = parseFloat(inputSum12.value) || 0;
+                                    var value21 = parseInt(inputSum21.value) || 0;
+                                    var value22 = parseFloat(inputSum22.value) || 0;
+                                    var value31 = parseInt(inputSum31.value) || 0;
+                                    var value32 = parseFloat(inputSum32.value) || 0;
+                                    var value41 = parseInt(inputSum41.value) || 0;
+                                    var value42 = parseFloat(inputSum42.value) || 0;
+                                    var value51 = parseInt(inputSum51.value) || 0;
+                                    var value52 = parseFloat(inputSum52.value) || 0;
+                                    
+                                    // Calculate the sum
+                                    var sum = (value11 * value12) + 
+                                        (value21 * value22) + 
+                                        (value31 * value32) +
+                                        (value41 * value42) + 
+                                        (value51 * value52);
+
+                                    // Update the span element with the sum
+                                    total.textContent = sum;
+                                }
+                            </script>
                         </td>
                     </tr>
                 </tbody>
-
 
             </table>
 
