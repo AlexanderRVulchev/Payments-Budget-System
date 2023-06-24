@@ -10,5 +10,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsById(string userId, Guid paymentId);
 
         Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model);
+
+        Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsById(string userId, Guid paymentId);
     }
 }

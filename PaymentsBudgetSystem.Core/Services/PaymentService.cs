@@ -116,6 +116,54 @@ namespace PaymentsBudgetSystem.Core.Services
             return supportPayment.Id;
         }
 
+        public async Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsById(string userId, Guid paymentId)
+        {
+            var entity = await context
+                .Payments
+                .Where(p => p.Id == paymentId)
+                .Include(p => p.AssetsDetails)
+                .ThenInclude(ad => ad.Beneficiary)
+                .Include(p => p.AssetsDetails)
+                .ThenInclude(p => p.Assets)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new InvalidOperationException(InvalidPayment);
+            }
+            if (entity.UserId != userId)
+            {
+                throw new InvalidOperationException(PaymentAccessDenied);
+            }
+
+            return new AssetPaymentDetailsViewModel
+            {
+                Id = entity.Id,
+                Date = entity.Date,
+                Description = entity.Description,
+                Amount = entity.Amount,
+                InvoiceDate = entity.AssetsDetails.InvoiceDate,
+                InvoiceNumber = entity.AssetsDetails.InvoiceNumber,
+                ParagraphType = entity.Paragraph,
+                Beneficiary = new BeneficiaryViewModel
+                {
+                    BeneficiaryId = entity.AssetsDetails.BeneficiaryId,
+                    Name = entity.AssetsDetails.Beneficiary.Name,
+                    Address = entity.AssetsDetails.Beneficiary.Address,
+                    BankAccount = entity.AssetsDetails.Beneficiary.BankAccount,
+                    Identifier = entity.AssetsDetails.Beneficiary.Identifier
+                },
+                Assets = entity.AssetsDetails.Assets.Select(a => new AssetShortViewModel
+                {
+                    AssetId = a.Id,
+                    AssetAquired = a.DateAquired,
+                    AssetDisposed = a.DateDisposed,
+                    Description = a.Description,
+                    ReportValue = a.ReportValue
+                }).ToList()
+            };
+        }
+
         public async Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsById(string userId, Guid paymentId)
         {
             var entity = await context

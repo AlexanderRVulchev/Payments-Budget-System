@@ -1,0 +1,87 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Assets
+@using PaymentsBudgetSystem.Data.Entities.Enums
+
+@model AssetPaymentDetailsViewModel
+
+@{
+    ViewBag.Title = "Извършено плащане за придобиване на активи";
+}
+
+
+<h2 class="text-center text-success">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="row">
+    <div class="pbs-box col-lg-5 col-sm-12">
+        <p>Име на получателя: @Model.Beneficiary.Name</p>
+        <p>IBAN: @Model.Beneficiary.BankAccount</p>
+        <p>Булстат: @Model.Beneficiary.Identifier</p>
+        <p>Адрес: @Model.Beneficiary.Address</p>
+        @{
+            if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
+            {
+                <p>Вид плащане: Придобиване на стопански инвентар</p>
+            }
+            else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
+            {
+                <p>Вид плащане: Придобиване на техника и оборудване</p>
+            }
+            else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
+            {
+                <p>Вид плащане: Придобиване на нематериални дълготрайни активи</p>
+            }
+        }
+        <p>Стойност: @Model.Amount</p>
+        <p>Описание:  @Model.Description</p>
+        <p>Група: Капиталови разходи</p>
+        <p>Дата на извършване на плащането: @Model.Date</p>
+        <p>Фактура номер: @Model.InvoiceNumber</p>
+        <p>Дата на фактура: @Model.InvoiceDate</p>
+    </div>
+
+    <div class="col-lg-6 col-sm-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Отчетна стойност</th>
+                    <th scope="col">Дата на придобиване</th>
+                    <th scope="col">Дата на отписване</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+
+                @foreach (var asset in Model.Assets)
+                {
+                    <tr>
+                        <th scope="row"></th>
+                        <td>@asset.Description</td>
+                        <td>@asset.ReportValue</td>
+                        <td>@asset.AssetAquired.ToShortDateString()</td>
+                        @{
+                            if (asset.AssetDisposed == null)
+                            {
+                                <td>няма</td>
+                            }
+                            else
+                            {
+                                <td>@asset.AssetDisposed.ToString()</td>
+                            }
+                        }
+                        <td>
+                            <span style="float:left">
+                                <a class="nav-link btn-warning" asp-area="" asp-controller="Assets" asp-action="AssetDetails" asp-route-id="@asset.AssetId">Преглед</a>
+                            </span>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
