@@ -1,0 +1,110 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Beneficiaries;
+
+@model AllBeneficiariesViewModel
+
+@{
+    ViewBag.Title = "Контрагенти";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="row">
+    <div class="col-lg-3 col-md-6 align-items-baseline">
+        <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+            Търсене<br />
+            <div>
+                <div>
+                    <label asp-for="NameFilter" class="form-label">Име: </label>
+                    <input type="text" asp-for="NameFilter" class="form-control" value="@Model.NameFilter" />
+                    <span asp-validation-for="NameFilter" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="IdentifierFilter" class="form-label">Булстат: </label>
+                    <input type="number" asp-for="IdentifierFilter" class="form-control" value="@Model.IdentifierFilter" />
+                    <span asp-validation-for="IdentifierFilter" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="AddressFilter" class="form-label">Адрес: </label>
+                    <input type="text" asp-for="AddressFilter" class="form-control" value="@Model.AddressFilter" />
+                    <span asp-validation-for="AddressFilter" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="BankAccountFilter" class="form-label">Банкова сметка: </label>
+                    <input type="text" asp-for="BankAccountFilter" class="form-control" value="@Model.BankAccountFilter" />
+                    <span asp-validation-for="BankAccountFilter" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
+                    <select asp-for="SortAttribute" class="form-control" aria-required="true">
+                        <option value="0">Име на контрагент</option>
+                        <option value="1">Булстат</option>
+                        <option value="2">Адрес</option>
+                        <option value="3">Банкова сметка</option>
+                    </select>
+                    <span asp-validation-for="SortAttribute" class="text-danger"></span>
+                </div>
+                <div>
+                    <label class="form-label-add-edit"></label>
+                    <select asp-for="SortBy" class="form-control" aria-required="true">
+                        <option value="0">Възходящ ред</option>
+                        <option value="1">Низходящ ред</option>
+                    </select>
+                    <span asp-validation-for="SortBy" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div>
+                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Beneficiaries" asp-action="Info">
+            </div>
+            <div>
+                <span style="float:left">
+                    <a class="btn btn-success" asp-area="" asp-controller="Beneficiaries" asp-action="Add">Добави нов контрагент</a>
+                </span>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-lg-9 col-md-6">
+        <h4 class="text-center">Контрагенти</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Булстат</th>
+                    <th scope="col">Адрес</th>
+                    <th scope="col">Банкова сметка</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+
+                @foreach (var beneficiary in Model.Beneficiaries)
+                {
+                    <tr>
+                        <th scope="row"></th>
+                        <td>@beneficiary.Name</td>
+                        <td>@beneficiary.Identifier</td>
+                        <td>@beneficiary.Address</td>
+                        <td>@beneficiary.BankAccount</td>
+                        <td>
+                            <span style="float:left">
+                                <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.BeneficiaryId">Промяна</a>
+                            </span>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
