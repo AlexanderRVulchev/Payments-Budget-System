@@ -1,9 +1,9 @@
-﻿@using PaymentsBudgetSystem.Core.Models.Beneficiaries;
+﻿@using PaymentsBudgetSystem.Core.Models.Assets;
 
-@model AllBeneficiariesViewModel
+@model AllAssetsViewModel
 
 @{
-    ViewBag.Title = "Контрагенти";
+    ViewBag.Title = "Активи";
 }
 
 
@@ -12,38 +12,51 @@
 
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
+
 <div class="row">
     <div class="col-lg-3 col-md-6 align-items-baseline">
-        <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+        <form class="input-group-sm" method="post" asp-area="" asp-controller="Assets" asp-action="Info">
             Търсене<br />
             <div>
+                <div class="row">
+                    <div class="col-6">
+                        <label asp-for="InfoMonth" class="form-label">Месец: </label>
+                        <select asp-for="InfoMonth" class="form-control" aria-required="true">
+                            <option value="1">Януари</option>
+                            <option value="2">Февруари</option>
+                            <option value="3">Март</option>
+                            <option value="4">Април</option>
+                            <option value="5">Май</option>
+                            <option value="6">Юни</option>
+                            <option value="7">Юли</option>
+                            <option value="8">Август</option>
+                            <option value="9">Септември</option>
+                            <option value="10">Октомври</option>
+                            <option value="11">Ноември</option>
+                            <option value="12">Декември</option>
+                        </select>
+                        <span asp-validation-for="InfoMonth" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="InfoYear" class="form-label">Година: </label>
+                        <input type="text" asp-for="InfoYear" class="form-control" value="@Model.InfoYear" />
+                        <span asp-validation-for="InfoYear" class="text-danger"></span>
+                    </div>
+                </div>
                 <div>
                     <label asp-for="NameFilter" class="form-label">Име: </label>
                     <input type="text" asp-for="NameFilter" class="form-control" value="@Model.NameFilter" />
                     <span asp-validation-for="NameFilter" class="text-danger"></span>
                 </div>
-                <div>
-                    <label asp-for="IdentifierFilter" class="form-label">Булстат: </label>
-                    <input type="number" asp-for="IdentifierFilter" class="form-control" value="@Model.IdentifierFilter" />
-                    <span asp-validation-for="IdentifierFilter" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="AddressFilter" class="form-label">Адрес: </label>
-                    <input type="text" asp-for="AddressFilter" class="form-control" value="@Model.AddressFilter" />
-                    <span asp-validation-for="AddressFilter" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="BankAccountFilter" class="form-label">Банкова сметка: </label>
-                    <input type="text" asp-for="BankAccountFilter" class="form-control" value="@Model.BankAccountFilter" />
-                    <span asp-validation-for="BankAccountFilter" class="text-danger"></span>
-                </div>
+                
                 <div>
                     <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
                     <select asp-for="SortAttribute" class="form-control" aria-required="true">
-                        <option value="0">Име на контрагент</option>
-                        <option value="1">Булстат</option>
-                        <option value="2">Адрес</option>
-                        <option value="3">Банкова сметка</option>
+                        <option value="0">Име</option>
+                        <option value="1">Отчетна стойност</option>
+                        <option value="2">Балансова стойност</option>
+                        <option value="3">Начислена амортизация</option>
+                        <option value="4">Дата на придобиване</option>
                     </select>
                     <span asp-validation-for="SortAttribute" class="text-danger"></span>
                 </div>
@@ -58,42 +71,47 @@
             </div>
 
             <div>
-                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Beneficiaries" asp-action="Info">
+                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Assets" asp-action="Info">
             </div>
             <div>
                 <span style="float:left">
-                    <a class="btn btn-success" asp-area="" asp-controller="Beneficiaries" asp-action="Add">Добави нов контрагент</a>
+                    <a class="btn btn-success" asp-area="" asp-controller="Assets" asp-action="Add">Придобиване на актив без плащане</a>
                 </span>
             </div>
         </form>
 
     </div>
     <div class="col-lg-9 col-md-6">
-        <h4 class="text-center">Контрагенти</h4>
+        <h4 class="text-center">Активи</h4>
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col"></th>
                     <th scope="col">Име</th>
-                    <th scope="col">Булстат</th>
-                    <th scope="col">Адрес</th>
-                    <th scope="col">Банкова сметка</th>
+                    <th scope="col">Отчетна стойност</th>
+                    <th scope="col">Балансова стойност</th>
+                    <th scope="col">Амортизация</th>
+                    <th scope="col">Дата на придобиване</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
 
-                @foreach (var beneficiary in Model.Beneficiaries)
+                @foreach (var asset in Model.Assets)
                 {
                     <tr>
                         <th scope="row"></th>
-                        <td>@beneficiary.Name</td>
-                        <td>@beneficiary.Identifier</td>
-                        <td>@beneficiary.Address</td>
-                        <td>@beneficiary.BankAccount</td>
+                        <td>@asset.Name</td>
+                        <td>@asset.ReportValue.ToString("n")</td>
+                        <td>@asset.BalanceValue.ToString("n")</td>
+                        <td>@asset.Amortization.ToString("n")</td>
+                        <td>@asset.DateAquired.ToShortDateString()</td>
                         <td>
                             <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.BeneficiaryId">Промяна</a>
+                                <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Преглед на плащане</a>
+                            </span>
+                            <span style="float:left">
+                                <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="AssetDetails" asp-route-id="@asset.AssetId">Преглед на актива</a>
                             </span>
                         </td>
                     </tr>

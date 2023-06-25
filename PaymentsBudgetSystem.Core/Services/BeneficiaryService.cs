@@ -7,7 +7,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Enums;
     using Data;
     using Data.Entities;
-
+    using PaymentsBudgetSystem.Core.Helpers;
     using static Common.ExceptionMessages.Beneficiary;
 
     public class BeneficiaryService : IBeneficiaryService
@@ -71,63 +71,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 .Where(b => b.UserId == userId)
                 .AsQueryable();
 
-            if (model.IdentifierFilter != null)
-            {
-                beneficiaries = beneficiaries
-                    .Where(b => b.Identifier.Contains(model.IdentifierFilter))
-                    .AsQueryable();
-            }
-            if (model.NameFilter != null)
-            {
-                beneficiaries = beneficiaries
-                    .Where(b => b.Name.Contains(model.NameFilter))
-                    .AsQueryable();
-            }
-            if (model.AddressFilter != null)
-            {
-                beneficiaries = beneficiaries
-                    .Where(b => b.Address != null
-                            && b.Address.Contains(model.AddressFilter))
-                    .AsQueryable();
-            }
-            if (model.BankAccountFilter != null)
-            {
-                beneficiaries = beneficiaries
-                    .Where(b => b.BankAccount.Contains(model.BankAccountFilter))
-                    .AsQueryable();
-            }
-
-
-            if (model.SortBy == SortBy.Ascending)
-            {
-                switch (model.SortAttribute)
-                {
-                    case BeneficiarySort.Name:
-                        beneficiaries = beneficiaries.OrderBy(b => b.Name); break;
-                    case BeneficiarySort.Identifier:
-                        beneficiaries = beneficiaries.OrderBy(b => b.Identifier); break;
-                    case BeneficiarySort.Address:
-                        beneficiaries = beneficiaries.OrderBy(b => b.Address); break;
-                    case BeneficiarySort.BankAccount:
-                        beneficiaries = beneficiaries.OrderBy(b => b.BankAccount); break;
-                    default: break;
-                }
-            }
-            else
-            {
-                switch (model.SortAttribute)
-                {
-                    case BeneficiarySort.Name:
-                        beneficiaries = beneficiaries.OrderByDescending(b => b.Name); break;
-                    case BeneficiarySort.Identifier:
-                        beneficiaries = beneficiaries.OrderByDescending(b => b.Identifier); break;
-                    case BeneficiarySort.Address:
-                        beneficiaries = beneficiaries.OrderByDescending(b => b.Address); break;
-                    case BeneficiarySort.BankAccount:
-                        beneficiaries = beneficiaries.OrderByDescending(b => b.BankAccount); break;
-                    default: break;
-                }
-            }
+            beneficiaries = Sorter.SortBeneficiaries(beneficiaries, model);
 
             model.Beneficiaries = await beneficiaries
                 .Select(b => new BeneficiaryViewModel

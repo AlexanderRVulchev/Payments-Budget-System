@@ -5,6 +5,6 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
     public interface IAssetService
     {
-        Task<List<AssetInfoViewModel>> GetAllAssetsAsync(string userId, int year, int month);
+        Task<AllAssetsViewModel> GetAllAssetsAsync(string userId, AllAssetsViewModel model);        
     }
 }

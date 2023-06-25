@@ -1,12 +1,14 @@
-﻿namespace PaymentsBudgetSystem.Core.Services
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
     using Data;
-    using Microsoft.EntityFrameworkCore;
     using Models;
     using Models.Assets;
     using Models.Enums;
-    using PaymentsBudgetSystem.Data.Entities.Enums;
+    using Data.Entities.Enums;
+    using PaymentsBudgetSystem.Core.Helpers;
 
     public class AssetService : IAssetService
     {
@@ -17,18 +19,8 @@
             context = _context;
         }
 
-        public async Task<List<AssetInfoViewModel>> GetAllAssetsAsync(string userId, int year, int month)
+        public async Task<AllAssetsViewModel> GetAllAssetsAsync(string userId, AllAssetsViewModel model)
         {
-            var settings = await context
-                .GlobalSettings
-                .Select(gs => new GlobalSettingDataModel
-                {
-                    Id = (GlobalSetting)gs.Id,
-                    SettingName = gs.SettingName,
-                    SettingValue = gs.SettingValue
-                })
-                .ToListAsync();
-
             var typeTexts = new Dictionary<int, string>
             {
                 { 9, "Стопански инвентар" },
@@ -39,8 +31,9 @@
             var assets = await context
                 .Assets
                 .Where(a => a.UserId == userId &&
-                    (a.DateAquired.Year < year ||
-                    a.DateAquired.Year == year && a.DateAquired.Month <= month))
+                    (a.DateAquired.Year < model.InfoYear ||
+                    a.DateAquired.Year == model.InfoYear && a.DateAquired.Month <= model.InfoMonth))
+                .Where(a => a.Description.Contains(model.NameFilter ?? String.Empty))
                 .Select(a => new AssetInfoViewModel
                 {
                     AssetId = a.Id,
@@ -54,40 +47,24 @@
                 })
                 .ToListAsync();
 
+            var settings = await context
+                 .GlobalSettings
+                 .Select(gs => new GlobalSettingDataModel
+                 {
+                     Id = (GlobalSetting)gs.Id,
+                     SettingName = gs.SettingName,
+                     SettingValue = gs.SettingValue
+                 })
+                 .ToListAsync();
+
             foreach (var asset in assets)
             {
-                int numberOfMonthsSinceAquisition = (year - asset.DateAquired.Year) * 12 + (month - asset.DateAquired.Month);
-                int totalLifeOfAssetInMonths = default;
-                decimal residualValuePart = default;
-
-                if (asset.Type == ParagraphType.UpkeepLongTermAssets5100)
-                {
-                    residualValuePart = settings.First(s => s.Id == GlobalSetting.UpkeepResidualPart).SettingValue;
-                    totalLifeOfAssetInMonths = (int)settings.First(s => s.Id == GlobalSetting.UpkeepLife).SettingValue;
-                }
-                else if (asset.Type == ParagraphType.AquisitionLongTermAssets5200)
-                {
-                    residualValuePart = settings.First(s => s.Id == GlobalSetting.TangibleAssetResidualPart).SettingValue;
-                    totalLifeOfAssetInMonths = (int)settings.First(s => s.Id == GlobalSetting.TangibleAssetLife).SettingValue;
-                }
-                else if (asset.Type == ParagraphType.AquisitionIntangibleAssets5300)
-                {
-                    residualValuePart = settings.First(s => s.Id == GlobalSetting.IntangibleAssetResidualPart).SettingValue;
-                    totalLifeOfAssetInMonths = (int)settings.First(s => s.Id == GlobalSetting.IntangibleAssetLife).SettingValue;
-                }
-
-                decimal assetResidualValue = residualValuePart * asset.ReportValue;
-                decimal totalAmortizationQuota = asset.ReportValue - assetResidualValue;
-                decimal amortizationPerMonth = totalAmortizationQuota / totalLifeOfAssetInMonths;
-                decimal assetAmortization = amortizationPerMonth * numberOfMonthsSinceAquisition;
-                decimal assetBalanceValue = asset.ReportValue - assetAmortization;
-
-                asset.ResidualValue = assetResidualValue;
-                asset.BalanceValue = assetBalanceValue;
-                asset.Amortization = assetAmortization;
+                Calculator.CalculateAssetDataByYearAndMonth(model.InfoYear, model.InfoMonth, asset, settings);               
             }
 
-            return assets;
+            model.Assets = Sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
+
+            return model;
         }
     }
 }
