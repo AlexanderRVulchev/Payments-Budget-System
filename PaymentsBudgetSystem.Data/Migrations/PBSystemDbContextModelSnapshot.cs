@@ -350,6 +350,44 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GlobalSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            SettingName = "Стопански инвентар - полезен живот в месеци",
+                            SettingValue = 180m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            SettingName = "Стопански инвентар - процент остатъчна стойност",
+                            SettingValue = 0.1m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            SettingName = "Техника и оборудване - полезен живот в месеци",
+                            SettingValue = 60m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            SettingName = "Техника и оборудване - процент остатъчна стойност",
+                            SettingValue = 0.15m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            SettingName = "Нематериални активи - полезен живот в месеци",
+                            SettingValue = 12m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            SettingName = "Нематериални активи - процент остатъчна стойност",
+                            SettingValue = 0m
+                        });
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.IndividualBudget", b =>

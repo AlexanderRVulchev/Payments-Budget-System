@@ -5,6 +5,7 @@ namespace PaymentsBudgetSystem.Data
 {
     using Data.Entities;
     using Microsoft.AspNetCore.Identity;
+    using PaymentsBudgetSystem.Data.Configuration;
 
     public class PBSystemDbContext : IdentityDbContext<User>
     {
@@ -21,7 +22,7 @@ namespace PaymentsBudgetSystem.Data
 
             builder
                 .Entity<CashPaymentDetails>()
-                .HasOne(c => c.Payment)                
+                .HasOne(c => c.Payment)
                 .WithOne(p => p.CashDetails)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -51,7 +52,7 @@ namespace PaymentsBudgetSystem.Data
                 .HasForeignKey(a => a.PaymentAssetDetailsId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
+            builder.ApplyConfiguration(new GlobalSettingsConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -59,27 +60,27 @@ namespace PaymentsBudgetSystem.Data
         public DbSet<Asset> Assets { get; set; } = null!;
 
         public DbSet<Beneficiary> Beneficiaries { get; set; } = null!;
-        
+
         public DbSet<CashPaymentDetails> CashPaymentDetails { get; set; } = null!;
-        
+
         public DbSet<ConsolidatedBudget> ConsolidatedBudgets { get; set; } = null!;
-        
+
         public DbSet<Employee> Employees { get; set; } = null!;
-        
+
         public DbSet<GlobalSetting> GlobalSettings { get; set; } = null!;
-        
+
         public DbSet<IndividualBudget> IndividualBudgets { get; set; } = null!;
-        
+
         public DbSet<Payment> Payments { get; set; } = null!;
-        
+
         public DbSet<PaymentAssetsDetails> PaymentAssetsDetails { get; set; } = null!;
-        
+
         public DbSet<PaymentSalaryDetails> PaymentSalariesDetails { get; set; } = null!;
-        
+
         public DbSet<PaymentSupportDetails> PaymentSupportDetails { get; set; } = null!;
-        
+
         public DbSet<Report> Reports { get; set; } = null!;
-        
+
         public DbSet<UserDependancy> UsersDependancies { get; set; } = null!;
     }
 }

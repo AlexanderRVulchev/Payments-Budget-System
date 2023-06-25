@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentsBudgetSystem.Data.Migrations
 {
-    public partial class AlteredAssetsTable : Migration
+    public partial class SeededGlobalSettings : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -468,6 +468,19 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         column: x => x.PaymentAssetDetailsId,
                         principalTable: "PaymentAssetsDetails",
                         principalColumn: "AssetPaymentId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "GlobalSettings",
+                columns: new[] { "Id", "SettingName", "SettingValue" },
+                values: new object[,]
+                {
+                    { 1, "Стопански инвентар - полезен живот в месеци", 180m },
+                    { 2, "Стопански инвентар - процент остатъчна стойност", 0.1m },
+                    { 3, "Техника и оборудване - полезен живот в месеци", 60m },
+                    { 4, "Техника и оборудване - процент остатъчна стойност", 0.15m },
+                    { 5, "Нематериални активи - полезен живот в месеци", 12m },
+                    { 6, "Нематериални активи - процент остатъчна стойност", 0m }
                 });
 
             migrationBuilder.CreateIndex(
