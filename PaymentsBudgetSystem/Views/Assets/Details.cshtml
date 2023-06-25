@@ -1,0 +1,94 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Assets
+@using PaymentsBudgetSystem.Data.Entities.Enums
+
+@model AssetDetailsViewModel
+
+@{
+    ViewBag.Title = "Детайли за актив";
+}
+
+
+<h2 class="text-center text-success">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="row">
+    <div class="pbs-box col-lg-3 col-sm-12">
+        <p>Име на актива: @Model.Name</p>
+        <p>Отчетна стойност: @Model.ReportValue</p>
+        <p>
+            Закупен от контрагент: @{
+                string name = @Model.BeneficiaryName ??= "n/a";
+            }
+            @name
+        </p>
+        <p>Дата на придобиване: @Model.DateAquired</p>
+
+        @{
+            if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
+            {
+                <p>Вид актив: Стопански инвентар</p>
+            }
+            else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
+            {
+                <p>Вид актив: Техника / оборудване</p>
+            }
+            else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
+            {
+                <p>Вид актив: Нематериален дълготраен актив</p>
+            }
+        }
+
+        <form asp-action="Details" method="post">
+            <div class="row align-items-center">
+                <div class="col-3">Година: </div>
+                <div class="col-4">
+                    <input type="number" asp-for="@Model.Year" class="form-control" aria-required="true">
+                    <span asp-validation-for="@Model.Year" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="@Model.AssetId" class="form-control" value="@Model.AssetId" />
+                <div class="col-4">
+                    <input class="btn btn-success fw-bold" type="submit" value="Приложи" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-8 col-sm-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Месец</th>
+                    <th scope="col">Отчетна стойност</th>
+                    <th scope="col">Балансова стойност</th>
+                    <th scope="col">Амортизация</th>
+                    <th scope="col">Остатъчна стойност</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @{
+                    int currentMonth = 1;
+
+                    @foreach (var monthlyStatus in Model.AssetMonthlyStatus)
+                    {
+
+                        <tr>
+                            <th scope="row"></th>
+                            <td>@currentMonth</td>
+                            <td>@monthlyStatus.ReportValue.ToString("n")</td>
+                            <td>@monthlyStatus.BalanceValue.ToString("n")</td>
+                            <td>@monthlyStatus.Amortization.ToString("n")</td>
+                            <td>@monthlyStatus.ResidualValue.ToString("n")</td>
+                        </tr>
+                        currentMonth++;
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

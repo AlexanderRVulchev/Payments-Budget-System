@@ -38,7 +38,7 @@ namespace PaymentsBudgetSystem.Controllers
             };
 
             model = await assetService.GetAllAssetsAsync(User.Id(), model);
-            
+
             return View(model);
         }
 
@@ -55,9 +55,24 @@ namespace PaymentsBudgetSystem.Controllers
             });
         }
 
-        public async Task<IActionResult> AssetDetails(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id, int year)
         {
-            return View();
+            try
+            {
+                var model = await assetService.GetAssetDetailsAsync(User.Id(), id, year);
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Details(AssetDetailsViewModel model)
+        {
+            return RedirectToAction(nameof(Details), new { id = model.AssetId, year = model.Year });
         }
     }
 }

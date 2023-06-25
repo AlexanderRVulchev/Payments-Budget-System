@@ -85,58 +85,6 @@ namespace PaymentsBudgetSystem.Core.Services
                 })
                 .AsQueryable();
 
-            //if (model.FirstName != null)
-            //{
-            //    employees = employees.Where(e => e.FirstName.Contains(model.FirstName));
-            //}
-            //if (model.LastName != null)
-            //{
-            //    employees = employees.Where(e => e.LastName.Contains(model.LastName));
-            //}
-            //if (model.Egn != null)
-            //{
-            //    employees = employees.Where(e => e.Egn.Contains(model.Egn));
-            //}
-
-            //if (model.SortBy == SortBy.Ascending)
-            //{
-            //    switch (model.SortAttribute)
-            //    {
-            //        case EmployeeSort.FirstName:
-            //            employees = employees.OrderBy(e => e.FirstName); break;
-            //        case EmployeeSort.LastName:
-            //            employees = employees.OrderBy(e => e.LastName); break;
-            //        case EmployeeSort.Salary:
-            //            employees = employees.OrderBy(e => e.MonthlySalary); break;
-            //        case EmployeeSort.Egn:
-            //            employees = employees.OrderBy(e => e.Egn); break;
-            //        case EmployeeSort.DateEmployed:
-            //            employees = employees.OrderBy(e => e.DateEmployed); break;
-            //        case EmployeeSort.TotalIncome:
-            //            employees = employees.OrderBy(e => e.TotalIncome); break;
-            //        default: break;
-            //    }
-            //}
-            //else
-            //{
-            //    switch (model.SortAttribute)
-            //    {
-            //        case EmployeeSort.FirstName:
-            //            employees = employees.OrderByDescending(e => e.FirstName); break;
-            //        case EmployeeSort.LastName:
-            //            employees = employees.OrderByDescending(e => e.LastName); break;
-            //        case EmployeeSort.Salary:
-            //            employees = employees.OrderByDescending(e => e.MonthlySalary); break;
-            //        case EmployeeSort.Egn:
-            //            employees = employees.OrderByDescending(e => e.Egn); break;
-            //        case EmployeeSort.DateEmployed:
-            //            employees = employees.OrderByDescending(e => e.DateEmployed); break;
-            //        case EmployeeSort.TotalIncome:
-            //            employees = employees.OrderByDescending(e => e.TotalIncome); break;
-            //        default: break;
-            //    }
-            //}
-
             employees = Sorter.SortEmployees(employees, model);
 
             model.Employees = await employees.ToListAsync();

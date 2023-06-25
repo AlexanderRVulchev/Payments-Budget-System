@@ -7,8 +7,11 @@ namespace PaymentsBudgetSystem.Core.Services
     using Models;
     using Models.Assets;
     using Models.Enums;
-    using Data.Entities.Enums;
-    using PaymentsBudgetSystem.Core.Helpers;
+    using Core.Helpers;
+    using Data.Entities;
+
+    using static Common.ExceptionMessages.Asset;
+    using GlobalSetting = Models.Enums.GlobalSetting;
 
     public class AssetService : IAssetService
     {
@@ -59,12 +62,74 @@ namespace PaymentsBudgetSystem.Core.Services
 
             foreach (var asset in assets)
             {
-                Calculator.CalculateAssetDataByYearAndMonth(model.InfoYear, model.InfoMonth, asset, settings);               
+                Calculator.CalculateAssetDataByYearAndMonth(model.InfoYear, model.InfoMonth, asset, settings);
             }
 
             model.Assets = Sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
 
             return model;
+        }
+
+        public async Task<AssetDetailsViewModel> GetAssetDetailsAsync(string userId, Guid id, int year)
+        {
+            var entity = await context
+                .Assets
+                .Where(a => a.Id == id)
+                .Include(a => a.PaymentAssetsDetails)
+                .ThenInclude(pad => pad.Beneficiary)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new InvalidOperationException(InvalidAsset);
+            }
+            if (entity.UserId != userId)
+            {
+                throw new InvalidOperationException(AssetAccessDenied);
+            }
+
+            var settings = await context
+                 .GlobalSettings
+                 .Select(gs => new GlobalSettingDataModel
+                 {
+                     Id = (GlobalSetting)gs.Id,
+                     SettingName = gs.SettingName,
+                     SettingValue = gs.SettingValue
+                 })
+                 .ToListAsync();
+
+            var monthlyInfoModels = new List<AssetInfoViewModel>();
+
+            for (int month = 1; month <= 12; month++)
+            {
+                var assetInfoModel = new AssetInfoViewModel
+                {
+                    DateAquired = entity.DateAquired,
+                    ReportValue = entity.ReportValue,
+                    Type = entity.Type
+                };
+
+                if (entity.DateAquired.Year < year ||
+                   (entity.DateAquired.Year == year && entity.DateAquired.Month <= month))
+                {
+                    assetInfoModel = Calculator.CalculateAssetDataByYearAndMonth(year, month, assetInfoModel, settings);
+                }
+
+                monthlyInfoModels.Add(assetInfoModel);
+            }
+
+            return new AssetDetailsViewModel
+            {
+                AssetId = entity.Id,
+                BeneficiaryId = entity.PaymentAssetsDetails.BeneficiaryId,
+                BeneficiaryName = entity.PaymentAssetsDetails.Beneficiary.Name,
+                DateAquired = entity.DateAquired,
+                Name = entity.Description,
+                ParagraphType = entity.Type,
+                ReportValue = entity.ReportValue,
+                Year = year,
+                AssetMonthlyStatus = monthlyInfoModels
+            };
         }
     }
 }

@@ -73,11 +73,7 @@
             <div>
                 <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Assets" asp-action="Info">
             </div>
-            <div>
-                <span style="float:left">
-                    <a class="btn btn-success" asp-area="" asp-controller="Assets" asp-action="Add">Придобиване на актив без плащане</a>
-                </span>
-            </div>
+
         </form>
 
     </div>
@@ -111,7 +107,7 @@
                                 <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Преглед на плащане</a>
                             </span>
                             <span style="float:left">
-                                <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="AssetDetails" asp-route-id="@asset.AssetId">Преглед на актива</a>
+                                <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Преглед на актива</a>
                             </span>
                         </td>
                     </tr>

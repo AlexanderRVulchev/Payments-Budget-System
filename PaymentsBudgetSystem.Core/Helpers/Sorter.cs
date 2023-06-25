@@ -1,57 +1,13 @@
-﻿
-namespace PaymentsBudgetSystem.Core.Helpers
+﻿namespace PaymentsBudgetSystem.Core.Helpers
 {
     using Models.Assets;
     using Models.Enums;
-    using PaymentsBudgetSystem.Core.Models.Beneficiaries;
-    using PaymentsBudgetSystem.Core.Models.Employees;
-    using PaymentsBudgetSystem.Data.Entities;
+    using Models.Beneficiaries;
+    using Models.Employees;
+    using Data.Entities;
 
     public static class Sorter
-    {
-        public static List<AssetInfoViewModel> SortAssets(
-            List<AssetInfoViewModel> assets,
-            AssetSort attribute,
-            SortBy sortBy)
-        {
-            if (sortBy == SortBy.Ascending)
-            {
-                switch (attribute)
-                {
-                    case AssetSort.Name:
-                        assets = assets.OrderBy(a => a.Name).ToList(); break;
-                    case AssetSort.AmortizationValue:
-                        assets = assets.OrderBy(a => a.Amortization).ToList(); break;
-                    case AssetSort.DateAquired:
-                        assets = assets.OrderBy(a => a.DateAquired).ToList(); break;
-                    case AssetSort.ReportValue:
-                        assets = assets.OrderBy(a => a.ReportValue).ToList(); break;
-                    case AssetSort.BalanceValue:
-                        assets = assets.OrderBy(a => a.BalanceValue).ToList(); break;
-                    default: break;
-                }
-            }
-            else
-            {
-                switch (attribute)
-                {
-                    case AssetSort.Name:
-                        assets = assets.OrderByDescending(a => a.Name).ToList(); break;
-                    case AssetSort.AmortizationValue:
-                        assets = assets.OrderByDescending(a => a.Amortization).ToList(); break;
-                    case AssetSort.DateAquired:
-                        assets = assets.OrderByDescending(a => a.DateAquired).ToList(); break;
-                    case AssetSort.ReportValue:
-                        assets = assets.OrderByDescending(a => a.ReportValue).ToList(); break;
-                    case AssetSort.BalanceValue:
-                        assets = assets.OrderByDescending(a => a.BalanceValue).ToList(); break;
-                    default: break;
-                }
-            }
-
-            return assets;
-        }
-
+    {      
         public static IQueryable<Beneficiary> SortBeneficiaries(
             IQueryable<Beneficiary> beneficiaries,
             AllBeneficiariesViewModel model)
@@ -174,6 +130,49 @@ namespace PaymentsBudgetSystem.Core.Helpers
             }
 
             return employees;
+        }
+
+        public static List<AssetInfoViewModel> SortAssets(
+          List<AssetInfoViewModel> assets,
+          AssetSort attribute,
+          SortBy sortBy)
+        {
+            if (sortBy == SortBy.Ascending)
+            {
+                switch (attribute)
+                {
+                    case AssetSort.Name:
+                        assets = assets.OrderBy(a => a.Name).ToList(); break;
+                    case AssetSort.AmortizationValue:
+                        assets = assets.OrderBy(a => a.Amortization).ToList(); break;
+                    case AssetSort.DateAquired:
+                        assets = assets.OrderBy(a => a.DateAquired).ToList(); break;
+                    case AssetSort.ReportValue:
+                        assets = assets.OrderBy(a => a.ReportValue).ToList(); break;
+                    case AssetSort.BalanceValue:
+                        assets = assets.OrderBy(a => a.BalanceValue).ToList(); break;
+                    default: break;
+                }
+            }
+            else
+            {
+                switch (attribute)
+                {
+                    case AssetSort.Name:
+                        assets = assets.OrderByDescending(a => a.Name).ToList(); break;
+                    case AssetSort.AmortizationValue:
+                        assets = assets.OrderByDescending(a => a.Amortization).ToList(); break;
+                    case AssetSort.DateAquired:
+                        assets = assets.OrderByDescending(a => a.DateAquired).ToList(); break;
+                    case AssetSort.ReportValue:
+                        assets = assets.OrderByDescending(a => a.ReportValue).ToList(); break;
+                    case AssetSort.BalanceValue:
+                        assets = assets.OrderByDescending(a => a.BalanceValue).ToList(); break;
+                    default: break;
+                }
+            }
+
+            return assets;
         }
     }
 }
