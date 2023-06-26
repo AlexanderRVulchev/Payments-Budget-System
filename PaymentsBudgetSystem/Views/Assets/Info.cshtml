@@ -104,10 +104,10 @@
                         <td>@asset.DateAquired.ToShortDateString()</td>
                         <td>
                             <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Преглед на плащане</a>
+                                <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Информация за плащане</a>
                             </span>
                             <span style="float:left">
-                                <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Преглед на актива</a>
+                                <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Детайли</a>
                             </span>
                         </td>
                     </tr>

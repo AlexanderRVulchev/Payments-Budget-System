@@ -73,6 +73,45 @@
                 <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
             </div>
         </form>
+
+        <h4>Начисляване на заплати</h4>
+
+        <form asp-controller="Gateway" asp-action="NewSalariesPayment" method="post">
+
+            <div>
+                <label asp-for="SalaryMonth" class="form-label-add-edit">Месец</label>
+                <select asp-for="SalaryMonth" class="form-control" aria-required="true">
+                    <option value="1">Януари</option>
+                    <option value="2">Февруари</option>
+                    <option value="3">Март</option>
+                    <option value="4">Април</option>
+                    <option value="5">Май</option>
+                    <option value="6">Юни</option>
+                    <option value="7">Юли</option>
+                    <option value="8">Август</option>
+                    <option value="9">Септември</option>
+                    <option value="10">Октомври</option>
+                    <option value="11">Ноември</option>
+                    <option value="12">Декември</option>                    
+                </select>
+                <span asp-validation-for="SalaryMonth" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SalaryYear" class="form-label-add-edit">Година</label>
+                <input asp-for="SalaryYear" class="form-control" aria-required="true" value="@DateTime.Now.Year" />
+                <span asp-validation-for="SalaryYear" class="text-danger"></span>
+            </div>
+
+            <div class="col-4 offset-4">
+                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+            </div>
+        </form>
+
+       
+
+       
+
     </div>
 
 </div>

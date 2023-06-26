@@ -38,6 +38,7 @@ namespace PaymentsBudgetSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PBSystemDbContext>();
 
+            
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/User/Login";

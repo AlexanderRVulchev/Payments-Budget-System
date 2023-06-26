@@ -77,9 +77,13 @@ namespace PaymentsBudgetSystem.Core.Services
                     MonthlySalary = e.MonthlySalary,
                     Egn = e.Egn,
                     TotalIncome = e.SalaryDetails.Sum(sd =>
-                        sd.InsurancePension +
-                        sd.InsuranceHealth +
-                        sd.InsuranceAdditional +
+                        sd.InsurancePensionEmployer + 
+                        sd.InsurancePensionEmployee +
+                        sd.InsuranceHealthEmployer +
+                        sd.InsuranceHealthEmployee +
+                        sd.InsuranceAdditionalEmployer +
+                        sd.InsuranceAdditionalEmployee +
+                        sd.IncomeTax +
                         sd.NetSalaryJobContract +
                         sd.NetSalaryStateOfficial)
                 })

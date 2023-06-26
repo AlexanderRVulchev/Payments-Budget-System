@@ -11,8 +11,8 @@ namespace PaymentsBudgetSystem.Data.Configuration
             builder.HasData(SeedGlobalSettings());
         }
 
-        private List<GlobalSetting> SeedGlobalSettings()
-            => new List<GlobalSetting>()
+        private static List<GlobalSetting> SeedGlobalSettings()
+            => new()
             {
                 new GlobalSetting
                 {
@@ -50,8 +50,54 @@ namespace PaymentsBudgetSystem.Data.Configuration
                     SettingName = "Нематериални активи - процент остатъчна стойност",
                     SettingValue = 0
                 },
+                new GlobalSetting
+                {
+                    Id = 7,
+                    SettingName = "Фонд Пенсии - работодател",
+                    SettingValue = 0.1372m,
+                },
+                new GlobalSetting
+                {
+                    Id = 8,
+                    SettingName = "Фонд Пенсии - служител",
+                    SettingValue = 0.1058m
+                },
+                new GlobalSetting
+                {
+                    Id = 9,
+                    SettingName = "Здравно осигуряване - работодател",
+                    SettingValue = 0.048m
+                },
+                new GlobalSetting
+                {
+                    Id = 10,
+                    SettingName = "Здравно осигуряване - служител",
+                    SettingValue = 0.032m
+                },
+                new GlobalSetting
+                {
+                    Id = 11,
+                    SettingName = "Oсигуряване в УПФ - работодател",
+                    SettingValue = 0.028m
+                },
+                new GlobalSetting
+                {
+                    Id=12,
+                    SettingName = "Oсигуряване в УПФ - служител",
+                    SettingValue = 0.022m,
+                },
+                new GlobalSetting
+                {
+                    Id=13,
+                    SettingName = "Данък общ доход",
+                    SettingValue = 0.1m,
+                },
+                new GlobalSetting
+                {
+                    Id = 14,
+                    SettingName = "Минимална работна заплата",
+                    SettingValue = 780m
+                }
             };
-            
-        
     }
 }
