@@ -1,18 +1,19 @@
-﻿using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Core.Contracts;
+    using Core.Models.Assets;
+    using Core.Models.Beneficiaries;
     using Core.Models.Support;
     using Data;
     using Data.Entities;
     using Data.Entities.Enums;
-    using Core.Models.Beneficiaries;
+    using PaymentsBudgetSystem.Core.Helpers;
+    using PaymentsBudgetSystem.Core.Models.Salaries;
     using static Common.DataConstants.General;
     using static Common.ExceptionMessages.Payment;
-    using PaymentsBudgetSystem.Core.Models.Assets;
-    using Microsoft.IdentityModel.Tokens;
 
     public class PaymentService : IPaymentService
     {
@@ -114,6 +115,45 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.SaveChangesAsync();
 
             return supportPayment.Id;
+        }
+
+        public async Task<SalariesPaymentViewModel> CreatePayroll(string userId, int year, int month)
+        {
+            string firstDayOfTheMonthString = "01." + month.ToString() + "." + year.ToString() + " 00:00";
+
+            DateTime firstDayOfTheMonth = DateTime
+                .ParseExact(firstDayOfTheMonthString, "dd.MM.yyyy HH:hh", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+            DateTime lastDayOfTheMonth = firstDayOfTheMonth
+                .AddMonths(1)
+                - TimeSpan.FromSeconds(1);
+
+            var employees = await context
+                .Employees
+                .Where(e => e.UserId == userId)
+                .Where(e => e.DateEmployed < lastDayOfTheMonth)
+                .Where(e => e.DateLeft == null || e.DateLeft > firstDayOfTheMonth)
+                .Select(e => new EmployeeSalaryPaymentViewModel
+                {
+                    Id = e.Id,
+                    EmployeeName = e.FirstName + " " + e.LastName,
+                    DateEmployed = e.DateEmployed,
+                    DateLeft = e.DateLeft                    
+                })
+                .ToListAsync();
+
+            Calculator calculator = new();
+
+            foreach (var employee in employees)
+            {
+                //TODO: Implement method
+                calculator.CalculateEmployeeMonthlySalary(employee, firstDayOfTheMonth, lastDayOfTheMonth);
+            }
+
+            return new SalariesPaymentViewModel
+            {
+                //TODO: new calculation method
+            };
         }
 
         public async Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsById(string userId, Guid paymentId)

@@ -6,9 +6,9 @@
     using Models.Employees;
     using Data.Entities;
 
-    public static class Sorter
+    public class Sorter
     {      
-        public static IQueryable<Beneficiary> SortBeneficiaries(
+        public IQueryable<Beneficiary> SortBeneficiaries(
             IQueryable<Beneficiary> beneficiaries,
             AllBeneficiariesViewModel model)
         {
@@ -73,7 +73,7 @@
             return beneficiaries;
         }
 
-        public static IQueryable<EmployeeViewModel> SortEmployees(
+        public IQueryable<EmployeeViewModel> SortEmployees(
             IQueryable<EmployeeViewModel> employees,
             AllEmployeesViewModel model)
         {
@@ -132,7 +132,7 @@
             return employees;
         }
 
-        public static List<AssetInfoViewModel> SortAssets(
+        public List<AssetInfoViewModel> SortAssets(
           List<AssetInfoViewModel> assets,
           AssetSort attribute,
           SortBy sortBy)

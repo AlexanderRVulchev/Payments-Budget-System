@@ -16,6 +16,8 @@
 
         public const string InvalidYearError = "Годината трябва да бъде между {1} и {2}";
 
+        public const string InvalidMonthError = "Невалиден месец.";
+
         public const string DateIsInvalid = "Моля, въведете дата във формат дд.мм.гггг";
 
         public const string PaymentMoneyCannotBeZeroOrLess = "Стойността на плащането трябва да бъде най-малко 0.01 лв.";

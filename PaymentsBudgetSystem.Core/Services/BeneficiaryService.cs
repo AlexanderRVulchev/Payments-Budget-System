@@ -71,7 +71,9 @@ namespace PaymentsBudgetSystem.Core.Services
                 .Where(b => b.UserId == userId)
                 .AsQueryable();
 
-            beneficiaries = Sorter.SortBeneficiaries(beneficiaries, model);
+            Sorter sorter = new();
+
+            beneficiaries = sorter.SortBeneficiaries(beneficiaries, model);
 
             model.Beneficiaries = await beneficiaries
                 .Select(b => new BeneficiaryViewModel

@@ -4,10 +4,11 @@
     using Models.Assets;
     using Models.Enums;
     using Data.Entities.Enums;
+    using PaymentsBudgetSystem.Core.Models.Salaries;
 
-    public static class Calculator
+    public class Calculator
     {
-        public static AssetInfoViewModel CalculateAssetDataByYearAndMonth(
+        public AssetInfoViewModel CalculateAssetDataByYearAndMonth(
             int year,
             int month,
             AssetInfoViewModel asset,
@@ -53,5 +54,13 @@
 
             return asset;
         } 
+
+        public void CalculateEmployeeMonthlySalary(
+            EmployeeSalaryPaymentViewModel employee, 
+            DateTime fromDay,
+            DateTime toDay)
+        {
+
+        }
     }
 }

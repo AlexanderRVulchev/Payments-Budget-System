@@ -50,5 +50,15 @@ namespace PaymentsBudgetSystem.Controllers
 
             return RedirectToAction("Payment", "AssetPayment", new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
         }
+
+        public IActionResult NewSalariesPayment(ChoosePaymentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(ChoosePayment));
+            }
+
+            return RedirectToAction("Payment", "Salaries", new { year = model.SalaryYear, month = model.SalaryMonth });
+        }
     }
 }

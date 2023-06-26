@@ -60,12 +60,14 @@ namespace PaymentsBudgetSystem.Core.Services
                  })
                  .ToListAsync();
 
+            Calculator calculator = new();
             foreach (var asset in assets)
             {
-                Calculator.CalculateAssetDataByYearAndMonth(model.InfoYear, model.InfoMonth, asset, settings);
+                calculator.CalculateAssetDataByYearAndMonth(model.InfoYear, model.InfoMonth, asset, settings);
             }
 
-            model.Assets = Sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
+            Sorter sorter = new();
+            model.Assets = sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
 
             return model;
         }
@@ -109,10 +111,12 @@ namespace PaymentsBudgetSystem.Core.Services
                     Type = entity.Type
                 };
 
+                Calculator calculator = new();
+
                 if (entity.DateAquired.Year < year ||
                    (entity.DateAquired.Year == year && entity.DateAquired.Month <= month))
                 {
-                    assetInfoModel = Calculator.CalculateAssetDataByYearAndMonth(year, month, assetInfoModel, settings);
+                    assetInfoModel = calculator.CalculateAssetDataByYearAndMonth(year, month, assetInfoModel, settings);
                 }
 
                 monthlyInfoModels.Add(assetInfoModel);

@@ -89,7 +89,9 @@ namespace PaymentsBudgetSystem.Core.Services
                 })
                 .AsQueryable();
 
-            employees = Sorter.SortEmployees(employees, model);
+            Sorter sorter = new();
+
+            employees = sorter.SortEmployees(employees, model);
 
             model.Employees = await employees.ToListAsync();
 
