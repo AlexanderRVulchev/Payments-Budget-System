@@ -12,11 +12,10 @@
 
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
-
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <h4>Ново плащане за Издръжка</h4>
-        <form asp-controller="Gateway" asp-action="NewSupportPayment" method="post">
+        <form asp-controller="Gateway" asp-action="NewSupportPayment" method="post" >
 
             <div>
                 <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
@@ -38,6 +37,9 @@
                 </select>
                 <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
             </div>
+
+            <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
+            <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
 
             <div class="col-4 offset-4">
                 <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
@@ -69,6 +71,9 @@
                 <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
             </div>
 
+            <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
+            <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
+
             <div class="col-4 offset-4">
                 <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
             </div>
@@ -81,7 +86,7 @@
             <div>
                 <label asp-for="SalaryMonth" class="form-label-add-edit">Месец</label>
                 <select asp-for="SalaryMonth" class="form-control" aria-required="true">
-                    <option value="1">Януари</option>
+                    <option selected value="1">Януари</option>
                     <option value="2">Февруари</option>
                     <option value="3">Март</option>
                     <option value="4">Април</option>
@@ -106,15 +111,13 @@
             <div class="col-4 offset-4">
                 <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
             </div>
-        </form>
-
-       
-
-       
+        </form>             
 
     </div>
 
 </div>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

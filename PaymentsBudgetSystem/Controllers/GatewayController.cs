@@ -43,6 +43,7 @@ namespace PaymentsBudgetSystem.Controllers
             return RedirectToAction("Payment", "Support", new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
         }
 
+        [HttpPost]
         public IActionResult NewAssetPayment(ChoosePaymentViewModel model)
         {
             if (!ModelState.IsValid)
@@ -53,8 +54,9 @@ namespace PaymentsBudgetSystem.Controllers
             return RedirectToAction("Payment", "AssetPayment", new { id = model.SelectedBeneficiary, type = model.SelectedParagraph });
         }
 
+        [HttpPost]
         public IActionResult NewSalariesPayment(ChoosePaymentViewModel model)
-        {
+        {           
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(ChoosePayment));

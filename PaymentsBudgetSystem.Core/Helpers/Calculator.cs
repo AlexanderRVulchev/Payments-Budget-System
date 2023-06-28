@@ -61,7 +61,7 @@
             DateTime toDay,
             List<GlobalSettingDataModel> settings)
         {
-            int totalDays = (toDay - fromDay).Days;
+            int totalDays = (toDay - fromDay).Days + 1;
 
             if (employee.DateEmployed > fromDay)
             {
@@ -72,9 +72,9 @@
                 toDay = (DateTime)employee.DateLeft;
             }
 
-            int employeeWorkDays = (fromDay - toDay).Days;
+            int employeeWorkDays = (toDay - fromDay).Days + 1;
 
-            decimal grossSalary = employee.MonthlySalary * (employeeWorkDays / totalDays);
+            decimal grossSalary = employee.MonthlySalary * ((decimal)employeeWorkDays / (decimal)totalDays);
 
             if (employee.ContractType == ContractType.JobContract)
             {
@@ -92,13 +92,14 @@
                 decimal incomeTax = salaryAfterSocialSecurityDeductions * settings.First(s => s.Id == GlobalSetting.TaxRate).SettingValue;
                 decimal netSalary = salaryAfterSocialSecurityDeductions - incomeTax;
 
+                employee.IncomeTax = incomeTax;
                 employee.NetSalaryJobContract = netSalary;
             }
             else if (employee.ContractType == ContractType.StateOfficial)
             {
                 employee.InsurancePensionEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.InsurancePensionEmployer).SettingValue;
-                employee.InsuranceAdditionalEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.AdditionalInsuranceEmployer).SettingValue;
                 employee.InsuranceHealthEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.HealthInsuranceEmployer).SettingValue;
+                employee.InsuranceAdditionalEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.AdditionalInsuranceEmployer).SettingValue;
 
                 employee.InsurancePensionEmployer += grossSalary * settings.First(s => s.Id == GlobalSetting.InsurancePensionEmployee).SettingValue;
                 employee.InsuranceHealthEmployer += grossSalary * settings.First(s => s.Id == GlobalSetting.HealthInsuranceEmployee).SettingValue;
@@ -107,6 +108,7 @@
                 decimal incomeTax = grossSalary * settings.First(s => s.Id == GlobalSetting.TaxRate).SettingValue;
                 decimal netSalary = grossSalary - incomeTax;
 
+                employee.IncomeTax = incomeTax;
                 employee.NetSalaryStateOfficial = netSalary;
             }
         }

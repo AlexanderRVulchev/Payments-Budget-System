@@ -1,0 +1,92 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Salaries
+@using PaymentsBudgetSystem.Data.Entities.Enums
+
+@model SalariesPaymentViewModel
+
+@{
+    ViewBag.Title = "Начисляване на заплати";
+}
+
+
+<h2 class="text-center text-success">@ViewBag.Title</h2>
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<div class="col-lg-3 col-md-6 align-items-baseline">
+    <form class="input-group-sm" method="post" asp-area="" asp-controller="Assets" asp-action="Info">
+        Търсене<br />
+        <div>
+            <div class="row">
+                <div class="col-6">
+                    <label asp-for="Month" class="form-label">Месец: </label>
+                    <select asp-for="Month" class="form-control" aria-required="true">
+                        <option value="1">Януари</option>
+                        <option value="2">Февруари</option>
+                        <option value="3">Март</option>
+                        <option value="4">Април</option>
+                        <option value="5">Май</option>
+                        <option value="6">Юни</option>
+                        <option value="7">Юли</option>
+                        <option value="8">Август</option>
+                        <option value="9">Септември</option>
+                        <option value="10">Октомври</option>
+                        <option value="11">Ноември</option>
+                        <option value="12">Декември</option>
+                    </select>
+                    <span asp-validation-for="Month" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Year" class="form-label">Година: </label>
+                    <input type="text" asp-for="Year" class="form-control" value="@Model.Year" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div>
+                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Salaries" asp-action="Payment">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="col-lg-6 col-md-12 align-items-baseline">
+    <h4 class="text-black-50">Рекапитулация заплати за месец @Model.Month @Model.Year година:</h4>
+    <ul class="box-shadow">
+        <li> Фонд пенсии - работодател: @Model.TotalInsurancePensionEmployer.ToString("n")</li>
+        <li> Фонд пенсии - служител: @Model.TotalInsurancePensionEmployee.ToString("n")</li>
+        <li> Здравно осигуряване - работодател: @Model.TotalInsuranceHealthEmployer.ToString("n")</li>
+        <li> Здравно осигуряване - служител: @Model.TotalInsuranceHealthEmployee.ToString("n")</li>
+        <li> Осигуряване в УПФ - работодател: @Model.TotalInsuranceAdditionalEmployer.ToString("n")</li>
+        <li> Осигуряване в УПФ - служител: @Model.TotalInsuranceAdditionalEmployee.ToString("n")</li>
+        <li> Данък общ доход: @Model.TotalIncomeTax.ToString("n")</li>
+        <li> Чисти заплати служители - трудов договор: @Model.TotalNetSalaryJobContract.ToString("n")</li>
+        <li> Чисти заплати служители - държавни служители: @Model.TotalNetSalaryStateOfficial.ToString("n")</li>
+    </ul>
+        <h5 class="font-monospace"> ОБЩО: @Model.Amount.ToString("n")</h5>
+</div>
+
+<div class="row">
+    @foreach (var employee in Model.IndividualSalaries)
+    {
+        <div class="pbs-box col-lg-3 col-md-6 align-items-baseline">
+            <h4 class="text-black-50">@employee.EmployeeName</h4>
+            <ul class="box-shadow">
+                <li> Фонд пенсии - работодател: @employee.InsurancePensionEmployer.ToString("n")</li>
+                <li> Фонд пенсии - служител: @employee.InsurancePensionEmployee.ToString("n")</li>
+                <li> Здравно осигуряване - работодател: @employee.InsuranceHealthEmployer.ToString("n")</li>
+                <li> Здравно осигуряване - служител: @employee.InsuranceHealthEmployee.ToString("n")</li>
+                <li> Осигуряване в УПФ - работодател: @employee.InsuranceAdditionalEmployer.ToString("n")</li>
+                <li> Осигуряване в УПФ - служител: @employee.InsuranceAdditionalEmployee.ToString("n")</li>
+                <li> Данък общ доход: @employee.IncomeTax.ToString("n")</li>
+            </ul>
+            @if (employee.ContractType == ContractType.JobContract)
+            {
+                <h5 class="font-monospace"> Чиста сума: @employee.NetSalaryJobContract.ToString("n")</h5>
+            }
+            else
+            {
+                <h5 class="font-monospace"> Чиста сума: @employee.NetSalaryStateOfficial.ToString("n")</h5>
+            }
+        </div>
+    }
+</div>

@@ -28,7 +28,6 @@
     <Folder Include="Areas\Budget\Data\" />
     <Folder Include="Areas\Budget\Models\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Views\Salaries\" />
   </ItemGroup>
 
 </Project>

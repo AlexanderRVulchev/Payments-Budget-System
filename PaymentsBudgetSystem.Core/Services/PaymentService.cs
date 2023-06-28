@@ -125,7 +125,7 @@ namespace PaymentsBudgetSystem.Core.Services
             string firstDayOfTheMonthString = "01." + month.ToString() + "." + year.ToString() + " 00:00";
 
             DateTime firstDayOfTheMonth = DateTime
-                .ParseExact(firstDayOfTheMonthString, "dd.MM.yyyy HH:hh", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                .ParseExact(firstDayOfTheMonthString, "dd.M.yyyy HH:hh", CultureInfo.InvariantCulture, DateTimeStyles.None);
 
             DateTime lastDayOfTheMonth = firstDayOfTheMonth
                 .AddMonths(1)
