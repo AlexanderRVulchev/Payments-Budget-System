@@ -7,7 +7,7 @@ namespace PaymentsBudgetSystem.Extensions
 
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder SeedRoles(this IApplicationBuilder app)
+        public static async Task<IApplicationBuilder> SeedRoles(this IApplicationBuilder app)
         {
             using var scopedServices = app.ApplicationServices.CreateScope();
 
@@ -15,32 +15,49 @@ namespace PaymentsBudgetSystem.Extensions
 
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            
 
-            Task.Run(async () =>
+            //Task.Run(async () =>
+            //{
+            //    if (!await roleManager.RoleExistsAsync(AdminRoleName))
+            //    {
+            //        var role = new IdentityRole(AdminRoleName);
+            //        await roleManager.CreateAsync(role);
+            //    }
+
+            //    if (!await roleManager.RoleExistsAsync(PrimaryRoleName))
+            //    {
+            //        var role = new IdentityRole(PrimaryRoleName);
+            //        await roleManager.CreateAsync(role);
+            //    }
+
+            //    if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
+            //    {
+            //        var role = new IdentityRole(SecondaryRoleName);
+            //        await roleManager.CreateAsync(role);
+            //    }
+
+            //})
+            //  .GetAwaiter()
+            //.GetResult();
+
+            if (!await roleManager.RoleExistsAsync(AdminRoleName))
             {
-                if (!await roleManager.RoleExistsAsync(AdminRoleName))
-                {
-                    var role = new IdentityRole(AdminRoleName);
-                    await roleManager.CreateAsync(role);
-                }
+                var role = new IdentityRole(AdminRoleName);
+                await roleManager.CreateAsync(role);
+            }
 
-                if (!await roleManager.RoleExistsAsync(PrimaryRoleName))
-                {
-                    var role = new IdentityRole(PrimaryRoleName);
-                    await roleManager.CreateAsync(role);
-                }
+            if (!await roleManager.RoleExistsAsync(PrimaryRoleName))
+            {
+                var role = new IdentityRole(PrimaryRoleName);
+                await roleManager.CreateAsync(role);
+            }
 
-                if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
-                {
-                    var role = new IdentityRole(SecondaryRoleName);
-                    await roleManager.CreateAsync(role);
-                }
-
-            })
-            .GetAwaiter()
-            .GetResult();
-
+            if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
+            {
+                var role = new IdentityRole(SecondaryRoleName);
+                await roleManager.CreateAsync(role);
+            }
+                        
             return app;
         }
     }

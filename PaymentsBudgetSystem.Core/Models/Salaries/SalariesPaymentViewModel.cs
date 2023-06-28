@@ -1,4 +1,6 @@
-﻿namespace PaymentsBudgetSystem.Core.Models.Salaries
+﻿using PaymentsBudgetSystem.Data.Entities.Enums;
+
+namespace PaymentsBudgetSystem.Core.Models.Salaries
 {
     public class SalariesPaymentViewModel
     {

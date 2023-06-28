@@ -1,5 +1,8 @@
-﻿namespace PaymentsBudgetSystem.Core.Models.Salaries
+﻿
+namespace PaymentsBudgetSystem.Core.Models.Salaries
 {
+    using Data.Entities.Enums;
+
     public class EmployeeSalaryPaymentViewModel
     {
         public Guid? Id { get; set; }
@@ -10,9 +13,13 @@
 
         public string EmployeeName { get; set; } = null!;
 
+        public ContractType ContractType { get; set; }
+
         public DateTime DateEmployed { get; set; }
 
         public DateTime? DateLeft { get; set; }
+
+        public decimal MonthlySalary { get; set; }
 
         public decimal NetSalaryJobContract { get; set; }
 

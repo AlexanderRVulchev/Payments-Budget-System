@@ -10,10 +10,13 @@ namespace PaymentsBudgetSystem.Core.Services
     using Data;
     using Data.Entities;
     using Data.Entities.Enums;
-    using PaymentsBudgetSystem.Core.Helpers;
-    using PaymentsBudgetSystem.Core.Models.Salaries;
+    using Core.Helpers;
+    using Core.Models;
+    using Core.Models.Enums;
+    using Core.Models.Salaries;
     using static Common.DataConstants.General;
     using static Common.ExceptionMessages.Payment;
+    using GlobalSetting = Models.Enums.GlobalSetting;
 
     public class PaymentService : IPaymentService
     {
@@ -138,22 +141,39 @@ namespace PaymentsBudgetSystem.Core.Services
                     Id = e.Id,
                     EmployeeName = e.FirstName + " " + e.LastName,
                     DateEmployed = e.DateEmployed,
-                    DateLeft = e.DateLeft                    
+                    DateLeft = e.DateLeft,
+                    ContractType = e.ContractType,
+                    MonthlySalary = e.MonthlySalary
                 })
                 .ToListAsync();
+
+            var settings = await context
+                 .GlobalSettings
+                 .Select(gs => new GlobalSettingDataModel
+                 {
+                     Id = (GlobalSetting)gs.Id,
+                     SettingName = gs.SettingName,
+                     SettingValue = gs.SettingValue
+                 })
+                 .ToListAsync();
 
             Calculator calculator = new();
 
             foreach (var employee in employees)
             {
-                //TODO: Implement method
-                calculator.CalculateEmployeeMonthlySalary(employee, firstDayOfTheMonth, lastDayOfTheMonth);
+                calculator.CalculateEmployeeMonthlySalary(employee, firstDayOfTheMonth, lastDayOfTheMonth, settings);
             }
 
-            return new SalariesPaymentViewModel
+            var model = new SalariesPaymentViewModel
             {
-                //TODO: new calculation method
+                IndividualSalaries = employees,
+                Month = month,
+                Year = year                
             };
+
+            calculator.CalculateTotalPayroll(model);
+
+            return model;            
         }
 
         public async Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsById(string userId, Guid paymentId)

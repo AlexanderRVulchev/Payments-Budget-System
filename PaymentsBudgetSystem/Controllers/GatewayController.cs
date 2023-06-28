@@ -6,7 +6,9 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models;
     using Core.Models.Beneficiaries;
     using Extensions;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
     public class GatewayController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;

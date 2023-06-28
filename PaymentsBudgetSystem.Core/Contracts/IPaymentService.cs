@@ -1,9 +1,11 @@
-﻿using PaymentsBudgetSystem.Core.Models.Assets;
-using PaymentsBudgetSystem.Core.Models.Salaries;
-using PaymentsBudgetSystem.Core.Models.Support;
-
+﻿
 namespace PaymentsBudgetSystem.Core.Contracts
 {
+    using Models;
+    using Models.Assets;
+    using Models.Salaries;
+    using Models.Support;
+
     public interface IPaymentService
     {
         Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model);

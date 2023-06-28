@@ -82,7 +82,8 @@ namespace PaymentsBudgetSystem
             pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            app.SeedRoles();
+            var seedRoles = app.SeedRoles(); 
+            seedRoles.Wait();
 
             app.Run();
         }

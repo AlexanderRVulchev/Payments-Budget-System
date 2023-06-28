@@ -58,9 +58,80 @@
         public void CalculateEmployeeMonthlySalary(
             EmployeeSalaryPaymentViewModel employee, 
             DateTime fromDay,
-            DateTime toDay)
+            DateTime toDay,
+            List<GlobalSettingDataModel> settings)
         {
+            int totalDays = (toDay - fromDay).Days;
 
+            if (employee.DateEmployed > fromDay)
+            {
+                fromDay = employee.DateEmployed;
+            }
+            if (employee.DateLeft != null && employee.DateLeft < toDay)
+            {
+                toDay = (DateTime)employee.DateLeft;
+            }
+
+            int employeeWorkDays = (fromDay - toDay).Days;
+
+            decimal grossSalary = employee.MonthlySalary * (employeeWorkDays / totalDays);
+
+            if (employee.ContractType == ContractType.JobContract)
+            {
+                employee.InsurancePensionEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.InsurancePensionEmployer).SettingValue;
+                employee.InsuranceAdditionalEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.AdditionalInsuranceEmployer).SettingValue;
+                employee.InsuranceHealthEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.HealthInsuranceEmployer).SettingValue;
+
+                employee.InsurancePensionEmployee = grossSalary * settings.First(s => s.Id == GlobalSetting.InsurancePensionEmployee).SettingValue;
+                employee.InsuranceHealthEmployee = grossSalary * settings.First(s => s.Id == GlobalSetting.HealthInsuranceEmployee).SettingValue;
+                employee.InsuranceAdditionalEmployee = grossSalary * settings.First(s => s.Id == GlobalSetting.AdditionalInsuranceEmployee).SettingValue;
+
+                decimal socialSecurityDeductions = employee.InsurancePensionEmployee + employee.InsuranceHealthEmployee + employee.InsuranceAdditionalEmployee;
+                decimal salaryAfterSocialSecurityDeductions = grossSalary - socialSecurityDeductions;
+
+                decimal incomeTax = salaryAfterSocialSecurityDeductions * settings.First(s => s.Id == GlobalSetting.TaxRate).SettingValue;
+                decimal netSalary = salaryAfterSocialSecurityDeductions - incomeTax;
+
+                employee.NetSalaryJobContract = netSalary;
+            }
+            else if (employee.ContractType == ContractType.StateOfficial)
+            {
+                employee.InsurancePensionEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.InsurancePensionEmployer).SettingValue;
+                employee.InsuranceAdditionalEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.AdditionalInsuranceEmployer).SettingValue;
+                employee.InsuranceHealthEmployer = grossSalary * settings.First(s => s.Id == GlobalSetting.HealthInsuranceEmployer).SettingValue;
+
+                employee.InsurancePensionEmployer += grossSalary * settings.First(s => s.Id == GlobalSetting.InsurancePensionEmployee).SettingValue;
+                employee.InsuranceHealthEmployer += grossSalary * settings.First(s => s.Id == GlobalSetting.HealthInsuranceEmployee).SettingValue;
+                employee.InsuranceAdditionalEmployer += grossSalary * settings.First(s => s.Id == GlobalSetting.AdditionalInsuranceEmployee).SettingValue;
+
+                decimal incomeTax = grossSalary * settings.First(s => s.Id == GlobalSetting.TaxRate).SettingValue;
+                decimal netSalary = grossSalary - incomeTax;
+
+                employee.NetSalaryStateOfficial = netSalary;
+            }
+        }
+
+        public void CalculateTotalPayroll(SalariesPaymentViewModel model)
+        {
+            model.TotalInsurancePensionEmployer = model.IndividualSalaries.Sum(s => s.InsurancePensionEmployer);
+            model.TotalInsurancePensionEmployee = model.IndividualSalaries.Sum(s => s.InsurancePensionEmployee);
+            model.TotalInsuranceHealthEmployer = model.IndividualSalaries.Sum(s => s.InsuranceHealthEmployer);
+            model.TotalInsuranceHealthEmployee = model.IndividualSalaries.Sum(s => s.InsuranceHealthEmployee);
+            model.TotalInsuranceAdditionalEmployer = model.IndividualSalaries.Sum(s => s.InsuranceHealthEmployer);
+            model.TotalInsuranceAdditionalEmployee = model.IndividualSalaries.Sum(s => s.InsuranceHealthEmployee);
+            model.TotalIncomeTax = model.IndividualSalaries.Sum(s => s.IncomeTax);
+            model.TotalNetSalaryJobContract = model.IndividualSalaries.Sum(s => s.NetSalaryJobContract);
+            model.TotalNetSalaryStateOfficial = model.IndividualSalaries.Sum(s => s.NetSalaryStateOfficial);
+
+            model.Amount = model.TotalInsurancePensionEmployer
+                + model.TotalInsurancePensionEmployee
+                + model.TotalInsuranceHealthEmployer
+                + model.TotalInsuranceHealthEmployee
+                + model.TotalInsuranceAdditionalEmployer
+                + model.TotalInsuranceAdditionalEmployee
+                + model.TotalIncomeTax
+                + model.TotalNetSalaryJobContract
+                + model.TotalNetSalaryStateOfficial;
         }
     }
 }
