@@ -4,50 +4,13 @@
 @model SalariesPaymentViewModel
 
 @{
-    ViewBag.Title = "Начисляване на заплати";
+    ViewBag.Title = $"Изплащане на заплати за месец {Model.Month} {Model.Year} г.";
 }
 
 
 <h2 class="text-center text-success">@ViewBag.Title</h2>
 
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
-
-<div class="col-lg-3 col-md-6 align-content-center">
-    <form class="input-group-sm" method="post" asp-area="" asp-controller="Assets" asp-action="Info">
-        Търсене<br />
-        <div>
-            <div class="row">
-                <div class="col-6">
-                    <label asp-for="Month" class="form-label">Месец: </label>
-                    <select asp-for="Month" class="form-control" aria-required="true">
-                        <option value="1">Януари</option>
-                        <option value="2">Февруари</option>
-                        <option value="3">Март</option>
-                        <option value="4">Април</option>
-                        <option value="5">Май</option>
-                        <option value="6">Юни</option>
-                        <option value="7">Юли</option>
-                        <option value="8">Август</option>
-                        <option value="9">Септември</option>
-                        <option value="10">Октомври</option>
-                        <option value="11">Ноември</option>
-                        <option value="12">Декември</option>
-                    </select>
-                    <span asp-validation-for="Month" class="text-danger"></span>
-                </div>
-                <div class="col-6">
-                    <label asp-for="Year" class="form-label">Година: </label>
-                    <input type="text" asp-for="Year" class="form-control" value="@Model.Year" />
-                    <span asp-validation-for="Year" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div>
-                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Salaries" asp-action="Payment">
-            </div>
-        </div>
-    </form>
-</div>
 
 <div class="col-lg-6 col-md-12 align-items-baseline">
     <h4 class="text-black-50">Рекапитулация заплати за месец @Model.Month @Model.Year година:</h4>
@@ -90,11 +53,3 @@
         </div>
     }
 </div>
-
-<form method="post" asp-controller="Salaries" asp-action="ProcessPayment">
-    <input hidden asp-for="@Model.Year" value="@Model.Year"/>
-    <input hidden asp-for="@Model.Month" value="@Model.Month"/>    
-    <div class="border-primary align-content-center" >
-        <input class="btn-outline-primary offset-4  col-lg-4" type="submit" value="Изплащане на начислените заплати">
-    </div>
-</form>

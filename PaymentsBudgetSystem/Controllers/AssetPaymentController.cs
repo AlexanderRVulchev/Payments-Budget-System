@@ -52,6 +52,7 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), (Guid)id);
+
                 if (beneficiary == null)
                 {
                     throw new InvalidOperationException(BeneficiaryDoesNotExist);

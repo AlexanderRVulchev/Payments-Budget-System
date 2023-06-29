@@ -20,6 +20,6 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
         Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model);
 
-        Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid id);
+        Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid paymentId);
     }
 }

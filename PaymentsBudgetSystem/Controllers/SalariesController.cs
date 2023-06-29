@@ -7,7 +7,6 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Contracts;
     using Core.Models.Salaries;
     using Extensions;
-    using Microsoft.CodeAnalysis.Operations;
 
     [Authorize]
     public class SalariesController : Controller
@@ -19,7 +18,7 @@ namespace PaymentsBudgetSystem.Controllers
             paymentService = _paymentService;
         }
 
-        [HttpGet]
+        
         public async Task<IActionResult> Payment(int year, int month)
         {
             SalariesPaymentViewModel model = await paymentService.CreatePayroll(User.Id(), year, month);
@@ -46,13 +45,13 @@ namespace PaymentsBudgetSystem.Controllers
         {
             try
             {
-                var model = paymentService.GetSalariesDetailsById(User.Id(), id);
+                var model = await paymentService.GetSalariesDetailsById(User.Id(), id);
+
                 return View(model);
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-
-                throw;
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });                
             }
         }
     }

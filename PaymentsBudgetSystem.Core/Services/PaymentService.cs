@@ -175,8 +175,8 @@ namespace PaymentsBudgetSystem.Core.Services
                 .Where(e => e.DateEmployed < lastDayOfTheMonth)
                 .Where(e => e.DateLeft == null || e.DateLeft > firstDayOfTheMonth)
                 .Select(e => new EmployeeSalaryPaymentViewModel
-                {
-                    Id = e.Id,
+                {                 
+                    EmployeeId = e.Id,
                     EmployeeName = e.FirstName + " " + e.LastName,
                     DateEmployed = e.DateEmployed,
                     DateLeft = e.DateLeft,
@@ -262,9 +262,60 @@ namespace PaymentsBudgetSystem.Core.Services
             };
         }
 
-        public Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid id)
+        public async Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid paymentId)
         {
-            throw new NotImplementedException();
+            var entity = await context
+                .Payments
+                .Where(p => p.Id == paymentId)
+                .Include(p => p.SalariesDetails)
+                .ThenInclude(sd => sd.Employee)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new InvalidOperationException(InvalidPayment);
+            }
+            if (entity.UserId != userId)
+            {
+                throw new InvalidOperationException(PaymentAccessDenied);
+            }
+
+            return new SalariesPaymentViewModel
+            {
+                Amount = entity.Amount,
+                Month = entity.Date.Month,
+                Year = entity.Date.Year,
+                TotalIncomeTax = entity.SalariesDetails.Sum(sd => sd.IncomeTax),
+                TotalInsuranceAdditionalEmployee = entity.SalariesDetails.Sum(sd => sd.InsuranceAdditionalEmployee),
+                TotalInsuranceAdditionalEmployer = entity.SalariesDetails.Sum(sd => sd.InsuranceAdditionalEmployer),
+                TotalInsuranceHealthEmployee = entity.SalariesDetails.Sum(sd => sd.InsuranceHealthEmployee),
+                TotalInsuranceHealthEmployer = entity.SalariesDetails.Sum(sd => sd.InsuranceHealthEmployer),
+                TotalInsurancePensionEmployee = entity.SalariesDetails.Sum(sd => sd.InsurancePensionEmployee),
+                TotalInsurancePensionEmployer = entity.SalariesDetails.Sum(sd => sd.InsurancePensionEmployer),
+                TotalNetSalaryJobContract = entity.SalariesDetails.Sum(sd => sd.NetSalaryJobContract),
+                TotalNetSalaryStateOfficial = entity.SalariesDetails.Sum(sd => sd.NetSalaryStateOfficial),
+                IndividualSalaries = entity.SalariesDetails.Select(sd => new EmployeeSalaryPaymentViewModel
+                {
+                    ContractType = sd.Employee.ContractType,
+                    EmployeeName = sd.Employee.FirstName + " " + sd.Employee.LastName,
+                    DateEmployed = sd.Employee.DateEmployed,
+                    DateLeft = sd.Employee.DateLeft,
+                    Id = sd.Employee.Id,
+                    PaymentId = sd.PaymentId,
+                    EmployeeId = sd.Employee.Id,
+                    IncomeTax = sd.IncomeTax,
+                    InsuranceAdditionalEmployee = sd.InsuranceAdditionalEmployee,
+                    InsuranceAdditionalEmployer = sd.InsuranceAdditionalEmployer,
+                    NetSalaryJobContract = sd.NetSalaryJobContract,
+                    NetSalaryStateOfficial = sd.NetSalaryStateOfficial,
+                    InsuranceHealthEmployee = sd.InsuranceHealthEmployee,
+                    InsuranceHealthEmployer = sd.InsuranceHealthEmployer,
+                    InsurancePensionEmployee = sd.InsurancePensionEmployee,
+                    InsurancePensionEmployer = sd.InsurancePensionEmployer
+                })
+                .ToList()
+            };
+
         }
 
         public async Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsById(string userId, Guid paymentId)
