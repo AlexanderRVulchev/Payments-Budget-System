@@ -62,7 +62,7 @@
         <li> Чисти заплати служители - трудов договор: @Model.TotalNetSalaryJobContract.ToString("n")</li>
         <li> Чисти заплати служители - държавни служители: @Model.TotalNetSalaryStateOfficial.ToString("n")</li>
     </ul>
-        <h5 class="font-monospace"> ОБЩО: @Model.Amount.ToString("n")</h5>
+    <h5 class="font-monospace"> ОБЩО: @Model.Amount.ToString("n")</h5>
 </div>
 
 <div class="row">
@@ -90,3 +90,11 @@
         </div>
     }
 </div>
+
+<form method="post" asp-controller="Salaries" asp-action="ProcessPayment">
+    <input hidden asp-for="@Model.Year" value="@Model.Year"/>
+    <input hidden asp-for="@Model.Month" value="@Model.Month"/>    
+    <div class="border-primary align-items-center">
+        <input class="btn-outline-primary offset-4  col-lg-4" type="submit" value="Изплащане на начислените заплати">
+    </div>
+</form>

@@ -17,5 +17,9 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsById(string userId, Guid paymentId);
 
         Task<SalariesPaymentViewModel> CreatePayroll(string userId, int year, int month);
+
+        Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model);
+
+        Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid id);
     }
 }

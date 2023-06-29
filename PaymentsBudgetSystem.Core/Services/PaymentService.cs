@@ -83,6 +83,44 @@ namespace PaymentsBudgetSystem.Core.Services
             return assetPayment.Id;
         }
 
+        public async Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model)
+        {
+            List<PaymentSalaryDetails> salaryDetails = new();
+
+            foreach (var individualSalary in model.IndividualSalaries)
+            {
+                salaryDetails.Add(new PaymentSalaryDetails
+                {
+                    EmployeeId = individualSalary.EmployeeId,
+                    IncomeTax = individualSalary.IncomeTax,
+                    InsuranceAdditionalEmployee = individualSalary.InsuranceAdditionalEmployee,
+                    InsuranceHealthEmployee = individualSalary.InsuranceHealthEmployee,
+                    InsuranceAdditionalEmployer = individualSalary.InsuranceAdditionalEmployer,
+                    InsuranceHealthEmployer = individualSalary.InsuranceHealthEmployer,
+                    InsurancePensionEmployee = individualSalary.InsurancePensionEmployee,
+                    InsurancePensionEmployer = individualSalary.InsurancePensionEmployer,
+                    NetSalaryJobContract = individualSalary.NetSalaryJobContract,
+                    NetSalaryStateOfficial = individualSalary.NetSalaryStateOfficial
+                });
+            }
+
+            Payment payment = new Payment
+            {
+                Date = DateTime.Now,
+                Description = $"Изплатени заплати за м.{model.Month} {model.Year} г.",
+                SalariesDetails = salaryDetails,
+                Amount = model.Amount,
+                Paragraph = ParagraphType.LocalTransaction0000,
+                PaymentType = PaymentType.Salaries,
+                UserId = userId
+            };
+
+            await context.Payments.AddAsync(payment);
+            await context.SaveChangesAsync();
+
+            return payment.Id;
+        }
+
         public async Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model)
         {
             DateTime? invoiceDate;
@@ -222,6 +260,11 @@ namespace PaymentsBudgetSystem.Core.Services
                     ReportValue = a.ReportValue
                 }).ToList()
             };
+        }
+
+        public Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsById(string userId, Guid paymentId)
