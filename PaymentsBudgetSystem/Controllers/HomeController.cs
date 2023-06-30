@@ -17,7 +17,6 @@ namespace PaymentsBudgetSystem.Controllers
             return View();
         }
 
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(string errorMessage)
         {
             return View(new ErrorViewModel

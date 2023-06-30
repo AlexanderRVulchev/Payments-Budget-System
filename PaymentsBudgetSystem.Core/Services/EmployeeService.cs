@@ -11,6 +11,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
     using static Common.ExceptionMessages.Employee;
     using PaymentsBudgetSystem.Core.Helpers;
+    using System.Collections.Generic;
 
     public class EmployeeService : IEmployeeService
     {
@@ -38,6 +39,7 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.Employees.AddAsync(entry);
             await context.SaveChangesAsync();
         }
+
 
         public async Task EditEmployeeAsync(string userId, EmployeeFormModel model)
         {
@@ -125,5 +127,17 @@ namespace PaymentsBudgetSystem.Core.Services
                 MonthlySalary = entity.MonthlySalary
             };
         }
+
+        public async Task<List<EmployeeListModel>> GetEmployeeListAsync(string userId)
+            => await context
+                .Employees
+                .Where(e => e.UserId == userId)
+                .Select(e => new EmployeeListModel
+                {
+                    EmployeeId = e.Id,
+                    EmployeeName = e.FirstName + " " + e.LastName
+                })
+                .OrderBy(e => e.EmployeeName)
+                .ToListAsync();
     }
 }

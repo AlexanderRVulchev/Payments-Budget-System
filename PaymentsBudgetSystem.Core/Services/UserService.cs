@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
-    using Microsoft.AspNetCore.Identity;
     using Data;
     using Data.Entities;
 
     using static Common.RoleNames;
-    using Microsoft.EntityFrameworkCore;
 
     public class UserService : IUserService
     {

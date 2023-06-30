@@ -17,6 +17,8 @@ namespace PaymentsBudgetSystem.Core.Services
     using static Common.DataConstants.General;
     using static Common.ExceptionMessages.Payment;
     using GlobalSetting = Models.Enums.GlobalSetting;
+    using PaymentsBudgetSystem.Core.Models.Cash;
+    using Microsoft.AspNetCore.Mvc;
 
     public class PaymentService : IPaymentService
     {
@@ -81,6 +83,11 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.SaveChangesAsync();
 
             return assetPayment.Id;
+        }
+
+        public async Task<Guid> AddNewCashPaymentAsync(string userId, CashPaymentViewModel model)
+        {
+            return new Guid();                
         }
 
         public async Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model)

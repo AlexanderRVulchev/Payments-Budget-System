@@ -23,5 +23,7 @@
         public const string PaymentMoneyCannotBeZeroOrLess = "Стойността на плащането трябва да бъде най-малко 0.01 лв.";
 
         public const string AssetMustHaveAName = "Всеки актив с поне 1 брой трябва да има име.";
+
+        public const string OrderNumberMustBeAPositiveNumber = "Номера на ордера трябва да бъде положително число";
     }
 }
