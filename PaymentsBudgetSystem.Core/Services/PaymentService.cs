@@ -19,6 +19,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using GlobalSetting = Models.Enums.GlobalSetting;
     using PaymentsBudgetSystem.Core.Models.Cash;
     using Microsoft.AspNetCore.Mvc;
+    using PaymentsBudgetSystem.Core.Models.Employees;
 
     public class PaymentService : IPaymentService
     {
@@ -285,6 +286,40 @@ namespace PaymentsBudgetSystem.Core.Services
                     Description = a.Description,
                     ReportValue = a.ReportValue
                 }).ToList()
+            };
+        }
+
+        public async Task<CashPaymentDetailsModel> GetCashPaymentById(string userId, Guid paymentId)
+        {
+            var entity = await context
+                .Payments
+                .Where(p => p.Id == paymentId)
+                .Include(p => p.CashDetails)
+                .ThenInclude(cd => cd.Employee)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new InvalidOperationException(InvalidPayment);
+            }
+            if (entity.UserId != userId)
+            {
+                throw new InvalidOperationException(PaymentAccessDenied);
+            }
+
+            return new CashPaymentDetailsModel
+            {
+                Amount = entity.Amount,
+                Date = entity.Date,
+                CashOrderNumber = entity.CashDetails.CashOrderNumber,
+                Description = entity.Description,
+                Type = entity.Paragraph,
+                Id = entity.Id,
+                Employee = new EmployeeListModel
+                {
+                    EmployeeId = entity.CashDetails.EmployeeId,
+                    EmployeeName = entity.CashDetails.Employee.FirstName + " " + entity.CashDetails.Employee.LastName
+                }
             };
         }
 

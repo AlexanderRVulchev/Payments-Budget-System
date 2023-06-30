@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PaymentsBudgetSystem.Controllers
 {
@@ -14,7 +14,7 @@ namespace PaymentsBudgetSystem.Controllers
         private readonly IPaymentService paymentsService;
 
         public CashPaymentController(
-            IEmployeeService _employeeService, 
+            IEmployeeService _employeeService,
             IPaymentService _paymentsService)
         {
             employeeService = _employeeService;
@@ -42,7 +42,20 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
             var paymentId = await paymentsService.AddNewCashPaymentAsync(User.Id(), model);
-            return RedirectToAction(nameof(Payment));
+            return RedirectToAction(nameof(CashPaymentDetails), new { id = paymentId });
+        }
+
+        public async Task<IActionResult> CashPaymentDetails(Guid id)
+        {
+            try
+            {
+                var model = await paymentsService.GetCashPaymentById(User.Id(), id);
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
         }
     }
 }
