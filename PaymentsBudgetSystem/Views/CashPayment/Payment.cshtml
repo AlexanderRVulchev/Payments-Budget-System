@@ -40,9 +40,9 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="Description" class="form-label-add-edit">Описание</label>
-            <input asp-for="Description" class="form-control" type="text" aria-required="true" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="CashOrderNumber" class="form-label-add-edit">Номер на ордер</label>
+            <input asp-for="CashOrderNumber" class="form-control" type="text" aria-required="true" />
+            <span asp-validation-for="CashOrderNumber" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
@@ -51,8 +51,20 @@
             <span asp-validation-for="Amount" class="text-danger"></span>
         </div>
 
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label-add-edit">Описание</label>
+            <input asp-for="Description" class="form-control" type="text" aria-required="true" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+
         <div class="col-4 offset-4">
             <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на плащането" />
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

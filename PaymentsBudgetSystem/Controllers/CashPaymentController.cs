@@ -37,10 +37,12 @@ namespace PaymentsBudgetSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Employees = await employeeService.GetEmployeeListAsync(User.Id());
                 return View(model);
             }
 
-            return View(model);
+            var paymentId = await paymentsService.AddNewCashPaymentAsync(User.Id(), model);
+            return RedirectToAction(nameof(Payment));
         }
     }
 }

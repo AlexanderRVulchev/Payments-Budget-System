@@ -2,7 +2,7 @@
 {
     public enum PaymentType
     {
-        LocalTransaction = 0,
+        Cash = 0,
         Salaries = 1,
         Insurance = 2,
         Support = 3,

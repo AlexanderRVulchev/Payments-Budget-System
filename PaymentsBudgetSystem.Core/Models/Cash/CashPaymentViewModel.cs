@@ -7,6 +7,7 @@ namespace PaymentsBudgetSystem.Core.Models.Cash
 
     using static Common.ValidationErrors.General;
     using static Common.DataConstants.Payment;
+    using static Common.DataConstants.General;
 
     public class CashPaymentViewModel
     {
@@ -20,7 +21,7 @@ namespace PaymentsBudgetSystem.Core.Models.Cash
         public int CashOrderNumber { get; set; }
 
         [Required]
-        [Range(typeof(decimal), AmountMinValue, AmountMinValue, ErrorMessage = PaymentMoneyCannotBeZeroOrLess)]
+        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = PaymentMoneyCannotBeZeroOrLess)]
         [Display(Name = "Сума")]        
         public decimal Amount { get; set; }
 

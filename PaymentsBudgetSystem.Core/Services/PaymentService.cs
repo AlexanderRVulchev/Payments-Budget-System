@@ -87,7 +87,26 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewCashPaymentAsync(string userId, CashPaymentViewModel model)
         {
-            return new Guid();                
+            var payment = new Payment
+            {
+                Date = DateTime.Now,
+                Amount = model.Amount,
+                Description = model.Description,
+                PaymentType = PaymentType.Cash,
+                Paragraph = model.Type,
+                UserId = userId,
+                CashDetails = new CashPaymentDetails
+                {
+                    CashOrderDate = DateTime.Now,
+                    CashOrderNumber = model.CashOrderNumber,
+                    EmployeeId = model.SelectedEmployee
+                }
+            };
+
+            await context.Payments.AddAsync(payment);
+            await context.SaveChangesAsync();
+
+            return payment.Id;
         }
 
         public async Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model)
