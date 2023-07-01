@@ -24,6 +24,8 @@
 
         public const string AssetMustHaveAName = "Всеки актив с поне 1 брой трябва да има име.";
 
-        public const string OrderNumberMustBeAPositiveNumber = "Номера на ордера трябва да бъде положително число";
+        public const string OrderNumberMustBeAPositiveNumber = "Номера на ордера трябва да бъде положително число.";
+
+        public const string EarlierDateCannotBeAfterLaterDate = "Невъзможно е началната дата да бъде след крайната дата.";
     }
 }

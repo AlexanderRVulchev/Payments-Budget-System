@@ -2,24 +2,27 @@
 {
     using Core.Models.Enums;
     using Data.Entities.Enums;
+    using System.ComponentModel.DataAnnotations;
 
     public class PaymentInformationViewModel
     {
-        public DateOnly StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public DateOnly EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public SortBy SortBy { get; set; }
 
         public InformationSort InformationSort { get; set; }
 
-        public ParagraphType ParagraphType { get; set; }
-
         public PaymentType PaymentType { get; set; }
+
+        public string ReceiverNameFilter { get; set; } = String.Empty;
 
         public decimal? AmountMin { get; set; }
 
         public decimal? AmountMax { get; set; }
+
+        public int Page { get; set; }
 
         public List<PaymentInformationItemModel> Payments { get; set; } = new();
     }

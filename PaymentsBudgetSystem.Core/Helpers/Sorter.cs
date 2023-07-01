@@ -5,6 +5,7 @@
     using Models.Beneficiaries;
     using Models.Employees;
     using Data.Entities;
+    using PaymentsBudgetSystem.Core.Models.Information;
 
     public class Sorter
     {      
@@ -173,6 +174,55 @@
             }
 
             return assets;
+        }
+
+        public IQueryable<PaymentInformationItemModel> SortInformationResults(
+            IQueryable<PaymentInformationItemModel> payments,
+            PaymentInformationViewModel model)
+        {
+            if (model.ReceiverNameFilter != String.Empty)
+            {
+                payments = payments
+                    .Where(p => p.ReceiverName.Contains(model.ReceiverNameFilter))
+                    .AsQueryable();
+            }
+
+            if (model.SortBy == SortBy.Ascending)
+            {
+                switch (model.InformationSort)
+                {
+                    case InformationSort.Amount:
+                        payments = payments.OrderBy(p => p.Amount); break;
+                    case InformationSort.Description:
+                        payments = payments.OrderBy(p => p.Description); break;
+                    case InformationSort.ReceiverName:
+                        payments = payments.OrderBy(p => p.ReceiverName); break;
+                    case InformationSort.Date:
+                        payments = payments.OrderBy(p => p.Date); break;
+                    case InformationSort.Type:
+                        payments = payments.OrderBy(p => p.PaymentType); break;
+                    default: break;
+                }
+            }
+            else
+            {
+                switch (model.InformationSort)
+                {
+                    case InformationSort.Amount:
+                        payments = payments.OrderByDescending(p => p.Amount); break;
+                    case InformationSort.Description:
+                        payments = payments.OrderByDescending(p => p.Description); break;
+                    case InformationSort.ReceiverName:
+                        payments = payments.OrderByDescending(p => p.ReceiverName); break;
+                    case InformationSort.Date:
+                        payments = payments.OrderByDescending(p => p.Date); break;
+                    case InformationSort.Type:
+                        payments = payments.OrderByDescending(p => p.PaymentType); break;
+                    default: break;
+                }
+            }
+
+            return payments;
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
+
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
-    using Microsoft.EntityFrameworkCore;
     using Models.Information;
     using Data;
     using Data.Entities.Enums;
+    using Core.Helpers;
 
     public class InformationService : IInformationService
     {
@@ -16,16 +17,12 @@ namespace PaymentsBudgetSystem.Core.Services
             context = _context;
         }
 
-        public async Task<List<PaymentInformationItemModel>> GetPaymentsInfoAsync(string userId, DateTime from, DateTime to)
+        public async Task<PaymentInformationViewModel> GetPaymentsInfoAsync(string userId, PaymentInformationViewModel model)
         {
-            var payments = await context
+            var payments = context
                 .Payments
                 .Where(p => p.UserId == userId)
-                .Where(p => p.Date >= from && p.Date <= to)
-                .Include(p => p.SupportDetails)
-                .Include(p => p.SalariesDetails)
-                .Include(p => p.AssetsDetails)
-                .Include(p => p.CashDetails)
+                .Where(p => p.Date >= model.StartDate && p.Date <= model.EndDate)
                 .Select(p => new PaymentInformationItemModel
                 {
                     Amount = p.Amount,
@@ -33,12 +30,25 @@ namespace PaymentsBudgetSystem.Core.Services
                     Description = p.Description,
                     ParagraphType = p.Paragraph,
                     PaymentType = p.PaymentType,
-                    PaymentId = p.Id,                                        
+                    PaymentId = p.Id,
                     ReceiverName = p.ReceiverName
                 })
-                .ToListAsync();
+              .AsQueryable();
 
-            return payments;
+            if (model.AmountMin != null)
+            {
+                payments = payments.Where(p => p.Amount >= model.AmountMin);
+            }
+            if (model.AmountMax != null)
+            {
+                payments = payments.Where(p => p.Amount <= model.AmountMax);
+            }
+
+            Sorter sorter = new();
+
+            model.Payments = await sorter.SortInformationResults(payments, model).ToListAsync();
+
+            return model;
         }
     }
 }

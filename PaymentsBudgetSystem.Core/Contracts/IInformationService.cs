@@ -4,6 +4,6 @@
 
     public interface IInformationService
     {
-        Task<List<PaymentInformationItemModel>> GetPaymentsInfoAsync(string userId, DateTime from, DateTime to);
+        Task<PaymentInformationViewModel> GetPaymentsInfoAsync(string userId, PaymentInformationViewModel model);
     }
 }
