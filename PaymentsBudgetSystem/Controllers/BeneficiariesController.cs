@@ -25,7 +25,8 @@ namespace PaymentsBudgetSystem.Controllers
             string? address,
             string? bankAccount,
             int sortBy, 
-            int attribute)
+            int attribute,
+            int page)
         {
             var model = new AllBeneficiariesViewModel
             {
@@ -34,7 +35,8 @@ namespace PaymentsBudgetSystem.Controllers
                 AddressFilter = address,
                 IdentifierFilter = identifier,
                 NameFilter = name,
-                BankAccountFilter = bankAccount
+                BankAccountFilter = bankAccount,
+                Page = page
             };
 
             model = await beneficiaryService.GetAllBeneficiariesAsync(User.Id(), model);

@@ -2,13 +2,15 @@
 
 namespace PaymentsBudgetSystem.Core.Services
 {
-    using Core.Contracts;
-    using Core.Models.Beneficiaries;
-    using Core.Models.Enums;
+    using Contracts;
+    using Models.Beneficiaries;
+    using Models.Enums;
     using Data;
     using Data.Entities;
-    using PaymentsBudgetSystem.Core.Helpers;
+    using Helpers;
+
     using static Common.ExceptionMessages.Beneficiary;
+    using static Common.DataConstants.General;
 
     public class BeneficiaryService : IBeneficiaryService
     {
@@ -85,6 +87,26 @@ namespace PaymentsBudgetSystem.Core.Services
                     BankAccount = b.BankAccount
                 })
                 .ToListAsync();
+
+            model.NumberOfPages = model.Beneficiaries.Count / ItemsPerPage;
+
+            if (model.Beneficiaries.Count % ItemsPerPage > 0)
+            {
+                model.NumberOfPages++;
+            }
+
+            if (model.Page < 1)
+            {
+                model.Page = 1;
+            }
+            else if (model.Page > model.NumberOfPages)
+            {
+                model.Page = model.NumberOfPages;
+            }
+
+            PaginationFilter<BeneficiaryViewModel> paginationFilter = new();
+
+            model.Beneficiaries = paginationFilter.FilterItemsByPage(model.Beneficiaries, model.Page);
 
             return model;
         }

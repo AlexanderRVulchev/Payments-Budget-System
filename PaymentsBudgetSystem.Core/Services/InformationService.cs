@@ -51,7 +51,12 @@ namespace PaymentsBudgetSystem.Core.Services
                 .SortInformationResults(payments, model)
                 .ToListAsync();
 
-            model.NumberOfPages = (model.Payments.Count / ItemsPerPage) + 1;
+            model.NumberOfPages = (model.Payments.Count / ItemsPerPage);
+
+            if (model.Payments.Count % ItemsPerPage > 0)
+            {
+                model.NumberOfPages++;
+            }
 
             if (model.Page < 1)
             {

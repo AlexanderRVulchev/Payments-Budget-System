@@ -70,7 +70,12 @@ namespace PaymentsBudgetSystem.Core.Services
             Sorter sorter = new();
             model.Assets = sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
 
-            model.NumberOfPages = (model.Assets.Count / ItemsPerPage) + 1;
+            model.NumberOfPages = (model.Assets.Count / ItemsPerPage);
+
+            if (model.Assets.Count % ItemsPerPage > 0)
+            {
+                model.NumberOfPages++;
+            }
 
             if (model.Page < 1)
             {
