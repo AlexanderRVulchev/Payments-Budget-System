@@ -8,5 +8,7 @@
         public const int DescriptionMaxLength = 1000;
 
         public const int InvoiceNumberMaxLength = 10;
+
+        public const int ReceiverNameMaxLength = 50;
     }
 }

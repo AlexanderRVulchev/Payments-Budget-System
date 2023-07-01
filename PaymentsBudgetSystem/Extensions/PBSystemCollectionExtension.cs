@@ -16,6 +16,7 @@ namespace PaymentsBudgetSystem.Extensions
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<IInformationService, InformationService>();
 
             return services;
         }

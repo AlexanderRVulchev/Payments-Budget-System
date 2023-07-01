@@ -31,6 +31,9 @@ namespace PaymentsBudgetSystem.Data.Entities
         [MaxLength(DescriptionMaxLength)]
         public string? Description { get; set; }
 
+        [MaxLength(ReceiverNameMaxLength)]
+        public string ReceiverName { get; set; } = null!;
+
         public PaymentSupportDetails SupportDetails { get; set; } = null!;
 
         public PaymentAssetsDetails AssetsDetails { get; set; } = null!;
