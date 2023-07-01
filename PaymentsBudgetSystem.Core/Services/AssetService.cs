@@ -10,6 +10,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Helpers;
     using Data.Entities;
 
+    using static Common.DataConstants.General;
     using static Common.ExceptionMessages.Asset;
     using GlobalSetting = Models.Enums.GlobalSetting;
 
@@ -68,6 +69,20 @@ namespace PaymentsBudgetSystem.Core.Services
 
             Sorter sorter = new();
             model.Assets = sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
+
+            model.NumberOfPages = (model.Assets.Count / ItemsPerPage) + 1;
+
+            if (model.Page < 1)
+            {
+                model.Page = 1;
+            }
+            else if (model.Page > model.NumberOfPages)
+            {
+                model.Page = model.NumberOfPages;
+            }
+
+            PaginationFilter<AssetInfoViewModel> paginationFilter = new();
+            model.Assets = paginationFilter.FilterItemsByPage(model.Assets, model.Page);
 
             return model;
         }

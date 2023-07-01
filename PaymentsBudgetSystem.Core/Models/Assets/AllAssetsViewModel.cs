@@ -23,5 +23,9 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         public AssetSort SortAttribute { get; set; }
 
         public SortBy SortBy { get; set; }
+
+        public int Page { get; set; }
+
+        public int NumberOfPages { get; set; }
     }
 }

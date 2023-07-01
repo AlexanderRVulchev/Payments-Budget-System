@@ -23,7 +23,8 @@ namespace PaymentsBudgetSystem.Controllers
             int? month,
             string? name,
             int attribute,
-            int sortBy)
+            int sortBy,
+            int page)
         {
             year ??= DateTime.Now.Year;
             month ??= DateTime.Now.Month;
@@ -34,7 +35,8 @@ namespace PaymentsBudgetSystem.Controllers
                 InfoYear = (int)year,
                 NameFilter = name,
                 SortAttribute = (AssetSort)attribute,
-                SortBy = (SortBy)sortBy
+                SortBy = (SortBy)sortBy,
+                Page = page
             };
 
             model = await assetService.GetAllAssetsAsync(User.Id(), model);

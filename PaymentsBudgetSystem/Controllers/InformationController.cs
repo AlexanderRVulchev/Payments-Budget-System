@@ -52,7 +52,21 @@ namespace PaymentsBudgetSystem.Controllers
                 ModelState.AddModelError("", EarlierDateCannotBeAfterLaterDate);
                 startDate = DateTime.ParseExact("01.01." + DateTime.Now.Year.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
                 endDate = DateTime.ParseExact("31.12." + DateTime.Now.Year.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
-                return RedirectToAction(nameof(Info), new { from = startDate, to = endDate });
+
+                var returnModel = new PaymentInformationViewModel
+                {
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    SortBy = sortBy,
+                    InformationSort = informationSort,
+                    AmountMin = amountMin,
+                    AmountMax = amountMax,
+                    PaymentType = paymentType,
+                    Page = page,
+                    ReceiverNameFilter = receiver,
+                };
+
+                return View(returnModel);
             }
 
             var model = new PaymentInformationViewModel
@@ -70,12 +84,11 @@ namespace PaymentsBudgetSystem.Controllers
 
             model = await informationService.GetPaymentsInfoAsync(User.Id(), model);
 
-
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Info(PaymentInformationViewModel model)
+        public IActionResult Info(PaymentInformationViewModel model)
         {
             if (!ModelState.IsValid)
             {
