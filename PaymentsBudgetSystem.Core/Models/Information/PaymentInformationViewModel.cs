@@ -24,6 +24,8 @@
 
         public int Page { get; set; }
 
+        public int NumberOfPages { get; set; }
+
         public List<PaymentInformationItemModel> Payments { get; set; } = new();
     }
 }

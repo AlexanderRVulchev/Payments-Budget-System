@@ -8,6 +8,8 @@ namespace PaymentsBudgetSystem.Core.Services
     using Data.Entities.Enums;
     using Core.Helpers;
 
+    using static Common.DataConstants.General;
+
     public class InformationService : IInformationService
     {
         private readonly PBSystemDbContext context;
@@ -37,16 +39,32 @@ namespace PaymentsBudgetSystem.Core.Services
 
             if (model.AmountMin != null)
             {
-                payments = payments.Where(p => p.Amount >= model.AmountMin);
+                payments = payments.Where(p => p.Amount >= model.AmountMin).AsQueryable();
             }
             if (model.AmountMax != null)
             {
-                payments = payments.Where(p => p.Amount <= model.AmountMax);
+                payments = payments.Where(p => p.Amount <= model.AmountMax).AsQueryable();
             }
 
             Sorter sorter = new();
+            model.Payments = await sorter
+                .SortInformationResults(payments, model)
+                .ToListAsync();
 
-            model.Payments = await sorter.SortInformationResults(payments, model).ToListAsync();
+            model.NumberOfPages = (model.Payments.Count / ItemsPerPage) + 1;
+
+            if (model.Page < 1)
+            {
+                model.Page = 1;
+            }
+            else if (model.Page > model.NumberOfPages)
+            {
+                model.Page = model.NumberOfPages;
+            }
+
+            PaginationFilter<PaymentInformationItemModel> paginationFilter = new();
+            model.Payments = paginationFilter
+                .FilterItemsByPage(model.Payments, model.Page);
 
             return model;
         }

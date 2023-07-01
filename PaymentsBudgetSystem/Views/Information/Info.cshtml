@@ -95,48 +95,48 @@
                         @{
                             if (payment.PaymentType == PaymentType.Salaries)
                             {
-                                <td>Заплати</td>
+                                    <td>Заплати</td>
                             }
                             else if (payment.PaymentType == PaymentType.Support)
                             {
-                                <td>Издръжка</td>
+                                    <td>Издръжка</td>
                             }
                             else if (payment.PaymentType == PaymentType.Assets)
                             {
-                                <td>Активи</td>
+                                    <td>Активи</td>
                             }
                             else if (payment.PaymentType == PaymentType.Cash)
                             {
-                                <td>Каса</td>
+                                    <td>Каса</td>
                             }
                         }
                         <td>@payment.Amount.ToString("n")</td>
                         <td>@payment.Description</td>
                         <td>
                             @{
-                                if (payment.PaymentType == PaymentType.Salaries) 
+                                if (payment.PaymentType == PaymentType.Salaries)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
                                 }
-                                else if(payment.PaymentType == PaymentType.Support) 
+                                else if (payment.PaymentType == PaymentType.Support)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
                                 }
                                 else if (payment.PaymentType == PaymentType.Assets)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
                                 }
                                 else if (payment.PaymentType == PaymentType.Cash)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
                                 }
                             }
                         </td>
@@ -148,6 +148,44 @@
     </div>
 </div>
 
+<div class="row align-items-end">
+    Страница @Model.Page / @Model.NumberOfPages
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <div>
+            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                @(Model.Page == 1 ? "disabled" : string.Empty)"
+               asp-action="Info"
+               asp-route-from="@Model.StartDate"
+               asp-route-to="@Model.EndDate"
+               asp-route-sortBy="@Model.SortBy"
+               asp-route-informationSort="@Model.InformationSort"
+               asp-route-paymentType="@Model.PaymentType"
+               asp-route-amountMin="@Model.AmountMin"
+               asp-route-amountMax="@Model.AmountMax"
+               asp-route-page="@(Model.Page - 1)"
+               asp-route-receiver="@Model.ReceiverNameFilter">
+                Предишна
+            </a>
+        </div>
+        <div>
+            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                @(Model.Page == Model.NumberOfPages || !Model.Payments.Any() ? "disabled" : string.Empty)"
+               asp-action="Info"
+               asp-route-from="@Model.StartDate"
+               asp-route-to="@Model.EndDate"
+               asp-route-sortBy="@Model.SortBy"
+               asp-route-informationSort="@Model.InformationSort"
+               asp-route-paymentType="@Model.PaymentType"
+               asp-route-amountMin="@Model.AmountMin"
+               asp-route-amountMax="@Model.AmountMax"
+               asp-route-page="@(Model.Page + 1)"
+               asp-route-receiver="@Model.ReceiverNameFilter">
+                Следваща
+            </a>
+        </div>
+    </div>
+</div>
+﻿
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

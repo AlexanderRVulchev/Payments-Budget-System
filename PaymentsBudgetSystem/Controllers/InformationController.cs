@@ -6,6 +6,7 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Contracts;
     using Extensions;
     using Microsoft.AspNetCore.Authorization;
+    using PaymentsBudgetSystem.Core.Helpers;
     using PaymentsBudgetSystem.Core.Models.Enums;
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Data.Entities.Enums;
@@ -64,10 +65,11 @@ namespace PaymentsBudgetSystem.Controllers
                 AmountMax = amountMax,
                 PaymentType = paymentType,
                 Page = page,
-                ReceiverNameFilter = receiver
+                ReceiverNameFilter = receiver,
             };
 
             model = await informationService.GetPaymentsInfoAsync(User.Id(), model);
+
 
             return View(model);
         }

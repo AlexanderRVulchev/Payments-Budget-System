@@ -12,5 +12,7 @@
 
         public const int MonthMinValue = 1;
         public const int MonthMaxValue = 12;
+
+        public const int ItemsPerPage = 9;
     }
 }
