@@ -116,6 +116,37 @@
     </div>
 </div>
 
+<div class="row align-items-end">
+    Страница @Model.Page / @Model.NumberOfPages
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <div>
+            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                @(Model.Page == 1 ? "disabled" : string.Empty)"
+               asp-action="Info"
+               asp-route-firstName="@Model.FirstName"
+               asp-route-lastName="@Model.LastName"
+               asp-route-egn="@Model.Egn"
+               asp-route-sortAttribute="@((int)Model.SortAttribute)"
+               asp-route-sortBy="@((int)Model.SortBy)"
+               asp-route-page="@(Model.Page - 1)">
+                Предишна
+            </a>
+        </div>
+        <div>
+            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                @(Model.Page == Model.NumberOfPages || !Model.Employees.Any() ? "disabled" : string.Empty)"
+               asp-action="Info"
+               asp-route-firstName="@Model.FirstName"
+               asp-route-lastName="@Model.LastName"
+               asp-route-egn="@Model.Egn"
+               asp-route-sortAttribute="@((int)Model.SortAttribute)"
+               asp-route-sortBy="@((int)Model.SortBy)"
+               asp-route-page="@(Model.Page + 1)">
+                Следваща
+            </a>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

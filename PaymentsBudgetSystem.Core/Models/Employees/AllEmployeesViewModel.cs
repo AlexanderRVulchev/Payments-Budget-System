@@ -20,5 +20,9 @@ namespace PaymentsBudgetSystem.Core.Models.Employees
         public EmployeeSort SortAttribute { get; set; }
 
         public SortBy SortBy { get; set; }
+
+        public int Page { get; set; }
+
+        public int NumberOfPages { get; set; }
     }
 }

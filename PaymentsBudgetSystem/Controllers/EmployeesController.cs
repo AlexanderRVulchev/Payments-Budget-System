@@ -9,6 +9,7 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models.Enums;
 
     using static Common.ExceptionMessages.Employee;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
 
     [Authorize]
     public class EmployeesController : Controller
@@ -26,7 +27,8 @@ namespace PaymentsBudgetSystem.Controllers
             string? lastName,
             string? egn,
             int sortAttribute, 
-            int sortBy)
+            int sortBy,
+            int page)
         {
             var model = new AllEmployeesViewModel
             {
@@ -34,7 +36,8 @@ namespace PaymentsBudgetSystem.Controllers
                 LastName = lastName,
                 Egn = egn,                
                 SortAttribute = (EmployeeSort)sortAttribute,
-                SortBy = (SortBy)sortBy
+                SortBy = (SortBy)sortBy,
+                Page = page
             };
 
             model = await employeeService.GetAllEmployeesAsync(User.Id(), model);
@@ -51,7 +54,8 @@ namespace PaymentsBudgetSystem.Controllers
                 lastName = model.LastName,
                 egn = model.Egn,
                 sortAttribute = (int)model.SortAttribute,
-                sortBy = (int)model.SortBy
+                sortBy = (int)model.SortBy,
+                page = model.Page
             });
         }
 

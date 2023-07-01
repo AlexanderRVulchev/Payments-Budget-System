@@ -53,7 +53,8 @@ namespace PaymentsBudgetSystem.Controllers
                 month = model.InfoMonth,
                 name = model.NameFilter,
                 attribute = (int)model.SortAttribute,
-                sortBy = (int)model.SortBy
+                sortBy = (int)model.SortBy,
+                page = model.Page
             });
         }
 

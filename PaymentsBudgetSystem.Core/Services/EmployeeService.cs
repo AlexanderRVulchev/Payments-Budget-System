@@ -5,13 +5,13 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Contracts;
     using Core.Models.Employees;
     using Data;
-    using Core.Models.Enums;
     using Data.Entities;
+    using PaymentsBudgetSystem.Core.Helpers;
     using System;
+    using System.Collections.Generic;
 
     using static Common.ExceptionMessages.Employee;
-    using PaymentsBudgetSystem.Core.Helpers;
-    using System.Collections.Generic;
+    using static Common.DataConstants.General;
 
     public class EmployeeService : IEmployeeService
     {
@@ -96,6 +96,25 @@ namespace PaymentsBudgetSystem.Core.Services
             employees = sorter.SortEmployees(employees, model);
 
             model.Employees = await employees.ToListAsync();
+
+            model.NumberOfPages = (model.Employees.Count / ItemsPerPage);
+
+            if (model.Employees.Count % ItemsPerPage > 0)
+            {
+                model.NumberOfPages++;
+            }
+
+            if (model.Page < 1)
+            {
+                model.Page = 1;
+            }
+            else if (model.Page > model.NumberOfPages)
+            {
+                model.Page = model.NumberOfPages;
+            }
+
+            PaginationFilter<EmployeeViewModel> paginationFilter = new();
+            model.Employees = paginationFilter.FilterItemsByPage(model.Employees, model.Page);
 
             return model;
         }

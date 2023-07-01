@@ -54,7 +54,8 @@ namespace PaymentsBudgetSystem.Controllers
                 address = model.AddressFilter,
                 sortBy = (int)model.SortBy,
                 attribute = (int)model.SortAttribute,
-                bankAccount = model.BankAccountFilter
+                bankAccount = model.BankAccountFilter,
+                page = model.Page
             });
         }
 
