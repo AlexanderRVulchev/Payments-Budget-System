@@ -3,11 +3,13 @@
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Models.Report;
     using PaymentsBudgetSystem.Core.Helpers;
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Data;
+    using PaymentsBudgetSystem.Data.Entities;
 
     public class ReportService : IReportService
     {
@@ -68,6 +70,54 @@ namespace PaymentsBudgetSystem.Core.Services
             calculator.CalculateReportExpenses(model, payments);
 
             return model;
+        }
+
+        public async Task SaveIndividualReportAsync(string userId, IndividualReportDataModel model)
+        {
+            var entry = new Report
+            {
+                Bank0101 = model.Bank0101,
+                Bank0102 = model.Bank0102,
+                Bank1015 = model.Bank1015,
+                Bank1020 = model.Bank1020,
+                Bank1051 = model.Bank1051,
+                Bank5100 = model.Bank5100,
+                Bank5200 = model.Bank5200,
+                Bank5300 = model.Bank5300,
+                Cash1015 = model.Cash1015,
+                Cash1020 = model.Cash1020,
+                Cash1051 = model.Cash1051,
+                IsConsolidated = false,
+                LimitAssets = model.AssetsLimit,
+                LimitSalaries = model.SalariesLimit,
+                LimitSupport = model.SupportLimit,
+                Transfer0551 = model.Transfer0551,
+                Transfer0560 = model.Transfer0560,
+                Transfer0580 = model.Transfer0580,
+                Transfer0590 = model.Transfer0590,
+                UserId = userId,
+                Year = model.Year,
+                Month = model.Month
+            };
+
+            var existingReportForThisMonthAndYear = await context
+                    .Reports
+                    .Where(r => r.UserId == userId
+                        && r.Year == model.Year
+                        && r.Month == model.Month
+                        && r.IsConsolidated == false)
+                    .FirstOrDefaultAsync();
+                    
+            if (existingReportForThisMonthAndYear != null)
+            {
+                existingReportForThisMonthAndYear = entry;
+            }
+            else
+            {
+                await context.Reports.AddAsync(entry);
+            }
+
+            await context.SaveChangesAsync();            
         }
     }
 }

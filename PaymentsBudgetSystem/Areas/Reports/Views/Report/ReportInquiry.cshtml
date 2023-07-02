@@ -33,10 +33,21 @@
                 <div>
                     <input class="btn btn-primary" type="submit" value="Генериране на отчет" />
                 </div>
+                <div>
+                    <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveIndividualReport"
+                           asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
+                </div>
             </form>
         </div>        
     </div>
 </div>
+
+@*<div>
+    <span style="float:left">
+        <a class="btn btn-success" asp-area="Reports" asp-controller="Report" asp-action="SaveIndividualReport" 
+            asp-route-year="@Model.Year", asp-route-month="@Model.Month">Запази отчет за м. @Model.Month @Model.Year г.</a>
+    </span>
+</div>*@
 
 
 @section Scripts {
