@@ -53,6 +53,9 @@ namespace PaymentsBudgetSystem.Data.Entities
         public decimal Cash1051 { get; set; }
 
         [Column(TypeName = "DECIMAL(18, 2)")]
+        public decimal Bank1051 { get; set; }
+
+        [Column(TypeName = "DECIMAL(18, 2)")]
         public decimal Bank5100 { get; set; }
 
         [Column(TypeName = "DECIMAL(18, 2)")]

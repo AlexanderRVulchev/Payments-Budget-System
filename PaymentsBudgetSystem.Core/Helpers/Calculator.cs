@@ -5,6 +5,8 @@
     using Models.Enums;
     using Data.Entities.Enums;
     using PaymentsBudgetSystem.Core.Models.Salaries;
+    using PaymentsBudgetSystem.Core.Models.Report;
+    using PaymentsBudgetSystem.Core.Models.Information;
 
     public class Calculator
     {
@@ -49,14 +51,14 @@
             asset.ResidualValue = assetResidualValue;
             asset.BalanceValue = assetBalanceValue;
             asset.Amortization = assetAmortization;
-            
+
 
 
             return asset;
-        } 
+        }
 
         public void CalculateEmployeeMonthlySalary(
-            EmployeeSalaryPaymentViewModel employee, 
+            EmployeeSalaryPaymentViewModel employee,
             DateTime fromDay,
             DateTime toDay,
             List<GlobalSettingDataModel> settings)
@@ -134,6 +136,36 @@
                 + model.TotalIncomeTax
                 + model.TotalNetSalaryJobContract
                 + model.TotalNetSalaryStateOfficial;
+        }
+
+        public void CalculateReportExpenses(
+            IndividualReportDataModel model,
+            List<ReportExpensesDataModel>? payments)
+        {
+            if (payments == null)
+            {
+                return;
+            }
+
+            model.Bank0101 = payments.Where(p => p.PaymentType == PaymentType.Salaries).Sum(p => p.NetSalaryJobContract);
+            model.Bank0102 = payments.Where(p => p.PaymentType == PaymentType.Salaries).Sum(p => p.NetSalaryStateOfficial);
+
+            model.Transfer0551 = payments.Where(p => p.PaymentType == PaymentType.Salaries).Sum(p => p.InsurancePension);
+            model.Transfer0560 = payments.Where(p => p.PaymentType == PaymentType.Salaries).Sum(p => p.InsuranceHealth);
+            model.Transfer0580 = payments.Where(p => p.PaymentType == PaymentType.Salaries).Sum(p => p.InsuranceAdditional);
+            model.Transfer0590 = payments.Where(p => p.PaymentType == PaymentType.Salaries).Sum(p => p.IncomeTax);
+
+            model.Bank1015 = payments.Where(p => p.PaymentType == PaymentType.Support && p.ParagraphType == ParagraphType.Materials1015).Sum(p => p.Amount);
+            model.Bank1020 = payments.Where(p => p.PaymentType == PaymentType.Support && p.ParagraphType == ParagraphType.Services1020).Sum(p => p.Amount);
+            model.Bank1051 = payments.Where(p => p.PaymentType == PaymentType.Support && p.ParagraphType == ParagraphType.BusinessTrips1051).Sum(p => p.Amount);
+
+            model.Cash1015 = payments.Where(p => p.PaymentType == PaymentType.Cash && p.ParagraphType == ParagraphType.Materials1015).Sum(p => p.Amount);
+            model.Cash1020 = payments.Where(p => p.PaymentType == PaymentType.Cash && p.ParagraphType == ParagraphType.Services1020).Sum(p => p.Amount);
+            model.Cash1051 = payments.Where(p => p.PaymentType == PaymentType.Cash && p.ParagraphType == ParagraphType.BusinessTrips1051).Sum(p => p.Amount);
+
+            model.Bank5100 = payments.Where(p => p.PaymentType == PaymentType.Assets && p.ParagraphType == ParagraphType.UpkeepLongTermAssets5100).Sum(p => p.Amount);
+            model.Bank5200 = payments.Where(p => p.PaymentType == PaymentType.Assets && p.ParagraphType == ParagraphType.AquisitionLongTermAssets5200).Sum(p => p.Amount);
+            model.Bank5300 = payments.Where(p => p.PaymentType == PaymentType.Assets && p.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300).Sum(p => p.Amount);
         }
     }
 }

@@ -619,6 +619,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     b.Property<decimal>("Bank1020")
                         .HasColumnType("DECIMAL(18,2)");
 
+                    b.Property<decimal>("Bank1051")
+                        .HasColumnType("DECIMAL(18,2)");
+
                     b.Property<decimal>("Bank5100")
                         .HasColumnType("DECIMAL(18,2)");
 
