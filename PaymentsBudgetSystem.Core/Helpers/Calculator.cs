@@ -139,7 +139,7 @@
         }
 
         public void CalculateReportExpenses(
-            IndividualReportDataModel model,
+            ReportDataModel model,
             List<ReportExpensesDataModel>? payments)
         {
             if (payments == null)

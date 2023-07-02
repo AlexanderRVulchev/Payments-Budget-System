@@ -44,7 +44,16 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
                 return View(model);
             }
 
-            IndividualReportDataModel reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+            ReportDataModel reportModel;
+
+            if (!model.IsConsolidated)
+            {
+                reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+            }
+            else
+            {
+                reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+            }
 
             string templatePath = "wwwroot/Report.xlsx";
 
@@ -95,14 +104,22 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveIndividualReport(ReportInquiryViewModel model)
+        public async Task<IActionResult> SaveReport(ReportInquiryViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(ReportInquiry));
             }
 
-            IndividualReportDataModel reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+            ReportDataModel reportModel;
+            if (!model.IsConsolidated)
+            {
+                reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+            }
+            else
+            {
+                reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+            }
 
             await reportService.SaveIndividualReportAsync(User.Id(), reportModel);
 

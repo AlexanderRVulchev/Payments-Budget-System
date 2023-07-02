@@ -5,8 +5,10 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
     public interface IReportService
     {
-        Task<IndividualReportDataModel> BuildIndividualReport(string userId, int year, int month);
+        Task<ReportDataModel> BuildIndividualReport(string userId, int year, int month);
 
-        Task SaveIndividualReportAsync(string userId, IndividualReportDataModel model);
+        Task<ReportDataModel> BuildConsolidatedReport(string userId, int year, int month);
+
+        Task SaveIndividualReportAsync(string userId, ReportDataModel model);
     }
 }

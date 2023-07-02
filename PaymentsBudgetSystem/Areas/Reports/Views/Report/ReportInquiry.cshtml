@@ -1,4 +1,5 @@
 ﻿@using PaymentsBudgetSystem.Core.Models.Report
+@using static PaymentsBudgetSystem.Common.RoleNames;
 
 @model ReportInquiryViewModel
 
@@ -23,32 +24,53 @@
                     <label asp-for="Year" class="form-label">Година: </label>
                     <input type="number" asp-for="Year" class="form-control" value="@Model.Year" />
                     <span asp-validation-for="Year" class="text-danger"></span>
-                    </div>
+                </div>
                 <div class="col-6 w-25">
                     <label asp-for="Month" class="form-label">Месец: </label>
                     <input type="number" asp-for="Month" class="form-control" value="@Model.Month" />
                     <span asp-validation-for="Month" class="text-danger"></span>
                 </div>
-
+                <input type="hidden" asp-for="IsConsolidated" class="form-control" value="false" />
                 <div>
-                    <input class="btn btn-primary" type="submit" value="Генериране на отчет" />
+                    <input class="btn btn-success" type="submit" value="Генериране на отчет" />
                 </div>
                 <div>
-                    <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveIndividualReport"
+                    <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveReport"
                            asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
                 </div>
             </form>
-        </div>        
+        </div>
+
+        @if (User.IsInRole(PrimaryRoleName))
+        {
+            <div class="pbs-box col-lg-4 offset-4">
+                <div>
+                    <p class="align-content-lg-start">Консолидиран отчет за дейността</p>
+                </div>
+                <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
+                    <div class="col-6 offset-3 w-25">
+                        <label asp-for="Year" class="form-label">Година: </label>
+                        <input type="number" asp-for="Year" class="form-control" value="@Model.Year" />
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                    <div class="col-6 w-25">
+                        <label asp-for="Month" class="form-label">Месец: </label>
+                        <input type="number" asp-for="Month" class="form-control" value="@Model.Month" />
+                        <span asp-validation-for="Month" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="IsConsolidated" class="form-control" value="true" />
+                    <div>
+                        <input class="btn btn-success" type="submit" value="Генериране на отчет" />
+                    </div>
+                    <div>
+                        <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveReport"
+                           asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
+                    </div>
+                </form>
+            </div>
+        }
     </div>
 </div>
-
-@*<div>
-    <span style="float:left">
-        <a class="btn btn-success" asp-area="Reports" asp-controller="Report" asp-action="SaveIndividualReport" 
-            asp-route-year="@Model.Year", asp-route-month="@Model.Month">Запази отчет за м. @Model.Month @Model.Year г.</a>
-    </span>
-</div>*@
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
