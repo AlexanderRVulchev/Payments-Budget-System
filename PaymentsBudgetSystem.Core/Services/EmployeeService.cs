@@ -158,5 +158,25 @@ namespace PaymentsBudgetSystem.Core.Services
                 })
                 .OrderBy(e => e.EmployeeName)
                 .ToListAsync();
+
+        public async Task<EmployeeViewModel> GetEmployeeById(Guid id)
+        {
+            Employee entity = await context
+                .Employees
+                .FindAsync(id)
+                    ?? throw new InvalidOperationException(EmployeeDoesNotExist);
+
+            return new EmployeeViewModel
+            {
+                ContractType = entity.ContractType,
+                DateEmployed = entity.DateEmployed,
+                Egn = entity.Egn,
+                EmployeeId = id,
+                DateLeft = entity.DateLeft,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                MonthlySalary = entity.MonthlySalary
+            };
+        }
     }
 }

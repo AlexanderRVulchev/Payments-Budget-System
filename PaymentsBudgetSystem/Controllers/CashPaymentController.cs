@@ -41,8 +41,15 @@ namespace PaymentsBudgetSystem.Controllers
                 return View(model);
             }
 
-            var paymentId = await paymentsService.AddNewCashPaymentAsync(User.Id(), model);
-            return RedirectToAction(nameof(CashPaymentDetails), new { id = paymentId });
+            try
+            {
+                var paymentId = await paymentsService.AddNewCashPaymentAsync(User.Id(), model);
+                return RedirectToAction(nameof(CashPaymentDetails), new { id = paymentId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
         }
 
         public async Task<IActionResult> CashPaymentDetails(Guid id)

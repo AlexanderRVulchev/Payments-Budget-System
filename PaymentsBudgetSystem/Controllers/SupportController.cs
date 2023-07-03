@@ -84,8 +84,6 @@ namespace PaymentsBudgetSystem.Controllers
                 }
             }
 
-            model.Beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
-
             if (!ModelState.IsValid)
             {
                 return View(model);

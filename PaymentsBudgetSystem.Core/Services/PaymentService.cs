@@ -24,13 +24,24 @@ namespace PaymentsBudgetSystem.Core.Services
     {
         private readonly PBSystemDbContext context;
 
-        public PaymentService(PBSystemDbContext _context)
+        private readonly IBeneficiaryService beneficiaryService;
+
+        private readonly IEmployeeService employeeService;
+
+        public PaymentService(
+            PBSystemDbContext _context, 
+            IBeneficiaryService _beneficiaryService,
+            IEmployeeService _employeeService)
         {
             context = _context;
+            beneficiaryService = _beneficiaryService;
+            employeeService = _employeeService;
         }
 
         public async Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model)
         {
+            var beneficiary = await beneficiaryService.GetBeneficiaryAsync(userId, model.BeneficiaryId);
+
             var assetPayment = new Payment
             {
                 Amount = model.Amount,
@@ -39,13 +50,14 @@ namespace PaymentsBudgetSystem.Core.Services
                 PaymentType = PaymentType.Assets,
                 UserId = userId,
                 Description = model.Description,
+                ReceiverName = beneficiary.Name,
                 AssetsDetails = new PaymentAssetsDetails
                 {
                     BeneficiaryId = model.BeneficiaryId,
                     DeliveryDate = DateTime.Now,
                     InvoiceNumber = model.InvoiceNumber,
                     InvoiceDate = model.InvoiceDate
-                }
+                },                
             };
 
             await context.Payments.AddAsync(assetPayment);
@@ -87,6 +99,8 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewCashPaymentAsync(string userId, CashPaymentViewModel model)
         {
+            var employee = await employeeService.GetEmployeeById(model.SelectedEmployee);
+
             var payment = new Payment
             {
                 Date = DateTime.Now,
@@ -95,6 +109,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 PaymentType = PaymentType.Cash,
                 Paragraph = model.Type,
                 UserId = userId,
+                ReceiverName = employee.FirstName + " " + employee.LastName,
                 CashDetails = new CashPaymentDetails
                 {
                     CashOrderDate = DateTime.Now,
@@ -138,7 +153,8 @@ namespace PaymentsBudgetSystem.Core.Services
                 Amount = model.Amount,
                 Paragraph = ParagraphType.LocalTransaction0000,
                 PaymentType = PaymentType.Salaries,
-                UserId = userId
+                UserId = userId,
+                ReceiverName = "Служители"
             };
 
             await context.Payments.AddAsync(payment);
@@ -162,6 +178,8 @@ namespace PaymentsBudgetSystem.Core.Services
                 invoiceDate = validInvoiceDate;
             }
 
+            var beneficiary = await beneficiaryService.GetBeneficiaryAsync(userId, model.BeneficiaryId);
+
             var supportPayment = new Payment
             {
                 UserId = userId,
@@ -170,7 +188,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 Description = model.Description,
                 Amount = model.Amount,
                 PaymentType = PaymentType.Support,
-                ReceiverName = model.Beneficiary.Name,
+                ReceiverName = beneficiary.Name,
                 SupportDetails = new PaymentSupportDetails
                 {
                     BeneficiaryId = model.BeneficiaryId,

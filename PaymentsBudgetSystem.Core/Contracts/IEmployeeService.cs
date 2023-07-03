@@ -13,5 +13,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task EditEmployeeAsync(string userId, EmployeeFormModel model);
 
         Task<List<EmployeeListModel>> GetEmployeeListAsync(string userId);
+
+        Task<EmployeeViewModel> GetEmployeeById(Guid id);
     }
 }

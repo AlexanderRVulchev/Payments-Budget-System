@@ -102,9 +102,15 @@ namespace PaymentsBudgetSystem.Controllers
                 return View(model);
             }
 
-            Guid assetPaymentId = await paymentService.AddNewAssetPayment(User.Id(), model);
-
-            return RedirectToAction(nameof(AssetPaymentDetails), new { id = assetPaymentId });
+            try
+            {
+                Guid assetPaymentId = await paymentService.AddNewAssetPayment(User.Id(), model);
+                return RedirectToAction(nameof(AssetPaymentDetails), new { id = assetPaymentId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
         }
 
         public async Task<IActionResult> AssetPaymentDetails(Guid id)
