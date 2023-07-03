@@ -170,6 +170,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 Description = model.Description,
                 Amount = model.Amount,
                 PaymentType = PaymentType.Support,
+                ReceiverName = model.Beneficiary.Name,
                 SupportDetails = new PaymentSupportDetails
                 {
                     BeneficiaryId = model.BeneficiaryId,

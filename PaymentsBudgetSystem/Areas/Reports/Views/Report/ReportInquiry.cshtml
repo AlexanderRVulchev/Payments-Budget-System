@@ -15,58 +15,80 @@
 
 <div class="text-center row">
     <div class="row">
-        <div class="pbs-box col-lg-4">
-            <div>
-                <p class="align-content-lg-start">Индивидуален отчет за дейността</p>
+        <div class="pbs-box col-lg-5">
+            <div class="row">
+                <div class="col-6">
+                    <p class="align-content-lg-start">Индивидуален отчет за дейността</p>
+                    <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
+                        <div class="col-6 offset-3 w-50">
+                            <label asp-for="Year" class="form-label">Година: </label>
+                            <input type="number" asp-for="Year" class="form-control" value="@Model.Year" />
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 w-25">
+                            <label asp-for="Month" class="form-label">Месец: </label>
+                            <input type="number" asp-for="Month" class="form-control" value="@Model.Month" />
+                            <span asp-validation-for="Month" class="text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="IsConsolidated" class="form-control" value="false" />
+                        <div>
+                            <input class="btn btn-success" type="submit" value="Генериране на отчет" />
+                        </div>
+                        <div>
+                            <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveReport"
+                                   asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
+                        </div>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <p>Запазени отчети</p>
+                    @foreach (var report in Model.IndividualReports)
+                    {
+                        <a class="btn btn-info" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                            Отчет м. @report.Month @report.Year г.
+                        </a>
+                    }
+                </div>
             </div>
-            <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
-                <div class="col-6 offset-3 w-25">
-                    <label asp-for="Year" class="form-label">Година: </label>
-                    <input type="number" asp-for="Year" class="form-control" value="@Model.Year" />
-                    <span asp-validation-for="Year" class="text-danger"></span>
-                </div>
-                <div class="col-6 w-25">
-                    <label asp-for="Month" class="form-label">Месец: </label>
-                    <input type="number" asp-for="Month" class="form-control" value="@Model.Month" />
-                    <span asp-validation-for="Month" class="text-danger"></span>
-                </div>
-                <input type="hidden" asp-for="IsConsolidated" class="form-control" value="false" />
-                <div>
-                    <input class="btn btn-success" type="submit" value="Генериране на отчет" />
-                </div>
-                <div>
-                    <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveReport"
-                           asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
-                </div>
-            </form>
         </div>
 
         @if (User.IsInRole(PrimaryRoleName))
         {
-            <div class="pbs-box col-lg-4 offset-4">
-                <div>
-                    <p class="align-content-lg-start">Консолидиран отчет за дейността</p>
+            <div class="pbs-box offset-lg-1 col-lg-5">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="align-content-lg-start">Консолидиран отчет за дейността</p>
+                        <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
+                            <div class="col-6 offset-3 w-50">
+                                <label asp-for="Year" class="form-label">Година: </label>
+                                <input type="number" asp-for="Year" class="form-control" value="@Model.Year" />
+                                <span asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                            <div class="col-6 w-25">
+                                <label asp-for="Month" class="form-label">Месец: </label>
+                                <input type="number" asp-for="Month" class="form-control" value="@Model.Month" />
+                                <span asp-validation-for="Month" class="text-danger"></span>
+                            </div>
+                            <input type="hidden" asp-for="IsConsolidated" class="form-control" value="true" />
+                            <div>
+                                <input class="btn btn-success" type="submit" value="Генериране на отчет" />
+                            </div>
+                            <div>
+                                <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveReport"
+                                   asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <p>Запазени отчети</p>
+                        @foreach (var report in Model.ConsolidatedReports)
+                        {
+                            <a class="btn btn-info" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                Отчет м. @report.Month @report.Year г.
+                            </a>
+                        }
+                    </div>
                 </div>
-                <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
-                    <div class="col-6 offset-3 w-25">
-                        <label asp-for="Year" class="form-label">Година: </label>
-                        <input type="number" asp-for="Year" class="form-control" value="@Model.Year" />
-                        <span asp-validation-for="Year" class="text-danger"></span>
-                    </div>
-                    <div class="col-6 w-25">
-                        <label asp-for="Month" class="form-label">Месец: </label>
-                        <input type="number" asp-for="Month" class="form-control" value="@Model.Month" />
-                        <span asp-validation-for="Month" class="text-danger"></span>
-                    </div>
-                    <input type="hidden" asp-for="IsConsolidated" class="form-control" value="true" />
-                    <div>
-                        <input class="btn btn-success" type="submit" value="Генериране на отчет" />
-                    </div>
-                    <div>
-                        <input class="btn btn-primary" type="submit" asp-area="Reports" asp-controller="Report" asp-action="SaveReport"
-                           asp-route-year="@Model.Year" , asp-route-month="@Model.Month" value="Запази отчет" />
-                    </div>
-                </form>
             </div>
         }
     </div>

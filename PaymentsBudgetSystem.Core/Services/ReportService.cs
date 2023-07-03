@@ -10,6 +10,9 @@ namespace PaymentsBudgetSystem.Core.Services
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Data;
     using PaymentsBudgetSystem.Data.Entities;
+    using System;
+
+    using static Common.ExceptionMessages.Report;
 
     public class ReportService : IReportService
     {
@@ -20,6 +23,37 @@ namespace PaymentsBudgetSystem.Core.Services
             context = _context;
         }
 
+        public async Task AddReportAnnotations(string userId, ReportInquiryViewModel model)
+        {
+            var reports = await context
+                .Reports
+                .Where(r => r.UserId == userId)
+                .OrderByDescending(r => r.Year)
+                .ThenByDescending(r => r.Month)
+                .ToArrayAsync();
+
+            foreach (var report in reports)
+            {
+                var reportAnnotationModel = new ReportAnnotationViewModel
+                {
+                    Month = report.Month,
+                    Year = report.Year,
+                    ReportId = report.Id
+                };                
+
+                if (report.IsConsolidated)
+                {
+                    model.ConsolidatedReports.Add(reportAnnotationModel);
+                }
+                else
+                {
+                    model.IndividualReports.Add(reportAnnotationModel);
+                }
+
+
+            }
+        }
+
         public async Task<ReportDataModel> BuildConsolidatedReport(string userId, int year, int month)
         {
             string[] secondaryUsersIds = await context
@@ -27,7 +61,6 @@ namespace PaymentsBudgetSystem.Core.Services
                 .Where(ud => ud.PrimaryUserId == userId)
                 .Select(ud => ud.SecondaryUserId)
                 .ToArrayAsync();
-
 
             var individualReports = new List<ReportDataModel>();
 
@@ -120,6 +153,40 @@ namespace PaymentsBudgetSystem.Core.Services
 
             return model;
         }
+
+        public async Task<ReportDataModel> GetReportById(Guid id)
+        {
+            Report entity = await context
+                .Reports
+                .FindAsync(id)
+                    ?? throw new InvalidOperationException(ReportDoesNotExist);
+
+            return new ReportDataModel
+            {
+                AssetsLimit = entity.LimitAssets,
+                Bank0101 = entity.Bank0101,
+                Bank0102 = entity.Bank0102,
+                Bank1015 = entity.Bank1015,
+                Bank1020 = entity.Bank1020,
+                Bank1051 = entity.Bank1051,
+                Bank5100 = entity.Bank5100,
+                Bank5200 = entity.Bank5200,
+                Bank5300 = entity.Bank5300,
+                Cash1015 = entity.Cash1015,
+                Cash1020 = entity.Cash1020,
+                Cash1051 = entity.Cash1051,
+                IsConsolidated = entity.IsConsolidated,
+                Month = entity.Month,
+                SalariesLimit = entity.LimitSalaries,
+                SupportLimit = entity.LimitSupport,
+                Transfer0551 = entity.Transfer0551,
+                Transfer0560 = entity.Transfer0560,
+                Transfer0580 = entity.Transfer0580,
+                Transfer0590 = entity.Transfer0590,
+                UserId = entity.UserId,
+                Year = entity.Year
+            };
+        }          
 
         public async Task SaveIndividualReportAsync(string userId, ReportDataModel model)
         {

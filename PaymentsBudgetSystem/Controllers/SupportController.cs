@@ -84,10 +84,10 @@ namespace PaymentsBudgetSystem.Controllers
                 }
             }
 
+            model.Beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
+
             if (!ModelState.IsValid)
             {
-                var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
-                model.Beneficiary = beneficiary;
                 return View(model);
             }
 
