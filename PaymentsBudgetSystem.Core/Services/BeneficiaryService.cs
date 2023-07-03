@@ -45,23 +45,36 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task EditBeneficiaryAsync(string userId, BeneficiaryFormModel model)
         {
-            var entity = await context
+            var beneficiary = await context
                 .Beneficiaries
                 .FindAsync(model.Id);
 
-            if (entity == null)
+            if (beneficiary == null)
             {
                 throw new InvalidOperationException(BeneficiaryDoesNotExist);
             }
-            if (entity.UserId != userId)
+            if (beneficiary.UserId != userId)
             {
                 throw new InvalidOperationException(BeneficiaryAccessDenied);
             }
 
-            entity.Address = model.Address;
-            entity.Identifier = model.Identifier;
-            entity.Name = model.Name;
-            entity.BankAccount = model.BankAccount;
+            if (beneficiary.Name != model.Name)
+            {
+                var payments = await context
+                .Payments
+                .Where(p => p.ReceiverName == beneficiary.Name)
+                .ToArrayAsync();
+
+                foreach (var payment in payments)
+                {
+                    payment.ReceiverName = model.Name;
+                };
+            }           
+
+            beneficiary.Address = model.Address;
+            beneficiary.Identifier = model.Identifier;
+            beneficiary.Name = model.Name;
+            beneficiary.BankAccount = model.BankAccount;
 
             await context.SaveChangesAsync();
         }
@@ -116,7 +129,7 @@ namespace PaymentsBudgetSystem.Core.Services
             var entity = await context
                 .Beneficiaries
                 .FindAsync(beneficiaryId);
-                    
+
             if (entity == null)
             {
                 throw new InvalidOperationException(BeneficiaryDoesNotExist);
