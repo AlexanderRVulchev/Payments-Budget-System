@@ -4,17 +4,48 @@ using System.Diagnostics;
 namespace PaymentsBudgetSystem.Controllers
 {
     using Core.Models;
+    using Core.Models.Report;
+    using PaymentsBudgetSystem.Core.Contracts;
 
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IReportService reportService;
+
+        private readonly IUserService userService;
+
+        public HomeController(
+            IReportService _reportService,
+            IUserService _userService)
         {
-            return View();
+            reportService = _reportService;
+            userService = _userService;
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public async Task<IActionResult> Index(string? id, string? name)
         {
-            return View();
+            var reportsToLoad = new ReportInquiryViewModel();
+
+            if (id != null)
+            {
+                await reportService.AddReportAnnotations(id, reportsToLoad);
+            }
+
+            var model = new ReportSelectionViewModel
+            {
+                SelectedInstitutionId = id,
+                SelectedInstitutionName = name,
+                ReportAnnotationCollection = reportsToLoad,
+                Institutions = await userService.GetAllUsersWithSavedReportsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Index(ReportSelectionViewModel model)
+        {
+            return RedirectToAction(nameof(Index), new { id = model.SelectedInstitutionId, name = model.SelectedInstitutionName });
         }
 
         public IActionResult Error(string errorMessage)

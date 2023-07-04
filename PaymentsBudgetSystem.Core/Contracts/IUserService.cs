@@ -1,7 +1,7 @@
-﻿using PaymentsBudgetSystem.Common.DataConstants;
-
-namespace PaymentsBudgetSystem.Core.Contracts
+﻿namespace PaymentsBudgetSystem.Core.Contracts
 {
+    using Models.User;
+
     public interface IUserService
     {
         Task<ICollection<string>> GetPrimaryNamesAsync();
@@ -9,5 +9,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task<Dictionary<string, string>> GetPrimaryIdsAndNamesAsync();
 
         Task RelateSecondaryToPrimaryUserAsync(string primaryId, string secondaryId);
+
+        Task<List<InstitutionSelectModel>> GetAllUsersWithSavedReportsAsync();
     }
 }

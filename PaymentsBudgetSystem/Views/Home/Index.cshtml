@@ -1,8 +1,69 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using PaymentsBudgetSystem.Core.Models.Report
+@using static PaymentsBudgetSystem.Common.RoleNames;
+
+@model ReportSelectionViewModel
+
+@{
+    ViewData["Title"] = "Начало";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+
+<div class="text-center" row>
+    <div class="accordion-header w-50">Моля, изберете институция за достъп до финансовите й отчети</div>
+    <div class="w-25 offset-2">
+        <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
+            <select asp-for="SelectedInstitutionId" class="form-control" aria-required="true">
+                <option value="@null">Избор</option>
+                @foreach (var institution in Model.Institutions)
+                {
+                    <option value="@institution.UserId">@institution.InstitutionName</option>
+                }
+            </select>
+            <span asp-validation-for="SelectedInstitutionId" class="text-danger"></span>
+            <input type="submit" class="btn btn-success" asp-action="Index" asp-route-id="@Model.SelectedInstitutionId" asp-route-name="@Model.SelectedInstitutionName" value="Преглед на отчетите">
+        </form>
+    </div>
 </div>
+
+<div class="text-center row">
+    <div class="row">
+        <div class="pbs-box col-lg-5">
+            <div class="row">
+                <div class="col-6">
+                    <p>Индивидуални отчети</p>
+                    @foreach (var report in Model.ReportAnnotationCollection.IndividualReports)
+                    {
+                        <a class="btn btn-info" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                            Отчет м. @report.Month @report.Year г.
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="pbs-box offset-lg-1 col-lg-5">
+            <div class="row">
+                <div class="col-6">
+                    <p>Консолидирани отчети</p>
+                    @foreach (var report in Model.ReportAnnotationCollection.ConsolidatedReports)
+                    {
+                        <a class="btn btn-info" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                            Отчет м. @report.Month @report.Year г.
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

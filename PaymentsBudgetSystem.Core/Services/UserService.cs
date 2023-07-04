@@ -6,8 +6,9 @@ namespace PaymentsBudgetSystem.Core.Services
     using Contracts;
     using Data;
     using Data.Entities;
-
+    using Core.Models.Report;
     using static Common.RoleNames;
+    using PaymentsBudgetSystem.Core.Models.User;
 
     public class UserService : IUserService
     {
@@ -78,5 +79,16 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.UsersDependancies.AddAsync(userPair);
             await context.SaveChangesAsync();
         }
+
+        public async Task<List<InstitutionSelectModel>> GetAllUsersWithSavedReportsAsync()
+            => await context
+                .Users
+                .Where(u => u.Reports.Any())
+                .Select(u => new InstitutionSelectModel
+                {
+                    UserId = u.Id,
+                    InstitutionName = u.Name
+                })
+                .ToListAsync();
     }
 }

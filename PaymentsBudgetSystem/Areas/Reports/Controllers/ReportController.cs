@@ -106,6 +106,7 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
             return RedirectToAction(nameof(ReportInquiry));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> LoadReport(Guid id)
         {
             ReportDataModel model;
