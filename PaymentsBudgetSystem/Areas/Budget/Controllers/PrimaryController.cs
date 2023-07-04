@@ -69,8 +69,6 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             {
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotRetrieveConsolidatedBudget });
             }
-
-
         }
 
         [HttpPost]
@@ -96,10 +94,26 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
                 return View(fullConsolidatedBudget);
             }
 
-            await budgetService.EditBudgetAsync(model);
-                             
-            model = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(User.Id(), model.FiscalYear);
+            var budgetToEdit = fullConsolidatedBudget.IndividualBudgetsData.Where(b => b.Id != model.Id).First();
 
+            if (model.NewSalaryLimit < budgetToEdit.SalariesExpenses ||
+                model.NewSupportLimit < budgetToEdit.SupportLimit ||
+                model.NewAssetsLimit < budgetToEdit.AssetsExpenses)
+            {
+                ModelState.AddModelError("", ExpensesCannotExceedLimit);
+                return View(fullConsolidatedBudget);
+            }
+
+            try
+            {
+                await budgetService.EditBudgetAsync(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            model = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(User.Id(), model.FiscalYear);
             return View(model);
         }
 

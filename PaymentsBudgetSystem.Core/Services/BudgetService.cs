@@ -13,9 +13,14 @@ namespace PaymentsBudgetSystem.Core.Services
     {
         private readonly PBSystemDbContext context;
 
-        public BudgetService(PBSystemDbContext _context)
+        private readonly IReportService reportService;
+
+        public BudgetService(
+            PBSystemDbContext _context,
+            IReportService _reportService)
         {
-            this.context = _context;
+            context = _context;
+            reportService = _reportService;
         }
 
         public async Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds)
@@ -82,25 +87,51 @@ namespace PaymentsBudgetSystem.Core.Services
                 .ToArrayAsync();
 
             decimal totalAllocatedFunds = 0;
+            List<IndividualBudgetFormData> secondaryBudgetModels = new();
 
             foreach (var individualBudget in individualBudgets
                     .Where(b => b.FiscalYear == consolidatedBudget.FiscalYear))
             {
                 totalAllocatedFunds += individualBudget.SalariesLimit + individualBudget.SupportLimit + individualBudget.AssetsLimit;
+
+                var annualReport = await reportService.BuildIndividualReport(individualBudget.UserId, year, 12);
+
+                decimal annualSalaryExpenses = 
+                      annualReport.Bank0101
+                    + annualReport.Bank0102
+                    + annualReport.Transfer0551
+                    + annualReport.Transfer0560
+                    + annualReport.Transfer0580
+                    + annualReport.Transfer0590;
+
+                decimal annualSupportExpenses =
+                      annualReport.Bank1015
+                    + annualReport.Bank1020
+                    + annualReport.Bank1051
+                    + annualReport.Cash1015
+                    + annualReport.Cash1020
+                    + annualReport.Cash1051;
+
+                decimal annualAssetsExpenses = 
+                      annualReport.Bank5100
+                    + annualReport.Bank5200
+                    + annualReport.Bank5300;
+
+                secondaryBudgetModels.Add(new IndividualBudgetFormData
+                {
+                    Id = individualBudget.Id,
+                    FiscalYear = individualBudget.FiscalYear,
+                    Name = individualBudget.User.Name,
+                    SalariesLimit = individualBudget.SalariesLimit,
+                    SupportLimit = individualBudget.SupportLimit,
+                    AssetsLimit = individualBudget.AssetsLimit,
+                    SalariesExpenses = annualSalaryExpenses,
+                    SupportExpenses = annualSupportExpenses,
+                    AssetsExpenses = annualAssetsExpenses
+                });
             }
 
             var budgetModel = GenerateConsolidatedBudget(consolidatedBudget, totalAllocatedFunds, userId);
-
-            List<IndividualBudgetFormData> secondaryBudgetModels = individualBudgets
-                .Select(b => new IndividualBudgetFormData
-                {
-                    Id = b.Id,
-                    FiscalYear = b.FiscalYear,
-                    Name = b.User.Name,
-                    SalariesLimit = b.SalariesLimit,
-                    SupportLimit = b.SupportLimit,
-                    AssetsLimit = b.AssetsLimit                    
-                }).ToList();
 
             return new EditBudgetFormModel
             {
@@ -148,7 +179,8 @@ namespace PaymentsBudgetSystem.Core.Services
         }
 
         public async Task<IEnumerable<BudgetViewModel>> GetIndividualBudgetsAsync(string userId)
-            => await context
+        {
+            var budgetViewModel = await context
                 .IndividualBudgets
                 .Include(b => b.User)
                 .Where(b => b.UserId == userId)
@@ -159,9 +191,12 @@ namespace PaymentsBudgetSystem.Core.Services
                     Id = b.Id,
                     SalariesLimit = b.SalariesLimit,
                     SupportLimit = b.SupportLimit,
-                    Name = b.User.Name
+                    Name = b.User.Name,
                 })
                 .ToArrayAsync();
+
+            return budgetViewModel;
+        }
 
         private ConsolidatedBudgetViewModel GenerateConsolidatedBudget(
                 ConsolidatedBudget consolidatedBudget,
@@ -183,7 +218,7 @@ namespace PaymentsBudgetSystem.Core.Services
             IndividualBudget individualBudget = await context
                 .IndividualBudgets
                 .FindAsync(model.Id)
-                    ?? throw new ArgumentNullException("", CannotRetrieveIndividualBudget);
+                    ?? throw new InvalidOperationException(CannotRetrieveIndividualBudget);
 
             individualBudget.SalariesLimit = model.NewSalaryLimit;
             individualBudget.SupportLimit = model.NewSupportLimit;

@@ -12,8 +12,14 @@
 
         public decimal SalariesLimit { get; set; }
 
+        public decimal SalariesExpenses { get; set; }
+
         public decimal SupportLimit { get; set; }
 
+        public decimal SupportExpenses { get; set; }
+
         public decimal AssetsLimit { get; set; }
+
+        public decimal AssetsExpenses { get; set; }
     }
 }
