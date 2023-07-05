@@ -10,12 +10,12 @@ namespace PaymentsBudgetSystem.Core.Models.Beneficiaries
     {
         public Guid? Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [StringLength(BeneficiaryNameMaxLength, ErrorMessage = StringMaxLengthValidationError)]
         [Display(Name = "Име на контрагента")]
         public string Name { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [StringLength(BeneficiaryIdentifierFixedLength, ErrorMessage = StringMaxLengthValidationError)]
         [Display(Name = "Булстат")]
         [RegularExpression(@"^\d{9}$", ErrorMessage = BeneficiaryIdentifierMustBeNineDigits)]
@@ -25,6 +25,7 @@ namespace PaymentsBudgetSystem.Core.Models.Beneficiaries
         [Display(Name = "Адрес")]
         public string? Address { get; set; }
 
+        [Required(ErrorMessage = FieldIsRequired)]
         [Display(Name = "Банкова сметка")]
         [RegularExpression(BankAccountRegex, ErrorMessage = BeneficiaryInvalidBankAccount)]
         public string BankAccount { get; set; } = null!;

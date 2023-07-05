@@ -3,6 +3,9 @@ namespace PaymentsBudgetSystem.Core.Models.Cash
 {
     using Core.Models.Employees;
     using Data.Entities.Enums;
+    using System.ComponentModel.DataAnnotations;
+
+    using static Common.ValidationErrors.General;
 
     public class CashPaymentDetailsModel
     {

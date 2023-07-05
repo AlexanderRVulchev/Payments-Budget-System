@@ -12,27 +12,28 @@ namespace PaymentsBudgetSystem.Core.Models.Employees
     {
         public Guid? Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength, ErrorMessage = StringLengthValidationError)]
         [Display(Name = "Име")]
         public string FirstName { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength, ErrorMessage = StringLengthValidationError)]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [StringLength(EgnFixedLength, MinimumLength = EgnFixedLength, ErrorMessage = StringFixedLength)]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = EgnRegexValidationMessage)]
         [Display(Name = "ЕГН")]
         public string Egn { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [Display(Name = "Брутна заплата")]
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = MoneyValidationError)]
         public decimal MonthlySalary { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [Display(Name = "Дата на назначаване")]
         public DateTime DateEmployed { get; set; }
                 

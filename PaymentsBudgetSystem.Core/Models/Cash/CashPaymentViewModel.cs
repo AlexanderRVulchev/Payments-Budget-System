@@ -15,7 +15,7 @@ namespace PaymentsBudgetSystem.Core.Models.Cash
 
         public Guid SelectedEmployee { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = FieldIsRequired)]
         [Range(1, int.MaxValue, ErrorMessage = OrderNumberMustBeAPositiveNumber)]
         [Display(Name = "Номер на ордер")]
         public int CashOrderNumber { get; set; }

@@ -20,7 +20,9 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         public decimal BalanceValue { get; set; }
 
-        public decimal Amortization { get; set; }
+        public decimal AmortizationValue { get; set; }
+
+        public decimal AmortizationQuotaLeft { get; set; }
 
         public decimal ResidualValue { get; set; }
 

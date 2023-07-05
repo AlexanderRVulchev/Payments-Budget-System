@@ -16,6 +16,8 @@
 
         public const string InvalidYearError = "Годината трябва да бъде между {1} и {2}";
 
+        public const string EgnRegexValidationMessage = "Полето ЕГН трябва да съдържа само цифри";
+
         public const string InvalidMonthError = "Невалиден месец.";
 
         public const string DateIsInvalid = "Моля, въведете дата във формат дд.мм.гггг";
@@ -27,5 +29,7 @@
         public const string OrderNumberMustBeAPositiveNumber = "Номера на ордера трябва да бъде положително число.";
 
         public const string EarlierDateCannotBeAfterLaterDate = "Невъзможно е началната дата да бъде след крайната дата.";
+
+        public const string FieldIsRequired = "Полето е задължително";
     }
 }

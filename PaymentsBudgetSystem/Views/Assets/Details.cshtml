@@ -64,6 +64,7 @@
                     <th scope="col">Отчетна стойност</th>
                     <th scope="col">Балансова стойност</th>
                     <th scope="col">Амортизация</th>
+                    <th scope="col">Амортизационна квота</th>
                     <th scope="col">Остатъчна стойност</th>
                     <th scope="col"></th>
                 </tr>
@@ -80,7 +81,8 @@
                             <td>@currentMonth</td>
                             <td>@monthlyStatus.ReportValue.ToString("n")</td>
                             <td>@monthlyStatus.BalanceValue.ToString("n")</td>
-                            <td>@monthlyStatus.Amortization.ToString("n")</td>
+                            <td>@monthlyStatus.AmortizationValue.ToString("n")</td>
+                            <td>@monthlyStatus.AmortizationQuotaLeft.ToString("n")</td>
                             <td>@monthlyStatus.ResidualValue.ToString("n")</td>
                         </tr>
                         currentMonth++;

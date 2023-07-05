@@ -124,6 +124,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
             for (int month = 1; month <= 12; month++)
             {
+
                 var assetInfoModel = new AssetInfoViewModel
                 {
                     DateAquired = entity.DateAquired,
@@ -137,6 +138,10 @@ namespace PaymentsBudgetSystem.Core.Services
                    (entity.DateAquired.Year == year && entity.DateAquired.Month <= month))
                 {
                     assetInfoModel = calculator.CalculateAssetDataByYearAndMonth(year, month, assetInfoModel, settings);
+                }
+                else
+                {
+                    assetInfoModel.ReportValue = 0;
                 }
 
                 monthlyInfoModels.Add(assetInfoModel);

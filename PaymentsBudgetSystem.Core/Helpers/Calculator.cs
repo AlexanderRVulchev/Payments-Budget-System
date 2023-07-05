@@ -41,18 +41,19 @@
             decimal amortizationPerMonth = totalAmortizationQuota / totalLifeOfAssetInMonths;
             decimal assetAmortization = amortizationPerMonth * numberOfMonthsSinceAquisition;
             decimal assetBalanceValue = asset.ReportValue - assetAmortization;
+            decimal amortizationQuotaLeft = totalAmortizationQuota - assetAmortization;
 
             if (assetAmortization > totalAmortizationQuota)
             {
                 assetAmortization = asset.ReportValue - assetResidualValue;
                 assetBalanceValue = asset.ReportValue - assetAmortization;
+                amortizationQuotaLeft = 0;
             }
 
             asset.ResidualValue = assetResidualValue;
             asset.BalanceValue = assetBalanceValue;
-            asset.Amortization = assetAmortization;
-
-
+            asset.AmortizationValue = assetAmortization;
+            asset.AmortizationQuotaLeft = amortizationQuotaLeft;
 
             return asset;
         }

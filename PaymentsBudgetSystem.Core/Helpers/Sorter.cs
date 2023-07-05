@@ -145,7 +145,7 @@
                     case AssetSort.Name:
                         assets = assets.OrderBy(a => a.Name).ToList(); break;
                     case AssetSort.AmortizationValue:
-                        assets = assets.OrderBy(a => a.Amortization).ToList(); break;
+                        assets = assets.OrderBy(a => a.AmortizationValue).ToList(); break;
                     case AssetSort.DateAquired:
                         assets = assets.OrderBy(a => a.DateAquired).ToList(); break;
                     case AssetSort.ReportValue:
@@ -162,7 +162,7 @@
                     case AssetSort.Name:
                         assets = assets.OrderByDescending(a => a.Name).ToList(); break;
                     case AssetSort.AmortizationValue:
-                        assets = assets.OrderByDescending(a => a.Amortization).ToList(); break;
+                        assets = assets.OrderByDescending(a => a.AmortizationValue).ToList(); break;
                     case AssetSort.DateAquired:
                         assets = assets.OrderByDescending(a => a.DateAquired).ToList(); break;
                     case AssetSort.ReportValue:
