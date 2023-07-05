@@ -16,12 +16,23 @@
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form asp-action="Edit" method="post">
-            <p>Име: @Model.FirstName</p>
-            <input type="hidden" asp-for="@Model.FirstName" class="form-control" value="@Model.FirstName" />
-            <p>Фамилия: @Model.LastName</p>
-            <input type="hidden" asp-for="@Model.LastName" class="form-control" value="@Model.LastName" />
-            <p>ЕГН: @Model.Egn</p>
-            <input type="hidden" asp-for="@Model.Egn" class="form-control" value="@Model.Egn" />
+            <div class="mb-3">
+                <label asp-for="@Model.FirstName" class="form-label-add-edit">Име: </label>
+                <input asp-for="@Model.FirstName" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.LastName" class="form-label-add-edit">Фамилия: </label>
+                <input asp-for="@Model.LastName" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.Egn" class="form-label-add-edit">ЕГН: </label>
+                <input asp-for="@Model.Egn" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Egn" class="text-danger"></span>
+            </div>
             <div>
                 @{
                     string type = "Вид трудово правоотношение: ";
@@ -37,7 +48,7 @@
                 }
                 <input type="hidden" asp-for="@Model.ContractType" class="form-control" value="@Model.ContractType" />
             </div>
-            
+
             <p>Дата на назначаване: @Model.DateEmployed.ToString("dd-MM-yyyy") г.</p>
             <input type="hidden" asp-for="@Model.DateEmployed" class="form-control" value="@Model.DateEmployed" />
             <div class="mb-3">

@@ -1,7 +1,11 @@
 ﻿using PaymentsBudgetSystem.Data.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace PaymentsBudgetSystem.Core.Models.Assets
 {
+    using static Common.DataConstants.General;
+    using static Common.ValidationErrors.General;
+
     public class AssetDetailsViewModel
     {
         public string Name { get; set; } = null!;
@@ -12,6 +16,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         public ParagraphType ParagraphType { get; set; }
 
+        [Range(YearMinValue, YearMaxValue, ErrorMessage = InvalidYearError)]
         public int Year { get; set; }
 
         public decimal ReportValue { get; set; }

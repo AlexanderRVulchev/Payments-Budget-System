@@ -58,6 +58,9 @@ namespace PaymentsBudgetSystem.Core.Services
 
             entity.MonthlySalary = model.MonthlySalary;
             entity.DateLeft = model.DateLeft;
+            entity.FirstName = model.FirstName;
+            entity.LastName = model.LastName;
+            entity.Egn = model.Egn;
 
             await context.SaveChangesAsync();
         }

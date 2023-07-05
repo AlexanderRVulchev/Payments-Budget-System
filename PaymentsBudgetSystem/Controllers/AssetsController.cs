@@ -73,8 +73,13 @@ namespace PaymentsBudgetSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(AssetDetailsViewModel model)
+        public async Task<IActionResult> Details(AssetDetailsViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model = await assetService.GetAssetDetailsAsync(User.Id(), model.AssetId, model.Year);
+                return View(model);
+            }
             return RedirectToAction(nameof(Details), new { id = model.AssetId, year = model.Year });
         }
     }
