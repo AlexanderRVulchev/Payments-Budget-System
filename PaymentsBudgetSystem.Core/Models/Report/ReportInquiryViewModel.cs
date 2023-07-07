@@ -8,6 +8,10 @@
 
         public bool IsConsolidated { get; set; }
 
+        public string? InstitutionName { get; set; }
+
+        public string? InstitutionId { get; set; }
+
         public List<ReportAnnotationViewModel> IndividualReports { get; set; } = new();
 
         public List<ReportAnnotationViewModel> ConsolidatedReports { get; set; } = new();

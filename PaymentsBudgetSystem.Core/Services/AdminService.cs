@@ -3,18 +3,66 @@
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
-    using Data;
-    using Models;
     using Core.Models.Administration;
+    using Core.Models.Report;
+    using Data;
+    using Data.Entities;
+    using System;
     using GlobalSetting = Models.Enums.GlobalSetting;
+
+    using static Common.ExceptionMessages.Report;
 
     public class AdminService : IAdminService
     {
         private readonly PBSystemDbContext context;
 
-        public AdminService(PBSystemDbContext _context)
+        private readonly IReportService reportService;
+
+        public AdminService(PBSystemDbContext _context, IReportService _reportService)
         {
             context = _context;
+            reportService = _reportService;
+        }
+
+        public async Task DeleteReportById(Guid reportId)
+        {
+            Report report = await context
+                .Reports
+                .FindAsync(reportId)
+                    ?? throw new InvalidOperationException(ReportDoesNotExist);
+
+            context.Reports.Remove(report);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<DeleteReportFormModel> GetAllReportsAsync()
+        {
+            var institutions = await context
+                .Users
+                .Where(u => u.IndividualBudgets.Any() || u.ConsolidatedBudgets.Any())
+                .Select(u => new
+                {
+                    InstitutionId = u.Id,
+                    InstitutionName = u.Name,
+                })
+                .ToArrayAsync();
+
+            var model = new DeleteReportFormModel();
+
+            foreach (var institution in institutions)
+            {
+                var institutionReportsCollection = new ReportInquiryViewModel
+                {
+                    InstitutionId = institution.InstitutionId,
+                    InstitutionName = institution.InstitutionName
+                };
+
+                await reportService.AddReportAnnotations(institution.InstitutionId, institutionReportsCollection);
+
+                model.InstitutionsWithReports.Add(institutionReportsCollection);
+            }
+
+            return model;
         }
 
         public async Task<GlobalSettingsEditModel> GetGlobalSettingsAsync()

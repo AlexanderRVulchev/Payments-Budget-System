@@ -6,6 +6,7 @@ namespace PaymentsBudgetSystem.Areas.Administration.Controllers
     using Core.Contracts;
     using Core.Models;
     using Core.Models.Administration;
+    using PaymentsBudgetSystem.Core.Models.Report;
 
     [Area("Administration")]
     public class AdminController : Controller
@@ -36,6 +37,26 @@ namespace PaymentsBudgetSystem.Areas.Administration.Controllers
             await adminService.SaveGlobalSettingsAsync(model);
 
             return RedirectToAction(nameof(Settings));
+        }
+
+        public async Task<IActionResult> Reports()
+        {
+            DeleteReportFormModel model = await adminService.GetAllReportsAsync();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteReport(Guid id)
+        {
+            try
+            {
+                await adminService.DeleteReportById(id);
+                return RedirectToAction(nameof(Reports));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
         }
     }
 }

@@ -1,0 +1,64 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Administration;
+@using PaymentsBudgetSystem.Core.Models.Report;
+
+@model DeleteReportFormModel
+
+@{
+    ViewData["Title"] = "Изтриване на отчет";
+}
+
+<a class="btn btn-outline-success align-content-end" asp-action="Settings">Настройки</a>
+
+<h2 class="text-center font-weight-bold">@ViewBag.Title</h2>
+<hr />
+
+@foreach (var institution in Model.InstitutionsWithReports)
+{
+    <h3 class="text-center font-weight-bold">Отчети на @institution.InstitutionName</h3>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title font-weight-bold">Индивидуални отчети</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var report in institution.IndividualReports)
+                            {
+                                <div class="text-md-center col-6">
+                                    Отчет м. @report.Month @report.Year г.
+                                    <a class="btn btn-outline-danger" asp-route-id="@report.ReportId" asp-action="DeleteReport" >Изтриване</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title font-weight-bold">Консолидирани отчети</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var report in institution.ConsolidatedReports)
+                            {
+                                <div class="text-md-center col-6">
+                                    Отчет м. @report.Month @report.Year г.
+                                    <input class="btn btn-outline-danger" type="submit" asp-action="DeleteReport" value="Изтриване">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
