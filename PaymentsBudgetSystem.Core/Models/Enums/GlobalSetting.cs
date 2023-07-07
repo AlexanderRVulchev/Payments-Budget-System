@@ -14,6 +14,7 @@
         HealthInsuranceEmployee = 10,
         AdditionalInsuranceEmployer = 11,
         AdditionalInsuranceEmployee = 12,
-        TaxRate = 13
+        TaxRate = 13,
+        MinimumWage = 14
     }
 }

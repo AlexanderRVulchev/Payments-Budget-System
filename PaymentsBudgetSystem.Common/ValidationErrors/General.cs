@@ -8,7 +8,7 @@
 
         public const string StringFixedLength = "Полето {0} трябва да съдържа точно {1} символа.";
 
-        public const string MoneyValidationError = "Полето {0} трябва да бъде със стойност между {1} и {2}.";
+        public const string RangeValidationError = "Полето {0} трябва да бъде със стойност между {1} и {2}.";
 
         public const string PasswordDoesntMatchError = "Паролата не съвпада.";
 

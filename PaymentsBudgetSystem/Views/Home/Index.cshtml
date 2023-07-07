@@ -7,39 +7,43 @@
     ViewData["Title"] = "Начало";
 }
 
-
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="text-center font-weight-bold">@ViewBag.Title</h2>
 <hr />
 
-<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
-
-
-<div class="text-center" row>
-    <div class="accordion-header w-50">Моля, изберете институция за достъп до финансовите й отчети</div>
-    <div class="w-25 offset-2">
-        <form class="input-group-sm row" method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
-            <select asp-for="SelectedInstitutionId" class="form-control" aria-required="true">
-                <option value="@null">Избор</option>
-                @foreach (var institution in Model.Institutions)
-                {
-                    <option value="@institution.UserId">@institution.InstitutionName</option>
-                }
-            </select>
-            <span asp-validation-for="SelectedInstitutionId" class="text-danger"></span>
-            <input type="submit" class="btn btn-success" asp-action="Index" asp-route-id="@Model.SelectedInstitutionId" asp-route-name="@Model.SelectedInstitutionName" value="Преглед на отчетите">
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
+                <div class="form-group">
+                    <label for="selectedInstitutionId" class="font-weight-bold">Моля, изберете институция за достъп до финансовите й отчети:</label>
+                    <select id="selectedInstitutionId" asp-for="SelectedInstitutionId" class="form-control form-control-sm" aria-required="true">
+                        <option value="">Избор</option>
+                        @foreach (var institution in Model.Institutions)
+                        {
+                            <option value="@institution.UserId">@institution.InstitutionName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SelectedInstitutionId" class="text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <input type="submit" class="btn btn-success" asp-action="Index" asp-route-id="@Model.SelectedInstitutionId" asp-route-name="@Model.SelectedInstitutionName" value="Преглед на отчетите">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div class="text-center row">
+<div class="container mt-4">
     <div class="row">
-        <div class="pbs-box col-lg-5">
-            <div class="row">
-                <div class="col-6">
-                    <p>Индивидуални отчети</p>
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="card-title font-weight-bold">Индивидуални отчети</h5>
+                </div>
+                <div class="card-body">
                     @foreach (var report in Model.ReportAnnotationCollection.IndividualReports)
                     {
-                        <a class="btn btn-info" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                        <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
                             Отчет м. @report.Month @report.Year г.
                         </a>
                     }
@@ -47,20 +51,21 @@
             </div>
         </div>
 
-        <div class="pbs-box offset-lg-1 col-lg-5">
-            <div class="row">
-                <div class="col-6">
-                    <p>Консолидирани отчети</p>
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="card-title font-weight-bold">Консолидирани отчети</h5>
+                </div>
+                <div class="card-body">
                     @foreach (var report in Model.ReportAnnotationCollection.ConsolidatedReports)
                     {
-                        <a class="btn btn-info" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                        <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
                             Отчет м. @report.Month @report.Year г.
                         </a>
                     }
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

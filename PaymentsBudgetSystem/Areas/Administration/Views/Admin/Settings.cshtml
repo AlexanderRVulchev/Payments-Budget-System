@@ -1,0 +1,167 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Administration
+
+@model GlobalSettingsEditModel
+
+@{
+    ViewBag.Title = "Настройки";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+
+<form class="input-group-sm" method="post" asp-area="Administration" asp-controller="Admin" asp-action="Settings">
+    <div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="UpkeepLife" class="form-label">Стопански инвентар - полезен живот в месеци: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="UpkeepLife" class="form-control" value="@Model.UpkeepLife.ToString("n")" />
+                <span asp-validation-for="UpkeepLife" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="UpkeepResidualPartPercentage" class="form-label">Стопански инвентар - процент остатъчна стойност: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="UpkeepResidualPartPercentage" class="form-control" value="@Model.UpkeepResidualPartPercentage.ToString("n")" />
+                <span asp-validation-for="UpkeepResidualPartPercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="TangibleAssetLife" class="form-label">Техника и оборудване - полезен живот в месеци: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="TangibleAssetLife" class="form-control" value="@Model.TangibleAssetLife.ToString("n")" />
+                <span asp-validation-for="TangibleAssetLife" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="TangibleAssetResidualPartPercentage" class="form-label">Техника и оборудване - процент остатъчна стойност: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="TangibleAssetResidualPartPercentage" class="form-control" value="@Model.TangibleAssetResidualPartPercentage.ToString("n")" />
+                <span asp-validation-for="TangibleAssetResidualPartPercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="IntangibleAssetLife" class="form-label">Нематериални активи - полезен живот в месеци: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="IntangibleAssetLife" class="form-control" value="@Model.IntangibleAssetLife.ToString("n")" />
+                <span asp-validation-for="IntangibleAssetLife" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="IntangibleAssetResidualPartPercentage" class="form-label">Нематериални активи - процент остатъчна стойност: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="IntangibleAssetResidualPartPercentage" class="form-control" value="@Model.IntangibleAssetResidualPartPercentage.ToString("n")" />
+                <span asp-validation-for="IntangibleAssetResidualPartPercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="InsurancePensionEmployerPercentage" class="form-label">Фонд Пенсии - работодател: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="InsurancePensionEmployerPercentage" class="form-control" value="@Model.InsurancePensionEmployerPercentage.ToString("n")" />
+                <span asp-validation-for="InsurancePensionEmployerPercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="InsurancePensionEmployeePercentage" class="form-label">Фонд Пенсии - служител: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="InsurancePensionEmployeePercentage" class="form-control" value="@Model.InsurancePensionEmployeePercentage.ToString("n")" />
+                <span asp-validation-for="InsurancePensionEmployeePercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="HealthInsuranceEmployerPercentage" class="form-label">Здравно осигуряване - работодател: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="HealthInsuranceEmployerPercentage" class="form-control" value="@Model.HealthInsuranceEmployerPercentage.ToString("n")" />
+                <span asp-validation-for="HealthInsuranceEmployerPercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="HealthInsuranceEmployeePercentage" class="form-label">Здравно осигуряване - служител: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="HealthInsuranceEmployeePercentage" class="form-control" value="@Model.HealthInsuranceEmployeePercentage.ToString("n")" />
+                <span asp-validation-for="HealthInsuranceEmployeePercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="AdditionalInsuranceEmployerPercentage" class="form-label">Oсигуряване в УПФ - работодател: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="AdditionalInsuranceEmployerPercentage" class="form-control" value="@Model.AdditionalInsuranceEmployerPercentage.ToString("n")" />
+                <span asp-validation-for="AdditionalInsuranceEmployerPercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="AdditionalInsuranceEmployeePercentage" class="form-label">Oсигуряване в УПФ - служител: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="AdditionalInsuranceEmployeePercentage" class="form-control" value="@Model.AdditionalInsuranceEmployeePercentage.ToString("n")" />
+                <span asp-validation-for="AdditionalInsuranceEmployeePercentage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="TaxRate" class="form-label">Данък общ доход: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="TaxRate" class="form-control" value="@Model.TaxRate.ToString("n")" />
+                <span asp-validation-for="TaxRate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4 offset-3">
+                <label asp-for="MinimumWage" class="form-label">Минимална работна заплата: </label>
+            </div>
+            <div class="col-1">
+                <input type="number" asp-for="MinimumWage" class="form-control" value="@Model.MinimumWage.ToString("n")" />
+                <span asp-validation-for="MinimumWage" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="row align-items-center">
+        <div class="col-2 offset-5">
+            <input class="btn btn-primary" type="submit" value="Запази промените" asp-area="Administration" asp-controller="Admin" asp-action="Settings">
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
