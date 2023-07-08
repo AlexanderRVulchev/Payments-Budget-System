@@ -12,6 +12,8 @@ namespace PaymentsBudgetSystem.Core.Services
 
     using static Common.ExceptionMessages.Employee;
     using static Common.DataConstants.General;
+    using PaymentsBudgetSystem.Core.Models.Enums;
+    using GlobalSetting = Models.Enums.GlobalSetting;
 
     public class EmployeeService : IEmployeeService
     {
@@ -180,6 +182,22 @@ namespace PaymentsBudgetSystem.Core.Services
                 LastName = entity.LastName,
                 MonthlySalary = entity.MonthlySalary
             };
+        }
+
+        public async Task<decimal> GetMinimumWageAsync()
+        {
+            var settingForMinimumWage = await context
+                    .GlobalSettings
+                    .FindAsync((int)GlobalSetting.MinimumWage);
+
+            if (settingForMinimumWage != null)
+            {
+                return settingForMinimumWage.SettingValue;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

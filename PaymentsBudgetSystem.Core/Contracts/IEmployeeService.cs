@@ -15,5 +15,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task<List<EmployeeListModel>> GetEmployeeListAsync(string userId);
 
         Task<EmployeeViewModel> GetEmployeeById(Guid id);
+
+        Task<decimal> GetMinimumWageAsync();
     }
 }

@@ -31,5 +31,7 @@
         public const string EarlierDateCannotBeAfterLaterDate = "Невъзможно е началната дата да бъде след крайната дата.";
 
         public const string FieldIsRequired = "Полето е задължително";
+
+        public const string SalaryIsBelowMinimumWage = "Брутната заплата на служителя не може да бъде по-малка от минималната работна заплата - {0} лв.";
     }
 }

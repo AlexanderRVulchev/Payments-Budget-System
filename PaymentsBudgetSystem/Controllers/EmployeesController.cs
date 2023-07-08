@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentsBudgetSystem.Controllers
 {
-    using Core.Models.Employees;
     using Core.Contracts;
-    using Extensions;
+    using Core.Models.Employees;
     using Core.Models.Enums;
+    using Extensions;
 
     using static Common.ExceptionMessages.Employee;
-    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using static Common.ValidationErrors.General;
 
     [Authorize]
     public class EmployeesController : Controller
@@ -69,6 +69,13 @@ namespace PaymentsBudgetSystem.Controllers
 
         public async Task<IActionResult> Add(EmployeeFormModel model)
         {
+            decimal minimumWage = await employeeService.GetMinimumWageAsync();
+
+            if (model.MonthlySalary < minimumWage)
+            {
+                ModelState.AddModelError("", String.Format(SalaryIsBelowMinimumWage, minimumWage.ToString("n")));
+            };
+
             if (!ModelState.IsValid)
             {
                 return View(model);
