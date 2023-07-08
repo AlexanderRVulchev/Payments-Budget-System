@@ -44,7 +44,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.InvoiceDate" class="form-label-add-edit">Дата на фактура: </label>
-                <input type="text" asp-for="@Model.InvoiceDate" class="form-control" aria-required="true">
+                <input type="date" asp-for="@Model.InvoiceDate" class="form-control" value="@DateTime.Now" aria-required="true">
                 <span asp-validation-for="@Model.InvoiceDate" class="text-danger"></span>
             </div>
             <div class="mb-3">

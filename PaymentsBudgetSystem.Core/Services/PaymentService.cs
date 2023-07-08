@@ -165,19 +165,6 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model)
         {
-            DateTime? invoiceDate;
-
-            var invoiceDateIsValid = DateTime.TryParseExact(model.InvoiceDate, ValidDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime validInvoiceDate);
-
-            if (!invoiceDateIsValid)
-            {
-                invoiceDate = null;
-            }
-            else
-            {
-                invoiceDate = validInvoiceDate;
-            }
-
             var beneficiary = await beneficiaryService.GetBeneficiaryAsync(userId, model.BeneficiaryId);
 
             var supportPayment = new Payment
@@ -192,7 +179,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 SupportDetails = new PaymentSupportDetails
                 {
                     BeneficiaryId = model.BeneficiaryId,
-                    InvoiceDate = invoiceDate,
+                    InvoiceDate = model.InvoiceDate,
                     InvoiceNumber = model.InvoiceNumber,
                 }
             };
@@ -422,7 +409,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 Description = entity.Description,
                 ParagraphType = entity.Paragraph,
                 PaymentType = entity.PaymentType,
-                InvoiceDate = entity.SupportDetails.InvoiceDate.ToString(),
+                InvoiceDate = entity.SupportDetails.InvoiceDate,
                 InvoiceNumber = entity.SupportDetails.InvoiceNumber,
                 Beneficiary = new BeneficiaryViewModel
                 {

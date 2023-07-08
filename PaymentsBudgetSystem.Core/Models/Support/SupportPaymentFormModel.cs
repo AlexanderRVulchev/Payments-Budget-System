@@ -26,7 +26,7 @@ namespace PaymentsBudgetSystem.Core.Models.Support
         public string? InvoiceNumber { get; set; }
 
         [Display(Name = "Дата на фактура")]
-        public string? InvoiceDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
 
         [MaxLength(DescriptionMaxLength)]
         [Display(Name = "Описание")]

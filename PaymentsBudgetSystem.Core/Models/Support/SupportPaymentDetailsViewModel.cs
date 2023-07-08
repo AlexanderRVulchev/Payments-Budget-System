@@ -13,7 +13,7 @@ namespace PaymentsBudgetSystem.Core.Models.Support
 
         public PaymentType PaymentType { get; set; }
 
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
 
         public ParagraphType ParagraphType { get; set; }
 
@@ -21,6 +21,6 @@ namespace PaymentsBudgetSystem.Core.Models.Support
 
         public string? InvoiceNumber { get; set; }
 
-        public string? InvoiceDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace PaymentsBudgetSystem.Controllers
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = InvalidParagraph });
             }
 
-            BeneficiaryFormModel? beneficiary = null;
+            BeneficiaryFormModel? beneficiary = new();
             try
             {
                 beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), (Guid)id);
@@ -74,16 +74,6 @@ namespace PaymentsBudgetSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Payment(SupportPaymentFormModel model)
         {
-            if (model.InvoiceDate != null)
-            {
-                var invoiceDateIsValid = DateTime.TryParseExact(model.InvoiceDate, ValidDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
-
-                if (!invoiceDateIsValid)
-                {
-                    ModelState.AddModelError("", DateIsInvalid);
-                }
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(model);

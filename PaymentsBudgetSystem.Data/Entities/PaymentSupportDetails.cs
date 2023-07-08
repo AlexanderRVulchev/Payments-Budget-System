@@ -20,6 +20,6 @@ namespace PaymentsBudgetSystem.Data.Entities
 
         public string? InvoiceNumber { get; set; }
 
-        public DateTime? InvoiceDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
     }
 }
