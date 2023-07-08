@@ -51,6 +51,13 @@ namespace PaymentsBudgetSystem.Controllers
 
                 return RedirectToAction(nameof(CashPaymentDetails), new { id = paymentId });
             }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                model.Employees = await employeeService.GetEmployeeListAsync(User.Id());
+
+                return View(model);
+            }
             catch (InvalidOperationException ex)
             {
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });

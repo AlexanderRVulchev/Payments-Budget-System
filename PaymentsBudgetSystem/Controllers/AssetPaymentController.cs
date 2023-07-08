@@ -110,10 +110,17 @@ namespace PaymentsBudgetSystem.Controllers
 
                 return RedirectToAction(nameof(AssetPaymentDetails), new { id = assetPaymentId });
             }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+
+                return View(model);
+            }
             catch (InvalidOperationException ex)
             {
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
             }
+
         }
 
         public async Task<IActionResult> AssetPaymentDetails(Guid id)

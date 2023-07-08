@@ -19,7 +19,7 @@ namespace PaymentsBudgetSystem.Controllers
             paymentService = _paymentService;
         }
 
-        
+
         public async Task<IActionResult> Payment(int year, int month)
         {
             SalariesPaymentViewModel model = await paymentService.CreatePayroll(User.Id(), year, month);
@@ -37,11 +37,24 @@ namespace PaymentsBudgetSystem.Controllers
 
             model = await paymentService.CreatePayroll(User.Id(), model.Year, model.Month);
 
-            var paymentId = await paymentService.AddNewSalariesPayment(User.Id(), model);
+            try
+            {
+                var paymentId = await paymentService.AddNewSalariesPayment(User.Id(), model);
 
-            TempData["SuccessMessage"] = "Заплатите са изплатени успешно!";
+                TempData["SuccessMessage"] = "Заплатите са изплатени успешно!";
 
-            return RedirectToAction(nameof(Details), new {id = paymentId});
+                return RedirectToAction(nameof(Details), new { id = paymentId });
+            }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+
+                return View(nameof(Payment), model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
+            }
         }
 
         public async Task<IActionResult> Details(Guid id)
@@ -54,7 +67,7 @@ namespace PaymentsBudgetSystem.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });                
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
             }
         }
     }

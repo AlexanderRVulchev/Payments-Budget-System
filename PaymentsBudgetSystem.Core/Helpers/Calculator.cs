@@ -168,5 +168,41 @@
             model.Bank5200 = payments.Where(p => p.PaymentType == PaymentType.Assets && p.ParagraphType == ParagraphType.AquisitionLongTermAssets5200).Sum(p => p.Amount);
             model.Bank5300 = payments.Where(p => p.PaymentType == PaymentType.Assets && p.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300).Sum(p => p.Amount);
         }
+
+        public decimal CalculateFreeSupportFunds(ReportDataModel report)
+        {
+            decimal totalSupportExpenses =
+                  report.Cash1015
+                + report.Bank1015
+                + report.Bank1020
+                + report.Cash1020
+                + report.Cash1051
+                + report.Bank0101;
+
+            return report.SupportLimit - totalSupportExpenses;
+        }
+
+        public decimal CalculateFreeSalariesFunds(ReportDataModel report)
+        {
+            decimal totalSalariesExpenses = 
+                  report.Bank0101
+                + report.Bank0102
+                + report.Transfer0551
+                + report.Transfer0560
+                + report.Transfer0580
+                + report.Transfer0590;
+
+            return report.SalariesLimit - totalSalariesExpenses;
+        }
+
+        public decimal CalculateFreeAssetsFunds(ReportDataModel report)
+        {
+            decimal totalAssetsExpenses =
+                  report.Bank5100
+                + report.Bank5200
+                + report.Bank5300;
+
+            return report.AssetsLimit - totalAssetsExpenses;
+        }
     }
 }

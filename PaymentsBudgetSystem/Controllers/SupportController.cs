@@ -73,6 +73,13 @@ namespace PaymentsBudgetSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
+                model.Beneficiary = new BeneficiaryFormModel
+                {
+                    Name = beneficiary.Name,
+                    Id = beneficiary.Id
+                };
+
                 return View(model);
             }
 
@@ -83,9 +90,22 @@ namespace PaymentsBudgetSystem.Controllers
 
                 return RedirectToAction(nameof(SupportPaymentDetails), new { id = paymentId });
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                return RedirectToAction("Error", "Home", new { area = "", errorMessage = CannotAddPayment });
+                ModelState.AddModelError("", ex.Message);
+
+                var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
+                model.Beneficiary = new BeneficiaryFormModel 
+                { 
+                    Name = beneficiary.Name, 
+                    Id = beneficiary.Id 
+                };
+
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
             }
         }
 

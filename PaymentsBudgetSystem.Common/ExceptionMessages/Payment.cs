@@ -11,5 +11,9 @@
         public const string PaymentAccessDenied = "Нямате достъп до това плащане!";
 
         public const string InvoiceDateCannotBeInTheFuture = "Датата на фактурата не може да бъде след плащането по нея";
+
+        public const string NoBudgetCreated = "Няма утвърден бюджет за настоящата година. Не могат да се извършват плащания без бюджет";
+
+        public const string PaymentExceedsBudgetLimit = "Разходите не могат да превишават утвърденият план за {0} по бюджета. Свободни средства: {1} лв.";
     }
 }

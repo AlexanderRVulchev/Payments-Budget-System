@@ -19,6 +19,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
     using static Common.DataConstants.General;
     using static Common.ExceptionMessages.Payment;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class PaymentService : IPaymentService
     {
@@ -28,18 +29,32 @@ namespace PaymentsBudgetSystem.Core.Services
 
         private readonly IEmployeeService employeeService;
 
+        private readonly IReportService reportService;
+
         public PaymentService(
             PBSystemDbContext _context, 
             IBeneficiaryService _beneficiaryService,
-            IEmployeeService _employeeService)
+            IEmployeeService _employeeService,
+            IReportService _reportService)
         {
             context = _context;
             beneficiaryService = _beneficiaryService;
             employeeService = _employeeService;
+            reportService = _reportService;
         }
 
         public async Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model)
         {
+            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+
+            Calculator calculator = new();
+            decimal freeFundsForAssetsPayments = calculator.CalculateFreeAssetsFunds(currentYearReport);
+
+            if (freeFundsForAssetsPayments - model.Amount < 0)
+            {
+                throw new ArgumentException(String.Format(PaymentExceedsBudgetLimit, "Активи", freeFundsForAssetsPayments));
+            }
+
             var beneficiary = await beneficiaryService.GetBeneficiaryAsync(userId, model.BeneficiaryId);
 
             var assetPayment = new Payment
@@ -99,6 +114,16 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewCashPaymentAsync(string userId, CashPaymentViewModel model)
         {
+            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+
+            Calculator calculator = new();
+            decimal freeFundsForSupportPayments = calculator.CalculateFreeSupportFunds(currentYearReport);
+
+            if (freeFundsForSupportPayments - model.Amount < 0)
+            {
+                throw new ArgumentException(String.Format(PaymentExceedsBudgetLimit, "Издръжка", freeFundsForSupportPayments));
+            }
+
             var employee = await employeeService.GetEmployeeById(model.SelectedEmployee);
 
             var payment = new Payment
@@ -126,6 +151,16 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model)
         {
+            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+
+            Calculator calculator = new();
+            decimal freeFundsForSalariesPayments = calculator.CalculateFreeSalariesFunds(currentYearReport);
+
+            if (freeFundsForSalariesPayments - model.Amount < 0)
+            {
+                throw new ArgumentException(String.Format(PaymentExceedsBudgetLimit, "Заплати", freeFundsForSalariesPayments));
+            }
+
             List<PaymentSalaryDetails> salaryDetails = new();
 
             foreach (var individualSalary in model.IndividualSalaries)
@@ -165,6 +200,16 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model)
         {
+            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+            
+            Calculator calculator = new();
+            decimal freeFundsForSupportPayments = calculator.CalculateFreeSupportFunds(currentYearReport);
+            
+            if (freeFundsForSupportPayments - model.Amount < 0)
+            {
+                throw new ArgumentException(String.Format(PaymentExceedsBudgetLimit, "Издръжка", freeFundsForSupportPayments));
+            }
+
             var beneficiary = await beneficiaryService.GetBeneficiaryAsync(userId, model.BeneficiaryId);
 
             var supportPayment = new Payment

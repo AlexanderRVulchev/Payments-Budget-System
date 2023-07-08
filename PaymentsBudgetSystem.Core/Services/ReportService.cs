@@ -13,6 +13,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using System;
 
     using static Common.ExceptionMessages.Report;
+    using static Common.ExceptionMessages.Payment;
 
     public class ReportService : IReportService
     {
@@ -49,8 +50,6 @@ namespace PaymentsBudgetSystem.Core.Services
                 {
                     model.IndividualReports.Add(reportAnnotationModel);
                 }
-
-
             }
         }
 
@@ -135,7 +134,7 @@ namespace PaymentsBudgetSystem.Core.Services
                     SupportLimit = ib.SupportLimit
                 })
                 .FirstOrDefaultAsync()
-                    ?? new ReportLimitsDataModel();
+                    ?? throw new InvalidOperationException(NoBudgetCreated);
 
             var model = new ReportDataModel
             {

@@ -97,7 +97,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
                 return View(fullConsolidatedBudget);
             }
 
-            var budgetToEdit = fullConsolidatedBudget.IndividualBudgetsData.Where(b => b.Id != model.Id).First();
+            var budgetToEdit = fullConsolidatedBudget.IndividualBudgetsData.Where(b => b.Id == model.Id).First();
 
             if (model.NewSalaryLimit < budgetToEdit.SalariesExpenses ||
                 model.NewSupportLimit < budgetToEdit.SupportLimit ||
