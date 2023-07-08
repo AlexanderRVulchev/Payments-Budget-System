@@ -14,7 +14,9 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
     using System.Drawing.Text;
     using System.Security.Claims;
 
-    [Authorize]
+    using static Common.RoleNames;
+
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     [Area("Reports")]
     public class ReportController : Controller
     {

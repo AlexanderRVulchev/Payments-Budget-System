@@ -53,6 +53,7 @@ namespace PaymentsBudgetSystem.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.ApplyConfiguration(new GlobalSettingsConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
 
             base.OnModelCreating(builder);
         }

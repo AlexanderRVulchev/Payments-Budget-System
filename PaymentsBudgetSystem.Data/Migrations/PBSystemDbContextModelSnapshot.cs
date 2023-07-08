@@ -168,9 +168,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     b.Property<DateTime>("DateAquired")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateDisposed")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -588,7 +585,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     b.Property<Guid>("BeneficiaryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("InvoiceDate")
+                    b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InvoiceNumber")
@@ -750,6 +747,24 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "586513cb-2bad-4ea3-ae33-7b8954efb167",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "66930e12-e3fb-4bc3-943d-c8a0df377724",
+                            Email = "Администратор",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            Name = "Админитратор",
+                            NormalizedUserName = "admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAHdhO823htLmWdF59e+udFUa+7ryZIkGvM99MSPI0WXa6GrTzLedrdU1BSPH6ukVA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "03fb156f-b1b4-41e2-9def-3308865f9213",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("PaymentsBudgetSystem.Data.Entities.UserDependancy", b =>

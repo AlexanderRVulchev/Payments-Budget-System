@@ -10,8 +10,9 @@ namespace PaymentsBudgetSystem.Controllers
 
     using static Common.ExceptionMessages.Employee;
     using static Common.ValidationErrors.General;
+    using static Common.RoleNames;
 
-    [Authorize]
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class EmployeesController : Controller
     {
         private readonly IEmployeeService employeeService;
@@ -119,7 +120,7 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 await employeeService.EditEmployeeAsync(User.Id(), model);
-                TempData["SuccessMessage"] = "Успешна корекция на служител!";
+                TempData["SuccessMessage"] = "Успешна редакция на служител!";
             }
             catch (InvalidOperationException ex)
             {

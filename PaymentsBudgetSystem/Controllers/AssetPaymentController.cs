@@ -13,9 +13,9 @@ namespace PaymentsBudgetSystem.Controllers
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
     using static Common.ValidationErrors.General;
+    using static Common.RoleNames;
 
-
-    [Authorize]
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class AssetPaymentController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;

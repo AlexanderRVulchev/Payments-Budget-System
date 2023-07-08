@@ -1,22 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace PaymentsBudgetSystem.Controllers
 {
-    using Core.Models.Support;
     using Core.Contracts;
-    using Extensions;
     using Core.Models.Beneficiaries;
+    using Core.Models.Support;
     using Data.Entities.Enums;
+    using Extensions;
 
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
-    using static Common.ValidationErrors.General;
-    using static Common.DataConstants.General;
-    using PaymentsBudgetSystem.Data.Entities;
+    using static Common.RoleNames;
 
-    [Authorize]
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class SupportController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;

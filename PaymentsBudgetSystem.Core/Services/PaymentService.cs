@@ -287,7 +287,6 @@ namespace PaymentsBudgetSystem.Core.Services
                 {
                     AssetId = a.Id,
                     AssetAquired = a.DateAquired,
-                    AssetDisposed = a.DateDisposed,
                     Description = a.Description,
                     ReportValue = a.ReportValue
                 }).ToList()
@@ -431,7 +430,6 @@ namespace PaymentsBudgetSystem.Core.Services
                 assets.Add(new Asset
                 {
                     DateAquired = DateTime.Now,
-                    DateDisposed = null,
                     Description = description,
                     ReportValue = reportValue,
                     UserId = userId,

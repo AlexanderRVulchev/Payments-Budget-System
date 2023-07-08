@@ -56,7 +56,6 @@
                     <th scope="col">Име</th>
                     <th scope="col">Отчетна стойност</th>
                     <th scope="col">Дата на придобиване</th>
-                    <th scope="col">Дата на отписване</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -69,16 +68,6 @@
                         <td>@asset.Description</td>
                         <td>@asset.ReportValue</td>
                         <td>@asset.AssetAquired.ToShortDateString()</td>
-                        @{
-                            if (asset.AssetDisposed == null)
-                            {
-                                <td>няма</td>
-                            }
-                            else
-                            {
-                                <td>@asset.AssetDisposed.ToString()</td>
-                            }
-                        }
                         <td>
                             <span>
                                 <a class="nav-link btn-warning" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Преглед</a>

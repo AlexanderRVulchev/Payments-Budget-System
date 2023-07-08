@@ -19,8 +19,6 @@ namespace PaymentsBudgetSystem.Data.Entities
 
         public DateTime DateAquired { get; set; }
 
-        public DateTime? DateDisposed { get; set; }
-
         [Required]
         public ParagraphType Type { get; set; }
 

@@ -8,7 +8,9 @@ namespace PaymentsBudgetSystem.Controllers
     using Extensions;
     using PaymentsBudgetSystem.Core.Contracts;
 
-    [Authorize]
+    using static Common.RoleNames;
+
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class BeneficiariesController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;

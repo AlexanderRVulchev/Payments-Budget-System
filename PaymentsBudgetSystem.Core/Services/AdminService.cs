@@ -39,7 +39,7 @@ namespace PaymentsBudgetSystem.Core.Services
         {
             var institutions = await context
                 .Users
-                .Where(u => u.IndividualBudgets.Any() || u.ConsolidatedBudgets.Any())
+                .Where(u => u.Reports.Any())
                 .Select(u => new
                 {
                     InstitutionId = u.Id,

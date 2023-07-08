@@ -44,6 +44,10 @@ namespace PaymentsBudgetSystem.Extensions
             {
                 var role = new IdentityRole(AdminRoleName);
                 await roleManager.CreateAsync(role);
+
+                var admin = await userManager.FindByNameAsync("admin");
+
+                await userManager.AddToRoleAsync(admin, AdminRoleName);
             }
 
             if (!await roleManager.RoleExistsAsync(PrimaryRoleName))

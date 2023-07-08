@@ -8,7 +8,9 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models.Enums;
     using Extensions;
 
-    [Authorize]
+    using static Common.RoleNames;
+
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class AssetsController : Controller
     {
         private readonly IAssetService assetService;

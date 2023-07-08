@@ -12,8 +12,9 @@ namespace PaymentsBudgetSystem.Controllers
     using PaymentsBudgetSystem.Data.Entities.Enums;
 
     using static Common.ValidationErrors.General;
+    using static Common.RoleNames;
 
-    [Authorize]
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class InformationController : Controller
     {
         private readonly IInformationService informationService;

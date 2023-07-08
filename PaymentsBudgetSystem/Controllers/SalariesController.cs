@@ -7,8 +7,9 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Contracts;
     using Core.Models.Salaries;
     using Extensions;
+    using static Common.RoleNames;
 
-    [Authorize]
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class SalariesController : Controller
     {
         private readonly IPaymentService paymentService;

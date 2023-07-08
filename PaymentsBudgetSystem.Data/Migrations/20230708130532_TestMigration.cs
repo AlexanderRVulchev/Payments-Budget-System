@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentsBudgetSystem.Data.Migrations
 {
-    public partial class SeededGlobalSettings : Migration
+    public partial class TestMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -284,7 +284,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Paragraph = table.Column<int>(type: "int", nullable: false),
                     IsPending = table.Column<bool>(type: "bit", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    ReceiverName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -317,6 +318,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     Bank1020 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Cash1020 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Cash1051 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    Bank1051 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Bank5100 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Bank5200 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Bank5300 = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
@@ -395,9 +397,12 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NetSalaryJobContract = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     NetSalaryStateOfficial = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
-                    InsurancePension = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
-                    InsuranceHealth = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
-                    InsuranceAdditional = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    InsurancePensionEmployer = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    InsurancePensionEmployee = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    InsuranceHealthEmployer = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    InsuranceHealthEmployee = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    InsuranceAdditionalEmployer = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
+                    InsuranceAdditionalEmployee = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     IncomeTax = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -423,7 +428,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     SupportPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeneficiaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -448,7 +453,6 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DateAquired = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateDisposed = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false),
                     ReportValue = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -471,6 +475,11 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "586513cb-2bad-4ea3-ae33-7b8954efb167", 0, "66930e12-e3fb-4bc3-943d-c8a0df377724", "Администратор", false, false, null, "Админитратор", null, "admin", "AQAAAAEAACcQAAAAEAHdhO823htLmWdF59e+udFUa+7ryZIkGvM99MSPI0WXa6GrTzLedrdU1BSPH6ukVA==", null, false, "03fb156f-b1b4-41e2-9def-3308865f9213", false, "admin" });
+
+            migrationBuilder.InsertData(
                 table: "GlobalSettings",
                 columns: new[] { "Id", "SettingName", "SettingValue" },
                 values: new object[,]
@@ -480,7 +489,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     { 3, "Техника и оборудване - полезен живот в месеци", 60m },
                     { 4, "Техника и оборудване - процент остатъчна стойност", 0.15m },
                     { 5, "Нематериални активи - полезен живот в месеци", 12m },
-                    { 6, "Нематериални активи - процент остатъчна стойност", 0m }
+                    { 6, "Нематериални активи - процент остатъчна стойност", 0m },
+                    { 7, "Фонд Пенсии - работодател", 0.1372m },
+                    { 8, "Фонд Пенсии - служител", 0.1058m },
+                    { 9, "Здравно осигуряване - работодател", 0.048m },
+                    { 10, "Здравно осигуряване - служител", 0.032m },
+                    { 11, "Oсигуряване в УПФ - работодател", 0.028m },
+                    { 12, "Oсигуряване в УПФ - служител", 0.022m },
+                    { 13, "Данък общ доход", 0.1m },
+                    { 14, "Минимална работна заплата", 780m }
                 });
 
             migrationBuilder.CreateIndex(

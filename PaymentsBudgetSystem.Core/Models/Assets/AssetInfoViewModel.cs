@@ -10,8 +10,6 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         public DateTime DateAquired { get; set; }
 
-        public DateTime? DateDisposed { get; set; }
-
         public ParagraphType Type { get; set; }
 
         public string TypeText { get; set; } = null!;

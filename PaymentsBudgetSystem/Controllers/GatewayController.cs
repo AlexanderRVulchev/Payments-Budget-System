@@ -8,7 +8,9 @@ namespace PaymentsBudgetSystem.Controllers
     using Extensions;
     using Microsoft.AspNetCore.Authorization;
 
-    [Authorize]
+    using static Common.RoleNames;
+
+    [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class GatewayController : Controller
     {
         private readonly IBeneficiaryService beneficiaryService;

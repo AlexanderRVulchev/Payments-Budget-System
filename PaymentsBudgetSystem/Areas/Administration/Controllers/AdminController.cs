@@ -6,9 +6,13 @@ namespace PaymentsBudgetSystem.Areas.Administration.Controllers
     using Core.Contracts;
     using Core.Models;
     using Core.Models.Administration;
+    using Microsoft.AspNetCore.Authorization;
     using PaymentsBudgetSystem.Core.Models.Report;
 
+    using static Common.RoleNames;
+
     [Area("Administration")]
+    [Authorize(Roles = AdminRoleName)]
     public class AdminController : Controller
     {
         private readonly IAdminService adminService;

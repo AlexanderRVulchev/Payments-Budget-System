@@ -7,6 +7,8 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models.Report;
     using PaymentsBudgetSystem.Core.Contracts;
 
+    using static Common.RoleNames;
+
     public class HomeController : Controller
     {
         private readonly IReportService reportService;
@@ -24,6 +26,11 @@ namespace PaymentsBudgetSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string? id, string? name)
         {
+            if (User.IsInRole(AdminRoleName))
+            {
+                return RedirectToAction("Settings", "Admin", new { area = "Administration" });
+            }
+
             var reportsToLoad = new ReportInquiryViewModel();
 
             if (id != null)

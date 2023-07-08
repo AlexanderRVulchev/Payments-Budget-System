@@ -43,7 +43,6 @@ namespace PaymentsBudgetSystem.Core.Services
                     AssetId = a.Id,
                     Name = a.Description,
                     DateAquired = a.DateAquired,
-                    DateDisposed = a.DateDisposed,
                     ReportValue = a.ReportValue,
                     TypeText = typeTexts[(int)a.Type],
                     Type = a.Type,
