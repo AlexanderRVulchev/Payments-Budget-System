@@ -105,6 +105,9 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 Guid assetPaymentId = await paymentService.AddNewAssetPayment(User.Id(), model);
+
+                TempData["SuccessMessage"] = "Активите са платени и придобити успешно!";
+
                 return RedirectToAction(nameof(AssetPaymentDetails), new { id = assetPaymentId });
             }
             catch (InvalidOperationException ex)

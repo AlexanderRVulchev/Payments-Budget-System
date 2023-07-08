@@ -83,6 +83,8 @@ namespace PaymentsBudgetSystem.Controllers
 
             await employeeService.AddEmployeeAsync(User.Id(), model);
 
+            TempData["SuccessMessage"] = "Успешно добавяне на нов служител!";
+
             return RedirectToAction(nameof(Info));
         }
 
@@ -117,6 +119,7 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 await employeeService.EditEmployeeAsync(User.Id(), model);
+                TempData["SuccessMessage"] = "Успешна корекция на служител!";
             }
             catch (InvalidOperationException ex)
             {

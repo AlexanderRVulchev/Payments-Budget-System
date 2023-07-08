@@ -7,12 +7,17 @@
     ViewBag.Title = "Извършено плащане за Издръжка";
 }
 
-
 <h2 class="text-center text-success">@ViewBag.Title</h2>
 <hr />
 
-<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success d-flex justify-content-center col-6 offset-lg-3">
+        <strong>@TempData["SuccessMessage"]</strong>
+    </div>
+}
 
+<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
 <div class="pbs-box">
     <p>Име на получателя: @Model.Beneficiary.Name</p>

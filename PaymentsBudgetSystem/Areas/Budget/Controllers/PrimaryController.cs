@@ -42,6 +42,8 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             try
             {
                 await budgetService.AddNewConsolidatedBudget(User.Id(), model.NewBudgetYear, model.NewBudgetFunds);
+
+                TempData["SuccessMessage"] = "Успешно е добавен нов бюджет!";
             }
             catch (InvalidOperationException ex)
             {
@@ -63,6 +65,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             try
             {
                 EditBudgetFormModel model = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(User.Id(), year);
+
                 return View(model);
             }
             catch (InvalidOperationException)
@@ -107,6 +110,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             try
             {
                 await budgetService.EditBudgetAsync(model);
+                TempData["SuccessMessage"] = "Бюджетът е променен успешно!";
             }
             catch (InvalidOperationException ex)
             {

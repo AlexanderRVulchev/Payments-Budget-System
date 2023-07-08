@@ -78,6 +78,7 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 await beneficiaryService.AddBeneficiaryAsync(User.Id(), model);
+                TempData["SuccessMessage"] = "Успешно добавяне на контрагент!";
             }
             catch (InvalidOperationException ex)
             {
@@ -112,6 +113,7 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 await beneficiaryService.EditBeneficiaryAsync(User.Id(), model);
+                TempData["SuccessMessage"] = "Контрагентът е редактиран успешно!";
             }
             catch (InvalidOperationException ex)
             {

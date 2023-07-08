@@ -44,6 +44,9 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 var paymentId = await paymentsService.AddNewCashPaymentAsync(User.Id(), model);
+
+                TempData["SuccessMessage"] = "Касовото плащане е извършено успешно!";
+
                 return RedirectToAction(nameof(CashPaymentDetails), new { id = paymentId });
             }
             catch (InvalidOperationException ex)

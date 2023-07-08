@@ -38,6 +38,8 @@ namespace PaymentsBudgetSystem.Controllers
 
             var paymentId = await paymentService.AddNewSalariesPayment(User.Id(), model);
 
+            TempData["SuccessMessage"] = "Заплатите са изплатени успешно!";
+
             return RedirectToAction(nameof(Details), new {id = paymentId});
         }
 

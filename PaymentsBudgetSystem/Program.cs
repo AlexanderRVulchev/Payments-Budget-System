@@ -38,7 +38,7 @@ namespace PaymentsBudgetSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PBSystemDbContext>();
 
-            
+
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/User/Login";
@@ -82,7 +82,7 @@ namespace PaymentsBudgetSystem
             pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            var seedRoles = app.SeedRoles(); 
+            var seedRoles = app.SeedRoles();
             seedRoles.Wait();
 
             app.Run();

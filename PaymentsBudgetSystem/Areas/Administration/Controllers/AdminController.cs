@@ -36,6 +36,8 @@ namespace PaymentsBudgetSystem.Areas.Administration.Controllers
 
             await adminService.SaveGlobalSettingsAsync(model);
 
+            TempData["SuccessMessage"] = "Настойките са запазени успешно!";
+
             return RedirectToAction(nameof(Settings));
         }
 
@@ -51,6 +53,8 @@ namespace PaymentsBudgetSystem.Areas.Administration.Controllers
             try
             {
                 await adminService.DeleteReportById(id);
+                TempData["SuccessMessage"] = "Отчетът е изтрит успешно!";
+
                 return RedirectToAction(nameof(Reports));
             }
             catch (InvalidOperationException ex)

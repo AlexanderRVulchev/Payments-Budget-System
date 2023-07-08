@@ -103,6 +103,8 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
 
             await reportService.SaveIndividualReportAsync(User.Id(), reportModel);
 
+            TempData["SuccessMessage"] = "Отчетът е запазен успешно!";
+
             return RedirectToAction(nameof(ReportInquiry));
         }
 

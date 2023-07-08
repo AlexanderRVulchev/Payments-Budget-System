@@ -12,6 +12,13 @@
 <h2 class="text-center font-weight-bold">@ViewBag.Title</h2>
 <hr />
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success d-flex justify-content-center col-6 offset-3">
+        <strong>@TempData["SuccessMessage"]</strong>
+    </div>
+}
+
 @foreach (var institution in Model.InstitutionsWithReports)
 {
     <h3 class="text-center font-weight-bold">Отчети на @institution.InstitutionName</h3>

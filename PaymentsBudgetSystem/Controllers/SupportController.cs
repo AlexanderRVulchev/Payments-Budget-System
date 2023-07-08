@@ -82,6 +82,8 @@ namespace PaymentsBudgetSystem.Controllers
             try
             {
                 Guid paymentId = await paymentService.AddNewSupportPayment(User.Id(), model);
+                TempData["SuccessMessage"] = "Плащането е извършено успешно!";
+
                 return RedirectToAction(nameof(SupportPaymentDetails), new { id = paymentId });
             }
             catch (Exception)

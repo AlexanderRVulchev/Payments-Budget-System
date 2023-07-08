@@ -10,6 +10,13 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success d-flex justify-content-center col-6 offset-lg-3">
+        <strong>@TempData["SuccessMessage"]</strong>
+    </div>
+}
+
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
 <div class="text-center row">

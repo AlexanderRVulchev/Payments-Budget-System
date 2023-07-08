@@ -145,7 +145,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 });
             }
 
-            Payment payment = new Payment
+            Payment payment = new()
             {
                 Date = DateTime.Now,
                 Description = $"Изплатени заплати за м.{model.Month} {model.Year} г.",
@@ -422,7 +422,7 @@ namespace PaymentsBudgetSystem.Core.Services
             };
         }
 
-        private List<Asset> CreateAssets(string description, int quantity, decimal reportValue, string userId, Guid paymentId, ParagraphType paragraph)
+        private static List<Asset> CreateAssets(string description, int quantity, decimal reportValue, string userId, Guid paymentId, ParagraphType paragraph)
         {
             List<Asset> assets = new();
 
