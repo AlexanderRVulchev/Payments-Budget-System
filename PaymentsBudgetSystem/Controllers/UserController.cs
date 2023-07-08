@@ -103,7 +103,8 @@ namespace PaymentsBudgetSystem.Controllers
                 {
                     UserName = model.UserName,
                     IsPrimary = false,
-                    Name = model.Name
+                    Name = model.Name,
+                    Email = model.Name
                 };
 
                 result = await userManager.CreateAsync(user, model.Password);
@@ -120,7 +121,6 @@ namespace PaymentsBudgetSystem.Controllers
                         .First();
 
                     await userService.RelateSecondaryToPrimaryUserAsync(primaryId, user.Id);
-
 
                     return RedirectToAction(nameof(Login));
                 }

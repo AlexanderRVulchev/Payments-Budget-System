@@ -14,5 +14,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
         Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds);
 
         Task EditBudgetAsync(EditBudgetFormModel model);
+
+        Task CreateBlankBudgetsForSecondaryUser(string primaryId, string secondaryId);
     }
 }

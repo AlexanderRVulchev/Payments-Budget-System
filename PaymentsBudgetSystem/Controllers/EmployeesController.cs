@@ -94,7 +94,7 @@ namespace PaymentsBudgetSystem.Controllers
         {
             try
             {
-                var model = await employeeService.GetEmployeesAsync(User.Id(), id);
+                var model = await employeeService.GetEmployeeAsync(User.Id(), id);
                 return View(model);
             }
             catch (InvalidOperationException ex)

@@ -124,7 +124,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return model;
         }
 
-        public async Task<EmployeeFormModel> GetEmployeesAsync(string userId, Guid employeeId)
+        public async Task<EmployeeFormModel> GetEmployeeAsync(string userId, Guid employeeId)
         {
             var entity = await context
                 .Employees

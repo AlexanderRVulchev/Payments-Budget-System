@@ -12,7 +12,7 @@
 
         public const string PasswordDoesntMatchError = "Паролата не съвпада.";
 
-        public const string InvalidPrimaryNumberForRegister = "Моля въведете валиден номер на Първостепенен РБ";
+        public const string InvalidPrimaryNumberForRegister = "Не е избран валиден Първостепенен РБ";
 
         public const string InvalidYearError = "Годината трябва да бъде между {1} и {2}";
 

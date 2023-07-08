@@ -18,14 +18,18 @@ namespace PaymentsBudgetSystem.Core.Services
 
         private UserManager<User> userManager;
 
+        private IBudgetService budgetService;
+
         public UserService(
             PBSystemDbContext _context,
             RoleManager<IdentityRole> _roleManager,
-            UserManager<User> _userManager)
+            UserManager<User> _userManager,
+            IBudgetService _budgetService)
         {
             this.context = _context;
             this.roleManager = _roleManager;
             this.userManager = _userManager;
+            this.budgetService = _budgetService;
         }
 
         public async Task<ICollection<string>> GetPrimaryNamesAsync()
@@ -75,6 +79,8 @@ namespace PaymentsBudgetSystem.Core.Services
                 PrimaryUserId = primaryId,
                 SecondaryUserId = secondaryId
             };
+
+            await budgetService.CreateBlankBudgetsForSecondaryUser(primaryId, secondaryId);
 
             await context.UsersDependancies.AddAsync(userPair);
             await context.SaveChangesAsync();

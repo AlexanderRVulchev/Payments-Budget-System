@@ -6,7 +6,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Budget;
     using Data;
     using Data.Entities;
-
+    using Microsoft.AspNetCore.Authentication;
     using static Common.ExceptionMessages.Budget;
 
     public class BudgetService : IBudgetService
@@ -224,6 +224,29 @@ namespace PaymentsBudgetSystem.Core.Services
             individualBudget.SupportLimit = model.NewSupportLimit;
             individualBudget.AssetsLimit = model.NewAssetsLimit;
 
+            await context.SaveChangesAsync();
+        }
+
+        public async Task CreateBlankBudgetsForSecondaryUser(string primaryId, string secondaryId)
+        {
+            int[] yearsWherePrimaryUserHasBudgets = await context
+                .ConsolidatedBudgets
+                .Where(b => b.UserId == primaryId)
+                .Select(b => b.FiscalYear)
+                .ToArrayAsync();
+
+            List<IndividualBudget> secondaryIndividualBudgets = new();
+
+            foreach (var year in yearsWherePrimaryUserHasBudgets)
+            {
+                secondaryIndividualBudgets.Add(new IndividualBudget
+                {
+                    UserId = secondaryId,
+                    FiscalYear = year
+                });
+            }
+
+            await context.IndividualBudgets.AddRangeAsync(secondaryIndividualBudgets);
             await context.SaveChangesAsync();
         }
     }

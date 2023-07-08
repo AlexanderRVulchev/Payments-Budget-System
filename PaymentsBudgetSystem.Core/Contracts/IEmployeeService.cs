@@ -8,7 +8,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
         Task AddEmployeeAsync(string userId, EmployeeFormModel model);
 
-        Task<EmployeeFormModel> GetEmployeesAsync(string userId, Guid employeeId);
+        Task<EmployeeFormModel> GetEmployeeAsync(string userId, Guid employeeId);
 
         Task EditEmployeeAsync(string userId, EmployeeFormModel model);
 
