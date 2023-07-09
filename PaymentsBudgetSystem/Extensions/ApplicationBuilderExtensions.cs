@@ -16,30 +16,6 @@ namespace PaymentsBudgetSystem.Extensions
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-            //Task.Run(async () =>
-            //{
-            //    if (!await roleManager.RoleExistsAsync(AdminRoleName))
-            //    {
-            //        var role = new IdentityRole(AdminRoleName);
-            //        await roleManager.CreateAsync(role);
-            //    }
-
-            //    if (!await roleManager.RoleExistsAsync(PrimaryRoleName))
-            //    {
-            //        var role = new IdentityRole(PrimaryRoleName);
-            //        await roleManager.CreateAsync(role);
-            //    }
-
-            //    if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
-            //    {
-            //        var role = new IdentityRole(SecondaryRoleName);
-            //        await roleManager.CreateAsync(role);
-            //    }
-
-            //})
-            //  .GetAwaiter()
-            //.GetResult();
-
             if (!await roleManager.RoleExistsAsync(AdminRoleName))
             {
                 var role = new IdentityRole(AdminRoleName);
@@ -54,12 +30,24 @@ namespace PaymentsBudgetSystem.Extensions
             {
                 var role = new IdentityRole(PrimaryRoleName);
                 await roleManager.CreateAsync(role);
+
+                var mc = await userManager.FindByNameAsync("mc");
+                var mtsp = await userManager.FindByNameAsync("mtsp");
+
+                await userManager.AddToRoleAsync(mc, PrimaryRoleName);
+                await userManager.AddToRoleAsync(mtsp, PrimaryRoleName);
             }
 
             if (!await roleManager.RoleExistsAsync(SecondaryRoleName))
             {
                 var role = new IdentityRole(SecondaryRoleName);
                 await roleManager.CreateAsync(role);
+
+                var sf = await userManager.FindByNameAsync("sf");
+                var daa = await userManager.FindByNameAsync("daa");
+
+                await userManager.AddToRoleAsync(sf, SecondaryRoleName);
+                await userManager.AddToRoleAsync(daa, SecondaryRoleName);
             }
                         
             return app;

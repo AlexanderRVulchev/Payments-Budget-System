@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaymentsBudgetSystem.Data.Entities;
 
 namespace PaymentsBudgetSystem.Data.Configuration
 {
+    using Entities;
+
     public class GlobalSettingsConfiguration : IEntityTypeConfiguration<GlobalSetting>
     {
         public void Configure(EntityTypeBuilder<GlobalSetting> builder)

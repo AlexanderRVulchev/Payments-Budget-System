@@ -52,8 +52,20 @@ namespace PaymentsBudgetSystem.Data
                 .HasForeignKey(a => a.PaymentAssetDetailsId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.ApplyConfiguration(new GlobalSettingsConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new GlobalSettingsConfiguration());
+            builder.ApplyConfiguration(new ConsolidatedBudgetsConfiguration());
+            builder.ApplyConfiguration(new IndividualBudgetsConfiguration());
+            builder.ApplyConfiguration(new UsersDependanciesConfiguration());
+            builder.ApplyConfiguration(new ReportsConfiguration());
+            builder.ApplyConfiguration(new PaymentsConfiguration());
+            builder.ApplyConfiguration(new BeneficiariesConfiguration());
+            builder.ApplyConfiguration(new EmployeesConfiguration());
+            builder.ApplyConfiguration(new CashPaymentDetailsConfiguration());
+            builder.ApplyConfiguration(new PaymentAssetDetailsConfiguration());
+            builder.ApplyConfiguration(new PaymentSalariesDetailsConfiguration());
+            builder.ApplyConfiguration(new PaymentSupportDetailsConfiguration());
+            builder.ApplyConfiguration(new AssetsConfiguration());
 
             base.OnModelCreating(builder);
         }

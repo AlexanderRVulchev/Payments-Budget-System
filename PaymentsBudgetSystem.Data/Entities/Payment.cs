@@ -25,9 +25,6 @@ namespace PaymentsBudgetSystem.Data.Entities
 
         public ParagraphType Paragraph { get; set; }
 
-        [Required]
-        public bool IsPending { get; set; }
-
         [MaxLength(DescriptionMaxLength)]
         public string? Description { get; set; }
 

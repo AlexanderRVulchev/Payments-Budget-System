@@ -16,15 +16,6 @@ namespace PaymentsBudgetSystem.Data.Entities
         public int FiscalYear { get; set; }
 
         [Column(TypeName = "DECIMAL(18, 2)")]
-        public decimal SalariesLimit { get; set; }
-
-        [Column(TypeName = "DECIMAL(18, 2)")]
-        public decimal SupportLimit { get; set; }
-
-        [Column(TypeName = "DECIMAL(18, 2)")]
-        public decimal AssetsLimit { get; set; }
-
-        [Column(TypeName = "DECIMAL(18, 2)")]
         public decimal TotalLimit { get; set; }
     }
 }
