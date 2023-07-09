@@ -3,7 +3,7 @@
     public class Asset
     {
         public const int AssetDescriptionMinLength = 5;
-        public const int AssetDescriptionMaxLength = 50;
+        public const int AssetDescriptionMaxLength = 150;
 
         public const int AssetNameMaxLength = 30;
 

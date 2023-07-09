@@ -84,7 +84,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
                 return View(fullConsolidatedBudget);
             }
 
-            var totalAllocatedFunds = model.IndividualBudgetsData
+            var totalAllocatedFunds = fullConsolidatedBudget.IndividualBudgetsData
                 .Where(b => b.Id != model.Id)
                 .Sum(b => b.SupportLimit + b.SalariesLimit + b.AssetsLimit);
 

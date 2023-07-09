@@ -164,7 +164,17 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
 
         private void FillCellValuesInWorksheet(ExcelWorksheet worksheet, ReportDataModel reportModel)
         {
-            worksheet.Cells["B13"].Value = User.FindFirstValue(ClaimTypes.Email);
+            worksheet.Cells["C3"].Value = reportModel.Year;
+            
+            worksheet.Cells["B16"].Value = reportModel.IsConsolidated
+                ? "Консолидиран отчет"
+                : "Индивидуален отчет";
+
+            string startPeriodText = "1." + reportModel.Year.ToString() + " г.";
+            string endPeriodText = reportModel.Month.ToString() + "." + reportModel.Year.ToString() + " г.";
+
+            worksheet.Cells["E13"].Value = startPeriodText;
+            worksheet.Cells["F13"].Value = endPeriodText;
 
             worksheet.Cells["G25"].Value = reportModel.Bank0101;
             worksheet.Cells["G26"].Value = reportModel.Bank0102;

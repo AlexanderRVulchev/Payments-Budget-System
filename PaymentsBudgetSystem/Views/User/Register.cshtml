@@ -43,47 +43,44 @@
             <div id="additionalField" style="display: none;">
                 <p></p>
                 <h6 class="text-center">Изберете Вашият Първостепенен РБ:</h6>
-          
-                    <div>
-                        <label asp-for="InputForPrimary" class="form-label-add-edit">Избор</label>
-                        <select asp-for="InputForPrimary" class="form-control" aria-required="true">
-                            <option value="0">--Без избор-- Регистриране като Първостепенен РБ</option>
-                            @foreach (var name in Model.PrimaryInstitutionName)
-                            {
-                                int counter = 1;
-                                <option value="@counter">@name</option>
-                                counter++;
-                            }
 
-                        </select>
-                        <script>
-                            $(document).ready(function () {
-                                $("#checkbox1").change(function () {
-                                    if (this.checked) {
-                                        $("#checkbox2").prop("checked", false);
-                                        $("#additionalField").hide();
-                                    }
-                                });
+                <div>
+                    <label asp-for="InputForPrimary" class="form-label-add-edit">Избор</label>
+                    <select asp-for="InputForPrimary" class="form-control" aria-required="true">
+                        <option value="0">--Без избор-- Регистриране като Първостепенен РБ</option>
+                        @foreach (var name in Model.PrimaryInstitutionName)
+                        {
+                            int counter = 1;
+                            <option value="@counter">@name</option>
+                            counter++;
+                        }
 
-                                $("#checkbox2").change(function () {
-                                    if (this.checked) {
-                                        $("#checkbox1").prop("checked", false);
-                                        $("#additionalField").show();
-                                    } else {
-                                        $("#additionalField").hide();
-                                    }
-                                });
+                    </select>
+                    <script>
+                        $(document).ready(function () {
+                            $("#checkbox1").change(function () {
+                                if (this.checked) {
+                                    $("#checkbox2").prop("checked", false);
+                                    $("#additionalField").hide();
+                                }
                             });
-                        </script>
 
-                        <div class="text-center">
-                            <button id="registerSubmit" type="submit" class="btn btn-primary">Регистрация</button>
-                        </div>
-                    </div>
-      
+                            $("#checkbox2").change(function () {
+                                if (this.checked) {
+                                    $("#checkbox1").prop("checked", false);
+                                    $("#additionalField").show();
+                                } else {
+                                    $("#additionalField").hide();
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="text-center">
+                <button id="registerSubmit" type="submit" class="btn btn-primary">Регистрация</button>
             </div>
 
-            
         </form>
     </div>
 </div>
