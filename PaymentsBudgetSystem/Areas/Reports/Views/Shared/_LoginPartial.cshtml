@@ -14,7 +14,7 @@
             @User.FindFirstValue(ClaimTypes.Email)
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
+            <form class="form-inline" asp-area="" asp-controller="User" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
                 <button type="submit" class="nav-link btn btn-link text-dark">Изход</button>
             </form>
         </li>

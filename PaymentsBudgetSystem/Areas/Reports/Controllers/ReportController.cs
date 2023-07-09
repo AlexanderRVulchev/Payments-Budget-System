@@ -1,18 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
-using System.Web;
-using System.IO;
+using System.Security.Claims;
 
 namespace PaymentsBudgetSystem.Areas.Reports.Controllers
 {
     using Core.Models.Report;
-    using Microsoft.CodeAnalysis.Operations;
-    using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
-    using PaymentsBudgetSystem.Core.Contracts;
-    using PaymentsBudgetSystem.Extensions;
-    using System.Drawing.Text;
-    using System.Security.Claims;
+    using Core.Contracts;
+    using Extensions;
 
     using static Common.RoleNames;
 
@@ -50,16 +45,25 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
                 return View(model);
             }
 
-            ReportDataModel reportModel;
+            ReportDataModel reportModel = new();
 
-            if (!model.IsConsolidated)
+            try
             {
-                reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+                if (!model.IsConsolidated)
+                {
+                    reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+                }
+                else
+                {
+                    reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+                }
             }
-            else
+            catch (InvalidOperationException)
             {
-                reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+                reportModel.Year = model.Year;
+                reportModel.Month = model.Month;
             }
+
 
             string templatePath = "wwwroot/Report.xlsx";
 
@@ -93,15 +97,24 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
                 return RedirectToAction(nameof(ReportInquiry));
             }
 
-            ReportDataModel reportModel;
-            if (!model.IsConsolidated)
+            ReportDataModel reportModel = new();
+
+            try
             {
-                reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+                if (!model.IsConsolidated)
+                {
+                    reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+                }
+                else
+                {
+                    reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+                }
             }
-            else
+            catch (InvalidOperationException)
             {
-                reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
-            }
+                reportModel.Year = model.Year;
+                reportModel.Month = model.Month;
+            };
 
             await reportService.SaveIndividualReportAsync(User.Id(), reportModel);
 
