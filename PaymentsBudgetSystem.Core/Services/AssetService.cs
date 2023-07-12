@@ -129,11 +129,10 @@ namespace PaymentsBudgetSystem.Core.Services
                     Type = entity.Type
                 };
 
-                Calculator calculator = new();
-
                 if (entity.DateAquired.Year < year ||
                    (entity.DateAquired.Year == year && entity.DateAquired.Month <= month))
                 {
+                    Calculator calculator = new();
                     assetInfoModel = calculator.CalculateAssetDataByYearAndMonth(year, month, assetInfoModel, settings);
                 }
                 else

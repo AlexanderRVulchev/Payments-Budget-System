@@ -5,6 +5,7 @@ using PaymentsBudgetSystem.Core.Models.Enums;
 using PaymentsBudgetSystem.Core.Services;
 using PaymentsBudgetSystem.Data;
 using PaymentsBudgetSystem.Data.Entities;
+using PaymentsBudgetSystem.Data.Entities.Enums;
 using System.Security.Permissions;
 using GlobalSetting = PaymentsBudgetSystem.Data.Entities.GlobalSetting;
 
@@ -16,12 +17,12 @@ namespace PaymentsBudgetSystem.Tests.Services
         private PBSystemDbContext context;
         private IAssetService assetService;
 
-        private string userId;
+        private string testUserId;
 
         [SetUp]
         public async Task SetUp()
         {
-            userId = "test user id";
+            testUserId = "test user id";
 
             var globalSettings = GetGlobalSettings();
 
@@ -35,7 +36,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                     Id = Guid.NewGuid(),
                     ReportValue = 1000,
                     Type = Data.Entities.Enums.ParagraphType.UpkeepLongTermAssets5100,
-                    UserId = userId
+                    UserId = testUserId
                 },
                 new Asset
                 {
@@ -45,7 +46,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                     Id = Guid.NewGuid(),
                     ReportValue = 500,
                     Type = Data.Entities.Enums.ParagraphType.AquisitionLongTermAssets5200,
-                    UserId = userId
+                    UserId = testUserId
                 },
                 new Asset
                 {
@@ -55,7 +56,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                     Id = Guid.NewGuid(),
                     ReportValue = 2000,
                     Type = Data.Entities.Enums.ParagraphType.AquisitionIntangibleAssets5300,
-                    UserId = userId
+                    UserId = testUserId
                 },
             };
 
@@ -69,7 +70,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                     Id = Guid.NewGuid(),
                     Identifier = "1234",
                     Name = "beneficiary name",
-                    UserId = userId,
+                    UserId = testUserId,
                 },
                 DeliveryDate = new DateTime(2023, 1, 1),
                 InvoiceDate = new DateTime(2023, 1 ,1),
@@ -81,7 +82,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                     Date = new DateTime(2023, 1, 1),
                     Description = string.Empty,
                     ReceiverName = string.Empty,
-                    UserId = userId
+                    UserId = testUserId
                 }
             };
 
@@ -93,6 +94,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             context.Database.EnsureDeleted();
 
             await context.Assets.AddRangeAsync(assets);
+            await context.PaymentAssetsDetails.AddAsync(paymentAssetDetails);
             await context.GlobalSettings.AddRangeAsync(globalSettings);
 
             await context.SaveChangesAsync();
@@ -103,7 +105,7 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task GetAllAssets_WorksAsIntended()
         {
-            var result = await assetService.GetAllAssetsAsync(userId, new AllAssetsViewModel
+            var result = await assetService.GetAllAssetsAsync(testUserId, new AllAssetsViewModel
             {
                 InfoMonth = 11,
                 InfoYear = 2023,
@@ -130,7 +132,8 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task GetAllAssets_CurrentPageShouldNotExceedNumberOfPages()
         {
-            var result = await assetService.GetAllAssetsAsync(userId, new AllAssetsViewModel
+            
+            var result = await assetService.GetAllAssetsAsync(testUserId, new AllAssetsViewModel
             {
                 InfoMonth = 11,
                 InfoYear = 2023,
@@ -142,6 +145,80 @@ namespace PaymentsBudgetSystem.Tests.Services
             });
 
             Assert.That(result.Page, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task GetAssetDetails_WorksAsIntended()
+        {
+            var testAssetGuidId = context.Assets.First().Id;
+            var testYear = 2023;
+
+            var expected = new AssetDetailsViewModel
+            {
+                AssetId = testAssetGuidId,
+                Year = testYear,
+                DateAquired = new DateTime(2023, 1, 1),
+                Name = String.Empty,
+                BeneficiaryName = "beneficiary name",
+                ParagraphType = ParagraphType.UpkeepLongTermAssets5100,
+                ReportValue = 1000                
+            };
+
+            var result = await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear);
+
+            Assert.That(result.DateAquired, Is.EqualTo(expected.DateAquired));
+            Assert.That(result.ReportValue, Is.EqualTo(expected.ReportValue));
+            Assert.That(result.Year, Is.EqualTo(expected.Year));
+            Assert.That(result.ParagraphType, Is.EqualTo(expected.ParagraphType));
+            Assert.That(result.BeneficiaryName, Is.EqualTo(expected.BeneficiaryName));
+            Assert.That(result.AssetId, Is.EqualTo(expected.AssetId));
+            Assert.That(result.AssetMonthlyStatus.Count, Is.EqualTo(12));
+            Assert.That(result.AssetMonthlyStatus.Last().ReportValue != 0);
+        }
+
+        [Test]
+        public void GetAssetDetails_ThrowsForInvalidAssetId()
+        {
+            var testAssetGuidId = Guid.NewGuid();
+            var testYear = 2023;
+
+            var expected = new AssetDetailsViewModel
+            {
+                AssetId = testAssetGuidId,
+                Name = String.Empty,
+                BeneficiaryName = "beneficiary name",
+            };
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear));
+        }
+
+        [Test]
+        public void GetAssetDetails_ThrowsForInvalidUser()
+        {
+            var testAssetGuidId = context.Assets.First().Id;
+            string invalidTestUserId = "InvalidUserId";
+            var testYear = 2023;
+
+            var expected = new AssetDetailsViewModel
+            {
+                AssetId = testAssetGuidId,
+                Name = String.Empty,
+                BeneficiaryName = "beneficiary name",
+            };
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await assetService.GetAssetDetailsAsync(invalidTestUserId, testAssetGuidId, testYear));
+        }
+
+        [Test]
+        public async Task GetAssetDetails_SetsReportValueToZeroIfTargetYearIsEarlierThatYearOfAquisition()
+        {
+            var testAssetGuidId = context.Assets.First().Id;
+            var testYear = 2000;
+
+            decimal expectedReportValue = 0;
+            var result = await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear);
+
+            Assert.That(result.AssetMonthlyStatus.All(a => a.ReportValue == expectedReportValue));
         }
 
         private static List<GlobalSetting> GetGlobalSettings()
