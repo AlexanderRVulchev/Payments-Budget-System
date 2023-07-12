@@ -6,13 +6,12 @@ using PaymentsBudgetSystem.Core.Services;
 using PaymentsBudgetSystem.Data;
 using PaymentsBudgetSystem.Data.Entities;
 using PaymentsBudgetSystem.Data.Entities.Enums;
-using System.Security.Permissions;
 using GlobalSetting = PaymentsBudgetSystem.Data.Entities.GlobalSetting;
 
 namespace PaymentsBudgetSystem.Tests.Services
 {
     [TestFixture]
-    public class AssetServiceTests
+    internal class AssetServiceTests
     {
         private PBSystemDbContext context;
         private IAssetService assetService;
@@ -91,7 +90,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 .Options;
             context = new PBSystemDbContext(options);
 
-            context.Database.EnsureDeleted();
+            await context.Database.EnsureDeletedAsync();
 
             await context.Assets.AddRangeAsync(assets);
             await context.PaymentAssetsDetails.AddAsync(paymentAssetDetails);
@@ -189,7 +188,8 @@ namespace PaymentsBudgetSystem.Tests.Services
                 BeneficiaryName = "beneficiary name",
             };
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear));
+            Assert.ThrowsAsync<InvalidOperationException>(async () 
+                => await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear));
         }
 
         [Test]
@@ -206,7 +206,8 @@ namespace PaymentsBudgetSystem.Tests.Services
                 BeneficiaryName = "beneficiary name",
             };
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await assetService.GetAssetDetailsAsync(invalidTestUserId, testAssetGuidId, testYear));
+            Assert.ThrowsAsync<InvalidOperationException>(async () 
+                => await assetService.GetAssetDetailsAsync(invalidTestUserId, testAssetGuidId, testYear));
         }
 
         [Test]
