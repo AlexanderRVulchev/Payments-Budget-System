@@ -19,9 +19,14 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         public ParagraphType ParagraphType { get; set; }
 
         [MaxLength(InvoiceNumberMaxLength, ErrorMessage = StringMaxLengthValidationError)]
-        public string? InvoiceNumber { get; set; }
+        [Required(ErrorMessage = FieldIsRequired)]
+        [Display(Name = "Номер на фактура")]
+        [RegularExpression(InvoiceNumberRegex, ErrorMessage = InvalidInvoiceNumber)]
+        public string InvoiceNumber { get; set; } = null!;
 
-        public DateTime? InvoiceDate { get; set; }
+        [Display(Name ="Дата на фактура")]
+        [Required(ErrorMessage = FieldIsRequired)]
+        public DateTime InvoiceDate { get; set; }
 
         public decimal Amount
             => (Position1Quantity * Position1SingleAssetValue) +

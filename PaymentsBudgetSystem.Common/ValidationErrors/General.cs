@@ -33,5 +33,7 @@
         public const string FieldIsRequired = "Полето е задължително";
 
         public const string SalaryIsBelowMinimumWage = "Брутната заплата на служителя не може да бъде по-малка от минималната работна заплата - {0} лв.";
+
+        public const string InvalidInvoiceNumber = "Номерът на фактура трябва да съдържа 10 цифри";
     }
 }

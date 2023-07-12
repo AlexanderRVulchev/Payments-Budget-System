@@ -41,7 +41,7 @@ namespace PaymentsBudgetSystem.Controllers
             {
                 var paymentId = await paymentService.AddNewSalariesPayment(User.Id(), model);
 
-                TempData["SuccessMessage"] = $"Заплатите за м.{model.Month} {model.Year} г. са изплатени успешно!";
+                TempData["SuccessMessage"] = $"Заплатите са изплатени успешно!";
 
                 return RedirectToAction(nameof(Details), new { id = paymentId });
             }

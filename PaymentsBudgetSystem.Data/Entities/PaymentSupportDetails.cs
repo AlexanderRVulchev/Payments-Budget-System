@@ -18,7 +18,7 @@ namespace PaymentsBudgetSystem.Data.Entities
         public Guid BeneficiaryId { get; set; }
         public Beneficiary Beneficiary { get; set; } = null!;
 
-        public string? InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; } = null!;
 
         public DateTime InvoiceDate { get; set; }
     }

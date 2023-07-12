@@ -14,5 +14,8 @@
         public const int MonthMaxValue = 12;
 
         public const int ItemsPerPage = 9;
+
+        public const string InvoiceNumberRegex = @"\d{10}";
+        public const int InvoiceLength = 10;
     }
 }

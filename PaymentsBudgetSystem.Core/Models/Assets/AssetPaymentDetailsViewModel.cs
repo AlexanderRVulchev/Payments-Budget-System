@@ -10,9 +10,9 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
 
         public Guid Id { get; set; }
 
-        public string? InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; } = null!;
 
-        public DateTime? InvoiceDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
 
         public decimal Amount { get; set; }
 

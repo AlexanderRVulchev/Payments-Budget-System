@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentsBudgetSystem.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentsBudgetSystem.Common", "..\PaymentsBudgetSystem.Common\PaymentsBudgetSystem.Common.csproj", "{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentsBudgetSystem.Tests", "..\PaymentsBudgetSystem.Tests\PaymentsBudgetSystem.Tests.csproj", "{3AD1C554-D602-4773-B6D8-972EFBDEEC3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6009CF0-7FEB-4BE0-A84F-AAD419C3710A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD1C554-D602-4773-B6D8-972EFBDEEC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD1C554-D602-4773-B6D8-972EFBDEEC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD1C554-D602-4773-B6D8-972EFBDEEC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD1C554-D602-4773-B6D8-972EFBDEEC3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

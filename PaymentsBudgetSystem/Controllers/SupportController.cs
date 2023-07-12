@@ -12,6 +12,7 @@ namespace PaymentsBudgetSystem.Controllers
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
     using static Common.RoleNames;
+    using static Common.ValidationErrors.General;   
 
     [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class SupportController : Controller
@@ -71,14 +72,19 @@ namespace PaymentsBudgetSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Payment(SupportPaymentFormModel model)
         {
+            if (model.InvoiceDate > DateTime.Now)
+            {
+                ModelState.AddModelError("", InvoiceDateCannotBeInTheFuture);
+            }
+            if (model.Amount <= 0)
+            {
+                ModelState.AddModelError("", PaymentMoneyCannotBeZeroOrLess);
+            }
+
             if (!ModelState.IsValid)
             {
                 var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
-                model.Beneficiary = new BeneficiaryFormModel
-                {
-                    Name = beneficiary.Name,
-                    Id = beneficiary.Id
-                };
+                model.Beneficiary = beneficiary;
 
                 return View(model);
             }

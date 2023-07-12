@@ -28,8 +28,8 @@ namespace PaymentsBudgetSystem.Data.Configuration
                 {
                     AssetPaymentId = Guid.Parse("0636467D-E3AA-4B48-5643-08DB804E8F7E"),
                     BeneficiaryId = Guid.Parse("3BBAA90D-9C3D-4A84-C5FE-08DB804FEFC7"),
-                    InvoiceNumber = null,
-                    InvoiceDate = null,
+                    InvoiceNumber = "0000032660",
+                    InvoiceDate = DateTime.Parse("2022-11-13 00:00:00.0000000"),
                     DeliveryDate = DateTime.Parse("2023-01-08 10:49:02.0578480")
                 },
                 new PaymentAssetsDetails
@@ -44,8 +44,8 @@ namespace PaymentsBudgetSystem.Data.Configuration
                 {
                     AssetPaymentId = Guid.Parse("ED82C4F5-4C19-44F4-564A-08DB804E8F7E"),
                     BeneficiaryId = Guid.Parse("46B32CD0-8754-4B38-2B2B-08DB80453A86"),
-                    InvoiceNumber = null,
-                    InvoiceDate = null,
+                    InvoiceNumber = "0100000012",
+                    InvoiceDate = DateTime.Parse("2023-03-08 00:00:00.0000000"),
                     DeliveryDate = DateTime.Parse("2023-04-10 11:12:12.2971277")
                 },
                 new PaymentAssetsDetails

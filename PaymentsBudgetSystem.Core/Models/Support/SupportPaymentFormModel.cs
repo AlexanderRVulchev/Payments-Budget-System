@@ -8,6 +8,7 @@ namespace PaymentsBudgetSystem.Core.Models.Support
     using static Common.DataConstants.Payment;
     using static Common.DataConstants.General;
     using static Common.ValidationErrors.General;
+    using Microsoft.AspNetCore.Mvc;
 
     public class SupportPaymentFormModel
     {
@@ -21,10 +22,13 @@ namespace PaymentsBudgetSystem.Core.Models.Support
         [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         public decimal Amount { get; set; }
 
+        [Required(ErrorMessage = FieldIsRequired)]
         [MaxLength(InvoiceNumberMaxLength, ErrorMessage = StringMaxLengthValidationError)]
+        [RegularExpression(InvoiceNumberRegex, ErrorMessage = InvalidInvoiceNumber)]
         [Display(Name = "Номер на фактура")]
-        public string? InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; } = null!;
 
+        [Required(ErrorMessage = FieldIsRequired)]
         [Display(Name = "Дата на фактура")]
         public DateTime InvoiceDate { get; set; }
 
