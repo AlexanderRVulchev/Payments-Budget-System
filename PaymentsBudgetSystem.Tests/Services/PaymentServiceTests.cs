@@ -186,7 +186,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             var resultAssetPaymentId = await paymentService
-                .AddNewAssetPayment(testUserId, testModel);
+                .AddNewAssetPaymentAsync(testUserId, testModel);
 
             var actualAssetEntity = await context.Assets
                 .Where(a => a.PaymentAssetsDetails.AssetPaymentId == resultAssetPaymentId)
@@ -219,7 +219,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             Assert.ThrowsAsync<ArgumentException>(async ()
-                => await paymentService.AddNewAssetPayment(testUserId, testModel));
+                => await paymentService.AddNewAssetPaymentAsync(testUserId, testModel));
         }
 
         [Test]
@@ -282,7 +282,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             var resultPaymentId = await paymentService
-                .AddNewSalariesPayment(testUserId, testModel);
+                .AddNewSalariesPaymentAsync(testUserId, testModel);
 
             var actualEntity = await context.Payments.FindAsync(resultPaymentId);
 
@@ -302,7 +302,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             Assert.ThrowsAsync<ArgumentException>(async ()
                 => await paymentService
-                    .AddNewSalariesPayment(testUserId, testModel));
+                    .AddNewSalariesPaymentAsync(testUserId, testModel));
         }
 
         [Test]
@@ -321,7 +321,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             var resultPaymentId = await paymentService
-                .AddNewSupportPayment(testUserId, testModel);
+                .AddNewSupportPaymentAsync(testUserId, testModel);
 
             var actualEntity = await context.PaymentSupportDetails
                 .FindAsync(resultPaymentId);
@@ -342,7 +342,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             Assert.ThrowsAsync<ArgumentException>(async ()
                 => await paymentService
-                    .AddNewSupportPayment(testUserId, testModel));
+                    .AddNewSupportPaymentAsync(testUserId, testModel));
         }
 
         [Test]
@@ -353,7 +353,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             decimal expectedTotalSalariesAmount = 4351.20m;
 
-            var result = await paymentService.CreatePayroll(testUserId, testYear, testMonth);
+            var result = await paymentService.CreatePayrollAsync(testUserId, testYear, testMonth);
 
             Assert.IsNotNull(result);
             Assert.That(result.Amount, Is.EqualTo(expectedTotalSalariesAmount));
@@ -368,7 +368,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             var actualPaymentId = actualEntity.AssetPaymentId;
 
-            var result = await paymentService.GetAssetPaymentDetailsById(testUserId, actualPaymentId);
+            var result = await paymentService.GetAssetPaymentDetailsByIdAsync(testUserId, actualPaymentId);
 
             Assert.IsNotNull(result);
             Assert.That(result.Id, Is.EqualTo(actualPaymentId));
@@ -384,7 +384,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             var invalidPaymentId = Guid.NewGuid();
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await paymentService.GetAssetPaymentDetailsById(testUserId, invalidPaymentId));
+                => await paymentService.GetAssetPaymentDetailsByIdAsync(testUserId, invalidPaymentId));
         }
 
         [Test]
@@ -394,7 +394,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             var validPaymentId = await context.PaymentAssetsDetails.Select(pad => pad.AssetPaymentId).FirstAsync();
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await paymentService.GetAssetPaymentDetailsById(invalidUserId, validPaymentId));
+                => await paymentService.GetAssetPaymentDetailsByIdAsync(invalidUserId, validPaymentId));
         }
 
         [Test]
@@ -406,7 +406,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             var actualPaymentId = actualEntity.CashPaymentId;
 
-            var result = await paymentService.GetCashPaymentById(testUserId, actualPaymentId);
+            var result = await paymentService.GetCashPaymentByIdAsync(testUserId, actualPaymentId);
 
             Assert.IsNotNull(result);
             Assert.That(result.Id, Is.EqualTo(actualPaymentId));
@@ -423,7 +423,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await paymentService
-                    .GetCashPaymentById(testUserId, invalidPaymentId));
+                    .GetCashPaymentByIdAsync(testUserId, invalidPaymentId));
         }
 
         [Test]
@@ -434,7 +434,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 .Select(pad => pad.AssetPaymentId).FirstAsync();
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await paymentService.GetCashPaymentById(invalidUserId, validPaymentId));
+                => await paymentService.GetCashPaymentByIdAsync(invalidUserId, validPaymentId));
         }
 
         [Test]
@@ -446,7 +446,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             var actualPaymentId = actualEntity.Payment.Id;
 
-            var result = await paymentService.GetSalariesDetailsById(testUserId, actualPaymentId);
+            var result = await paymentService.GetSalariesDetailsByIdAsync(testUserId, actualPaymentId);
 
             Assert.IsNotNull(result);
             Assert.That(result.IndividualSalaries.Count, Is.EqualTo(1));
@@ -460,7 +460,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await paymentService
-                    .GetSalariesDetailsById(testUserId, invalidPaymentId));
+                    .GetSalariesDetailsByIdAsync(testUserId, invalidPaymentId));
         }
 
         [Test]
@@ -472,7 +472,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 .FirstAsync();
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await paymentService.GetSalariesDetailsById(invalidUserId, validPaymentId));
+                => await paymentService.GetSalariesDetailsByIdAsync(invalidUserId, validPaymentId));
         }
 
         [Test]
@@ -484,7 +484,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             var actualPaymentId = actualEntity.Payment.Id;
 
-            var result = await paymentService.GetSupportPaymentDetailsById(testUserId, actualPaymentId);
+            var result = await paymentService.GetSupportPaymentDetailsByIdAsync(testUserId, actualPaymentId);
 
             Assert.IsNotNull(result);
             Assert.That(result.Amount, Is.EqualTo(1));
@@ -500,7 +500,7 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await paymentService
-                    .GetSupportPaymentDetailsById(testUserId, invalidPaymentId));
+                    .GetSupportPaymentDetailsByIdAsync(testUserId, invalidPaymentId));
         }
 
         [Test]
@@ -511,7 +511,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 .Select(psd => psd.SupportPaymentId).FirstAsync();
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await paymentService.GetSupportPaymentDetailsById(invalidUserId, validPaymentId));
+                => await paymentService.GetSupportPaymentDetailsByIdAsync(invalidUserId, validPaymentId));
         }
 
         private static List<GlobalSetting> GetGlobalSettings()

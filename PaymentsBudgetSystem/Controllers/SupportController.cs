@@ -91,7 +91,7 @@ namespace PaymentsBudgetSystem.Controllers
 
             try
             {
-                Guid paymentId = await paymentService.AddNewSupportPayment(User.Id(), model);
+                Guid paymentId = await paymentService.AddNewSupportPaymentAsync(User.Id(), model);
                 TempData["SuccessMessage"] = "Плащането е извършено успешно!";
 
                 return RedirectToAction(nameof(SupportPaymentDetails), new { id = paymentId });
@@ -119,7 +119,7 @@ namespace PaymentsBudgetSystem.Controllers
         {
             try
             {
-                SupportPaymentDetailsViewModel model = await paymentService.GetSupportPaymentDetailsById(User.Id(), id);
+                SupportPaymentDetailsViewModel model = await paymentService.GetSupportPaymentDetailsByIdAsync(User.Id(), id);
                 return View(model);
             }
             catch (InvalidOperationException ex)

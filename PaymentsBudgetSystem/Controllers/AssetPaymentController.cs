@@ -104,7 +104,7 @@ namespace PaymentsBudgetSystem.Controllers
 
             try
             {
-                Guid assetPaymentId = await paymentService.AddNewAssetPayment(User.Id(), model);
+                Guid assetPaymentId = await paymentService.AddNewAssetPaymentAsync(User.Id(), model);
 
                 TempData["SuccessMessage"] = "Активите са платени и придобити успешно!";
 
@@ -127,7 +127,7 @@ namespace PaymentsBudgetSystem.Controllers
         {
             try
             {
-                AssetPaymentDetailsViewModel model = await paymentService.GetAssetPaymentDetailsById(User.Id(), id);
+                AssetPaymentDetailsViewModel model = await paymentService.GetAssetPaymentDetailsByIdAsync(User.Id(), id);
                 return View(model);
             }
             catch (InvalidOperationException ex)

@@ -22,7 +22,7 @@ namespace PaymentsBudgetSystem.Controllers
 
         public async Task<IActionResult> Payment(int year, int month)
         {
-            SalariesPaymentViewModel model = await paymentService.CreatePayroll(User.Id(), year, month);
+            SalariesPaymentViewModel model = await paymentService.CreatePayrollAsync(User.Id(), year, month);
 
             return View(model);
         }
@@ -35,11 +35,11 @@ namespace PaymentsBudgetSystem.Controllers
                 return View(model);
             }
 
-            model = await paymentService.CreatePayroll(User.Id(), model.Year, model.Month);
+            model = await paymentService.CreatePayrollAsync(User.Id(), model.Year, model.Month);
 
             try
             {
-                var paymentId = await paymentService.AddNewSalariesPayment(User.Id(), model);
+                var paymentId = await paymentService.AddNewSalariesPaymentAsync(User.Id(), model);
 
                 TempData["SuccessMessage"] = $"Заплатите са изплатени успешно!";
 
@@ -61,7 +61,7 @@ namespace PaymentsBudgetSystem.Controllers
         {
             try
             {
-                var model = await paymentService.GetSalariesDetailsById(User.Id(), id);
+                var model = await paymentService.GetSalariesDetailsByIdAsync(User.Id(), id);
 
                 return View(model);
             }

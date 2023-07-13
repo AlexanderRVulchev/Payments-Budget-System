@@ -1,22 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Contracts;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
+    using Core.Helpers;
+    using Data;
+    using Data.Entities;
     using Models.Report;
-    using PaymentsBudgetSystem.Core.Helpers;
-    using PaymentsBudgetSystem.Core.Models.Information;
-    using PaymentsBudgetSystem.Data;
-    using PaymentsBudgetSystem.Data.Entities;
-    using System;
 
-    using static Common.ExceptionMessages.Report;
     using static Common.ExceptionMessages.Payment;
+    using static Common.ExceptionMessages.Report;
 
     public class ReportService : IReportService
     {
+
         private readonly PBSystemDbContext context;
 
         public ReportService(PBSystemDbContext _context)

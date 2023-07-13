@@ -68,7 +68,7 @@ namespace PaymentsBudgetSystem.Controllers
         {
             try
             {
-                var model = await paymentsService.GetCashPaymentById(User.Id(), id);
+                var model = await paymentsService.GetCashPaymentByIdAsync(User.Id(), id);
                 return View(model);
             }
             catch (InvalidOperationException ex)

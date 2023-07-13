@@ -43,7 +43,7 @@ namespace PaymentsBudgetSystem.Core.Services
             reportService = _reportService;
         }
 
-        public async Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model)
+        public async Task<Guid> AddNewAssetPaymentAsync(string userId, NewAssetFormModel model)
         {
             var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
 
@@ -149,7 +149,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return payment.Id;
         }
 
-        public async Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model)
+        public async Task<Guid> AddNewSalariesPaymentAsync(string userId, SalariesPaymentViewModel model)
         {
             var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
 
@@ -198,7 +198,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return payment.Id;
         }
 
-        public async Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model)
+        public async Task<Guid> AddNewSupportPaymentAsync(string userId, SupportPaymentFormModel model)
         {
             var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
             
@@ -235,7 +235,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return supportPayment.Id;
         }
 
-        public async Task<SalariesPaymentViewModel> CreatePayroll(string userId, int year, int month)
+        public async Task<SalariesPaymentViewModel> CreatePayrollAsync(string userId, int year, int month)
         {
             string firstDayOfTheMonthString = "01." + month.ToString() + "." + year.ToString() + " 00:00";
 
@@ -291,7 +291,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return model;            
         }
 
-        public async Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsById(string userId, Guid paymentId)
+        public async Task<AssetPaymentDetailsViewModel> GetAssetPaymentDetailsByIdAsync(string userId, Guid paymentId)
         {
             var entity = await context
                 .Payments
@@ -338,7 +338,7 @@ namespace PaymentsBudgetSystem.Core.Services
             };
         }
 
-        public async Task<CashPaymentDetailsModel> GetCashPaymentById(string userId, Guid paymentId)
+        public async Task<CashPaymentDetailsModel> GetCashPaymentByIdAsync(string userId, Guid paymentId)
         {
             var entity = await context
                 .Payments
@@ -372,7 +372,7 @@ namespace PaymentsBudgetSystem.Core.Services
             };
         }
 
-        public async Task<SalariesPaymentViewModel> GetSalariesDetailsById(string userId, Guid paymentId)
+        public async Task<SalariesPaymentViewModel> GetSalariesDetailsByIdAsync(string userId, Guid paymentId)
         {
             var entity = await context
                 .Payments
@@ -428,7 +428,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
         }
 
-        public async Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsById(string userId, Guid paymentId)
+        public async Task<SupportPaymentDetailsViewModel> GetSupportPaymentDetailsByIdAsync(string userId, Guid paymentId)
         {
             var entity = await context
                 .Payments
