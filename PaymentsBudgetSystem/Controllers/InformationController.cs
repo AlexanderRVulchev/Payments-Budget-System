@@ -80,7 +80,7 @@ namespace PaymentsBudgetSystem.Controllers
                 AmountMax = amountMax,
                 PaymentType = paymentType,
                 Page = page,
-                ReceiverNameFilter = receiver,
+                ReceiverNameFilter = receiver
             };
 
             model = await informationService.GetPaymentsInfoAsync(User.Id(), model);
