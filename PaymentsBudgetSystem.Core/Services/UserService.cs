@@ -80,7 +80,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 SecondaryUserId = secondaryId
             };
 
-            await budgetService.CreateBlankBudgetsForSecondaryUser(primaryId, secondaryId);
+            await budgetService.CreateBlankBudgetsForSecondaryUserAsync(primaryId, secondaryId);
 
             await context.UsersDependancies.AddAsync(userPair);
             await context.SaveChangesAsync();

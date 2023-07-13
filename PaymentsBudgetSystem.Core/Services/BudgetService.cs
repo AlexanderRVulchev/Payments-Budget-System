@@ -212,7 +212,7 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task CreateBlankBudgetsForSecondaryUser(string primaryId, string secondaryId)
+        public async Task CreateBlankBudgetsForSecondaryUserAsync(string primaryId, string secondaryId)
         {
             int[] yearsWherePrimaryUserHasBudgets = await context
                 .ConsolidatedBudgets

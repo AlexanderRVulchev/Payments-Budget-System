@@ -15,6 +15,6 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
         Task EditBudgetAsync(EditBudgetFormModel model);
 
-        Task CreateBlankBudgetsForSecondaryUser(string primaryId, string secondaryId);
+        Task CreateBlankBudgetsForSecondaryUserAsync(string primaryId, string secondaryId);
     }
 }
