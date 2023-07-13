@@ -164,7 +164,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 .OrderBy(e => e.EmployeeName)
                 .ToListAsync();
 
-        public async Task<EmployeeViewModel> GetEmployeeById(Guid id)
+        public async Task<EmployeeViewModel> GetEmployeeByIdAsync(Guid id)
         {
             Employee entity = await context
                 .Employees

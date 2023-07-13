@@ -5,14 +5,14 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
     public interface IReportService
     {
-        Task AddReportAnnotations(string userId, ReportInquiryViewModel model);
+        Task AddReportAnnotationsAsync(string userId, ReportInquiryViewModel model);
 
-        Task<ReportDataModel> BuildIndividualReport(string userId, int year, int month);
+        Task<ReportDataModel> BuildIndividualReportAsync(string userId, int year, int month);
 
-        Task<ReportDataModel> BuildConsolidatedReport(string userId, int year, int month);
+        Task<ReportDataModel> BuildConsolidatedReportAsync(string userId, int year, int month);
 
         Task SaveIndividualReportAsync(string userId, ReportDataModel model);
 
-        Task<ReportDataModel> GetReportById(Guid id);
+        Task<ReportDataModel> GetReportByIdAsync(Guid id);
     }
 }

@@ -11,6 +11,6 @@
 
         Task<DeleteReportFormModel> GetAllReportsAsync();
 
-        Task DeleteReportById(Guid reportId);
+        Task DeleteReportByIdAsync(Guid reportId);
     }
 }

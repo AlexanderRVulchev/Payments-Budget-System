@@ -23,7 +23,7 @@ namespace PaymentsBudgetSystem.Core.Services
             reportService = _reportService;
         }
 
-        public async Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds)
+        public async Task AddConsolidatedBudgetAsync(string userId, int newBudgetYear, decimal newBudgetFunds)
         {
             bool budgetAlreadyExists = context.ConsolidatedBudgets
                 .Any(cb => cb.UserId == userId && cb.FiscalYear == newBudgetYear);
@@ -94,7 +94,7 @@ namespace PaymentsBudgetSystem.Core.Services
             {
                 totalAllocatedFunds += individualBudget.SalariesLimit + individualBudget.SupportLimit + individualBudget.AssetsLimit;
 
-                var annualReport = await reportService.BuildIndividualReport(individualBudget.UserId, year, 12);
+                var annualReport = await reportService.BuildIndividualReportAsync(individualBudget.UserId, year, 12);
 
                 decimal annualSalaryExpenses = 
                       annualReport.Bank0101
@@ -198,21 +198,6 @@ namespace PaymentsBudgetSystem.Core.Services
             return budgetViewModel;
         }
 
-        private ConsolidatedBudgetViewModel GenerateConsolidatedBudget(
-                ConsolidatedBudget consolidatedBudget,
-                decimal totalAllocatedFunds,
-                string userId)
-            => new ConsolidatedBudgetViewModel
-            {
-                Name = consolidatedBudget.User.Name,
-                FiscalYear = consolidatedBudget.FiscalYear,
-                Id = consolidatedBudget.Id,
-                TotalLimit = consolidatedBudget.TotalLimit,
-                UserId = userId,
-                Allocated = totalAllocatedFunds,
-                Unallocated = consolidatedBudget.TotalLimit - totalAllocatedFunds
-            };
-
         public async Task EditBudgetAsync(EditBudgetFormModel model)
         {
             IndividualBudget individualBudget = await context
@@ -249,5 +234,20 @@ namespace PaymentsBudgetSystem.Core.Services
             await context.IndividualBudgets.AddRangeAsync(secondaryIndividualBudgets);
             await context.SaveChangesAsync();
         }
+
+        private ConsolidatedBudgetViewModel GenerateConsolidatedBudget(
+                ConsolidatedBudget consolidatedBudget,
+                decimal totalAllocatedFunds,
+                string userId)
+            => new ConsolidatedBudgetViewModel
+            {
+                Name = consolidatedBudget.User.Name,
+                FiscalYear = consolidatedBudget.FiscalYear,
+                Id = consolidatedBudget.Id,
+                TotalLimit = consolidatedBudget.TotalLimit,
+                UserId = userId,
+                Allocated = totalAllocatedFunds,
+                Unallocated = consolidatedBudget.TotalLimit - totalAllocatedFunds
+            };
     }
 }

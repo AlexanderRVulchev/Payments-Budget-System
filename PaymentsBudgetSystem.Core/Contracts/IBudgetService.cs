@@ -11,7 +11,7 @@ namespace PaymentsBudgetSystem.Core.Contracts
 
         Task<EditBudgetFormModel> GetFullConsolidatedBudgetForPrimaryAsync(string userId, int year);
 
-        Task AddNewConsolidatedBudget(string userId, int newBudgetYear, decimal newBudgetFunds);
+        Task AddConsolidatedBudgetAsync(string userId, int newBudgetYear, decimal newBudgetFunds);
 
         Task EditBudgetAsync(EditBudgetFormModel model);
 

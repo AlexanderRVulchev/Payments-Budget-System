@@ -31,7 +31,7 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
                 Month = DateTime.Now.Month
             };
 
-            await reportService.AddReportAnnotations(User.Id(), model);
+            await reportService.AddReportAnnotationsAsync(User.Id(), model);
 
             return View(model);
         }
@@ -41,7 +41,7 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
         {
             if (!ModelState.IsValid)
             {
-                await reportService.AddReportAnnotations(User.Id(), model);
+                await reportService.AddReportAnnotationsAsync(User.Id(), model);
                 return View(model);
             }
 
@@ -51,11 +51,11 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
             {
                 if (!model.IsConsolidated)
                 {
-                    reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+                    reportModel = await reportService.BuildIndividualReportAsync(User.Id(), model.Year, model.Month);
                 }
                 else
                 {
-                    reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+                    reportModel = await reportService.BuildConsolidatedReportAsync(User.Id(), model.Year, model.Month);
                 }
             }
             catch (InvalidOperationException)
@@ -103,11 +103,11 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
             {
                 if (!model.IsConsolidated)
                 {
-                    reportModel = await reportService.BuildIndividualReport(User.Id(), model.Year, model.Month);
+                    reportModel = await reportService.BuildIndividualReportAsync(User.Id(), model.Year, model.Month);
                 }
                 else
                 {
-                    reportModel = await reportService.BuildConsolidatedReport(User.Id(), model.Year, model.Month);
+                    reportModel = await reportService.BuildConsolidatedReportAsync(User.Id(), model.Year, model.Month);
                 }
             }
             catch (InvalidOperationException)
@@ -130,7 +130,7 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
 
             try
             {
-                model = await reportService.GetReportById(id);
+                model = await reportService.GetReportByIdAsync(id);
             }
             catch (InvalidOperationException ex)
             {

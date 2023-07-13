@@ -56,7 +56,7 @@ namespace PaymentsBudgetSystem.Areas.Administration.Controllers
         {
             try
             {
-                await adminService.DeleteReportById(id);
+                await adminService.DeleteReportByIdAsync(id);
                 TempData["SuccessMessage"] = "Отчетът е изтрит успешно!";
 
                 return RedirectToAction(nameof(Reports));

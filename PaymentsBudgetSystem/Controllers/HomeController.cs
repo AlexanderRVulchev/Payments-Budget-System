@@ -35,7 +35,7 @@ namespace PaymentsBudgetSystem.Controllers
 
             if (id != null)
             {
-                await reportService.AddReportAnnotations(id, reportsToLoad);
+                await reportService.AddReportAnnotationsAsync(id, reportsToLoad);
             }
 
             var model = new ReportSelectionViewModel

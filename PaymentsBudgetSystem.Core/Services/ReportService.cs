@@ -24,7 +24,7 @@ namespace PaymentsBudgetSystem.Core.Services
             context = _context;
         }
 
-        public async Task AddReportAnnotations(string userId, ReportInquiryViewModel model)
+        public async Task AddReportAnnotationsAsync(string userId, ReportInquiryViewModel model)
         {
             var reports = await context
                 .Reports
@@ -53,7 +53,7 @@ namespace PaymentsBudgetSystem.Core.Services
             }
         }
 
-        public async Task<ReportDataModel> BuildConsolidatedReport(string userId, int year, int month)
+        public async Task<ReportDataModel> BuildConsolidatedReportAsync(string userId, int year, int month)
         {
             string[] secondaryUsersIds = await context
                 .UsersDependancies
@@ -63,12 +63,12 @@ namespace PaymentsBudgetSystem.Core.Services
 
             var individualReports = new List<ReportDataModel>();
 
-            var individualReportOfThePrimaryUser = await BuildIndividualReport(userId, year, month);
+            var individualReportOfThePrimaryUser = await BuildIndividualReportAsync(userId, year, month);
             individualReports.Add(individualReportOfThePrimaryUser);
 
             foreach (string secondaryUserId in secondaryUsersIds)
             {
-                var individualReportOfASecondaryUser = await BuildIndividualReport(secondaryUserId, year, month);
+                var individualReportOfASecondaryUser = await BuildIndividualReportAsync(secondaryUserId, year, month);
                 individualReports.Add(individualReportOfASecondaryUser);
             }
 
@@ -101,7 +101,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return consolidatedReport;
         }
 
-        public async Task<ReportDataModel> BuildIndividualReport(string userId, int year, int month)
+        public async Task<ReportDataModel> BuildIndividualReportAsync(string userId, int year, int month)
         {
             var payments = await context
                 .Payments
@@ -153,7 +153,7 @@ namespace PaymentsBudgetSystem.Core.Services
             return model;
         }
 
-        public async Task<ReportDataModel> GetReportById(Guid id)
+        public async Task<ReportDataModel> GetReportByIdAsync(Guid id)
         {
             Report entity = await context
                 .Reports

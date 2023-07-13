@@ -45,7 +45,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewAssetPayment(string userId, NewAssetFormModel model)
         {
-            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+            var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
 
             Calculator calculator = new();
             decimal freeFundsForAssetsPayments = calculator.CalculateFreeAssetsFunds(currentYearReport);
@@ -114,7 +114,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewCashPaymentAsync(string userId, CashPaymentViewModel model)
         {
-            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+            var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
 
             Calculator calculator = new();
             decimal freeFundsForSupportPayments = calculator.CalculateFreeSupportFunds(currentYearReport);
@@ -124,7 +124,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 throw new ArgumentException(String.Format(PaymentExceedsBudgetLimit, "Издръжка", freeFundsForSupportPayments));
             }
 
-            var employee = await employeeService.GetEmployeeById(model.SelectedEmployee);
+            var employee = await employeeService.GetEmployeeByIdAsync(model.SelectedEmployee);
 
             var payment = new Payment
             {
@@ -151,7 +151,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewSalariesPayment(string userId, SalariesPaymentViewModel model)
         {
-            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+            var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
 
             Calculator calculator = new();
             decimal freeFundsForSalariesPayments = calculator.CalculateFreeSalariesFunds(currentYearReport);
@@ -200,7 +200,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<Guid> AddNewSupportPayment(string userId, SupportPaymentFormModel model)
         {
-            var currentYearReport = await reportService.BuildIndividualReport(userId, DateTime.Now.Year, 12);
+            var currentYearReport = await reportService.BuildIndividualReportAsync(userId, DateTime.Now.Year, 12);
             
             Calculator calculator = new();
             decimal freeFundsForSupportPayments = calculator.CalculateFreeSupportFunds(currentYearReport);

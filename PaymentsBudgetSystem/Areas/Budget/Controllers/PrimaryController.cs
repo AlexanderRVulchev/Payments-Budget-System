@@ -41,7 +41,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
 
             try
             {
-                await budgetService.AddNewConsolidatedBudget(User.Id(), model.NewBudgetYear, model.NewBudgetFunds);
+                await budgetService.AddConsolidatedBudgetAsync(User.Id(), model.NewBudgetYear, model.NewBudgetFunds);
 
                 TempData["SuccessMessage"] = "Успешно е добавен нов бюджет!";
             }

@@ -24,7 +24,7 @@ namespace PaymentsBudgetSystem.Core.Services
             reportService = _reportService;
         }
 
-        public async Task DeleteReportById(Guid reportId)
+        public async Task DeleteReportByIdAsync(Guid reportId)
         {
             Report report = await context
                 .Reports
@@ -57,7 +57,7 @@ namespace PaymentsBudgetSystem.Core.Services
                     InstitutionName = institution.InstitutionName
                 };
 
-                await reportService.AddReportAnnotations(institution.InstitutionId, institutionReportsCollection);
+                await reportService.AddReportAnnotationsAsync(institution.InstitutionId, institutionReportsCollection);
 
                 model.InstitutionsWithReports.Add(institutionReportsCollection);
             }
