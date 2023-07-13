@@ -110,10 +110,11 @@ namespace PaymentsBudgetSystem.Tests.Services
         {
             int testYear = 2022;
 
-            var actualConsolidatedBudget = await context.ConsolidatedBudgets.FirstAsync(b => b.UserId == primaryTestUserId && b.FiscalYear == testYear);
+            var actualConsolidatedBudget = await context.ConsolidatedBudgets
+                .FirstAsync(b => b.UserId == primaryTestUserId && b.FiscalYear == testYear);
 
-
-            var resultModel = await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(primaryTestUserId, testYear);
+            var resultModel = await budgetService
+                .GetFullConsolidatedBudgetForPrimaryAsync(primaryTestUserId, testYear);
 
             Assert.That(resultModel.IndividualBudgetsData.Count(), Is.EqualTo(1));
             Assert.That(resultModel.ConsolidatedBudget.TotalLimit, Is.EqualTo(actualConsolidatedBudget.TotalLimit));
@@ -142,9 +143,11 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task GetConsolidatedBudgetsAsync_ReturnsCorrectCollection()
         {
-            var actualEntity = await context.ConsolidatedBudgets.FirstAsync(b => b.UserId == primaryTestUserId);
+            var actualEntity = await context.ConsolidatedBudgets
+                .FirstAsync(b => b.UserId == primaryTestUserId);
 
-            var result = await budgetService.GetConsolidatedBudgetsAsync(primaryTestUserId);
+            var result = await budgetService
+                .GetConsolidatedBudgetsAsync(primaryTestUserId);
 
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.First().UserId, Is.EqualTo(primaryTestUserId));
@@ -155,9 +158,11 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task GetIndividualBudgetsAsync_ReturnsCorrectCollection()
         {
-            var actualEntity = await context.IndividualBudgets.FirstAsync(b => b.UserId == primaryTestUserId);
+            var actualEntity = await context.IndividualBudgets
+                .FirstAsync(b => b.UserId == primaryTestUserId);
 
-            var result = await budgetService.GetIndividualBudgetsAsync(primaryTestUserId);
+            var result = await budgetService
+                .GetIndividualBudgetsAsync(primaryTestUserId);
 
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.First().SupportLimit, Is.EqualTo(actualEntity.SupportLimit));
@@ -169,7 +174,10 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task EditBudget_ChangesTheEntityProperly()
         {
-            var individualReportId = await context.IndividualBudgets.Select(b => b.Id).FirstAsync();
+            var individualReportId = await context.IndividualBudgets
+                .Select(b => b.Id)
+                .FirstAsync();
+
             decimal newSupportLimit = 11;
             decimal newAssetsLimit = 12;
             decimal newSalaryLimit = 13;
@@ -195,7 +203,7 @@ namespace PaymentsBudgetSystem.Tests.Services
         }
 
         [Test]
-        public async Task EditBudget_ThrowsForInvalidBudgetId()
+        public void EditBudget_ThrowsForInvalidBudgetId()
         {
             Guid invalidBudgetId = Guid.NewGuid();
             int testYear = 2022;
@@ -213,7 +221,8 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task CreateBlankBudgetsForSecondaryUser()
         {
-            var result = budgetService.CreateBlankBudgetsForSecondaryUserAsync(primaryTestUserId, secondaryTestUserId);
+            var result = budgetService
+                .CreateBlankBudgetsForSecondaryUserAsync(primaryTestUserId, secondaryTestUserId);
 
             Assert.That(await context.IndividualBudgets.CountAsync(), Is.EqualTo(2));
             Assert.That(await context.IndividualBudgets.AnyAsync(b => b.UserId == secondaryTestUserId));

@@ -3,16 +3,13 @@
 namespace PaymentsBudgetSystem.Core.Services
 {
     using Core.Contracts;
+    using Core.Helpers;
     using Core.Models.Employees;
     using Data;
     using Data.Entities;
-    using PaymentsBudgetSystem.Core.Helpers;
-    using System;
-    using System.Collections.Generic;
 
-    using static Common.ExceptionMessages.Employee;
     using static Common.DataConstants.General;
-    using PaymentsBudgetSystem.Core.Models.Enums;
+    using static Common.ExceptionMessages.Employee;
     using GlobalSetting = Models.Enums.GlobalSetting;
 
     public class EmployeeService : IEmployeeService
@@ -84,7 +81,7 @@ namespace PaymentsBudgetSystem.Core.Services
                     MonthlySalary = e.MonthlySalary,
                     Egn = e.Egn,
                     TotalIncome = e.SalaryDetails.Sum(sd =>
-                        sd.InsurancePensionEmployer + 
+                        sd.InsurancePensionEmployer +
                         sd.InsurancePensionEmployee +
                         sd.InsuranceHealthEmployer +
                         sd.InsuranceHealthEmployee +

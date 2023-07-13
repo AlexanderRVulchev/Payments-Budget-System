@@ -123,7 +123,8 @@ namespace PaymentsBudgetSystem.Tests.Services
                 Name = newName
             };
 
-            await beneficiaryService.EditBeneficiaryAsync(testUserId, testModel);
+            await beneficiaryService
+                .EditBeneficiaryAsync(testUserId, testModel);
 
             var expectedEntity = await context.Beneficiaries
                 .Where(b => b.Id == entityId)
@@ -134,7 +135,8 @@ namespace PaymentsBudgetSystem.Tests.Services
                 .Where(b => b.UserId == testUserId)
                 .FirstOrDefaultAsync();
 
-            var actualEntity = await context.Beneficiaries.FindAsync(entityId);
+            var actualEntity = await context.Beneficiaries
+                .FindAsync(entityId);
 
             Assert.IsNotNull(expectedEntity);
             Assert.That(await context.Payments.AnyAsync(p => p.ReceiverName == expectedEntity.Name));
@@ -149,7 +151,8 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             Assert.ThrowsAsync<InvalidOperationException>(async () 
-                => await beneficiaryService.EditBeneficiaryAsync(testUserId, testModel));
+                => await beneficiaryService
+                    .EditBeneficiaryAsync(testUserId, testModel));
         }
 
         [Test]
@@ -164,7 +167,8 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await beneficiaryService.EditBeneficiaryAsync(invalidUserId, testModel));
+                => await beneficiaryService
+                    .EditBeneficiaryAsync(invalidUserId, testModel));
         }
 
         [Test]
@@ -172,7 +176,8 @@ namespace PaymentsBudgetSystem.Tests.Services
         {
             var testModel = new AllBeneficiariesViewModel();            
 
-            var result = await beneficiaryService.GetAllBeneficiariesAsync(testUserId, testModel);
+            var result = await beneficiaryService
+                .GetAllBeneficiariesAsync(testUserId, testModel);
 
             Assert.That(result.Beneficiaries.Count, Is.EqualTo(2));
             Assert.That(result.Page, Is.EqualTo(1));
@@ -188,20 +193,22 @@ namespace PaymentsBudgetSystem.Tests.Services
                 NumberOfPages = 1
             };
 
-            var result = await beneficiaryService.GetAllBeneficiariesAsync(testUserId, testModel);
+            var result = await beneficiaryService
+                .GetAllBeneficiariesAsync(testUserId, testModel);
 
             Assert.That(result.Beneficiaries.Count, Is.EqualTo(2));
             Assert.That(result.Page, Is.EqualTo(1));
             Assert.That(result.NumberOfPages, Is.EqualTo(1));
-
         }
 
         [Test]
         public async Task GetBeneficiary_ReturnCorrectModel()
         {
-            var entity = await context.Beneficiaries.FirstAsync();
+            var entity = await context.Beneficiaries
+                .FirstAsync();
 
-            var result = await beneficiaryService.GetBeneficiaryAsync(testUserId, entity.Id);
+            var result = await beneficiaryService
+                .GetBeneficiaryAsync(testUserId, entity.Id);
 
             Assert.That(result.Id, Is.EqualTo(entity.Id));
             Assert.That(result.Identifier, Is.EqualTo(entity.Identifier));
@@ -216,18 +223,21 @@ namespace PaymentsBudgetSystem.Tests.Services
             var invalidBeneficiaryId = Guid.NewGuid();
 
             Assert.ThrowsAsync<InvalidOperationException>(async () 
-                => await beneficiaryService.GetBeneficiaryAsync(testUserId, invalidBeneficiaryId));
+                => await beneficiaryService
+                    .GetBeneficiaryAsync(testUserId, invalidBeneficiaryId));
         }
 
         [Test]
         public async Task GetBeneficiary_ThrowsForInvalidUser()
         {
-            var beneficiaryId = await context.Beneficiaries.Select(b => b.Id).FirstAsync();
+            var beneficiaryId = await context.Beneficiaries.Select(b => b.Id)
+                .FirstAsync();
+
             var invalidUserId = "invalid user id";
 
             Assert.ThrowsAsync<InvalidOperationException>(async ()
-                => await beneficiaryService.GetBeneficiaryAsync(invalidUserId, beneficiaryId));
+                => await beneficiaryService
+                    .GetBeneficiaryAsync(invalidUserId, beneficiaryId));
         }
     }
-
 }

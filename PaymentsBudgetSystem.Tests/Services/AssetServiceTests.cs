@@ -104,7 +104,8 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task GetAllAssets_WorksAsIntended()
         {
-            var result = await assetService.GetAllAssetsAsync(testUserId, new AllAssetsViewModel
+            var result = await assetService
+                .GetAllAssetsAsync(testUserId, new AllAssetsViewModel
             {
                 InfoMonth = 11,
                 InfoYear = 2023,
@@ -115,7 +116,8 @@ namespace PaymentsBudgetSystem.Tests.Services
                 Page = 0
             });
 
-            var orderedAssets = context.Assets.OrderBy(a => a.Description);
+            var orderedAssets = context.Assets
+                .OrderBy(a => a.Description);
 
             Assert.IsNotNull(result);
             Assert.That(result.Assets.Count, Is.EqualTo(3));
@@ -132,7 +134,8 @@ namespace PaymentsBudgetSystem.Tests.Services
         public async Task GetAllAssets_CurrentPageShouldNotExceedNumberOfPages()
         {
             
-            var result = await assetService.GetAllAssetsAsync(testUserId, new AllAssetsViewModel
+            var result = await assetService
+                .GetAllAssetsAsync(testUserId, new AllAssetsViewModel
             {
                 InfoMonth = 11,
                 InfoYear = 2023,
@@ -163,7 +166,8 @@ namespace PaymentsBudgetSystem.Tests.Services
                 ReportValue = 1000                
             };
 
-            var result = await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear);
+            var result = await assetService
+                .GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear);
 
             Assert.That(result.DateAquired, Is.EqualTo(expected.DateAquired));
             Assert.That(result.ReportValue, Is.EqualTo(expected.ReportValue));
@@ -189,7 +193,8 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             Assert.ThrowsAsync<InvalidOperationException>(async () 
-                => await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear));
+                => await assetService
+                    .GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear));
         }
 
         [Test]
@@ -207,7 +212,8 @@ namespace PaymentsBudgetSystem.Tests.Services
             };
 
             Assert.ThrowsAsync<InvalidOperationException>(async () 
-                => await assetService.GetAssetDetailsAsync(invalidTestUserId, testAssetGuidId, testYear));
+                => await assetService
+                    .GetAssetDetailsAsync(invalidTestUserId, testAssetGuidId, testYear));
         }
 
         [Test]
@@ -217,7 +223,8 @@ namespace PaymentsBudgetSystem.Tests.Services
             var testYear = 2000;
 
             decimal expectedReportValue = 0;
-            var result = await assetService.GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear);
+            var result = await assetService
+                .GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear);
 
             Assert.That(result.AssetMonthlyStatus.All(a => a.ReportValue == expectedReportValue));
         }
