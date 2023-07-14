@@ -1,15 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Assets;
-using PaymentsBudgetSystem.Core.Models.Enums;
-using PaymentsBudgetSystem.Core.Services;
-using PaymentsBudgetSystem.Data;
-using PaymentsBudgetSystem.Data.Entities;
-using PaymentsBudgetSystem.Data.Entities.Enums;
-using GlobalSetting = PaymentsBudgetSystem.Data.Entities.GlobalSetting;
 
 namespace PaymentsBudgetSystem.Tests.Services
 {
+    using Core.Contracts;
+    using Core.Models.Assets;
+    using Core.Models.Enums;
+    using Core.Services;
+    using Data;
+    using Data.Entities;
+    using Data.Entities.Enums;
+
+    using GlobalSetting = PaymentsBudgetSystem.Data.Entities.GlobalSetting;
+    using static Tests.GlobalSettingsTestSeeder;
+
     [TestFixture]
     internal class AssetServiceTests
     {
@@ -72,7 +75,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                     UserId = testUserId,
                 },
                 DeliveryDate = new DateTime(2023, 1, 1),
-                InvoiceDate = new DateTime(2023, 1 ,1),
+                InvoiceDate = new DateTime(2023, 1, 1),
                 InvoiceNumber = "1234",
                 Payment = new Payment
                 {
@@ -106,15 +109,15 @@ namespace PaymentsBudgetSystem.Tests.Services
         {
             var result = await assetService
                 .GetAllAssetsAsync(testUserId, new AllAssetsViewModel
-            {
-                InfoMonth = 11,
-                InfoYear = 2023,
-                NameFilter = null,
-                NumberOfPages = 0,
-                SortAttribute = AssetSort.Name,
-                SortBy = SortBy.Ascending,
-                Page = 0
-            });
+                {
+                    InfoMonth = 11,
+                    InfoYear = 2023,
+                    NameFilter = null,
+                    NumberOfPages = 0,
+                    SortAttribute = AssetSort.Name,
+                    SortBy = SortBy.Ascending,
+                    Page = 0
+                });
 
             var orderedAssets = context.Assets
                 .OrderBy(a => a.Description);
@@ -133,18 +136,18 @@ namespace PaymentsBudgetSystem.Tests.Services
         [Test]
         public async Task GetAllAssets_CurrentPageShouldNotExceedNumberOfPages()
         {
-            
+
             var result = await assetService
                 .GetAllAssetsAsync(testUserId, new AllAssetsViewModel
-            {
-                InfoMonth = 11,
-                InfoYear = 2023,
-                NameFilter = null,
-                NumberOfPages = 0,
-                SortAttribute = AssetSort.Name,
-                SortBy = SortBy.Ascending,
-                Page = 5
-            });
+                {
+                    InfoMonth = 11,
+                    InfoYear = 2023,
+                    NameFilter = null,
+                    NumberOfPages = 0,
+                    SortAttribute = AssetSort.Name,
+                    SortBy = SortBy.Ascending,
+                    Page = 5
+                });
 
             Assert.That(result.Page, Is.EqualTo(1));
         }
@@ -163,7 +166,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 Name = String.Empty,
                 BeneficiaryName = "beneficiary name",
                 ParagraphType = ParagraphType.UpkeepLongTermAssets5100,
-                ReportValue = 1000                
+                ReportValue = 1000
             };
 
             var result = await assetService
@@ -192,7 +195,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 BeneficiaryName = "beneficiary name",
             };
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () 
+            Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await assetService
                     .GetAssetDetailsAsync(testUserId, testAssetGuidId, testYear));
         }
@@ -211,7 +214,7 @@ namespace PaymentsBudgetSystem.Tests.Services
                 BeneficiaryName = "beneficiary name",
             };
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () 
+            Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await assetService
                     .GetAssetDetailsAsync(invalidTestUserId, testAssetGuidId, testYear));
         }
@@ -228,94 +231,5 @@ namespace PaymentsBudgetSystem.Tests.Services
 
             Assert.That(result.AssetMonthlyStatus.All(a => a.ReportValue == expectedReportValue));
         }
-
-        private static List<GlobalSetting> GetGlobalSettings()
-            => new()
-            {
-                new GlobalSetting
-                {
-                    Id = 1,
-                    SettingName = "Стопански инвентар - полезен живот в месеци",
-                    SettingValue = 180
-                },
-                new GlobalSetting
-                {
-                    Id = 2,
-                    SettingName = "Стопански инвентар - процент остатъчна стойност",
-                    SettingValue = 0.1m
-                },
-                new GlobalSetting
-                {
-                    Id = 3,
-                    SettingName = "Техника и оборудване - полезен живот в месеци",
-                    SettingValue = 60
-                },
-                new GlobalSetting
-                {
-                    Id = 4,
-                    SettingName = "Техника и оборудване - процент остатъчна стойност",
-                    SettingValue = 0.15m
-                },
-                new GlobalSetting
-                {
-                    Id = 5,
-                    SettingName = "Нематериални активи - полезен живот в месеци",
-                    SettingValue = 12
-                },
-                new GlobalSetting
-                {
-                    Id = 6,
-                    SettingName = "Нематериални активи - процент остатъчна стойност",
-                    SettingValue = 0
-                },
-                new GlobalSetting
-                {
-                    Id = 7,
-                    SettingName = "Фонд Пенсии - работодател",
-                    SettingValue = 0.1372m,
-                },
-                new GlobalSetting
-                {
-                    Id = 8,
-                    SettingName = "Фонд Пенсии - служител",
-                    SettingValue = 0.1058m
-                },
-                new GlobalSetting
-                {
-                    Id = 9,
-                    SettingName = "Здравно осигуряване - работодател",
-                    SettingValue = 0.048m
-                },
-                new GlobalSetting
-                {
-                    Id = 10,
-                    SettingName = "Здравно осигуряване - служител",
-                    SettingValue = 0.032m
-                },
-                new GlobalSetting
-                {
-                    Id = 11,
-                    SettingName = "Oсигуряване в УПФ - работодател",
-                    SettingValue = 0.028m
-                },
-                new GlobalSetting
-                {
-                    Id=12,
-                    SettingName = "Oсигуряване в УПФ - служител",
-                    SettingValue = 0.022m,
-                },
-                new GlobalSetting
-                {
-                    Id=13,
-                    SettingName = "Данък общ доход",
-                    SettingValue = 0.1m,
-                },
-                new GlobalSetting
-                {
-                    Id = 14,
-                    SettingName = "Минимална работна заплата",
-                    SettingValue = 780m
-                }
-            };
     }
 }

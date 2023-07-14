@@ -177,7 +177,7 @@
                 + report.Bank1020
                 + report.Cash1020
                 + report.Cash1051
-                + report.Bank0101;
+                + report.Bank1051;
 
             return report.SupportLimit - totalSupportExpenses;
         }

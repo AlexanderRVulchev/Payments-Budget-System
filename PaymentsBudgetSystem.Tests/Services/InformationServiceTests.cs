@@ -1,13 +1,13 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
+
 namespace PaymentsBudgetSystem.Tests.Services
 {
     using Data;
-    using Microsoft.EntityFrameworkCore;
-    using PaymentsBudgetSystem.Core.Contracts;
-    using PaymentsBudgetSystem.Core.Models.Information;
-    using PaymentsBudgetSystem.Core.Services;
-    using PaymentsBudgetSystem.Data.Entities;
-    using PaymentsBudgetSystem.Data.Entities.Enums;
+    using Core.Contracts;
+    using Core.Models.Information;
+    using Core.Services;
+    using Data.Entities;
+    using Data.Entities.Enums;
 
     [TestFixture]
     internal class InformationServiceTests

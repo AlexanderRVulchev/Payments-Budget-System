@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Report;
-using PaymentsBudgetSystem.Core.Services;
-using PaymentsBudgetSystem.Data;
-using PaymentsBudgetSystem.Data.Entities;
-using PaymentsBudgetSystem.Data.Entities.Enums;
 
 namespace PaymentsBudgetSystem.Tests.Services
 {
+    using Core.Contracts;
+    using Core.Models.Report;
+    using Core.Services;
+    using Data;
+    using Data.Entities;
+    using Data.Entities.Enums;
+
     internal class ReportServiceTests
     {
         private PBSystemDbContext context;

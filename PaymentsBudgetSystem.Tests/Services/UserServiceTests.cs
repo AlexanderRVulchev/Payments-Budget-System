@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 
-
 namespace PaymentsBudgetSystem.Tests.Services
 {
     using Core.Contracts;

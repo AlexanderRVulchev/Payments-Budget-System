@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.EntityFrameworkCore;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Beneficiaries;
-using PaymentsBudgetSystem.Core.Services;
-using PaymentsBudgetSystem.Data;
-using PaymentsBudgetSystem.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace PaymentsBudgetSystem.Tests.Services
 {
+    using Core.Contracts;
+    using Core.Models.Beneficiaries;
+    using Core.Services;
+    using Data;
+    using Data.Entities;
+
     [TestFixture]
     internal class BeneficiaryServiceTests
     {

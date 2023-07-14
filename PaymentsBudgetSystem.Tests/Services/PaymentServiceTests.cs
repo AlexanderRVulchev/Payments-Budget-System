@@ -1,16 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Assets;
-using PaymentsBudgetSystem.Core.Models.Cash;
-using PaymentsBudgetSystem.Core.Models.Salaries;
-using PaymentsBudgetSystem.Core.Models.Support;
-using PaymentsBudgetSystem.Core.Services;
-using PaymentsBudgetSystem.Data;
-using PaymentsBudgetSystem.Data.Entities;
-using PaymentsBudgetSystem.Data.Entities.Enums;
 
 namespace PaymentsBudgetSystem.Tests.Services
 {
+    using Core.Contracts;
+    using Core.Models.Assets;
+    using Core.Models.Cash;
+    using Core.Models.Salaries;
+    using Core.Models.Support;
+    using Core.Services;
+    using Data;
+    using Data.Entities;
+    using Data.Entities.Enums;
+
+    using static Tests.GlobalSettingsTestSeeder;
+
     [TestFixture]
     internal class PaymentServiceTests
     {
@@ -513,94 +516,5 @@ namespace PaymentsBudgetSystem.Tests.Services
             Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await paymentService.GetSupportPaymentDetailsByIdAsync(invalidUserId, validPaymentId));
         }
-
-        private static List<GlobalSetting> GetGlobalSettings()
-           => new()
-           {
-                new GlobalSetting
-                {
-                    Id = 1,
-                    SettingName = "Стопански инвентар - полезен живот в месеци",
-                    SettingValue = 180
-                },
-                new GlobalSetting
-                {
-                    Id = 2,
-                    SettingName = "Стопански инвентар - процент остатъчна стойност",
-                    SettingValue = 0.1m
-                },
-                new GlobalSetting
-                {
-                    Id = 3,
-                    SettingName = "Техника и оборудване - полезен живот в месеци",
-                    SettingValue = 60
-                },
-                new GlobalSetting
-                {
-                    Id = 4,
-                    SettingName = "Техника и оборудване - процент остатъчна стойност",
-                    SettingValue = 0.15m
-                },
-                new GlobalSetting
-                {
-                    Id = 5,
-                    SettingName = "Нематериални активи - полезен живот в месеци",
-                    SettingValue = 12
-                },
-                new GlobalSetting
-                {
-                    Id = 6,
-                    SettingName = "Нематериални активи - процент остатъчна стойност",
-                    SettingValue = 0
-                },
-                new GlobalSetting
-                {
-                    Id = 7,
-                    SettingName = "Фонд Пенсии - работодател",
-                    SettingValue = 0.1372m,
-                },
-                new GlobalSetting
-                {
-                    Id = 8,
-                    SettingName = "Фонд Пенсии - служител",
-                    SettingValue = 0.1058m
-                },
-                new GlobalSetting
-                {
-                    Id = 9,
-                    SettingName = "Здравно осигуряване - работодател",
-                    SettingValue = 0.048m
-                },
-                new GlobalSetting
-                {
-                    Id = 10,
-                    SettingName = "Здравно осигуряване - служител",
-                    SettingValue = 0.032m
-                },
-                new GlobalSetting
-                {
-                    Id = 11,
-                    SettingName = "Oсигуряване в УПФ - работодател",
-                    SettingValue = 0.028m
-                },
-                new GlobalSetting
-                {
-                    Id=12,
-                    SettingName = "Oсигуряване в УПФ - служител",
-                    SettingValue = 0.022m,
-                },
-                new GlobalSetting
-                {
-                    Id=13,
-                    SettingName = "Данък общ доход",
-                    SettingValue = 0.1m,
-                },
-                new GlobalSetting
-                {
-                    Id = 14,
-                    SettingName = "Минимална работна заплата",
-                    SettingValue = 780m
-                }
-           };
     }
 }
