@@ -1,13 +1,13 @@
-﻿using PaymentsBudgetSystem.Core.Helpers;
-using PaymentsBudgetSystem.Core.Models;
-using PaymentsBudgetSystem.Core.Models.Assets;
-using PaymentsBudgetSystem.Core.Models.Enums;
-using PaymentsBudgetSystem.Core.Models.Report;
-using PaymentsBudgetSystem.Core.Models.Salaries;
-using PaymentsBudgetSystem.Data.Entities.Enums;
-
-namespace PaymentsBudgetSystem.Tests.Helpers
+﻿namespace PaymentsBudgetSystem.Tests.Helpers
 {
+    using Core.Helpers;
+    using Core.Models;
+    using Core.Models.Assets;
+    using Core.Models.Enums;
+    using Core.Models.Report;
+    using Core.Models.Salaries;
+    using Data.Entities.Enums;
+
     using static Tests.GlobalSettingsTestSeeder;
 
     [TestFixture]

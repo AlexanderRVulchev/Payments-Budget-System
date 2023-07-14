@@ -5,7 +5,7 @@
     using Models.Beneficiaries;
     using Models.Employees;
     using Data.Entities;
-    using PaymentsBudgetSystem.Core.Models.Information;
+    using Core.Models.Information;
 
     public class Sorter
     {      
