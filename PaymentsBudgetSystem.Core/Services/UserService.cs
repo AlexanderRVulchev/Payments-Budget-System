@@ -6,15 +6,12 @@ namespace PaymentsBudgetSystem.Core.Services
     using Contracts;
     using Data;
     using Data.Entities;
-    using Core.Models.Report;
-    using static Common.RoleNames;
     using PaymentsBudgetSystem.Core.Models.User;
+    using static Common.RoleNames;
 
     public class UserService : IUserService
     {
         private PBSystemDbContext context;
-
-        private RoleManager<IdentityRole> roleManager;
 
         private UserManager<User> userManager;
 
@@ -22,12 +19,10 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public UserService(
             PBSystemDbContext _context,
-            RoleManager<IdentityRole> _roleManager,
             UserManager<User> _userManager,
             IBudgetService _budgetService)
         {
             this.context = _context;
-            this.roleManager = _roleManager;
             this.userManager = _userManager;
             this.budgetService = _budgetService;
         }
