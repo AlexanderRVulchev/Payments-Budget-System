@@ -24,10 +24,10 @@ namespace PaymentsBudgetSystem.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Info(
-            string? firstName, 
+            string? firstName,
             string? lastName,
             string? egn,
-            int sortAttribute, 
+            int sortAttribute,
             int sortBy,
             int page)
         {
@@ -35,7 +35,7 @@ namespace PaymentsBudgetSystem.Controllers
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Egn = egn,                
+                Egn = egn,
                 SortAttribute = (EmployeeSort)sortAttribute,
                 SortBy = (SortBy)sortBy,
                 Page = page
@@ -68,6 +68,7 @@ namespace PaymentsBudgetSystem.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Add(EmployeeFormModel model)
         {
             decimal minimumWage = await employeeService.GetMinimumWageAsync();
@@ -83,7 +84,6 @@ namespace PaymentsBudgetSystem.Controllers
             }
 
             await employeeService.AddEmployeeAsync(User.Id(), model);
-
             TempData["SuccessMessage"] = "Успешно добавяне на нов служител!";
 
             return RedirectToAction(nameof(Info));
@@ -121,13 +121,13 @@ namespace PaymentsBudgetSystem.Controllers
             {
                 await employeeService.EditEmployeeAsync(User.Id(), model);
                 TempData["SuccessMessage"] = "Успешна редакция на служител!";
+
+                return RedirectToAction(nameof(Info));
             }
             catch (InvalidOperationException ex)
             {
                 return RedirectToAction("Error", "Home", new { area = "", errorMessage = ex.Message });
             }
-
-            return RedirectToAction(nameof(Info));
         }
     }
 }
