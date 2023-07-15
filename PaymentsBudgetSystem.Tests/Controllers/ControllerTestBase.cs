@@ -13,6 +13,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     using Core.Models.Enums;
     using Data.Entities.Enums;
     using PaymentsBudgetSystem.Core.Models;
+    using PaymentsBudgetSystem.Core.Models.Information;
 
     [TestFixture]
     internal abstract class ControllerTestBase
@@ -187,6 +188,19 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             => new ChoosePaymentViewModel
             {
                 Beneficiaries = GetDefaultListOfBeneficiaryViewModel()
+            };
+
+        protected PaymentInformationViewModel GetDefaultPaymentInformationViewModel()
+            => new PaymentInformationViewModel
+            {
+                StartDate = new DateTime(2023, 1, 1),
+                EndDate = new DateTime(2023, 12, 31),
+                SortBy = SortBy.Descending,
+                InformationSort = InformationSort.Amount,
+                AmountMin = 1,
+                AmountMax = 10000,
+                Page = 1,
+                ReceiverNameFilter = ""
             };
     }
 }
