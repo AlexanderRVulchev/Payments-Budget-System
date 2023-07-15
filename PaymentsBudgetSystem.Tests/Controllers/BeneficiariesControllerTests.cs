@@ -14,7 +14,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     [TestFixture]
     internal class BeneficiariesControllerTests : ControllerTestBase
     {
-        private BeneficiariesController beneficiariesController;
+        private BeneficiariesController controller;
 
         private Mock<IBeneficiaryService> mockBeneficiaryService;
 
@@ -34,12 +34,12 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 .Setup(s => s.GetBeneficiaryAsync(testUserId, testBeneficiaryId))
                 .ReturnsAsync(GetDefaultBeneficiaryFormModel());
 
-            beneficiariesController = new BeneficiariesController(mockBeneficiaryService.Object)
+            controller = new BeneficiariesController(mockBeneficiaryService.Object)
             {
                 ControllerContext = testControllerContext
             };
 
-            beneficiariesController.TempData = new TempDataDictionary(
+            controller.TempData = new TempDataDictionary(
                 new DefaultHttpContext(),
                 Mock.Of<ITempDataProvider>());
         }
@@ -49,7 +49,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         {
             var testModel = GetDefaultAllBeneficiariesViewModel();
 
-            var result = await beneficiariesController.Info(
+            var result = await controller.Info(
                 testModel.NameFilter, 
                 testModel.IdentifierFilter,
                 testModel.AddressFilter, 
@@ -68,7 +68,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         {
             var testModel = GetDefaultAllBeneficiariesViewModel();
 
-            var result = beneficiariesController.Info(testModel);
+            var result = controller.Info(testModel);
             var redirectResult = result as RedirectToActionResult;
 
             Assert.IsNotNull(redirectResult);
@@ -80,7 +80,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         [Test]
         public void Add_OnGet_ReturnsViewWithProperModel()
         {
-            var result = beneficiariesController.Add();
+            var result = controller.Add();
             var viewResult = result as ViewResult;
 
             Assert.IsNotNull(viewResult);
@@ -92,9 +92,9 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         {
             var testModel = GetDefaultBeneficiaryFormModel();
 
-            beneficiariesController.ModelState.AddModelError("", "");
+            controller.ModelState.AddModelError("", "");
 
-            var result = await beneficiariesController.Add(testModel);
+            var result = await controller.Add(testModel);
             var viewResult = result as ViewResult;
 
             Assert.IsNotNull(viewResult);
@@ -106,12 +106,12 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         {
             var testModel = GetDefaultBeneficiaryFormModel();
 
-            var result = await beneficiariesController.Add(testModel);
+            var result = await controller.Add(testModel);
             var redirectResult = result as RedirectToActionResult;
 
             Assert.IsNotNull(redirectResult);
-            Assert.That(beneficiariesController.TempData.First().Key, Is.EqualTo("SuccessMessage"));
-            Assert.That(beneficiariesController.TempData.First().Value, Is.EqualTo("Успешно добавяне на контрагент!"));
+            Assert.That(controller.TempData.First().Key, Is.EqualTo("SuccessMessage"));
+            Assert.That(controller.TempData.First().Value, Is.EqualTo("Успешно добавяне на контрагент!"));
             Assert.That(redirectResult.ActionName, Is.EqualTo("Info"));
         }
 
@@ -124,12 +124,12 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 .Setup(s => s.AddBeneficiaryAsync(testUserId, It.IsAny<BeneficiaryFormModel>()))
                 .ThrowsAsync(new InvalidOperationException(BeneficiaryAlreadyExists));
 
-            var result = await beneficiariesController.Add(testModel);
+            var result = await controller.Add(testModel);
             var viewResult = result as ViewResult;
 
             Assert.IsNotNull(viewResult);
-            Assert.IsFalse(beneficiariesController.ModelState.IsValid);
-            Assert.That(beneficiariesController.ModelState.ErrorCount, Is.EqualTo(1));
+            Assert.IsFalse(controller.ModelState.IsValid);
+            Assert.That(controller.ModelState.ErrorCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         {
             var expectedModel = GetDefaultBeneficiaryFormModel();
 
-            var result = await beneficiariesController.Edit(testBeneficiaryId);
+            var result = await controller.Edit(testBeneficiaryId);
             var viewResult = result as ViewResult;
 
             Assert.IsNotNull(viewResult);
@@ -153,7 +153,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 .Setup(s => s.GetBeneficiaryAsync(testUserId, invalidBeneficiaryId))
                 .ThrowsAsync(new InvalidOperationException(BeneficiaryDoesNotExist));
 
-            var result = await beneficiariesController.Edit(invalidBeneficiaryId);
+            var result = await controller.Edit(invalidBeneficiaryId);
             var redirectResult = result as RedirectToActionResult;
 
             AssertRedirectToError(redirectResult, BeneficiaryDoesNotExist);
@@ -164,9 +164,9 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         {
             var expectedModel = GetDefaultBeneficiaryFormModel();
 
-            beneficiariesController.ModelState.AddModelError("", "");
+            controller.ModelState.AddModelError("", "");
 
-            var result = await beneficiariesController.Edit(GetDefaultBeneficiaryFormModel());
+            var result = await controller.Edit(GetDefaultBeneficiaryFormModel());
             var viewResult = result as ViewResult;
 
             Assert.IsNotNull(viewResult);
@@ -176,13 +176,13 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         [Test]
         public async Task Edit_OnPost_RedirectsToActionInfoIfEditIsSuccessful()
         {
-            var result = await beneficiariesController.Edit(GetDefaultBeneficiaryFormModel());
+            var result = await controller.Edit(GetDefaultBeneficiaryFormModel());
             var redirectResult = result as RedirectToActionResult;
 
             Assert.IsNotNull(redirectResult);
             Assert.That(redirectResult.ActionName, Is.EqualTo("Info"));
-            Assert.That(beneficiariesController.TempData.First().Key, Is.EqualTo("SuccessMessage"));
-            Assert.That(beneficiariesController.TempData.First().Value, Is.EqualTo("Контрагентът е редактиран успешно!"));
+            Assert.That(controller.TempData.First().Key, Is.EqualTo("SuccessMessage"));
+            Assert.That(controller.TempData.First().Value, Is.EqualTo("Контрагентът е редактиран успешно!"));
         }
 
         [Test]
@@ -192,7 +192,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 .Setup(s => s.EditBeneficiaryAsync(testUserId, It.IsAny<BeneficiaryFormModel>()))
                 .ThrowsAsync(new InvalidOperationException(BeneficiaryDoesNotExist));
 
-            var result = await beneficiariesController.Edit(GetDefaultBeneficiaryFormModel());
+            var result = await controller.Edit(GetDefaultBeneficiaryFormModel());
             var redirectResult = result as RedirectToActionResult;
 
             AssertRedirectToError(redirectResult, BeneficiaryDoesNotExist);
