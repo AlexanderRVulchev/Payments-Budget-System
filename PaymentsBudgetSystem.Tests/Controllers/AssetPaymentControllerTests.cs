@@ -48,7 +48,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
             assetPaymentController = new AssetPaymentController(mockBeneficiaryService.Object, mockPaymentService.Object)
             {
-                ControllerContext = testControllerContext,
+                ControllerContext = testControllerContext
             };
 
             assetPaymentController.TempData = new TempDataDictionary(

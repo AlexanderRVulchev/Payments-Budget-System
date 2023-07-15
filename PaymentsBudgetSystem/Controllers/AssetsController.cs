@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentsBudgetSystem.Controllers
 {
@@ -7,7 +7,6 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models.Assets;
     using Core.Models.Enums;
     using Extensions;
-
     using static Common.RoleNames;
 
     [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
