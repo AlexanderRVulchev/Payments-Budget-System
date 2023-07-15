@@ -22,11 +22,11 @@ namespace PaymentsBudgetSystem.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Info(
-            string? name, 
+            string? name,
             string? identifier,
             string? address,
             string? bankAccount,
-            int sortBy, 
+            int sortBy,
             int attribute,
             int page)
         {
@@ -81,13 +81,13 @@ namespace PaymentsBudgetSystem.Controllers
             {
                 await beneficiaryService.AddBeneficiaryAsync(User.Id(), model);
                 TempData["SuccessMessage"] = "Успешно добавяне на контрагент!";
+                return RedirectToAction(nameof(Info));
             }
             catch (InvalidOperationException ex)
             {
                 ModelState.AddModelError("", ex.Message);
+                return View(model);
             }
-
-            return RedirectToAction(nameof(Info));
         }
 
         [HttpGet]

@@ -2,13 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
-using PaymentsBudgetSystem.Controllers;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Assets;
-using PaymentsBudgetSystem.Core.Models.Enums;
+
 
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
+    using PaymentsBudgetSystem.Controllers;
+    using Core.Contracts;
+    using Core.Models.Assets;
+    using Core.Models.Enums;
+
     using static Common.ExceptionMessages.Asset;
 
     [TestFixture]
@@ -48,8 +50,6 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 Mock.Of<ITempDataProvider>());
         }
 
-
-        // Does not work !!!!!!!!!!!!!!!!!!
         [Test]
         public async Task Info_OnGet_ReturnsViewWithCorrectModel()
         {
@@ -70,7 +70,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         }
 
         [Test]
-        public async Task Info_OnPost_RedirectsWithProperArguments()
+        public void Info_OnPost_RedirectsWithProperArguments()
         {
             var testModel = GetDefaultAllAssetsViewModel();
 
@@ -82,6 +82,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             List<string> actualRouteValues = redirectResult.RouteValues.Select(v => v.Value.ToString()).ToList();
 
             Assert.That(actualRouteValues.Count, Is.EqualTo(6));
+            Assert.That(redirectResult.ActionName, Is.EqualTo("Info"));
             Assert.That(actualRouteValues[0], Is.EqualTo(testModel.InfoYear.ToString()));
             Assert.That(actualRouteValues[1], Is.EqualTo(testModel.InfoMonth.ToString()));
             Assert.That(actualRouteValues[2], Is.EqualTo(testModel.NameFilter));
@@ -132,6 +133,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             var redirectResult = result as RedirectToActionResult;
 
             Assert.IsNotNull(redirectResult);
+            Assert.That(redirectResult.ActionName, Is.EqualTo("Details"));
             Assert.IsNotNull(redirectResult.RouteValues);
             Assert.That(redirectResult.RouteValues.First().Value, Is.EqualTo(testAssetId));
             Assert.That(redirectResult.RouteValues.Last().Value, Is.EqualTo(testYear));
