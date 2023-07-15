@@ -5,9 +5,9 @@ using Moq;
 
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
-    using PaymentsBudgetSystem.Controllers;
     using Core.Contracts;
     using Core.Models.Beneficiaries;
+    using PaymentsBudgetSystem.Controllers;
 
     using static Common.ExceptionMessages.Beneficiary;
 
@@ -197,24 +197,5 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
             AssertRedirectToError(redirectResult, BeneficiaryDoesNotExist);
         }
-
-        private AllBeneficiariesViewModel GetDefaultAllBeneficiariesViewModel()
-            => new AllBeneficiariesViewModel
-            {
-                AddressFilter = "",
-                BankAccountFilter = "",
-                IdentifierFilter = "",
-                NameFilter = "",
-                Page = 1,
-            };
-
-        private BeneficiaryFormModel GetDefaultBeneficiaryFormModel()
-            => new BeneficiaryFormModel
-            {
-                Address = "",
-                BankAccount = "",
-                Identifier = "",
-                Name = ""
-            };
     }
 }

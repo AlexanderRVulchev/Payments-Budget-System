@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
-using PaymentsBudgetSystem.Controllers;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Employees;
-using PaymentsBudgetSystem.Core.Models.Enums;
-using PaymentsBudgetSystem.Data.Entities.Enums;
+
 
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
+    using Core.Contracts;
+    using Core.Models.Employees;
+    using PaymentsBudgetSystem.Controllers;
+
     using static Common.ExceptionMessages.Employee;
 
     internal class EmployeesControllerTests : ControllerTestBase
@@ -185,30 +185,5 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             Assert.IsNotNull(redirectResult);
             AssertRedirectToError(redirectResult, EmployeeDoesNotExist);
         }
-
-        private AllEmployeesViewModel GetDefaultAllEmployeesViewModel()
-            => new AllEmployeesViewModel
-            {
-                SortAttribute = EmployeeSort.TotalIncome,
-                SortBy = SortBy.Descending,
-                Egn = "",
-                FirstName = "",
-                LastName = "",
-                Page = 1
-            };
-
-        private EmployeeFormModel GetDefaultEmployeeFormModel()
-            => new EmployeeFormModel
-            {
-                ContractType = ContractType.JobContract,
-                MonthlySalary = 4000,
-                DateEmployed = new DateTime(2023, 1, 1),
-                Egn = "",
-                DateLeft = null,
-                FirstName = "",
-                LastName = ""
-            };
-
-        
     }
 }

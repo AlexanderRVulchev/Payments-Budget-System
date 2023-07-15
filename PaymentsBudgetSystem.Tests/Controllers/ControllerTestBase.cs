@@ -6,12 +6,22 @@ using System.Security.Claims;
 
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
+    using Core.Models.Assets;
+    using Core.Models.Beneficiaries;
+    using Core.Models.Cash;
+    using Core.Models.Employees;
+    using Core.Models.Enums;
+    using Data.Entities.Enums;
+    using PaymentsBudgetSystem.Core.Models;
+
     [TestFixture]
     internal abstract class ControllerTestBase
     {
         protected Mock<ClaimsPrincipal> userMock;
         protected ControllerContext testControllerContext;
         protected string testUserId = "test user id";
+
+        protected Guid testGuidId = Guid.NewGuid();
 
         [SetUp]
         protected void BaseSetup()
@@ -47,5 +57,136 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
             Assert.That(actualJson, Is.EqualTo(expectedJson));
         }
+
+        protected NewAssetFormModel GetDefaultTestNewAssetFormModel()
+            => new NewAssetFormModel
+            {
+                Beneficiary = new BeneficiaryFormModel
+                {
+                    Id = testGuidId
+                },
+                Position1SingleAssetValue = 100,
+                Position1Name = "asset name",
+                Position1Quantity = 1,
+                BeneficiaryId = testGuidId,
+                ParagraphType = ParagraphType.UpkeepLongTermAssets5100,
+            };
+
+        protected BeneficiaryFormModel GetDefaultTestBeneficiaryFormModel()
+            => new BeneficiaryFormModel
+            {
+                Id = testGuidId,
+                Address = "",
+                BankAccount = "",
+                Identifier = "",
+                Name = ""
+            };
+
+        protected AllAssetsViewModel GetDefaultAllAssetsViewModel()
+            => new AllAssetsViewModel
+            {
+                InfoMonth = 1,
+                InfoYear = 2023,
+                NameFilter = "",
+                SortAttribute = AssetSort.BalanceValue,
+                SortBy = SortBy.Ascending,
+                Page = 1
+            };
+
+        protected AllBeneficiariesViewModel GetDefaultAllBeneficiariesViewModel()
+            => new AllBeneficiariesViewModel
+            {
+                AddressFilter = "",
+                BankAccountFilter = "",
+                IdentifierFilter = "",
+                NameFilter = "",
+                Page = 1
+            };
+
+        protected BeneficiaryFormModel GetDefaultBeneficiaryFormModel()
+            => new BeneficiaryFormModel
+            {
+                Address = "",
+                BankAccount = "",
+                Identifier = "",
+                Name = ""
+            };
+
+        protected List<EmployeeListModel> GetDefaultListOfEmployeeListModel()
+            => new List<EmployeeListModel>()
+            {
+                        new EmployeeListModel
+                        {
+                            EmployeeId = testGuidId,
+                            EmployeeName = ""
+                        }
+            };
+
+        protected CashPaymentViewModel GetDefaultCashPaymentViewModel()
+            => new CashPaymentViewModel
+            {
+                Amount = 10,
+                Employees = GetDefaultListOfEmployeeListModel()
+            };
+
+        protected CashPaymentDetailsModel GetDefaultCashPaymentDetailsModel()
+            => new CashPaymentDetailsModel
+            {
+                Amount = 10,
+                CashOrderNumber = 1,
+                Description = "",
+                Employee = new EmployeeListModel
+                {
+                    EmployeeId = testGuidId,
+                    EmployeeName = " "
+                },
+                Type = ParagraphType.Materials1015,
+                Id = testGuidId,
+            };
+
+        protected AllEmployeesViewModel GetDefaultAllEmployeesViewModel()
+            => new AllEmployeesViewModel
+            {
+                SortAttribute = EmployeeSort.TotalIncome,
+                SortBy = SortBy.Descending,
+                Egn = "",
+                FirstName = "",
+                LastName = "",
+                Page = 1
+            };
+
+        protected EmployeeFormModel GetDefaultEmployeeFormModel()
+            => new EmployeeFormModel
+            {
+                ContractType = ContractType.JobContract,
+                MonthlySalary = 4000,
+                DateEmployed = new DateTime(2023, 1, 1),
+                Egn = "",
+                DateLeft = null,
+                FirstName = "",
+                LastName = ""
+            };
+
+        protected BeneficiaryViewModel GetDefaultBeneficiaryViewModel()
+            => new BeneficiaryViewModel
+            {
+                Address = "",
+                BankAccount = "",
+                Identifier = "",
+                Name = "",
+                BeneficiaryId = testGuidId
+            };
+
+        protected List<BeneficiaryViewModel> GetDefaultListOfBeneficiaryViewModel()
+            => new List<BeneficiaryViewModel>
+            {
+                GetDefaultBeneficiaryViewModel()
+            };
+
+        protected ChoosePaymentViewModel GetDefaultChoosePaymentViewModel()
+            => new ChoosePaymentViewModel
+            {
+                Beneficiaries = GetDefaultListOfBeneficiaryViewModel()
+            };
     }
 }

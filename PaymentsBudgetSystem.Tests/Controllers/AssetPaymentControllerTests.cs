@@ -8,11 +8,9 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 {
     using Core.Contracts;
     using Core.Models.Assets;
-    using Core.Models.Beneficiaries;
     using Data.Entities.Enums;
     using PaymentsBudgetSystem.Controllers;
 
-    using static Common.ExceptionMessages.Asset;
     using static Common.ExceptionMessages.Beneficiary;
     using static Common.ExceptionMessages.Payment;
 
@@ -33,7 +31,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             mockBeneficiaryService = new Mock<IBeneficiaryService>();
 
             mockBeneficiaryService
-                .Setup(s => s.GetBeneficiaryAsync(testUserId, beneficiaryId))
+                .Setup(s => s.GetBeneficiaryAsync(testUserId, It.IsAny<Guid>()))
                 .ReturnsAsync(GetDefaultTestBeneficiaryFormModel());
 
             mockPaymentService = new Mock<IPaymentService>();
@@ -203,29 +201,5 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             Assert.IsNotNull(redirectResult);
             AssertRedirectToError(redirectResult, InvalidPayment);
         }
-
-        private NewAssetFormModel GetDefaultTestNewAssetFormModel()
-            => new NewAssetFormModel
-            {
-                Beneficiary = new BeneficiaryFormModel
-                {
-                    Id = beneficiaryId
-                },
-                Position1SingleAssetValue = 100,
-                Position1Name = "asset name",
-                Position1Quantity = 1,
-                BeneficiaryId = beneficiaryId,
-                ParagraphType = ParagraphType.UpkeepLongTermAssets5100,
-            };
-
-        private BeneficiaryFormModel GetDefaultTestBeneficiaryFormModel()
-            => new BeneficiaryFormModel
-            {
-                Id = beneficiaryId,
-                Address = "",
-                BankAccount = "",
-                Identifier = "",
-                Name = ""
-            };
     }
 }

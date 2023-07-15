@@ -7,8 +7,6 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 {
     using Core.Contracts;
     using Core.Models.Cash;
-    using Core.Models.Employees;
-    using Data.Entities.Enums;
     using PaymentsBudgetSystem.Controllers;
 
     using static Common.ExceptionMessages.Employee;
@@ -159,36 +157,6 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
         }
 
-        private List<EmployeeListModel> GetDefaultListOfEmployeeListModel()
-            => new List<EmployeeListModel>()
-            {
-                new EmployeeListModel
-                {
-                    EmployeeId = testEmployeeId,
-                    EmployeeName = ""
-                }
-            };
 
-        private CashPaymentViewModel GetDefaultCashPaymentViewModel()
-            => new CashPaymentViewModel
-            {
-                Amount = 10,
-                Employees = GetDefaultListOfEmployeeListModel()
-            };
-
-        private CashPaymentDetailsModel GetDefaultCashPaymentDetailsModel()
-            => new CashPaymentDetailsModel
-            {
-                Amount = 10,
-                CashOrderNumber = 1,
-                Description = "",
-                Employee = new EmployeeListModel
-                {
-                    EmployeeId = testEmployeeId,
-                    EmployeeName = " "
-                },
-                Type = ParagraphType.Materials1015,
-                Id = testPaymentId,
-            };
     }
 }
