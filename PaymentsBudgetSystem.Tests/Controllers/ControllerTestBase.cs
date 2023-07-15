@@ -28,12 +28,13 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             };
         }
 
-        protected void AssertRedirectToError(RedirectToActionResult? result)
+        protected void AssertRedirectToError(RedirectToActionResult? result, string message)
         {
             Assert.IsNotNull(result);
             Assert.That(result.ControllerName, Is.EqualTo("Home"));
             Assert.That(result.ActionName, Is.EqualTo("Error"));
             Assert.That(result.RouteValues!.Last().Key, Is.EqualTo("errorMessage"));
+            Assert.That(result.RouteValues!.Last().Value, Is.EqualTo(message));
         }
 
         protected void AssertObjectEquality(object? actual, object? expected)

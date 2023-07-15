@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Moq;
-using Newtonsoft.Json;
-using PaymentsBudgetSystem.Controllers;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Assets;
-using PaymentsBudgetSystem.Core.Models.Beneficiaries;
-using PaymentsBudgetSystem.Data.Entities;
-using PaymentsBudgetSystem.Data.Entities.Enums;
-using System.Security.Claims;
+
 
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
+    using Core.Contracts;
+    using Core.Models.Assets;
+    using Core.Models.Beneficiaries;
+    using Data.Entities.Enums;
+    using PaymentsBudgetSystem.Controllers;
+
+    using static Common.ExceptionMessages.Asset;
+    using static Common.ExceptionMessages.Beneficiary;
+    using static Common.ExceptionMessages.Payment;
 
     [TestFixture]
     internal class AssetPaymentControllerTests : ControllerTestBase
@@ -40,6 +41,10 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             mockPaymentService
                 .Setup(s => s.AddNewAssetPaymentAsync(testUserId, GetDefaultTestNewAssetFormModel()))
                 .ReturnsAsync(paymentId);
+
+            mockPaymentService
+                .Setup(s => s.GetAssetPaymentDetailsByIdAsync(testUserId, paymentId))
+                .ReturnsAsync(new AssetPaymentDetailsViewModel());
 
             assetPaymentController = new AssetPaymentController(mockBeneficiaryService.Object, mockPaymentService.Object)
             {
@@ -79,7 +84,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             var result = await assetPaymentController.Payment(null, paragraphType);
             var redirectResult = result as RedirectToActionResult;
 
-            base.AssertRedirectToError(redirectResult);
+            base.AssertRedirectToError(redirectResult, BeneficiaryDoesNotExist);
         }
 
         [Test]
@@ -88,7 +93,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             var result = await assetPaymentController.Payment(beneficiaryId, null);
             var redirectResult = result as RedirectToActionResult;
 
-            base.AssertRedirectToError(redirectResult);
+            base.AssertRedirectToError(redirectResult, InvalidParagraph);
         }
 
         [Test]
@@ -103,7 +108,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             var result = await assetPaymentController.Payment(beneficiaryId, paragraphType);
             var redirectResult = result as RedirectToActionResult;
                         
-            base.AssertRedirectToError(redirectResult);
+            base.AssertRedirectToError(redirectResult, BeneficiaryDoesNotExist);
         }
 
         [Test]
@@ -163,14 +168,41 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
             mockPaymentService
                .Setup(s => s.AddNewAssetPaymentAsync(testUserId, testModel))
-               .ThrowsAsync(new InvalidOperationException());
+               .ThrowsAsync(new InvalidOperationException(BeneficiaryDoesNotExist));
 
             var result = await assetPaymentController.Payment(testModel);
             var redirectResult = result as RedirectToActionResult;
 
-            AssertRedirectToError(redirectResult);
+            AssertRedirectToError(redirectResult, BeneficiaryDoesNotExist);
         }
 
+        [Test]
+        public async Task AssetPaymentDetails_ReturnsViewWithCorrectModel()
+        {
+            var expectedModel = new AssetPaymentDetailsViewModel();
+
+            var result = await assetPaymentController.AssetPaymentDetails(paymentId);
+            var viewResult = result as ViewResult;
+
+            Assert.IsNotNull(viewResult);
+            AssertObjectEquality(viewResult.Model, expectedModel);
+        }
+
+        [Test]
+        public async Task AssetPaymentDetails_RedirectsToErrorInCaseOfInvalidPaymentId()
+        {
+            var invalidPaymentId = Guid.NewGuid();
+
+            mockPaymentService
+               .Setup(s => s.GetAssetPaymentDetailsByIdAsync(testUserId, invalidPaymentId))
+               .ThrowsAsync(new InvalidOperationException(InvalidPayment));
+
+            var result = await assetPaymentController.AssetPaymentDetails(invalidPaymentId);
+            var redirectResult = result as RedirectToActionResult;
+
+            Assert.IsNotNull(redirectResult);
+            AssertRedirectToError(redirectResult, InvalidPayment);
+        }
 
         private NewAssetFormModel GetDefaultTestNewAssetFormModel()
             => new NewAssetFormModel
