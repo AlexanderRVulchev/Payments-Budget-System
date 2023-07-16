@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PaymentsBudgetSystem.Areas.Administration.Controllers
 {
     using Core.Contracts;
-    using Core.Models;
     using Core.Models.Administration;
-    using Microsoft.AspNetCore.Authorization;
-    using PaymentsBudgetSystem.Core.Models.Report;
 
     using static Common.RoleNames;
 

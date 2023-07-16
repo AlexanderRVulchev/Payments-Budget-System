@@ -13,6 +13,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     using Core.Models.Enums;
     using Data.Entities.Enums;
     using PaymentsBudgetSystem.Core.Models;
+    using PaymentsBudgetSystem.Core.Models.Administration;
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Core.Models.Salaries;
     using PaymentsBudgetSystem.Core.Models.Support;
@@ -233,6 +234,20 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 InvoiceNumber = "",
                 Description = "",
                 Beneficiary = GetDefaultBeneficiaryViewModel()
+            };
+
+        protected GlobalSettingsEditModel GetDefaultGlobalSettingsEditModel()
+            => new GlobalSettingsEditModel
+            {
+                MinimumWage = 780,
+                TaxRate = 0.1m,
+                IntangibleAssetLife = 2
+            };
+
+        protected DeleteReportFormModel GetDefaultDeleteReportFormModel()
+            => new DeleteReportFormModel
+            {
+                ReportToDeleteId = testGuidId
             };
     }
 }
