@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace PaymentsBudgetSystem.Controllers
 {
     using Core.Contracts;
@@ -41,7 +40,7 @@ namespace PaymentsBudgetSystem.Controllers
             {
                 var paymentId = await paymentService.AddNewSalariesPaymentAsync(User.Id(), model);
 
-                TempData["SuccessMessage"] = $"Заплатите са изплатени успешно!";
+                TempData["SuccessMessage"] = "Заплатите са изплатени успешно!";
 
                 return RedirectToAction(nameof(Details), new { id = paymentId });
             }

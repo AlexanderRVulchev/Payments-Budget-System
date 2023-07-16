@@ -14,6 +14,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     using Data.Entities.Enums;
     using PaymentsBudgetSystem.Core.Models;
     using PaymentsBudgetSystem.Core.Models.Information;
+    using PaymentsBudgetSystem.Core.Models.Salaries;
 
     [TestFixture]
     internal abstract class ControllerTestBase
@@ -201,6 +202,17 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 AmountMax = 10000,
                 Page = 1,
                 ReceiverNameFilter = ""
+            };
+
+        protected SalariesPaymentViewModel GetDefaultSalariesPaymentViewModel()
+            => new SalariesPaymentViewModel
+            {
+                Amount = 100,
+                Month = 1,
+                Year = 2023,
+                TotalNetSalaryJobContract = 2500,
+                TotalNetSalaryStateOfficial = 4000,
+                TotalIncomeTax = 550,
             };
     }
 }

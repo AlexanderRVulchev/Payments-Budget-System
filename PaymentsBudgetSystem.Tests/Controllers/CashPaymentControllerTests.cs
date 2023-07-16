@@ -20,13 +20,11 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         private Mock<IEmployeeService> mockEmployeeService;
         private Mock<IPaymentService> mockPaymentService;
 
-        private Guid testEmployeeId;
         private Guid testPaymentId;
 
         [SetUp]
         public void Setup()
         {
-            testEmployeeId = Guid.NewGuid();
             testPaymentId = Guid.NewGuid();
 
             mockEmployeeService = new();
@@ -154,9 +152,6 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
             Assert.IsNotNull(viewResult);
             AssertRedirectToError(viewResult, InvalidPayment);
-
         }
-
-
     }
 }
