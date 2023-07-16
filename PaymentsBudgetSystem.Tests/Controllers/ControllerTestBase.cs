@@ -15,6 +15,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     using PaymentsBudgetSystem.Core.Models;
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Core.Models.Salaries;
+    using PaymentsBudgetSystem.Core.Models.Support;
 
     [TestFixture]
     internal abstract class ControllerTestBase
@@ -213,6 +214,25 @@ namespace PaymentsBudgetSystem.Tests.Controllers
                 TotalNetSalaryJobContract = 2500,
                 TotalNetSalaryStateOfficial = 4000,
                 TotalIncomeTax = 550,
+            };
+
+        protected SupportPaymentFormModel GetDefaultSupportPaymentFormModel()
+            => new SupportPaymentFormModel
+            {
+                Amount = 100,
+                Description = "",
+                InvoiceDate = new DateTime(2023, 1, 1),
+                InvoiceNumber = "",
+                BeneficiaryId = testGuidId,
+            };
+
+        protected SupportPaymentDetailsViewModel GetDefaultSupportPaymentDetailsViewModel()
+            => new SupportPaymentDetailsViewModel
+            {
+                Amount = 10,
+                InvoiceNumber = "",
+                Description = "",
+                Beneficiary = GetDefaultBeneficiaryViewModel()
             };
     }
 }

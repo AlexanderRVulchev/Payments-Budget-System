@@ -12,6 +12,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
 
     using static Common.ExceptionMessages.Payment;
 
+    [TestFixture]
     internal class SalariesControllerTests : ControllerTestBase
     {
         private SalariesController controller;
