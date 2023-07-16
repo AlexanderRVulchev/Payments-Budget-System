@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
-using PaymentsBudgetSystem.Areas.Budget.Controllers;
-using PaymentsBudgetSystem.Core.Contracts;
-using PaymentsBudgetSystem.Core.Models.Budget;
 
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
+    using Areas.Budget.Controllers;
+    using Core.Contracts;
+    using Core.Models.Budget;
+
     using static Common.ExceptionMessages.Budget;
 
     [TestFixture]

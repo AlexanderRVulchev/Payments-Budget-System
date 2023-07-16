@@ -127,7 +127,7 @@ namespace PaymentsBudgetSystem.Tests.Services
             string invalidUserId = "invalid user id";
             int testYear = 2022;
 
-            Assert.ThrowsAsync<ArgumentNullException>(async ()
+            Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(invalidUserId, testYear));
         }
 
@@ -136,7 +136,7 @@ namespace PaymentsBudgetSystem.Tests.Services
         {
             int invalidYear = 2023;
 
-            Assert.ThrowsAsync<ArgumentNullException>(async ()
+            Assert.ThrowsAsync<InvalidOperationException>(async ()
                 => await budgetService.GetFullConsolidatedBudgetForPrimaryAsync(primaryTestUserId, invalidYear));
         }
 
