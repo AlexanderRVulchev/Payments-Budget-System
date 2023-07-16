@@ -21,6 +21,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             this.budgetService = _budgetService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Info()
         {
             var model = await GetPrimaryBudgetsModel();

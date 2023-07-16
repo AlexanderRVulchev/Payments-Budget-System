@@ -73,7 +73,7 @@ namespace PaymentsBudgetSystem.Core.Services
                .Include(b => b.User)
                .Where(b => b.UserId == userId && b.FiscalYear == year)
                .FirstOrDefaultAsync()
-                    ?? throw new ArgumentNullException("", CannotRetrieveConsolidatedBudget);
+                    ?? throw new InvalidOperationException(CannotRetrieveConsolidatedBudget);
 
             string[] secondaryUsersIds = await context.UsersDependancies
                .Where(ud => ud.PrimaryUserId == userId)

@@ -14,6 +14,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     using Data.Entities.Enums;
     using PaymentsBudgetSystem.Core.Models;
     using PaymentsBudgetSystem.Core.Models.Administration;
+    using PaymentsBudgetSystem.Core.Models.Budget;
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Core.Models.Salaries;
     using PaymentsBudgetSystem.Core.Models.Support;
@@ -248,6 +249,62 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             => new DeleteReportFormModel
             {
                 ReportToDeleteId = testGuidId
+            };
+
+        protected BudgetViewModel GetDefaultBudgetViewModel()
+            => new BudgetViewModel
+            {
+                FiscalYear = 2023,
+                SupportLimit = 1000,
+                SupportExpenses = 500
+            };
+
+        protected List<BudgetViewModel> GetDefaultListOfBudgetViewModel()
+            => new List<BudgetViewModel>()
+            {
+                GetDefaultBudgetViewModel()
+            };
+
+        protected ConsolidatedBudgetViewModel GetDefaultConsolidatedBudgetViewModel()
+            => new ConsolidatedBudgetViewModel
+            {
+                FiscalYear = 2023,
+                TotalLimit = 10000,
+                UserId = testUserId
+            };
+
+        protected List<ConsolidatedBudgetViewModel> GetDefaultListOfConsolidatedBudgetViewModel()
+            => new List<ConsolidatedBudgetViewModel>()
+            {
+                GetDefaultConsolidatedBudgetViewModel()
+            };
+
+        protected PrimaryBudgetsViewModel GetDefaultPrimaryBudgetsViewModel()
+            => new PrimaryBudgetsViewModel
+            {
+                IndividualBudgets = GetDefaultListOfBudgetViewModel(),
+                ConsolidatedBudgets = GetDefaultListOfConsolidatedBudgetViewModel()
+            };
+
+        protected EditBudgetFormModel GetDefaultEditBudgetFormModel()
+            => new EditBudgetFormModel
+            {
+                ConsolidatedBudget = GetDefaultConsolidatedBudgetViewModel(),
+                IndividualBudgetsData = GetDefaultListOfIndividualBudgetFormData()
+            };
+
+        protected IndividualBudgetFormData GetDefaultIndividualBudgetFormData()
+            => new IndividualBudgetFormData
+            {
+                UserId = testUserId,
+                SupportExpenses = 500,
+                SupportLimit = 1000
+            };
+
+        protected List<IndividualBudgetFormData> GetDefaultListOfIndividualBudgetFormData()
+            => new List<IndividualBudgetFormData>
+            {
+                GetDefaultIndividualBudgetFormData()
             };
     }
 }
