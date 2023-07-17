@@ -21,7 +21,8 @@
 <div class="row">
     <div class="col-lg-3 col-md-6 align-items-baseline">
         <form class="input-group-sm" method="post" asp-area="" asp-controller="Employees" asp-action="Info">
-            Търсене<br />
+            Търсене по признаци
+            <br />
             <div>
                 <div>
                     <label asp-for="FirstName" class="form-label">Име: </label>
@@ -72,11 +73,10 @@
 
     </div>
     <div class="col-lg-9 col-md-6">
-        <h4 class="text-center">Контрагенти</h4>
-        <table class="table">
+        <h4 class="text-center info-box-title">Информация за служители</h4>
+        <table class="table table-bordered table-striped text-center">
             <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">Име</th>
                     <th scope="col">Фамилия</th>
                     <th scope="col">ЕГН</th>
@@ -92,7 +92,6 @@
                 @foreach (var employee in Model.Employees)
                 {
                     <tr>
-                        <th scope="row"></th>
                         <td>@employee.FirstName</td>
                         <td>@employee.LastName</td>
                         <td>@employee.Egn</td>

@@ -10,11 +10,12 @@ html {
 
 html {
   position: relative;
-  min-height: 100%;
+  height: 100%;
+  display: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .pbs-box {
@@ -23,4 +24,23 @@ body {
     background-color: #f8f9fa;
     padding: 20px;
     margin: 20px;
+}
+.info-box {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.info-box-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 3px solid yellow;
+    text-shadow: 1px 1px 1px yellow;    
+}
+
+.info-box-line {
+    margin-bottom: 8px;
+    text-shadow: 0px 1px yellow;
 }

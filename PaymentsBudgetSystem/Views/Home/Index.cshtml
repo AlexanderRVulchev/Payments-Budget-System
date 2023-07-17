@@ -1,4 +1,5 @@
 ﻿@using PaymentsBudgetSystem.Core.Models.Report
+@using System.Security.Claims
 @using static PaymentsBudgetSystem.Common.RoleNames;
 
 @model ReportSelectionViewModel
@@ -10,64 +11,107 @@
 <h2 class="text-center font-weight-bold">@ViewBag.Title</h2>
 <hr />
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
-                <div class="form-group">
-                    <label for="selectedInstitutionId" class="font-weight-bold">Моля, изберете институция за достъп до финансовите й отчети:</label>
-                    <select id="selectedInstitutionId" asp-for="SelectedInstitutionId" class="form-control form-control-sm" aria-required="true">
-                        <option value="">Избор</option>
-                        @foreach (var institution in Model.Institutions)
+@if (!User?.Identity?.IsAuthenticated ?? false)
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="info-box">
+                    <h3 class="info-box-title text-monospace text-center text-info">Добре дошли</h3>
+                    <p class="info-box-line border-bottom-light">Изберете институция за да прегледате експортираните отчети</p>
+                    <p class="info-box-line border-bottom-light">Регистрирайте се или се логнете за повече функционалност</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
+                    <div class="form-group">
+                        <label for="selectedInstitutionId" class="font-weight-bold">Моля, изберете институция за достъп до финансовите й отчети:</label>
+                        <select id="selectedInstitutionId" asp-for="SelectedInstitutionId" class="form-control form-control-sm" aria-required="true">
+                            <option value="">Избор</option>
+                            @foreach (var institution in Model.Institutions)
+                            {
+                                <option value="@institution.UserId">@institution.InstitutionName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="SelectedInstitutionId" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-success" asp-action="Index" asp-route-id="@Model.SelectedInstitutionId" asp-route-name="@Model.SelectedInstitutionName" value="Преглед на отчетите">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title font-weight-bold info-box-line">Индивидуални отчети</h5>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var report in Model.ReportAnnotationCollection.IndividualReports)
                         {
-                            <option value="@institution.UserId">@institution.InstitutionName</option>
+                            <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                Отчет м. @report.Month @report.Year г.
+                            </a>
                         }
-                    </select>
-                    <span asp-validation-for="SelectedInstitutionId" class="text-danger"></span>
-                </div>
-                <div class="text-center">
-                    <input type="submit" class="btn btn-success" asp-action="Index" asp-route-id="@Model.SelectedInstitutionId" asp-route-name="@Model.SelectedInstitutionName" value="Преглед на отчетите">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
-                    <h5 class="card-title font-weight-bold">Индивидуални отчети</h5>
-                </div>
-                <div class="card-body">
-                    @foreach (var report in Model.ReportAnnotationCollection.IndividualReports)
-                    {
-                        <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
-                            Отчет м. @report.Month @report.Year г.
-                        </a>
-                    }
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-6 mt-4 mt-lg-0">
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
-                    <h5 class="card-title font-weight-bold">Консолидирани отчети</h5>
-                </div>
-                <div class="card-body">
-                    @foreach (var report in Model.ReportAnnotationCollection.ConsolidatedReports)
-                    {
-                        <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
-                            Отчет м. @report.Month @report.Year г.
-                        </a>
-                    }
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title font-weight-bold info-box-line">Консолидирани отчети</h5>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var report in Model.ReportAnnotationCollection.ConsolidatedReports)
+                        {
+                            <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                Отчет м. @report.Month @report.Year г.
+                            </a>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="info-box">
+                    <h3 class="info-box-title text-monospace text-center text-info">@User.FindFirstValue(ClaimTypes.Email)</h3>
+                    @if (User!.IsInRole(PrimaryRoleName))
+                    {
+                        <p class="info-box-line border-bottom-light">Вие сте първостепенен разпоредител с бюджет</p>
+                        <p class="info-box-line border-bottom-light text-success">Можете да създавате нов бюджет</p>
+                        <p class="info-box-line border-bottom-light text-success">Можете да преразпределяте бюджет</p>
+                        <p class="info-box-line border-bottom-light text-success">Можете да съставяте консолидирани отчети</p>
+                        <p class="border-bottom-light">Изберете дейност от менюто в ляво</p>
+                    }
+                    else if (User!.IsInRole(SecondaryRoleName))
+                    {
+                        <p class="info-box-line border-bottom-light">Вие сте второстепенен разпоредител с бюджет</p>
+                        <p class="info-box-line border-bottom-light text-warning">Не можете да създавате нов бюджет</p>
+                        <p class="info-box-line border-bottom-light text-warning">Не можете да преразпределяте бюджет</p>
+                        <p class="info-box-line border-bottom-light text-warning">Не можете да съставяте консолидирани отчети</p>
+                        <p class="border-bottom-light">Изберете дейност от менюто в ляво</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

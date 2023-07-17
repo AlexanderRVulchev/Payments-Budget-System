@@ -3,20 +3,17 @@
     ViewData["Title"] = "Грешка!";
 }
 
-@*<h1 class="text-danger">Грешка</h1>
-<h2 class="text-danger">Възникна проблем при обработката на Вашата заявка</h2>
-
-<br />
-<h3 class="text-danger">
-    @Model.ErrorMessage
-</h3>*@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>@ViewData["Title"]</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <link href="~/Content/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
         body {
             background-color: #f8f9fa;

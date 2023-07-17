@@ -8,7 +8,7 @@
 }
 
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="text-center text-success">@ViewBag.Title</h2>
 <hr />
 
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
@@ -71,11 +71,10 @@
 
     </div>
     <div class="col-lg-9 col-md-6">
-        <h4 class="text-center">Контрагенти</h4>
-        <table class="table">
+        <h4 class="text-center info-box-title">Обща информация за извършени плащания</h4>
+        <table class="table table-bordered table-striped text-center">
             <thead>
                 <tr>
-                    <th scope="col"></th>
                     <th scope="col">Дата</th>
                     <th scope="col">Получател</th>
                     <th scope="col">Вид плащане</th>
@@ -85,11 +84,9 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-
                 @foreach (var payment in Model.Payments)
                 {
                     <tr>
-                        <th scope="row"></th>
                         <td>@payment.Date.ToShortDateString()</td>
                         <td>@payment.ReceiverName</td>
                         @{

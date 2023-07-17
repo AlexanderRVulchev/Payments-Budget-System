@@ -7,56 +7,65 @@
     ViewBag.Title = $"Изплатени заплати";
 }
 
-
 <h2 class="text-center text-success">@ViewBag.Title</h2>
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success d-flex justify-content-center col-6 offset-lg-3">
+    <div class="alert alert-success d-flex justify-content-center col-10 offset-lg-1">
         <strong>@TempData["SuccessMessage"]</strong>
     </div>
 }
 
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
-<div class="col-lg-6 col-md-12 align-items-baseline">
-    <h4 class="text-black-50">Рекапитулация заплати за месец @Model.Month @Model.Year година:</h4>
-    <ul class="box-shadow">
-        <li> Фонд пенсии - работодател: @Model.TotalInsurancePensionEmployer.ToString("n")</li>
-        <li> Фонд пенсии - служител: @Model.TotalInsurancePensionEmployee.ToString("n")</li>
-        <li> Здравно осигуряване - работодател: @Model.TotalInsuranceHealthEmployer.ToString("n")</li>
-        <li> Здравно осигуряване - служител: @Model.TotalInsuranceHealthEmployee.ToString("n")</li>
-        <li> Осигуряване в УПФ - работодател: @Model.TotalInsuranceAdditionalEmployer.ToString("n")</li>
-        <li> Осигуряване в УПФ - служител: @Model.TotalInsuranceAdditionalEmployee.ToString("n")</li>
-        <li> Данък общ доход: @Model.TotalIncomeTax.ToString("n")</li>
-        <li> Чисти заплати служители - трудов договор: @Model.TotalNetSalaryJobContract.ToString("n")</li>
-        <li> Чисти заплати служители - държавни служители: @Model.TotalNetSalaryStateOfficial.ToString("n")</li>
-    </ul>
-    <h5 class="font-monospace"> ОБЩО: @Model.Amount.ToString("n")</h5>
+<div class="container mb-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-12 pbs-box">
+            <h4 class="text-black-50 info-box-title text-center">Рекапитулация заплати за месец @Model.Month @Model.Year година:</h4>
+            <ul class="list-group box-shadow text-truncate">
+                <li class="list-group-item"> Фонд пенсии - работодател: @Model.TotalInsurancePensionEmployer.ToString("n") лв.</li>
+                <li class="list-group-item"> Фонд пенсии - служител: @Model.TotalInsurancePensionEmployee.ToString("n") лв.</li>
+                <li class="list-group-item"> Здравно осигуряване - работодател: @Model.TotalInsuranceHealthEmployer.ToString("n") лв.</li>
+                <li class="list-group-item"> Здравно осигуряване - служител: @Model.TotalInsuranceHealthEmployee.ToString("n") лв.</li>
+                <li class="list-group-item"> Осигуряване в УПФ - работодател: @Model.TotalInsuranceAdditionalEmployer.ToString("n") лв.</li>
+                <li class="list-group-item"> Осигуряване в УПФ - служител: @Model.TotalInsuranceAdditionalEmployee.ToString("n") лв.</li>
+                <li class="list-group-item"> Данък общ доход: @Model.TotalIncomeTax.ToString("n") лв.</li>
+                <li class="list-group-item"> Чисти заплати служители - трудов договор: @Model.TotalNetSalaryJobContract.ToString("n") лв.</li>
+                <li class="list-group-item"> Чисти заплати служители - държавни служители: @Model.TotalNetSalaryStateOfficial.ToString("n") лв.</li>
+                <li class="list-group-item font-monospace font-weight-bold text-center"> ОБЩО: @Model.Amount.ToString("n") лв. </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    @foreach (var employee in Model.IndividualSalaries)
-    {
-        <div class="pbs-box col-lg-3 col-md-6 align-items-baseline">
-            <h4 class="text-black-50">@employee.EmployeeName</h4>
-            <ul class="box-shadow">
-                <li> Фонд пенсии - работодател: @employee.InsurancePensionEmployer.ToString("n")</li>
-                <li> Фонд пенсии - служител: @employee.InsurancePensionEmployee.ToString("n")</li>
-                <li> Здравно осигуряване - работодател: @employee.InsuranceHealthEmployer.ToString("n")</li>
-                <li> Здравно осигуряване - служител: @employee.InsuranceHealthEmployee.ToString("n")</li>
-                <li> Осигуряване в УПФ - работодател: @employee.InsuranceAdditionalEmployer.ToString("n")</li>
-                <li> Осигуряване в УПФ - служител: @employee.InsuranceAdditionalEmployee.ToString("n")</li>
-                <li> Данък общ доход: @employee.IncomeTax.ToString("n")</li>
-            </ul>
-            @if (employee.ContractType == ContractType.JobContract)
-            {
-                <h5 class="font-monospace"> Чиста сума: @employee.NetSalaryJobContract.ToString("n")</h5>
-            }
-            else
-            {
-                <h5 class="font-monospace"> Чиста сума: @employee.NetSalaryStateOfficial.ToString("n")</h5>
-            }
-        </div>
-    }
+<div class="container">
+    <div class="row">
+        @foreach (var employee in Model.IndividualSalaries)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card shadow mb-4">
+                    <p class="text-black-50 card-header info-box-line text-center font-weight-bold">@employee.EmployeeName</p>
+                    <div class="card-body">
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> ДОО - работодател: </span>@employee.InsurancePensionEmployer.ToString("n") лв.</p>
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> ДОО - служител: </span>@employee.InsurancePensionEmployee.ToString("n") лв.</p>
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> ЗО - работодател: </span>@employee.InsuranceHealthEmployer.ToString("n") лв.</p>
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> ЗО - служител: </span>@employee.InsuranceHealthEmployee.ToString("n") лв.</p>
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> УПФ - работодател:</span> @employee.InsuranceAdditionalEmployer.ToString("n") лв.</p>
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> УПФ - служител: </span>@employee.InsuranceAdditionalEmployee.ToString("n") лв.</p>
+                        <p class="border-left-info pl-1 border-bottom-light"><span class="font-italic font-weight-bolder"> Данък общ доход:</span> @employee.IncomeTax.ToString("n") лв.</p>
+                        <div class="card-footer">
+                            @if (employee.ContractType == ContractType.JobContract)
+                            {
+                                <h6 class="font-monospace"> Чиста сума: <span class="font-weight-bold">@employee.NetSalaryJobContract.ToString("n") лв.</span></h6>
+                            }
+                            else
+                            {
+                                <h6 class="font-monospace"> Чиста сума: <span class="font-weight-bold">@employee.NetSalaryStateOfficial.ToString("n") лв.</span></h6>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
