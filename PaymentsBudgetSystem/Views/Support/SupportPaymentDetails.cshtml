@@ -19,32 +19,35 @@
 
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
-<div class="pbs-box">
-    <p>Име на получателя: @Model.Beneficiary.Name</p>
-    <p>IBAN: @Model.Beneficiary.BankAccount</p>
-    <p>Булстат: @Model.Beneficiary.Identifier</p>
-    <p>Адрес: @Model.Beneficiary.Address</p>
-    @{
-        if (Model.ParagraphType == ParagraphType.Materials1015)
-        {
-            <p>Вид плащане: Материали</p>
-        }
-        else if (Model.ParagraphType == ParagraphType.Services1020)
-        {
-            <p>Вид плащане: Разходи за външни услуги</p>
-        }
-        else if (Model.ParagraphType == ParagraphType.BusinessTrips1051)
-        {
-            <p>Вид плащане: Командировки</p>
-        }
-    }
-    <p>Стойност: @Model.Amount</p>
-    <p>Описание:  @Model.Description</p>
-    <p>Група: Издръжка</p>
-    <p>Дата на извършване на плащането: @Model.Date.ToShortDateString()</p>
-    <p>Фактура номер: @Model.InvoiceNumber</p>
-    <p>Дата на фактура: @Model.InvoiceDate.ToShortDateString()</p>
-
+<div class="d-flex justify-content-center">
+    <div class="card shadow w-50">
+        <p class="card-header text-center font-weight-bold">Име на получателя: @Model.Beneficiary.Name</p>
+        <div class="card-body ml-3 mr-3">
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">IBAN: </span>@Model.Beneficiary.BankAccount</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Булстат: </span>@Model.Beneficiary.Identifier</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Адрес: </span>@Model.Beneficiary.Address</p>
+            @{
+                if (Model.ParagraphType == ParagraphType.Materials1015)
+                {
+                    <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Материали</p>
+                }
+                else if (Model.ParagraphType == ParagraphType.Services1020)
+                {
+                    <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Разходи за външни услуги</p>
+                }
+                else if (Model.ParagraphType == ParagraphType.BusinessTrips1051)
+                {
+                    <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Командировки</p>
+                }
+            }
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Стойност: </span>@Model.Amount лв.</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Описание:  </span>@Model.Description</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Група: </span>Издръжка</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Дата на извършване на плащането: </span>@Model.Date.ToShortDateString()</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Фактура номер: </span>@Model.InvoiceNumber</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Дата на фактура: </span>@Model.InvoiceDate.ToShortDateString()</p>
+        </div>
+    </div>
 </div>
 
 

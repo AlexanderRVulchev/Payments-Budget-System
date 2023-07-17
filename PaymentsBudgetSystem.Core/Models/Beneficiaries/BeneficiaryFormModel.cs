@@ -4,7 +4,6 @@ namespace PaymentsBudgetSystem.Core.Models.Beneficiaries
 {
     using static Common.DataConstants.Beneficiary;
     using static Common.ValidationErrors.General;
-    using static Common.ValidationErrors.Beneficiary;
 
     public class BeneficiaryFormModel
     {

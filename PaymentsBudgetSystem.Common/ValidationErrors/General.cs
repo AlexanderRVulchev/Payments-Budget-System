@@ -35,5 +35,11 @@
         public const string SalaryIsBelowMinimumWage = "Брутната заплата на служителя не може да бъде по-малка от минималната работна заплата - {0} лв.";
 
         public const string InvalidInvoiceNumber = "Номерът на фактура трябва да съдържа 10 цифри";
+
+        public const string ConsolidatedBudgetLimitExceeded = "Въведеното разпределение превишава общият лимит на консолидирания отчет. Превишението е в размер {0} лева. Моля въведете нови данни.";
+
+        public const string BeneficiaryIdentifierMustBeNineDigits = "Булстатът на контрагента трябва да бъде 9-цифрено число";
+
+        public const string BeneficiaryInvalidBankAccount = "Въведената банкова сметка е невалидна";
     }
 }

@@ -7,7 +7,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
     using Core.Models.Budget;
     using Extensions;
     using static Common.ExceptionMessages.Budget;
-    using static Common.ValidationErrors.Budget;
+    using static Common.ValidationErrors.General;
     using static Common.RoleNames;
 
     [Area("Budget")]

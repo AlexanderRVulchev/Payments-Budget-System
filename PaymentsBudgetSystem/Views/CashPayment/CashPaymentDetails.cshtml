@@ -8,7 +8,7 @@
 }
 
 
-<h2 class="text-center text-success">@ViewBag.Title</h2>
+<div class="h2 text-center text-success">@ViewBag.Title</div>
 <hr />
 
 @if (TempData["SuccessMessage"] != null)
@@ -21,27 +21,30 @@
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
 
-<div class="pbs-box">
-    <p>Име на служителя: @Model.Employee.EmployeeName</p>
-    <p>Номер на ордер: @Model.CashOrderNumber</p>
-    @{
-        if (Model.Type == ParagraphType.Materials1015)
-        {
-            <p>Вид плащане: Материали</p>
-        }
-        else if (Model.Type == ParagraphType.Services1020)
-        {
-            <p>Вид плащане: Разходи за външни услуги</p>
-        }
-        else if (Model.Type == ParagraphType.BusinessTrips1051)
-        {
-            <p>Вид плащане: Командировки</p>
-        }
-    }
-    <p>Стойност: @Model.Amount</p>
-    <p>Описание:  @Model.Description</p>
-    <p>Група: Издръжка</p>
-    <p>Дата на извършване на плащането: @Model.Date.ToShortDateString()</p>
+<div class="d-flex justify-content-center">
+    <div class="card shadow w-50">
+        <p class="card-header text-center font-weight-bold">Име на служителя: @Model.Employee.EmployeeName</p>
+        <div class="card-body ml-3 mr-3">
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Номер на ордер: </span>@Model.CashOrderNumber</p>
+            @{
+                if (Model.Type == ParagraphType.Materials1015)
+                {
+                                <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Материали</p>
+                }
+                else if (Model.Type == ParagraphType.Services1020)
+                {
+                                <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Разходи за външни услуги</p>
+                }
+                else if (Model.Type == ParagraphType.BusinessTrips1051)
+                {
+                                <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Командировки</p>
+                }
+            }
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Стойност: </span>@Model.Amount лв.</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Описание: </span>@Model.Description</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Група: </span>Издръжка</p>
+            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Дата на плащането: </span>@Model.Date.ToShortDateString()</p>
+        </div>
+    </div>
 </div>
-
 
