@@ -172,11 +172,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
             var testModel = GetDefaultSupportPaymentFormModel();
 
             var expectedModel = GetDefaultSupportPaymentFormModel();
-            expectedModel.Beneficiary = new BeneficiaryFormModel
-            {
-                Id = null,
-                Name = ""
-            };
+            expectedModel.Beneficiary = GetDefaultBeneficiaryFormModel();
 
             mockPaymentService
                 .Setup(s => s.AddNewSupportPaymentAsync(testUserId, It.IsAny<SupportPaymentFormModel>()))

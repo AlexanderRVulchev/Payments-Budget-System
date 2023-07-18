@@ -101,11 +101,7 @@ namespace PaymentsBudgetSystem.Controllers
                 ModelState.AddModelError("", ex.Message);
 
                 var beneficiary = await beneficiaryService.GetBeneficiaryAsync(User.Id(), model.BeneficiaryId);
-                model.Beneficiary = new BeneficiaryFormModel 
-                { 
-                    Name = beneficiary.Name, 
-                    Id = beneficiary.Id 
-                };
+                model.Beneficiary = beneficiary;
 
                 return View(model);
             }

@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-    using System.Globalization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace PaymentsBudgetSystem.Controllers
 {
     using Core.Contracts;
     using Extensions;
-    using Microsoft.AspNetCore.Authorization;
-    using PaymentsBudgetSystem.Core.Helpers;
     using PaymentsBudgetSystem.Core.Models.Enums;
     using PaymentsBudgetSystem.Core.Models.Information;
     using PaymentsBudgetSystem.Data.Entities.Enums;
 
-    using static Common.ValidationErrors.General;
     using static Common.RoleNames;
+    using static Common.ValidationErrors.General;
 
     [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class InformationController : Controller

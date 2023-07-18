@@ -14,32 +14,8 @@
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
 
-<div class="pbs-box">
-    <p>Име на получателя: @Model.Beneficiary.Name</p>
-    <p>IBAN: @Model.Beneficiary.BankAccount</p>
-    <p>Булстат: @Model.Beneficiary.Identifier</p>
-    <p>Адрес: @Model.Beneficiary.Address</p>
-    @{
-        if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
-        {
-                <p>Вид плащане: Стопански инвентар</p>
-        }
-        else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
-        {
-                <p>Вид плащане: Техника и оборудване</p>
-        }
-        else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
-        {
-                <p>Вид плащане: Нематериални дълготрайни активи</p>
-        }
-    }
-</div>
-
-
-
-
 <div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+    <div class="pbs-box col-sm-12 col-lg-6 offset-lg-1">
         <form asp-action="Payment" method="post">
             <div class="mb-3">
                 <label asp-for="@Model.InvoiceNumber" class="form-label-add-edit">Номер на фактура: </label>
@@ -89,7 +65,7 @@
                             <input type="number" id="value1" asp-for="@Model.Position1SingleAssetValue" class="form-control" aria-required="true">
                             <span asp-validation-for="@Model.Position1SingleAssetValue" class="text-danger"></span>
                         </td>
-                        <td>                            
+                        <td>
                             <span id="sum1"></span> лв.
                             <script>
                                 var input11 = document.getElementById('quantity1');
@@ -298,11 +274,11 @@
                                     var value42 = parseFloat(inputSum42.value) || 0;
                                     var value51 = parseInt(inputSum51.value) || 0;
                                     var value52 = parseFloat(inputSum52.value) || 0;
-                                    
-                                    var sum = (value11 * value12) + 
-                                        (value21 * value22) + 
+
+                                    var sum = (value11 * value12) +
+                                        (value21 * value22) +
                                         (value31 * value32) +
-                                        (value41 * value42) + 
+                                        (value41 * value42) +
                                         (value51 * value52);
 
                                     total.textContent = sum.toFixed(2);
@@ -318,7 +294,33 @@
                 <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на разхода ->" />
             </div>
         </form>
+    </div>
 
+    <div class="col-lg-5 col-sm-12 mt-3">
+        <div class="d-flex justify-content-center">
+            <div class="card shadow">
+                <p class="card-header text-center font-weight-bold">Име на получателя: @Model.Beneficiary.Name</p>
+                <div class="card-body ml-3 mr-3">
+                    <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">IBAN: </span>@Model.Beneficiary.BankAccount</p>
+                    <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Булстат: </span>@Model.Beneficiary.Identifier</p>
+                    <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Адрес:</span> @Model.Beneficiary.Address</p>
+                    @{
+                        if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
+                        {
+                            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Придобиване на стопански инвентар</p>
+                        }
+                        else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
+                        {
+                            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Придобиване на техника и оборудване</p>
+                        }
+                        else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
+                        {
+                            <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид плащане: </span>Придобиване на нематериални дълготрайни активи</p>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

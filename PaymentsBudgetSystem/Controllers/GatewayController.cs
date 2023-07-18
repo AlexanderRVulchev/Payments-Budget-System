@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PaymentsBudgetSystem.Controllers
 {
@@ -6,7 +7,6 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models;
     using Core.Models.Beneficiaries;
     using Extensions;
-    using Microsoft.AspNetCore.Authorization;
 
     using static Common.RoleNames;
 
@@ -58,7 +58,7 @@ namespace PaymentsBudgetSystem.Controllers
 
         [HttpPost]
         public IActionResult NewSalariesPayment(ChoosePaymentViewModel model)
-        {           
+        {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(ChoosePayment));

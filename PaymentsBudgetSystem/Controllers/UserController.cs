@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace PaymentsBudgetSystem.Controllers
 {
     using Core.Contracts;
     using Core.Models.User;
     using Data.Entities;
-    using PaymentsBudgetSystem.Extensions;
-    using System.Security.Claims;
+
     using static Common.RoleNames;
     using static Common.ValidationErrors.General;
 
@@ -84,7 +84,7 @@ namespace PaymentsBudgetSystem.Controllers
                 {
                     UserName = model.UserName,
                     IsPrimary = true,
-                    Name = model.Name,    
+                    Name = model.Name,
                     Email = model.Name
                 };
 

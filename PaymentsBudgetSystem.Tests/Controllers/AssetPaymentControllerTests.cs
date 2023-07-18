@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 
-
 namespace PaymentsBudgetSystem.Tests.Controllers
 {
     using Core.Contracts;

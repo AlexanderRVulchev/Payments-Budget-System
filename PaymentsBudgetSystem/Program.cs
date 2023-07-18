@@ -50,7 +50,6 @@ namespace PaymentsBudgetSystem
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -58,7 +57,6 @@ namespace PaymentsBudgetSystem
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -82,8 +80,7 @@ namespace PaymentsBudgetSystem
             pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            var seedRoles = app.SeedRoles();
-            seedRoles.Wait();
+            app.SeedRoles().Wait();
 
             app.Run();
         }

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PaymentsBudgetSystem.Controllers
 {
     using Core.Models.Beneficiaries;
     using Core.Models.Enums;
-    using Microsoft.AspNetCore.Authorization;
     using Extensions;
     using PaymentsBudgetSystem.Core.Contracts;
 
