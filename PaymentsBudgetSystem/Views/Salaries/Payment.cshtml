@@ -10,7 +10,11 @@
 
 <h2 class="text-center text-success">@ViewBag.Title</h2>
 
-<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+<strong>
+    <div asp-validation-summary="ModelOnly" class="text-danger text-center alert alert-danger
+        alert-dismissible text-decoration-none d-flex justify-content-center col-lg-6 offset-lg-3 col-md-12">
+    </div>
+</strong>
 
 <div class="col-lg-3 col-md-6 align-content-center">
     <form class="input-group-sm" method="post" asp-area="" asp-controller="Assets" asp-action="Info">

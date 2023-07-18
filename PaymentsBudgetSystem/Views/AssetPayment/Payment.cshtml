@@ -11,7 +11,11 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+<strong>
+    <div asp-validation-summary="ModelOnly" class="text-danger text-center alert alert-danger
+        alert-dismissible text-decoration-none d-flex justify-content-center col-lg-6 offset-lg-3 col-md-12">
+    </div>
+</strong>
 
 
 <div class="row">
@@ -311,7 +315,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-4 offset-4 mt-3">
+            <div class="col-6 offset-3 mt-3">
                 <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на разхода" />
             </div>
         </form>

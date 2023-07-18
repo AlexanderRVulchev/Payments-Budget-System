@@ -19,6 +19,12 @@
     </div>
 }
 
+<strong>
+    <div asp-validation-summary="ModelOnly" class="text-danger text-center alert alert-danger
+        alert-dismissible text-decoration-none d-flex justify-content-center col-lg-6 offset-lg-3 col-md-12">
+    </div>
+</strong>
+
 @foreach (var institution in Model.InstitutionsWithReports)
 {
     <h3 class="text-center font-weight-bold">Отчети на @institution.InstitutionName</h3>

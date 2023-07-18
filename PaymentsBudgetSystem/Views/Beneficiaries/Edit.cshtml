@@ -6,40 +6,60 @@
     ViewBag.Title = "Промяна на контрагент";
 }
 
-
-<h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+<strong>
+    <div asp-validation-summary="ModelOnly" class="text-danger text-center alert alert-danger
+        alert-dismissible text-decoration-none d-flex justify-content-center col-lg-6 offset-lg-3 col-md-12">
+    </div>
+</strong>
 
 <div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="Edit" method="post">
-            <div class="mb-3">
-                <label asp-for="@Model.Name" class="form-label-add-edit">Име на контрагента</label>
-                <input asp-for="@Model.Name" class="form-control" aria-required="true" />
-                <span asp-validation-for="@Model.Name" class="text-danger"></span>
-            </div>     
-            <div class="mb-3">
-                <label asp-for="@Model.BankAccount" class="form-label-add-edit">Банкова сметка</label>
-                <input asp-for="@Model.BankAccount" class="form-control" aria-required="true" />
-                <span asp-validation-for="@Model.BankAccount" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="@Model.Address" class="form-label-add-edit">Адрес</label>
-                <textarea asp-for="@Model.Address" class="form-control" aria-required="true" rows="5"></textarea>
-                <span asp-validation-for="@Model.Address" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="@Model.Identifier" class="form-label-add-edit">Булстат</label>
-                <input asp-for="@Model.Identifier" class="form-control" />
-                <span asp-validation-for="@Model.Identifier" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="@Model.Id" class="form-control" value="@Model.Id" />
-            <div class="mb-3">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Запазване на промените" />
-            </div>
-        </form>
+    <div class="card shadow col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <p class="info-box-title text-center text-monospace">@Model.Name</p>
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <div class="info-box-line row mb-3">
+                    <div class="col-4 border-left-success border-bottom-light">
+                        <label asp-for="@Model.Name" class="form-label-add-edit">Име</label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="info-box-line row mb-3">
+                    <div class="col-4 border-left-success border-bottom-light">
+                        <label asp-for="@Model.BankAccount" class="form-label-add-edit">Банкова сметка</label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.BankAccount" class="form-control" aria-required="true" />
+                        <span asp-validation-for="@Model.BankAccount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="info-box-line row mb-3">
+                    <div class="col-4 border-left-success border-bottom-light">
+                        <label asp-for="@Model.Address" class="form-label-add-edit">Адрес</label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="@Model.Address" class="form-control" aria-required="true" rows="3"></textarea>
+                        <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="info-box-line row mb-3">
+                    <div class="col-4 border-left-success border-bottom-light">
+                        <label asp-for="@Model.Identifier" class="form-label-add-edit">Булстат</label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Identifier" class="form-control" />
+                        <span asp-validation-for="@Model.Identifier" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Промяна" />
+                </div>
+            </form>
+        </div>
     </div>
 
 </div>

@@ -10,7 +10,11 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+<strong>
+    <div asp-validation-summary="ModelOnly" class="text-danger text-center alert alert-danger
+        alert-dismissible text-decoration-none d-flex justify-content-center col-lg-6 offset-lg-3 col-md-12">
+    </div>
+</strong>
 
 
 <div class="row">
@@ -124,7 +128,6 @@
                 </tbody>
             </table>
             <div class="row justify-content-center">
-
                 <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
                     <div>
                         <a class="btn btn-success mb-2 w-100 p-3 fw-bold
