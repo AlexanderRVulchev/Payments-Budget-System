@@ -11,6 +11,7 @@ namespace PaymentsBudgetSystem.Tests.Controllers
     using PaymentsBudgetSystem.Controllers;
 
     using static Common.ExceptionMessages.Asset;
+    using static Common.DataConstants.General;
 
     [TestFixture]
     internal class AssetsControllerTests : ControllerTestBase
@@ -139,16 +140,16 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         }
 
         [Test]
-        public async Task Details_OnPost_ReturnsViewWithProperModelIfModelStateIsInvalid()
+        [TestCase(2023)]
+        [TestCase(100)]
+        [TestCase(9999)]
+        public async Task Details_OnPost_ReturnsViewWithProperModelIfModelStateIsInvalid(int testYear)
         {
-            var testYear = 2023;
-
             var testModel = new AssetDetailsViewModel
             {
                 AssetId = testAssetId,
                 Year = testYear,
             };
-
             controller.ModelState.AddModelError("", "");
             
             var result = await controller.Details(testModel);

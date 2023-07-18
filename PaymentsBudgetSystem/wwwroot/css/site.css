@@ -33,6 +33,13 @@ body {
     padding: 20px;
 }
 
+.form-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
 .info-box-title {
     font-size: 24px;
     font-weight: bold;
@@ -41,7 +48,20 @@ body {
     text-shadow: 1px 1px 1px yellow;    
 }
 
+.form-box-title {
+    font-size: 28px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #87CEFA;
+    text-shadow: 1px 1px 1px blue;
+}
+
 .info-box-line {
     margin-bottom: 8px;
     text-shadow: 0px 1px yellow;
+}
+
+.form-box-line {
+    margin-bottom: 8px;
+    text-shadow: 0px 1px blue;
 }

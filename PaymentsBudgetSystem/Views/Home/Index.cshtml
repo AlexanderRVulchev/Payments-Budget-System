@@ -36,7 +36,7 @@
             <div class="col-md-6">
                 <form method="post" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">
                     <div class="form-group">
-                        <label for="selectedInstitutionId" class="font-weight-bold">Моля, изберете институция за достъп до финансовите й отчети:</label>
+                        <label for="selectedInstitutionId" class="font-weight-bold mt-3">Моля, изберете институция за достъп до финансовите й отчети:</label>
                         <select id="selectedInstitutionId" asp-for="SelectedInstitutionId" class="form-control form-control-sm" aria-required="true">
                             <option value="">Избор</option>
                             @foreach (var institution in Model.Institutions)

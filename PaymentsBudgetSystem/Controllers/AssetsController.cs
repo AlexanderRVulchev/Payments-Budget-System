@@ -7,7 +7,9 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Models.Assets;
     using Core.Models.Enums;
     using Extensions;
+
     using static Common.RoleNames;
+    using static Common.DataConstants.General;
 
     [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class AssetsController : Controller
@@ -78,6 +80,11 @@ namespace PaymentsBudgetSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
+                if (model.Year < YearMinValue || model.Year > YearMaxValue)
+                {
+                    model.Year = DateTime.Now.Year;
+                }
+
                 model = await assetService.GetAssetDetailsAsync(User.Id(), model.AssetId, model.Year);
                 return View(model);
             }

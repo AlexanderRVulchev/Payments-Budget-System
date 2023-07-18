@@ -8,7 +8,6 @@
 }
 
 
-<h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <strong>
@@ -18,50 +17,67 @@
 </strong>
 
 
-<h4>Ново касово плащане</h4>
-<div class="col-6 offset-3">
+<div class="card shadow col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6 mt-5">
     <form asp-controller="CashPayment" asp-action="Payment" method="post">
-
-        <div>
-            <label asp-for="Type" class="form-label-add-edit">Вид на разхода</label>
-            <select asp-for="Type" class="form-control" aria-required="true">
-                <option value="6">Материали</option>
-                <option value="7">Разходи за външни услуги</option>
-                <option value="8">Командировки</option>
-            </select>
-            <span asp-validation-for="Type" class="text-danger"></span>
+        <p class="info-box-title text-center text-monospace">Касово плащане</p>
+        <div class="info-box-line row justify-content-center mb-3" style="">
+            <div class="col-4 ml-2 border-left-success border-bottom-light">
+                <label asp-for="Type" class="form-label-add-edit">Вид на разхода</label>
+            </div>
+            <div class="col-7">
+                <select asp-for="Type" class="form-control" aria-required="true">
+                    <option value="6">Материали</option>
+                    <option value="7">Разходи за външни услуги</option>
+                    <option value="8">Командировки</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
         </div>
 
-        <div>
-            <label asp-for="SelectedEmployee" class="form-label-add-edit">Избор на служител</label>
-            <select asp-for="SelectedEmployee" class="form-control" aria-required="true">
-                @foreach (var employee in Model.Employees)
-                {
-                    <option value="@employee.EmployeeId">@employee.EmployeeName</option>
-                }
-            </select>
-            <span asp-validation-for="SelectedEmployee" class="text-danger"></span>
+        <div class="info-box-line row justify-content-center mb-3">
+            <div class="col-4 ml-2 border-left-success border-bottom-light">
+                <label asp-for="SelectedEmployee" class="form-label-add-edit">Избор на служител</label>
+            </div>
+            <div class="col-7">
+                <select asp-for="SelectedEmployee" class="form-control" aria-required="true">
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <option value="@employee.EmployeeId">@employee.EmployeeName</option>
+                    }
+                </select>
+                <span asp-validation-for="SelectedEmployee" class="text-danger"></span>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="CashOrderNumber" class="form-label-add-edit">Номер на ордер</label>
-            <input asp-for="CashOrderNumber" class="form-control" type="text" aria-required="true" />
-            <span asp-validation-for="CashOrderNumber" class="text-danger"></span>
+        <div class="info-box-line row justify-content-center mb-3">
+            <div class="col-4 ml-2 border-left-success border-bottom-light">
+                <label asp-for="CashOrderNumber" class="form-label-add-edit">Номер на ордер</label>
+            </div>
+            <div class="col-7">
+                <input asp-for="CashOrderNumber" class="form-control" type="text" aria-required="true" />
+                <span asp-validation-for="CashOrderNumber" class="text-danger"></span>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Amount" class="form-label-add-edit">Сума</label>
-            <input asp-for="Amount" class="form-control" type="number" aria-required="true" />
-            <span asp-validation-for="Amount" class="text-danger"></span>
+        <div class="info-box-line row justify-content-center mb-3">
+            <div class="col-4 ml-2 border-left-success border-bottom-light">
+                <label asp-for="Amount" class="form-label-add-edit">Сума</label>
+            </div>
+            <div class="col-7">
+                <input asp-for="Amount" class="form-control" type="number" aria-required="true" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label asp-for="Description" class="form-label-add-edit">Описание</label>
-            <input asp-for="Description" class="form-control" type="text" aria-required="true" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+        <div class="info-box-line row justify-content-center mb-3">
+            <div class="col-4 ml-2 border-left-success border-bottom-light">
+                <label asp-for="Description" class="form-label-add-edit">Описание</label>
+            </div>
+            <div class="col-7">
+                <textarea asp-for="Description" class="form-control" type="text" rows="2" aria-required="true"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
         </div>
-
-        <div class="col-4 offset-4">
+        <div class="col-6 offset-3">
             <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на плащането" />
         </div>
     </form>

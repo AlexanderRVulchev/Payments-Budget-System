@@ -48,7 +48,7 @@
                     <div class="row align-items-center">
                         <div class="col-3">Година: </div>
                         <div class="col-4">
-                            <input type="number" asp-for="@Model.Year" class="form-control" aria-required="true">
+                            <input type="number" asp-for="@Model.Year" class="form-control" value="@Model.Year" aria-required="true">
                             <span asp-validation-for="@Model.Year" class="text-danger"></span>
                         </div>
                         <input type="hidden" asp-for="@Model.AssetId" class="form-control" value="@Model.AssetId" />
