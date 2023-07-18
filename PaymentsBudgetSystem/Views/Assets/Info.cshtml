@@ -14,144 +14,157 @@
 
 
 <div class="row">
-    <div class="col-lg-3 col-md-6 align-items-baseline">
+    <div class="d-inline-block">
         <form class="input-group-sm" method="post" asp-area="" asp-controller="Assets" asp-action="Info">
-            Търсене<br />
-            <div>
-                <div class="row">
-                    <div class="col-6">
-                        <label asp-for="InfoMonth" class="form-label">Месец: </label>
-                        <select asp-for="InfoMonth" class="form-control" aria-required="true">
-                            <option value="1">Януари</option>
-                            <option value="2">Февруари</option>
-                            <option value="3">Март</option>
-                            <option value="4">Април</option>
-                            <option value="5">Май</option>
-                            <option value="6">Юни</option>
-                            <option value="7">Юли</option>
-                            <option value="8">Август</option>
-                            <option value="9">Септември</option>
-                            <option value="10">Октомври</option>
-                            <option value="11">Ноември</option>
-                            <option value="12">Декември</option>
+            <div class="info-box">
+                <p class="info-box-title">Търсене</p>
+                <div>
+                    <div class="row info-box-line">
+                        <div class="col-6">
+                            <label asp-for="InfoMonth" class="form-label">Месец: </label>
+                            <select asp-for="InfoMonth" class="form-control" aria-required="true">
+                                <option value="1">Януари</option>
+                                <option value="2">Февруари</option>
+                                <option value="3">Март</option>
+                                <option value="4">Април</option>
+                                <option value="5">Май</option>
+                                <option value="6">Юни</option>
+                                <option value="7">Юли</option>
+                                <option value="8">Август</option>
+                                <option value="9">Септември</option>
+                                <option value="10">Октомври</option>
+                                <option value="11">Ноември</option>
+                                <option value="12">Декември</option>
+                            </select>
+                            <span asp-validation-for="InfoMonth" class="text-danger"></span>
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="InfoYear" class="form-label">Година: </label>
+                            <input type="number" asp-for="InfoYear" class="form-control" value="@Model.InfoYear" />
+                            <span asp-validation-for="InfoYear" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="info-box-line">
+                        <label asp-for="NameFilter" class="form-label">Име: </label>
+                        <input type="text" asp-for="NameFilter" class="form-control" value="@Model.NameFilter" />
+                        <span asp-validation-for="NameFilter" class="text-danger"></span>
+                    </div>
+
+                    <div class="info-box-line">
+                        <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
+                        <select asp-for="SortAttribute" class="form-control" aria-required="true">
+                            <option value="0">Име</option>
+                            <option value="1">Отчетна стойност</option>
+                            <option value="2">Балансова стойност</option>
+                            <option value="3">Начислена амортизация</option>
+                            <option value="4">Дата на придобиване</option>
                         </select>
-                        <span asp-validation-for="InfoMonth" class="text-danger"></span>
+                        <span asp-validation-for="SortAttribute" class="text-danger"></span>
                     </div>
-                    <div class="col-6">
-                        <label asp-for="InfoYear" class="form-label">Година: </label>
-                        <input type="number" asp-for="InfoYear" class="form-control" value="@Model.InfoYear" />
-                        <span asp-validation-for="InfoYear" class="text-danger"></span>
+                    <div class="info-box-line">
+                        <label class="form-label-add-edit">Във</label>
+                        <select asp-for="SortBy" class="form-control" aria-required="true">
+                            <option value="0">Възходящ ред</option>
+                            <option value="1">Низходящ ред</option>
+                        </select>
+                        <span asp-validation-for="SortBy" class="text-danger"></span>
                     </div>
-                </div>
-                <div>
-                    <label asp-for="NameFilter" class="form-label">Име: </label>
-                    <input type="text" asp-for="NameFilter" class="form-control" value="@Model.NameFilter" />
-                    <span asp-validation-for="NameFilter" class="text-danger"></span>
                 </div>
 
-                <div>
-                    <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
-                    <select asp-for="SortAttribute" class="form-control" aria-required="true">
-                        <option value="0">Име</option>
-                        <option value="1">Отчетна стойност</option>
-                        <option value="2">Балансова стойност</option>
-                        <option value="3">Начислена амортизация</option>
-                        <option value="4">Дата на придобиване</option>
-                    </select>
-                    <span asp-validation-for="SortAttribute" class="text-danger"></span>
-                </div>
-                <div>
-                    <label class="form-label-add-edit"></label>
-                    <select asp-for="SortBy" class="form-control" aria-required="true">
-                        <option value="0">Възходящ ред</option>
-                        <option value="1">Низходящ ред</option>
-                    </select>
-                    <span asp-validation-for="SortBy" class="text-danger"></span>
+                <div class="container">
+                    <div class="row justify-content-center mt-3">
+                        <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Assets" asp-action="Info">
+                    </div>
                 </div>
             </div>
-
-            <div>
-                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Assets" asp-action="Info">
-            </div>
-
         </form>
 
     </div>
-    <div class="col-lg-9 col-md-6">
-        <h4 class="text-center info-box-title text-center">Информация за активи</h4>
-        <table class="table text-center">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Име</th>
-                    <th scope="col">Отчетна стойност</th>
-                    <th scope="col">Балансова стойност</th>
-                    <th scope="col">Амортизация</th>
-                    <th scope="col">Дата на придобиване</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
 
-                @foreach (var asset in Model.Assets)
-                {
+    <div class="col-lg-8 col-md-11">
+        <div class="container-fluid">
+            <h4 class="text-center info-box-title text-center">Информация за активи</h4>
+            <table class="table text-center">
+                <thead>
                     <tr>
-                        <th scope="row"></th>
-                        <td>@asset.Name</td>
-                        <td>@asset.ReportValue.ToString("n")</td>
-                        <td>@asset.BalanceValue.ToString("n")</td>
-                        <td>@asset.AmortizationValue.ToString("n")</td>
-                        <td>@asset.DateAquired.ToShortDateString()</td>
-                        <td>
-                            <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Информация</a>
-                            </span>
-                        </td>
-                        <td>
-                            <span style="float:left">
-                                <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Детайли</a>
-                            </span>
-                        </td>
+                        <th scope="col"></th>
+                        <th scope="col">Име</th>
+                        <th scope="col">Отчетна стойност</th>
+                        <th scope="col">Балансова стойност</th>
+                        <th scope="col">Амортизация</th>
+                        <th scope="col">Дата на придобиване</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
-                }
+                </thead>
+                <tbody class="table-group-divider">
 
-            </tbody>
-        </table>
+                    @foreach (var asset in Model.Assets)
+                    {
+                        <tr>
+                            <th scope="row"></th>
+                            <td>@asset.Name</td>
+                            <td>@asset.ReportValue.ToString("n")</td>
+                            <td>@asset.BalanceValue.ToString("n")</td>
+                            <td>@asset.AmortizationValue.ToString("n")</td>
+                            <td>@asset.DateAquired.ToShortDateString()</td>
+                            <td>
+                                <span style="float:left">
+                                    <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Информация</a>
+                                </span>
+                            </td>
+                            <td>
+                                <span style="float:left">
+                                    <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Детайли</a>
+                                </span>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="row justify-content-center">
+
+                <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                            @(Model.Page == 1 ? "disabled" : string.Empty)"
+                           asp-action="Info"
+                           asp-route-year="@Model.InfoYear"
+                           asp-route-month="@Model.InfoMonth"
+                           asp-route-sortBy="@((int)Model.SortBy)"
+                           asp-route-name="@Model.NameFilter"
+                           asp-route-attribute="@((int)Model.SortAttribute)"
+                           asp-route-page="@(Model.Page - 1)">
+                            Предишна
+                        </a>
+                    </div>
+                    <div class="font-monospace ml-5 mr-5">
+                        Страница @Model.Page / @Model.NumberOfPages
+                    </div>
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                            @(Model.Page == Model.NumberOfPages || !Model.Assets.Any() ? "disabled" : string.Empty)"
+                           asp-action="Info"
+                           asp-route-year="@Model.InfoYear"
+                           asp-route-month="@Model.InfoMonth"
+                           asp-route-sortBy="@((int)Model.SortBy)"
+                           asp-route-name="@Model.NameFilter"
+                           asp-route-attribute="@((int)Model.SortAttribute)"
+                           asp-route-page="@(Model.Page + 1)">
+                            Следваща
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    
+
 </div>
 
-<div class="row align-items-end">
-    Страница @Model.Page / @Model.NumberOfPages
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <div>
-            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
-                @(Model.Page == 1 ? "disabled" : string.Empty)"
-               asp-action="Info"
-               asp-route-year="@Model.InfoYear"
-               asp-route-month="@Model.InfoMonth"
-               asp-route-sortBy="@((int)Model.SortBy)"
-               asp-route-name="@Model.NameFilter"
-               asp-route-attribute="@((int)Model.SortAttribute)"
-               asp-route-page="@(Model.Page - 1)">
-                Предишна
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
-                @(Model.Page == Model.NumberOfPages || !Model.Assets.Any() ? "disabled" : string.Empty)"
-               asp-action="Info"
-               asp-route-year="@Model.InfoYear"
-               asp-route-month="@Model.InfoMonth"
-               asp-route-sortBy="@((int)Model.SortBy)"
-               asp-route-name="@Model.NameFilter"
-               asp-route-attribute="@((int)Model.SortAttribute)"
-               asp-route-page="@(Model.Page + 1)">
-                Следваща
-            </a>
-        </div>
-    </div>
-</div>
+
 
 
 @section Scripts {

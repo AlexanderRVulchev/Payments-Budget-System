@@ -18,280 +18,301 @@
     <div class="pbs-box col-sm-12 col-lg-6 offset-lg-1">
         <form asp-action="Payment" method="post">
             <div class="mb-3">
-                <label asp-for="@Model.InvoiceNumber" class="form-label-add-edit">Номер на фактура: </label>
-                <input asp-for="@Model.InvoiceNumber" class="form-control" aria-required="true">
-                <span asp-validation-for="@Model.InvoiceNumber" class="text-danger"></span>
+                <div class="row text-center">
+                    <div class="col-6 font-weight-bolder border-left-success border-bottom-light bg-white">
+                        <label asp-for="@Model.InvoiceNumber" class="form-label-add-edit">Номер на фактура: </label>
+                    </div>
+                    <div class="col-6">
+                        <input asp-for="@Model.InvoiceNumber" class="form-control shadow" aria-required="true">
+                        <span asp-validation-for="@Model.InvoiceNumber" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.InvoiceDate" class="form-label-add-edit">Дата на фактура: </label>
-                <input type="date" asp-for="@Model.InvoiceDate" class="form-control" value="@DateTime.Now" aria-required="true">
-                <span asp-validation-for="@Model.InvoiceDate" class="text-danger"></span>
+                <div class="row text-center">
+                    <div class="col-6 font-weight-bolder border-left-success border-bottom-light bg-white">
+                        <label asp-for="@Model.InvoiceDate" class="form-label-add-edit">Дата на фактура: </label>
+                    </div>
+                    <div class="col-6">
+                        <input type="date" asp-for="@Model.InvoiceDate" class="form-control shadow" value="@DateTime.Now" aria-required="true">
+                        <span asp-validation-for="@Model.InvoiceDate" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <label asp-for="@Model.Description" class="form-label-add-edit">Описание: </label>
-                <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="3"></textarea>
-                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                <div class="row text-center align-items-center">
+                    <div class="col-6 font-weight-bolder border-left-success border-bottom-light bg-white">
+                        <label asp-for="@Model.Description" class="form-label-add-edit">Описание: </label>
+                    </div>
+                    <div class="col-6">
+                        <textarea asp-for="@Model.Description" class="form-control shadow" aria-required="true" rows="3"></textarea>
+                        <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
 
             <input type="hidden" asp-for="@Model.ParagraphType" class="form-control" value="@Model.ParagraphType" />
             <input type="hidden" asp-for="@Model.BeneficiaryId" class="form-control" value="@Model.Beneficiary.Id" />
+            <div class="info-box">
+                <div class="info-box-title">Активи</div>
+                <div class="info-box-line">
+                    <table class="table">
 
-            <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Име на актива</th>
+                                <th scope="col">Количество</th>
+                                <th scope="col">Единична цена</th>
+                                <th scope="col">Обща стойност</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
 
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Име на актива</th>
-                        <th scope="col">Количество</th>
-                        <th scope="col">Единична цена</th>
-                        <th scope="col">Обща стойност</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
+                            <tr>
+                                <th scope="row"></th>
+                                <td>1. </td>
+                                <td>
+                                    <input type="text" asp-for="@Model.Position1Name" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position1Name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity1" asp-for="@Model.Position1Quantity" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position1Quantity" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="value1" asp-for="@Model.Position1SingleAssetValue" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position1SingleAssetValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <span id="sum1"></span> лв.
+                                    <script>
+                                        var input11 = document.getElementById('quantity1');
+                                        var input12 = document.getElementById('value1');
+                                        var sumElement1 = document.getElementById('sum1');
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td>1. </td>
-                        <td>
-                            <input type="text" asp-for="@Model.Position1Name" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position1Name" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="quantity1" asp-for="@Model.Position1Quantity" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position1Quantity" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="value1" asp-for="@Model.Position1SingleAssetValue" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position1SingleAssetValue" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <span id="sum1"></span> лв.
-                            <script>
-                                var input11 = document.getElementById('quantity1');
-                                var input12 = document.getElementById('value1');
-                                var sumElement1 = document.getElementById('sum1');
+                                        input11.addEventListener('input', calculateSum1);
+                                        input12.addEventListener('input', calculateSum1);
 
-                                input11.addEventListener('input', calculateSum1);
-                                input12.addEventListener('input', calculateSum1);
+                                        function calculateSum1() {
+                                            var value1 = parseInt(input11.value) || 0;
+                                            var value2 = parseFloat(input12.value) || 0;
 
-                                function calculateSum1() {
-                                    var value1 = parseInt(input11.value) || 0;
-                                    var value2 = parseFloat(input12.value) || 0;
+                                            var sum = value1 * value2;
 
-                                    var sum = value1 * value2;
+                                            sumElement1.textContent = sum.toFixed(2);
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
 
-                                    sumElement1.textContent = sum.toFixed(2);
-                                }
-                            </script>
-                        </td>
-                    </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>2. </td>
+                                <td>
+                                    <input type="text" asp-for="@Model.Position2Name" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position2Name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity2" asp-for="@Model.Position2Quantity" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position2Quantity" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="value2" asp-for="@Model.Position2SingleAssetValue" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position2SingleAssetValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <span id="sum2"></span> лв.
+                                    <script>
+                                        var input21 = document.getElementById('quantity2');
+                                        var input22 = document.getElementById('value2');
+                                        var sumElement2 = document.getElementById('sum2');
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td>2. </td>
-                        <td>
-                            <input type="text" asp-for="@Model.Position2Name" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position2Name" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="quantity2" asp-for="@Model.Position2Quantity" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position2Quantity" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="value2" asp-for="@Model.Position2SingleAssetValue" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position2SingleAssetValue" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <span id="sum2"></span> лв.
-                            <script>
-                                var input21 = document.getElementById('quantity2');
-                                var input22 = document.getElementById('value2');
-                                var sumElement2 = document.getElementById('sum2');
+                                        input21.addEventListener('input', calculateSum);
+                                        input22.addEventListener('input', calculateSum);
 
-                                input21.addEventListener('input', calculateSum);
-                                input22.addEventListener('input', calculateSum);
+                                        function calculateSum() {
+                                            var value1 = parseInt(input21.value) || 0;
+                                            var value2 = parseFloat(input22.value) || 0;
 
-                                function calculateSum() {
-                                    var value1 = parseInt(input21.value) || 0;
-                                    var value2 = parseFloat(input22.value) || 0;
+                                            var sum = value1 * value2;
 
-                                    var sum = value1 * value2;
+                                            sumElement2.textContent = sum.toFixed(2);
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
 
-                                    sumElement2.textContent = sum.toFixed(2);
-                                }
-                            </script>
-                        </td>
-                    </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>3. </td>
+                                <td>
+                                    <input type="text" asp-for="@Model.Position3Name" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position3Name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity3" asp-for="@Model.Position3Quantity" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position3Quantity" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="value3" asp-for="@Model.Position3SingleAssetValue" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position3SingleAssetValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <span id="sum3"></span> лв.
+                                    <script>
+                                        var input31 = document.getElementById('quantity3');
+                                        var input32 = document.getElementById('value3');
+                                        var sumElement3 = document.getElementById('sum3');
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td>3. </td>
-                        <td>
-                            <input type="text" asp-for="@Model.Position3Name" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position3Name" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="quantity3" asp-for="@Model.Position3Quantity" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position3Quantity" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="value3" asp-for="@Model.Position3SingleAssetValue" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position3SingleAssetValue" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <span id="sum3"></span> лв.
-                            <script>
-                                var input31 = document.getElementById('quantity3');
-                                var input32 = document.getElementById('value3');
-                                var sumElement3 = document.getElementById('sum3');
+                                        input31.addEventListener('input', calculateSum);
+                                        input32.addEventListener('input', calculateSum);
 
-                                input31.addEventListener('input', calculateSum);
-                                input32.addEventListener('input', calculateSum);
+                                        function calculateSum() {
+                                            var value1 = parseInt(input31.value) || 0;
+                                            var value2 = parseFloat(input32.value) || 0;
 
-                                function calculateSum() {
-                                    var value1 = parseInt(input31.value) || 0;
-                                    var value2 = parseFloat(input32.value) || 0;
+                                            var sum = value1 * value2;
 
-                                    var sum = value1 * value2;
+                                            sumElement3.textContent = sum.toFixed(2);
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
 
-                                    sumElement3.textContent = sum.toFixed(2);
-                                }
-                            </script>
-                        </td>
-                    </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>4. </td>
+                                <td>
+                                    <input type="text" asp-for="@Model.Position4Name" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position4Name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity4" asp-for="@Model.Position4Quantity" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position4Quantity" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="value4" asp-for="@Model.Position4SingleAssetValue" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position4SingleAssetValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <span id="sum4"></span> лв.
+                                    <script>
+                                        var input41 = document.getElementById('quantity4');
+                                        var input42 = document.getElementById('value4');
+                                        var sumElement4 = document.getElementById('sum4');
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td>4. </td>
-                        <td>
-                            <input type="text" asp-for="@Model.Position4Name" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position4Name" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="quantity4" asp-for="@Model.Position4Quantity" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position4Quantity" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="value4" asp-for="@Model.Position4SingleAssetValue" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position4SingleAssetValue" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <span id="sum4"></span> лв.
-                            <script>
-                                var input41 = document.getElementById('quantity4');
-                                var input42 = document.getElementById('value4');
-                                var sumElement4 = document.getElementById('sum4');
+                                        input41.addEventListener('input', calculateSum);
+                                        input42.addEventListener('input', calculateSum);
 
-                                input41.addEventListener('input', calculateSum);
-                                input42.addEventListener('input', calculateSum);
+                                        function calculateSum() {
+                                            var value1 = parseInt(input41.value) || 0;
+                                            var value2 = parseFloat(input42.value) || 0;
 
-                                function calculateSum() {
-                                    var value1 = parseInt(input41.value) || 0;
-                                    var value2 = parseFloat(input42.value) || 0;
+                                            var sum = value1 * value2;
 
-                                    var sum = value1 * value2;
+                                            sumElement4.textContent = sum.toFixed(2);
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
 
-                                    sumElement4.textContent = sum.toFixed(2);
-                                }
-                            </script>
-                        </td>
-                    </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>5. </td>
+                                <td>
+                                    <input type="text" asp-for="@Model.Position5Name" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position5Name" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantity5" asp-for="@Model.Position5Quantity" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position5Quantity" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input type="number" id="value5" asp-for="@Model.Position5SingleAssetValue" class="form-control" aria-required="true">
+                                    <span asp-validation-for="@Model.Position5SingleAssetValue" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <span id="sum5"></span> лв.
+                                    <script>
+                                        var input51 = document.getElementById('quantity5');
+                                        var input52 = document.getElementById('value5');
+                                        var sumElement5 = document.getElementById('sum5');
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td>5. </td>
-                        <td>
-                            <input type="text" asp-for="@Model.Position5Name" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position5Name" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="quantity5" asp-for="@Model.Position5Quantity" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position5Quantity" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <input type="number" id="value5" asp-for="@Model.Position5SingleAssetValue" class="form-control" aria-required="true">
-                            <span asp-validation-for="@Model.Position5SingleAssetValue" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <span id="sum5"></span> лв.
-                            <script>
-                                var input51 = document.getElementById('quantity5');
-                                var input52 = document.getElementById('value5');
-                                var sumElement5 = document.getElementById('sum5');
+                                        input51.addEventListener('input', calculateSum);
+                                        input52.addEventListener('input', calculateSum);
 
-                                input51.addEventListener('input', calculateSum);
-                                input52.addEventListener('input', calculateSum);
+                                        function calculateSum() {
+                                            var value1 = parseInt(input51.value) || 0;
+                                            var value2 = parseFloat(input52.value) || 0;
 
-                                function calculateSum() {
-                                    var value1 = parseInt(input51.value) || 0;
-                                    var value2 = parseFloat(input52.value) || 0;
+                                            var sum = value1 * value2;
 
-                                    var sum = value1 * value2;
+                                            sumElement5.textContent = sum.toFixed(2);
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
 
-                                    sumElement5.textContent = sum.toFixed(2);
-                                }
-                            </script>
-                        </td>
-                    </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td colspan="12" style="text-align: center" class="font-monospace text-dark">
+                                    Обща сума на поръчката: <span id="total"></span> лв.
+                                    <script>
+                                        var inputSum11 = document.getElementById('quantity1');
+                                        var inputSum12 = document.getElementById('value1');
+                                        var inputSum21 = document.getElementById('quantity2');
+                                        var inputSum22 = document.getElementById('value2');
+                                        var inputSum31 = document.getElementById('quantity3');
+                                        var inputSum32 = document.getElementById('value3');
+                                        var inputSum41 = document.getElementById('quantity4');
+                                        var inputSum42 = document.getElementById('value4');
+                                        var inputSum51 = document.getElementById('quantity5');
+                                        var inputSum52 = document.getElementById('value5');
+                                        var total = document.getElementById('total');
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td colspan="12" style="text-align: center">
-                            Обща сума на поръчката: <span id="total"></span> лв.
-                            <script>
-                                var inputSum11 = document.getElementById('quantity1');
-                                var inputSum12 = document.getElementById('value1');
-                                var inputSum21 = document.getElementById('quantity2');
-                                var inputSum22 = document.getElementById('value2');
-                                var inputSum31 = document.getElementById('quantity3');
-                                var inputSum32 = document.getElementById('value3');
-                                var inputSum41 = document.getElementById('quantity4');
-                                var inputSum42 = document.getElementById('value4');
-                                var inputSum51 = document.getElementById('quantity5');
-                                var inputSum52 = document.getElementById('value5');
-                                var total = document.getElementById('total');
+                                        inputSum11.addEventListener('input', calculateSum);
+                                        inputSum12.addEventListener('input', calculateSum);
+                                        inputSum21.addEventListener('input', calculateSum);
+                                        inputSum22.addEventListener('input', calculateSum);
+                                        inputSum31.addEventListener('input', calculateSum);
+                                        inputSum32.addEventListener('input', calculateSum);
+                                        inputSum41.addEventListener('input', calculateSum);
+                                        inputSum42.addEventListener('input', calculateSum);
+                                        inputSum51.addEventListener('input', calculateSum);
+                                        inputSum52.addEventListener('input', calculateSum);
 
-                                inputSum11.addEventListener('input', calculateSum);
-                                inputSum12.addEventListener('input', calculateSum);
-                                inputSum21.addEventListener('input', calculateSum);
-                                inputSum22.addEventListener('input', calculateSum);
-                                inputSum31.addEventListener('input', calculateSum);
-                                inputSum32.addEventListener('input', calculateSum);
-                                inputSum41.addEventListener('input', calculateSum);
-                                inputSum42.addEventListener('input', calculateSum);
-                                inputSum51.addEventListener('input', calculateSum);
-                                inputSum52.addEventListener('input', calculateSum);
+                                        function calculateSum() {
+                                            var value11 = parseInt(inputSum11.value) || 0;
+                                            var value12 = parseFloat(inputSum12.value) || 0;
+                                            var value21 = parseInt(inputSum21.value) || 0;
+                                            var value22 = parseFloat(inputSum22.value) || 0;
+                                            var value31 = parseInt(inputSum31.value) || 0;
+                                            var value32 = parseFloat(inputSum32.value) || 0;
+                                            var value41 = parseInt(inputSum41.value) || 0;
+                                            var value42 = parseFloat(inputSum42.value) || 0;
+                                            var value51 = parseInt(inputSum51.value) || 0;
+                                            var value52 = parseFloat(inputSum52.value) || 0;
 
-                                function calculateSum() {
-                                    var value11 = parseInt(inputSum11.value) || 0;
-                                    var value12 = parseFloat(inputSum12.value) || 0;
-                                    var value21 = parseInt(inputSum21.value) || 0;
-                                    var value22 = parseFloat(inputSum22.value) || 0;
-                                    var value31 = parseInt(inputSum31.value) || 0;
-                                    var value32 = parseFloat(inputSum32.value) || 0;
-                                    var value41 = parseInt(inputSum41.value) || 0;
-                                    var value42 = parseFloat(inputSum42.value) || 0;
-                                    var value51 = parseInt(inputSum51.value) || 0;
-                                    var value52 = parseFloat(inputSum52.value) || 0;
+                                            var sum = (value11 * value12) +
+                                                (value21 * value22) +
+                                                (value31 * value32) +
+                                                (value41 * value42) +
+                                                (value51 * value52);
 
-                                    var sum = (value11 * value12) +
-                                        (value21 * value22) +
-                                        (value31 * value32) +
-                                        (value41 * value42) +
-                                        (value51 * value52);
+                                            total.textContent = sum.toFixed(2);
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
+                        </tbody>
 
-                                    total.textContent = sum.toFixed(2);
-                                }
-                            </script>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
-
-            <div class="col-4 offset-4">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на разхода ->" />
+                    </table>
+                </div>
+            </div>
+            <div class="col-4 offset-4 mt-3">
+                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на разхода" />
             </div>
         </form>
     </div>

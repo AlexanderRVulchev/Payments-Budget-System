@@ -14,49 +14,54 @@
 <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
 
 <div class="row">
-    <div class="pbs-box col-lg-3 col-sm-12">
-        <p>Име на актива: @Model.Name</p>
-        <p>Отчетна стойност: @Model.ReportValue</p>
-        <p>
-            Закупен от контрагент: @{
-                string name = @Model.BeneficiaryName ??= "n/a";
-            }
-            @name
-        </p>
-        <p>Дата на придобиване: @Model.DateAquired</p>
+    <div class="d-inline-block col-lg-4 col-sm-12">
+        <div class="info-box ">
+            <p class="card-header text-center font-weight-bold info-box-title">@Model.Name</p>
+            <div class="card-body ml-3 mr-3">
+                <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Отчетна стойност: </span>@Model.ReportValue лв.</p>
+                <p class="border-left-info pl-2 border-bottom-light">
+                    <span class="font-italic font-weight-bolder">
+                        Закупен от контрагент:
+                    </span>@{
+                        string name = @Model.BeneficiaryName ??= "n/a";
+                    }
+                    @name
+                </p>
+                <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Дата на придобиване: </span>@Model.DateAquired.ToShortDateString()</p>
 
-        @{
-            if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
-            {
-                <p>Вид актив: Стопански инвентар</p>
-            }
-            else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
-            {
-                <p>Вид актив: Техника / оборудване</p>
-            }
-            else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
-            {
-                <p>Вид актив: Нематериален дълготраен актив</p>
-            }
-        }
+                @{
+                    if (Model.ParagraphType == ParagraphType.UpkeepLongTermAssets5100)
+                    {
+                        <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид актив: </span>Стопански инвентар</p>
+                    }
+                    else if (Model.ParagraphType == ParagraphType.AquisitionLongTermAssets5200)
+                    {
+                        <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид актив: </span>Техника / оборудване</p>
+                    }
+                    else if (Model.ParagraphType == ParagraphType.AquisitionIntangibleAssets5300)
+                    {
+                        <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Вид актив: </span>Нематериален дълготраен актив</p>
+                    }
+                }
 
-        <form asp-action="Details" method="post">
-            <div class="row align-items-center">
-                <div class="col-3">Година: </div>
-                <div class="col-4">
-                    <input type="number" asp-for="@Model.Year" class="form-control" aria-required="true">
-                    <span asp-validation-for="@Model.Year" class="text-danger"></span>
-                </div>
-                <input type="hidden" asp-for="@Model.AssetId" class="form-control" value="@Model.AssetId" />
-                <div class="col-4">
-                    <input class="btn btn-success fw-bold" type="submit" value="Приложи" />
-                </div>
+                <form asp-action="Details" method="post">
+                    <div class="row align-items-center">
+                        <div class="col-3">Година: </div>
+                        <div class="col-4">
+                            <input type="number" asp-for="@Model.Year" class="form-control" aria-required="true">
+                            <span asp-validation-for="@Model.Year" class="text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="@Model.AssetId" class="form-control" value="@Model.AssetId" />
+                        <div class="col-4">
+                            <input class="btn btn-success fw-bold" type="submit" value="Приложи" />
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-
     <div class="col-lg-8 col-sm-12">
-        <table class="table">
+        <table class="table text-center">
             <thead>
                 <tr>
                     <th scope="col"></th>

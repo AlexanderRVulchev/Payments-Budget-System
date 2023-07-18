@@ -2,11 +2,12 @@
 @model LoginViewModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Вход";
 }
 
 
 <h1 class="text-center">@ViewData["Title"]</h1>
+<br />
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <section>
@@ -14,12 +15,12 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="text-center mb-3">
-                    <label asp-for="@Model.UserName" class="form-label"></label>
+                    <label class="form-label">Потребителско име</label>
                     <input asp-for="@Model.UserName" class="form-control" autocomplete="username" aria-required="true" />
                     <span asp-validation-for="@Model.UserName" class="text-danger"></span>
                 </div>
                 <div class="text-center mb-3">
-                    <label asp-for="@Model.Password" class="form-label"></label>
+                    <label class="form-label">Парола</label>
                     <input asp-for="@Model.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" />
                     <span asp-validation-for="@Model.Password" class="text-danger"></span>
                 </div>
