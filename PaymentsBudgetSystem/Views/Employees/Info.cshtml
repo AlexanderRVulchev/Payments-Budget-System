@@ -6,7 +6,6 @@
     ViewBag.Title = "Служители";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 @if (TempData["SuccessMessage"] != null)
@@ -24,60 +23,65 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-6 align-items-baseline">
-        <form class="input-group-sm" method="post" asp-area="" asp-controller="Employees" asp-action="Info">
-            Търсене по признаци
-            <br />
-            <div>
-                <div>
-                    <label asp-for="FirstName" class="form-label">Име: </label>
-                    <input type="text" asp-for="FirstName" class="form-control" value="@Model.FirstName" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="LastName" class="form-label">Фамилия: </label>
-                    <input type="text" asp-for="LastName" class="form-control" value="@Model.LastName" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="Egn" class="form-label">ЕГН: </label>
-                    <input type="number" asp-for="Egn" class="form-control" value="@Model.Egn" />
-                    <span asp-validation-for="Egn" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
-                    <select asp-for="SortAttribute" class="form-control" aria-required="true">
-                        <option value="0">Име</option>
-                        <option value="1">Фамилия</option>
-                        <option value="2">ЕГН</option>
-                        <option value="3">Брутна заплата</option>
-                        <option value="4">Дата на назначаване</option>
-                        <option value="5">Общо възнаграждения</option>
-                    </select>
-                    <span asp-validation-for="SortAttribute" class="text-danger"></span>
-                </div>
-                <div>
-                    <label class="form-label-add-edit"></label>
-                    <select asp-for="SortBy" class="form-control" aria-required="true">
-                        <option value="0">Възходящ ред</option>
-                        <option value="1">Низходящ ред</option>
-                    </select>
-                    <span asp-validation-for="SortBy" class="text-danger"></span>
-                </div>
-            </div>
+        <div class="d-inline-block">
+            <div class="pbs-box">
+                <form class="input-group-sm" method="post" asp-area="" asp-controller="Employees" asp-action="Info">
+                    <div class="form-box bg-white p-3">
+                        <p class="form-box-title">Търсене</p>
+                        <div>
+                            <div class="form-box-line">
+                                <label asp-for="FirstName" class="form-label">Име: </label>
+                                <input type="text" asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-box-line">
+                                <label asp-for="LastName" class="form-label">Фамилия: </label>
+                                <input type="text" asp-for="LastName" class="form-control" value="@Model.LastName" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-box-line">
+                                <label asp-for="Egn" class="form-label">ЕГН: </label>
+                                <input type="number" asp-for="Egn" class="form-control" value="@Model.Egn" />
+                                <span asp-validation-for="Egn" class="text-danger"></span>
+                            </div>
+                            <div class="form-box-line">
+                                <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
+                                <select asp-for="SortAttribute" class="form-control" aria-required="true">
+                                    <option value="0">Име</option>
+                                    <option value="1">Фамилия</option>
+                                    <option value="2">ЕГН</option>
+                                    <option value="3">Брутна заплата</option>
+                                    <option value="4">Дата на назначаване</option>
+                                    <option value="5">Общо възнаграждения</option>
+                                </select>
+                                <span asp-validation-for="SortAttribute" class="text-danger"></span>
+                            </div>
+                            <div class="form-box-line">
+                                <label class="form-label-add-edit"></label>
+                                <select asp-for="SortBy" class="form-control" aria-required="true">
+                                    <option value="0">Възходящ ред</option>
+                                    <option value="1">Низходящ ред</option>
+                                </select>
+                                <span asp-validation-for="SortBy" class="text-danger"></span>
+                            </div>
+                        </div>
 
-            <div>
-                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Employees" asp-action="Info">
-            </div>
-            <div>
-                <span style="float:left">
-                    <a class="btn btn-success" asp-area="" asp-controller="Employees" asp-action="Add">Добави нов служител</a>
-                </span>
-            </div>
-        </form>
+                        <div class="row justify-content-center mt-3">
+                            <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Employees" asp-action="Info">
+                        </div>
 
+                    </div>
+                    <div class="row justify-content-center mt-5 mb-3">
+                        <span style="float:left">
+                            <a class="btn btn-lg btn-success" asp-area="" asp-controller="Employees" asp-action="Add">Добави нов служител</a>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="col-lg-9 col-md-6">
-        <h4 class="text-center info-box-title">Информация за служители</h4>
+        <h4 class="text-center form-box-title">Информация за служители</h4>
         <table class="table table-bordered table-striped text-center">
             <thead>
                 <tr>
@@ -104,7 +108,8 @@
                         <td>
                             @if (employee.DateLeft != null)
                             {
-                                @employee.DateLeftToString;
+                                @employee.DateLeftToString
+                                ;
                             }
                             else
                             {
@@ -122,40 +127,43 @@
 
             </tbody>
         </table>
+        <div class="row justify-content-center">
+            <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                <div>
+                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                         @(Model.Page == 1 ? "disabled" : string.Empty)"
+                       asp-action="Info"
+                       asp-route-firstName="@Model.FirstName"
+                       asp-route-lastName="@Model.LastName"
+                       asp-route-egn="@Model.Egn"
+                       asp-route-sortAttribute="@((int)Model.SortAttribute)"
+                       asp-route-sortBy="@((int)Model.SortBy)"
+                       asp-route-page="@(Model.Page - 1)">
+                        Предишна
+                    </a>
+                </div>
+                <div class="font-monospace ml-5 mr-5">
+                    Страница @Model.Page / @Model.NumberOfPages
+                </div>
+                <div>
+                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                         @(Model.Page == Model.NumberOfPages || !Model.Employees.Any() ? "disabled" : string.Empty)"
+                       asp-action="Info"
+                       asp-route-firstName="@Model.FirstName"
+                       asp-route-lastName="@Model.LastName"
+                       asp-route-egn="@Model.Egn"
+                       asp-route-sortAttribute="@((int)Model.SortAttribute)"
+                       asp-route-sortBy="@((int)Model.SortBy)"
+                       asp-route-page="@(Model.Page + 1)">
+                        Следваща
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row align-items-end">
-    Страница @Model.Page / @Model.NumberOfPages
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <div>
-            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
-                @(Model.Page == 1 ? "disabled" : string.Empty)"
-               asp-action="Info"
-               asp-route-firstName="@Model.FirstName"
-               asp-route-lastName="@Model.LastName"
-               asp-route-egn="@Model.Egn"
-               asp-route-sortAttribute="@((int)Model.SortAttribute)"
-               asp-route-sortBy="@((int)Model.SortBy)"
-               asp-route-page="@(Model.Page - 1)">
-                Предишна
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
-                @(Model.Page == Model.NumberOfPages || !Model.Employees.Any() ? "disabled" : string.Empty)"
-               asp-action="Info"
-               asp-route-firstName="@Model.FirstName"
-               asp-route-lastName="@Model.LastName"
-               asp-route-egn="@Model.Egn"
-               asp-route-sortAttribute="@((int)Model.SortAttribute)"
-               asp-route-sortBy="@((int)Model.SortBy)"
-               asp-route-page="@(Model.Page + 1)">
-                Следваща
-            </a>
-        </div>
-    </div>
-</div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
