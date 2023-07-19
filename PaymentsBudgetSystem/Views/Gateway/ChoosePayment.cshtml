@@ -7,7 +7,6 @@
 }
 
 
-<h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <strong>
@@ -18,105 +17,139 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <h4>Ново плащане за Издръжка</h4>
-        <form asp-controller="Gateway" asp-action="NewSupportPayment" method="post" >
+        <div class="pbs-box">
+            <form asp-controller="Gateway" asp-action="NewSupportPayment" method="post">
+                <div class="card">
+                    <div class="card-header text-center green-box-title">Ново плащане за Издръжка</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 green-box-line">
+                                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
+                            </div>
+                            <div class="col-8">
+                                <select asp-for="SelectedParagraph" class="form-control" aria-required="true">
+                                    <option value="6">Материали</option>
+                                    <option value="7">Разходи за външни услуги</option>
+                                    <option value="8">Командировки</option>
+                                </select>
+                                <span asp-validation-for="SelectedParagraph" class="text-danger"></span>
+                            </div>
+                        </div>
 
-            <div>
-                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
-                <select asp-for="SelectedParagraph" class="form-control" aria-required="true">
-                    <option value="6">Материали</option>
-                    <option value="7">Разходи за външни услуги</option>
-                    <option value="8">Командировки</option>
-                </select>
-                <span asp-validation-for="SelectedParagraph" class="text-danger"></span>
-            </div>
+                        <div class="row">
+                            <div class="col-4 green-box-line">
+                                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Избор на Контрагент</label>
+                            </div>
+                            <div class="col-8">
+                                <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
+                                    @foreach (var beneficiary in Model.Beneficiaries)
+                                    {
+                                        <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
+                            </div>
+                        </div>
 
-            <div>
-                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Избор на Контрагент</label>
-                <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
-                    @foreach (var beneficiary in Model.Beneficiaries)
-                    {
-                        <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
-            </div>
+                        <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
+                        <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
+                    </div>
+                </div>
+                <div class="col-4 offset-4">
+                    <input class="btn btn-success mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                </div>
+            </form>
+        </div>
 
-            <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
-            <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
 
-            <div class="col-4 offset-4">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
-            </div>
-        </form>
+        <div class="pbs-box">
+            <form asp-controller="Gateway" asp-action="NewAssetPayment" method="post">
+                <div class="card">
+                    <div class="card-header text-center info-box-title">Ново плащане за придобиване на активи</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 info-box-line">
+                                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
+                            </div>
+                            <div class="col-8">
+                                <select asp-for="SelectedParagraph" class="form-control" aria-required="true">
+                                    <option value="9">Стопански инвентар</option>
+                                    <option value="10">Техника и оборудване</option>
+                                    <option value="11">Нематериални дълготрайни активи</option>
+                                </select>
+                                <span asp-validation-for="SelectedParagraph" class="text-danger"></span>
+                            </div>
+                        </div>
 
-        <h4>Ново плащане за придобиване на активи</h4>
+                        <div class="row">
+                            <div class="col-4 info-box-line">
+                                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Избор на Контрагент</label>
+                            </div>
+                            <div class="col-8">
+                                <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
+                                    @foreach (var beneficiary in Model.Beneficiaries)
+                                    {
+                                        <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
+                            </div>
+                        </div>
 
-        <form asp-controller="Gateway" asp-action="NewAssetPayment" method="post">
+                        <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
+                        <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
+                    </div>
+                </div>
+                <div class="col-4 offset-4">
+                    <input class="btn btn-warning mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                </div>
+            </form>
+        </div>
 
-            <div>
-                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
-                <select asp-for="SelectedParagraph" class="form-control" aria-required="true">
-                    <option value="9">Стопански инвентар</option>
-                    <option value="10">Техника и оборудване</option>
-                    <option value="11">Нематериални дълготрайни активи</option>
-                </select>
-                <span asp-validation-for="SelectedParagraph" class="text-danger"></span>
-            </div>
+        <div class="pbs-box">
+            <form asp-controller="Gateway" asp-action="NewSalariesPayment" method="post">
+                <div class="card">
+                    <div class="card-header text-center form-box-title">Начисляване на заплати</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 form-box-line">
+                                <label asp-for="SalaryMonth" class="form-label-add-edit">Месец</label>
+                            </div>
+                            <div class="col-8">
+                                <select asp-for="SalaryMonth" class="form-control" aria-required="true">
+                                    <option selected value="1">Януари</option>
+                                    <option value="2">Февруари</option>
+                                    <option value="3">Март</option>
+                                    <option value="4">Април</option>
+                                    <option value="5">Май</option>
+                                    <option value="6">Юни</option>
+                                    <option value="7">Юли</option>
+                                    <option value="8">Август</option>
+                                    <option value="9">Септември</option>
+                                    <option value="10">Октомври</option>
+                                    <option value="11">Ноември</option>
+                                    <option value="12">Декември</option>
+                                </select>
+                                <span asp-validation-for="SalaryMonth" class="text-danger"></span>
+                            </div>
+                        </div>
 
-            <div>
-                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Избор на Контрагент</label>
-                <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
-                    @foreach (var beneficiary in Model.Beneficiaries)
-                    {
-                        <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
-            </div>
-
-            <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
-            <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
-
-            <div class="col-4 offset-4">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
-            </div>
-        </form>
-
-        <h4>Начисляване на заплати</h4>
-
-        <form asp-controller="Gateway" asp-action="NewSalariesPayment" method="post">
-
-            <div>
-                <label asp-for="SalaryMonth" class="form-label-add-edit">Месец</label>
-                <select asp-for="SalaryMonth" class="form-control" aria-required="true">
-                    <option selected value="1">Януари</option>
-                    <option value="2">Февруари</option>
-                    <option value="3">Март</option>
-                    <option value="4">Април</option>
-                    <option value="5">Май</option>
-                    <option value="6">Юни</option>
-                    <option value="7">Юли</option>
-                    <option value="8">Август</option>
-                    <option value="9">Септември</option>
-                    <option value="10">Октомври</option>
-                    <option value="11">Ноември</option>
-                    <option value="12">Декември</option>                    
-                </select>
-                <span asp-validation-for="SalaryMonth" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="SalaryYear" class="form-label-add-edit">Година</label>
-                <input asp-for="SalaryYear" class="form-control" aria-required="true" value="@DateTime.Now.Year" />
-                <span asp-validation-for="SalaryYear" class="text-danger"></span>
-            </div>
-
-            <div class="col-4 offset-4">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
-            </div>
-        </form>             
-
+                        <div class="row">
+                            <div class="col-4 form-box-line">
+                                <label asp-for="SalaryYear" class="form-label-add-edit">Година</label>
+                            </div>
+                            <div class="col-8">
+                                <input asp-for="SalaryYear" class="form-control" aria-required="true" value="@DateTime.Now.Year" />
+                                <span asp-validation-for="SalaryYear" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 offset-4">
+                        <input class="btn btn-info mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
 </div>
