@@ -7,6 +7,7 @@
 }
 
 
+<h2 class="justify-content-center mt-4 font-weight-bolder bg-light mb-3 pbs-box text-monospace text-center">@ViewBag.Title</h2>
 <hr />
 
 <strong>
@@ -15,16 +16,16 @@
     </div>
 </strong>
 
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <div class="pbs-box">
+<div class="pbs-box">
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12 col-xl-4">
             <form asp-controller="Gateway" asp-action="NewSupportPayment" method="post">
                 <div class="card">
                     <div class="card-header text-center green-box-title">Ново плащане за Издръжка</div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 green-box-line">
-                                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
+                                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид разход</label>
                             </div>
                             <div class="col-8">
                                 <select asp-for="SelectedParagraph" class="form-control" aria-required="true">
@@ -38,7 +39,7 @@
 
                         <div class="row">
                             <div class="col-4 green-box-line">
-                                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Избор на Контрагент</label>
+                                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Контрагент</label>
                             </div>
                             <div class="col-8">
                                 <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
@@ -54,22 +55,20 @@
                         <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
                         <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
                     </div>
-                </div>
-                <div class="col-4 offset-4">
-                    <input class="btn btn-success mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                    <div class="card-footer">
+                        <input class="col-4 offset-4 btn btn-success mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                    </div>
                 </div>
             </form>
         </div>
-
-
-        <div class="pbs-box">
+        <div class="col-sm-12 col-xl-4">
             <form asp-controller="Gateway" asp-action="NewAssetPayment" method="post">
                 <div class="card">
-                    <div class="card-header text-center info-box-title">Ново плащане за придобиване на активи</div>
+                    <div class="card-header text-center info-box-title">Ново плащане за активи</div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 info-box-line">
-                                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид на разхода</label>
+                                <label asp-for="SelectedParagraph" class="form-label-add-edit">Вид разход</label>
                             </div>
                             <div class="col-8">
                                 <select asp-for="SelectedParagraph" class="form-control" aria-required="true">
@@ -83,7 +82,7 @@
 
                         <div class="row">
                             <div class="col-4 info-box-line">
-                                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Избор на Контрагент</label>
+                                <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Контрагент</label>
                             </div>
                             <div class="col-8">
                                 <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
@@ -99,14 +98,13 @@
                         <input type="hidden" asp-for="SalaryYear" class="form-control" value="@DateTime.Now.Year" />
                         <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
                     </div>
-                </div>
-                <div class="col-4 offset-4">
-                    <input class="btn btn-warning mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                    <div class="card-footer">
+                        <input class="col-4 offset-4 btn btn-warning mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                    </div>
                 </div>
             </form>
         </div>
-
-        <div class="pbs-box">
+        <div class="col-sm-12 col-xl-4">
             <form asp-controller="Gateway" asp-action="NewSalariesPayment" method="post">
                 <div class="card">
                     <div class="card-header text-center form-box-title">Начисляване на заплати</div>
@@ -144,8 +142,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 offset-4">
-                        <input class="btn btn-info mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                    <div class="card-footer">
+                        <input class="col-4 offset-4 btn btn-info mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
                     </div>
                 </div>
             </form>

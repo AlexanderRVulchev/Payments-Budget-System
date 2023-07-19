@@ -22,65 +22,62 @@
 </strong>
 
 <div class="row">
-    <div class="col-lg-3 col-md-6 align-items-baseline">
-        <div class="d-inline-block">
-            <div class="pbs-box">
-                <form class="input-group-sm" method="post" asp-area="" asp-controller="Employees" asp-action="Info">
-                    <div class="form-box bg-white p-3">
-                        <p class="form-box-title">Търсене</p>
-                        <div>
-                            <div class="form-box-line">
-                                <label asp-for="FirstName" class="form-label">Име: </label>
-                                <input type="text" asp-for="FirstName" class="form-control" value="@Model.FirstName" />
-                                <span asp-validation-for="FirstName" class="text-danger"></span>
-                            </div>
-                            <div class="form-box-line">
-                                <label asp-for="LastName" class="form-label">Фамилия: </label>
-                                <input type="text" asp-for="LastName" class="form-control" value="@Model.LastName" />
-                                <span asp-validation-for="LastName" class="text-danger"></span>
-                            </div>
-                            <div class="form-box-line">
-                                <label asp-for="Egn" class="form-label">ЕГН: </label>
-                                <input type="number" asp-for="Egn" class="form-control" value="@Model.Egn" />
-                                <span asp-validation-for="Egn" class="text-danger"></span>
-                            </div>
-                            <div class="form-box-line">
-                                <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
-                                <select asp-for="SortAttribute" class="form-control" aria-required="true">
-                                    <option value="0">Име</option>
-                                    <option value="1">Фамилия</option>
-                                    <option value="2">ЕГН</option>
-                                    <option value="3">Брутна заплата</option>
-                                    <option value="4">Дата на назначаване</option>
-                                    <option value="5">Общо възнаграждения</option>
-                                </select>
-                                <span asp-validation-for="SortAttribute" class="text-danger"></span>
-                            </div>
-                            <div class="form-box-line">
-                                <label class="form-label-add-edit"></label>
-                                <select asp-for="SortBy" class="form-control" aria-required="true">
-                                    <option value="0">Възходящ ред</option>
-                                    <option value="1">Низходящ ред</option>
-                                </select>
-                                <span asp-validation-for="SortBy" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-center mt-3">
-                            <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Employees" asp-action="Info">
-                        </div>
-
+    <div class="d-inline-block col-xl-3 col-md-12 align-items-baseline">
+        <form class="input-group-sm" method="post" asp-area="" asp-controller="Employees" asp-action="Info">
+            <div class="form-box bg-white p-3">
+                <p class="form-box-title">Търсене</p>
+                <div>
+                    <div class="form-box-line">
+                        <label asp-for="FirstName" class="form-label">Име: </label>
+                        <input type="text" asp-for="FirstName" class="form-control" value="@Model.FirstName" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
-                    <div class="row justify-content-center mt-5 mb-3">
-                        <span style="float:left">
-                            <a class="btn btn-lg btn-success" asp-area="" asp-controller="Employees" asp-action="Add">Добави нов служител</a>
-                        </span>
+                    <div class="form-box-line">
+                        <label asp-for="LastName" class="form-label">Фамилия: </label>
+                        <input type="text" asp-for="LastName" class="form-control" value="@Model.LastName" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
-                </form>
+                    <div class="form-box-line">
+                        <label asp-for="Egn" class="form-label">ЕГН: </label>
+                        <input type="number" asp-for="Egn" class="form-control" value="@Model.Egn" />
+                        <span asp-validation-for="Egn" class="text-danger"></span>
+                    </div>
+                    <div class="form-box-line">
+                        <label asp-for="SortAttribute" class="form-label-add-edit">Подреди по</label>
+                        <select asp-for="SortAttribute" class="form-control" aria-required="true">
+                            <option value="0">Име</option>
+                            <option value="1">Фамилия</option>
+                            <option value="2">ЕГН</option>
+                            <option value="3">Брутна заплата</option>
+                            <option value="4">Дата на назначаване</option>
+                            <option value="5">Общо възнаграждения</option>
+                        </select>
+                        <span asp-validation-for="SortAttribute" class="text-danger"></span>
+                    </div>
+                    <div class="form-box-line">
+                        <label class="form-label-add-edit"></label>
+                        <select asp-for="SortBy" class="form-control" aria-required="true">
+                            <option value="0">Възходящ ред</option>
+                            <option value="1">Низходящ ред</option>
+                        </select>
+                        <span asp-validation-for="SortBy" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mt-3">
+                    <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Employees" asp-action="Info">
+                </div>
+
             </div>
-        </div>
+            <div class="row justify-content-center mt-5 mb-3">
+                <span style="float:left">
+                    <a class="btn btn-lg btn-success" asp-area="" asp-controller="Employees" asp-action="Add">Добави нов служител</a>
+                </span>
+            </div>
+        </form>
     </div>
-    <div class="col-lg-9 col-md-6">
+
+    <div class="col-xl-9 col-md-6">
         <h4 class="text-center form-box-title">Информация за служители</h4>
         <table class="table table-bordered table-striped text-center">
             <thead>

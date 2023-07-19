@@ -54,6 +54,7 @@
         @if (User?.Identity?.IsAuthenticated ?? false)
         {
             <nav class="col-12 col-md-4 col-lg-2 d-md-block btn-group-vertical sidebar">
+                <hr />
                 <button class="btn btn-lg bg-gradient-light btn-outline-info m-md-2 ">
                     <a class="nav-link text-primary font-weight-bold" asp-area="" asp-controller="Gateway" asp-action="ChoosePayment">Банков превод</a>
                 </button>
@@ -89,6 +90,7 @@
                         <a class="nav-link text-primary font-weight-bold" asp-area="Budget" asp-controller="Secondary" asp-action="Info">Бюджет</a>
                     </button>
                 }
+                <hr />
             </nav>
         }
         <div class="wrapper container-fluid col-12 col-md-8 col-lg-10">

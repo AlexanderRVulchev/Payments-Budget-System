@@ -1,9 +1,15 @@
 ﻿using PaymentsBudgetSystem.Data.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace PaymentsBudgetSystem.Core.Models.Salaries
 {
+    using static Common.DataConstants.General;
+    using static Common.ValidationErrors.General;
+
     public class SalariesPaymentViewModel
     {
+        [Required(ErrorMessage = FieldIsRequired)]
+        [Range(YearMinValue, YearMaxValue, ErrorMessage = InvalidYearError)]
         public int Year { get; set; }
 
         public int Month { get; set; }

@@ -66,6 +66,32 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         }
 
         [Test]
+        [TestCase(0)]
+        [TestCase(9999)]
+        public async Task Payment_ReturnsModelWithModelErrorsIfYearIsInvalid(int year)
+        {
+            int expectedYear = DateTime.Now.Year;
+
+            var result = await controller.Payment(year, testModel.Month);
+            var viewResult = result as ViewResult;
+
+            Assert.IsNotNull(viewResult);
+            AssertObjectEquality(viewResult.Model, testModel);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(13)]
+        public async Task Payment_ReturnsModelWithModelErrorsIfMonthIsInvalid(int month)
+        {
+            var result = await controller.Payment(testModel.Year, month);
+            var viewResult = result as ViewResult;
+
+            Assert.IsNotNull(viewResult);
+            AssertObjectEquality(viewResult.Model, testModel);
+        }
+
+        [Test]
         public async Task ProcessPayment_ReturnsViewWithCorrectModelIfModelStateIsInvalid()
         {
             controller.ModelState.AddModelError("", "");

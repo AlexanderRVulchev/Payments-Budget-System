@@ -18,65 +18,65 @@
 </strong>
 
 <div class="row">
-    <div class="col-lg-3 col-md-6 align-items-baseline">
-        <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
-            Търсене<br />
-            <div>
+    <div class="d-inline-block col-xl-3 col-md-12">
+        <div class="info-box align-items-baseline">
+            <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
                 <div>
-                    <label asp-for="StartDate" class="form-label">От дата: </label>
-                    <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                    <p class="info-box-title">Търсене</p>
+                    <div>
+                        <div class="info-box-line">
+                            <label asp-for="StartDate" class="form-label">От дата: </label>
+                            <input type="date" asp-for="StartDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="info-box-line">
+                            <label asp-for="EndDate" class="form-label">До дата: </label>
+                            <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                        <div class="info-box-line">
+                            <label asp-for="AmountMin" class="form-label">Минимум стойност: </label>
+                            <input type="number" asp-for="AmountMin" class="form-control" value="@Model.AmountMin" />
+                            <span asp-validation-for="AmountMin" class="text-danger"></span>
+                        </div>
+                        <div class="info-box-line">
+                            <label asp-for="AmountMax" class="form-label">Максимум стойност: </label>
+                            <input type="number" asp-for="AmountMax" class="form-control" value="@Model.AmountMax" />
+                            <span asp-validation-for="AmountMax" class="text-danger"></span>
+                        </div>
+                        <div class="info-box-line">
+                            <label asp-for="InformationSort" class="form-label-add-edit">Подреди по</label>
+                            <select asp-for="InformationSort" class="form-control" aria-required="true">
+                                <option value="0">Дата</option>
+                                <option value="1">Получател</option>
+                                <option value="2">Стойност</option>
+                                <option value="3">Вид плащане</option>
+                                <option value="4">Описание</option>
+                            </select>
+                            <span asp-validation-for="InformationSort" class="text-danger"></span>
+                        </div>
+                        <div class="info-box-line">
+                            <label class="form-label-add-edit"></label>
+                            <select asp-for="SortBy" class="form-control" aria-required="true">
+                                <option value="0">Възходящ ред</option>
+                                <option value="1">Низходящ ред</option>
+                            </select>
+                            <span asp-validation-for="SortBy" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label asp-for="EndDate" class="form-label">До дата: </label>
-                    <input type="date" asp-for="EndDate" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="AmountMin" class="form-label">Минимум стойност: </label>
-                    <input type="number" asp-for="AmountMin" class="form-control" value="@Model.AmountMin" />
-                    <span asp-validation-for="AmountMin" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="AmountMax" class="form-label">Максимум стойност: </label>
-                    <input type="number" asp-for="AmountMax" class="form-control" value="@Model.AmountMax" />
-                    <span asp-validation-for="AmountMax" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="InformationSort" class="form-label-add-edit">Подреди по</label>
-                    <select asp-for="InformationSort" class="form-control" aria-required="true">
-                        <option value="0">Дата</option>
-                        <option value="1">Получател</option>
-                        <option value="2">Стойност</option>
-                        <option value="3">Вид плащане</option>
-                        <option value="4">Описание</option>
-                    </select>
-                    <span asp-validation-for="InformationSort" class="text-danger"></span>
-                </div>
-                <div>
-                    <label class="form-label-add-edit"></label>
-                    <select asp-for="SortBy" class="form-control" aria-required="true">
-                        <option value="0">Възходящ ред</option>
-                        <option value="1">Низходящ ред</option>
-                    </select>
-                    <span asp-validation-for="SortBy" class="text-danger"></span>
-                </div>
-            </div>
 
-            <div>
-                <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Information" asp-action="Info">
-            </div>
-            <div>
-                <span style="float:left">
-                    <a class="btn btn-success" asp-area="" asp-controller="Beneficiaries" asp-action="Add">Добави нов контрагент</a>
-                </span>
-            </div>
-        </form>
-
+                <div class="container">
+                    <div class="row justify-content-center mt-3">
+                        <input class="btn btn-primary" type="submit" value="Приложи" asp-area="" asp-controller="Information" asp-action="Info">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="col-lg-9 col-md-6">
+    <div class="col-xl-9 col-sm-12">
         <h4 class="text-center info-box-title">Обща информация за извършени плащания</h4>
-        <table class="table table-bordered table-striped text-center">
+        <table class="table table-bordered table-striped text-center" style="color: #0F0F0F;">
             <thead>
                 <tr>
                     <th scope="col">Дата</th>
@@ -96,19 +96,19 @@
                         @{
                             if (payment.PaymentType == PaymentType.Salaries)
                             {
-                                    <td>Заплати</td>
+                                <td>Заплати</td>
                             }
                             else if (payment.PaymentType == PaymentType.Support)
                             {
-                                    <td>Издръжка</td>
+                                <td>Издръжка</td>
                             }
                             else if (payment.PaymentType == PaymentType.Assets)
                             {
-                                    <td>Активи</td>
+                                <td>Активи</td>
                             }
                             else if (payment.PaymentType == PaymentType.Cash)
                             {
-                                    <td>Каса</td>
+                                <td>Каса</td>
                             }
                         }
                         <td>@payment.Amount.ToString("n")</td>
@@ -117,27 +117,27 @@
                             @{
                                 if (payment.PaymentType == PaymentType.Salaries)
                                 {
-                                        <span style="float:left">
-                                            <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@payment.PaymentId">Преглед</a>
-                                        </span>
+                                    <span style="float:left">
+                                        <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@payment.PaymentId">Преглед</a>
+                                    </span>
                                 }
                                 else if (payment.PaymentType == PaymentType.Support)
                                 {
-                                        <span style="float:left">
-                                            <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                        </span>
+                                    <span style="float:left">
+                                        <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                    </span>
                                 }
                                 else if (payment.PaymentType == PaymentType.Assets)
                                 {
-                                        <span style="float:left">
-                                            <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                        </span>
+                                    <span style="float:left">
+                                        <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                    </span>
                                 }
                                 else if (payment.PaymentType == PaymentType.Cash)
                                 {
-                                        <span style="float:left">
-                                            <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                        </span>
+                                    <span style="float:left">
+                                        <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                    </span>
                                 }
                             }
                         </td>
@@ -146,47 +146,50 @@
 
             </tbody>
         </table>
+        <div class="row justify-content-center">
+            <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                <div>
+                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                          @(Model.Page == 1 ? "disabled" : string.Empty)"
+                       asp-action="Info"
+                       asp-route-from="@Model.StartDate"
+                       asp-route-to="@Model.EndDate"
+                       asp-route-sortBy="@Model.SortBy"
+                       asp-route-informationSort="@Model.InformationSort"
+                       asp-route-paymentType="@Model.PaymentType"
+                       asp-route-amountMin="@Model.AmountMin"
+                       asp-route-amountMax="@Model.AmountMax"
+                       asp-route-page="@(Model.Page - 1)"
+                       asp-route-receiver="@Model.ReceiverNameFilter">
+                        Предишна
+                    </a>
+                </div>
+                <div class="font-monospace ml-5 mr-5">
+                    Страница @Model.Page / @Model.NumberOfPages
+                </div>
+                <div>
+                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                           @(Model.Page == Model.NumberOfPages || !Model.Payments.Any() ? "disabled" : string.Empty)"
+                       asp-action="Info"
+                       asp-route-from="@Model.StartDate"
+                       asp-route-to="@Model.EndDate"
+                       asp-route-sortBy="@Model.SortBy"
+                       asp-route-informationSort="@Model.InformationSort"
+                       asp-route-paymentType="@Model.PaymentType"
+                       asp-route-amountMin="@Model.AmountMin"
+                       asp-route-amountMax="@Model.AmountMax"
+                       asp-route-page="@(Model.Page + 1)"
+                       asp-route-receiver="@Model.ReceiverNameFilter">
+                        Следваща
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row align-items-end">
-    Страница @Model.Page / @Model.NumberOfPages
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <div>
-            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
-                @(Model.Page == 1 ? "disabled" : string.Empty)"
-               asp-action="Info"
-               asp-route-from="@Model.StartDate"
-               asp-route-to="@Model.EndDate"
-               asp-route-sortBy="@Model.SortBy"
-               asp-route-informationSort="@Model.InformationSort"
-               asp-route-paymentType="@Model.PaymentType"
-               asp-route-amountMin="@Model.AmountMin"
-               asp-route-amountMax="@Model.AmountMax"
-               asp-route-page="@(Model.Page - 1)"
-               asp-route-receiver="@Model.ReceiverNameFilter">
-                Предишна
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-success mb-2 w-100 p-3 fw-bold
-                @(Model.Page == Model.NumberOfPages || !Model.Payments.Any() ? "disabled" : string.Empty)"
-               asp-action="Info"
-               asp-route-from="@Model.StartDate"
-               asp-route-to="@Model.EndDate"
-               asp-route-sortBy="@Model.SortBy"
-               asp-route-informationSort="@Model.InformationSort"
-               asp-route-paymentType="@Model.PaymentType"
-               asp-route-amountMin="@Model.AmountMin"
-               asp-route-amountMax="@Model.AmountMax"
-               asp-route-page="@(Model.Page + 1)"
-               asp-route-receiver="@Model.ReceiverNameFilter">
-                Следваща
-            </a>
-        </div>
-    </div>
-</div>
-﻿
+
+    ﻿
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

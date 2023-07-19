@@ -6,7 +6,10 @@ namespace PaymentsBudgetSystem.Controllers
     using Core.Contracts;
     using Core.Models.Salaries;
     using Extensions;
+
     using static Common.RoleNames;
+    using static Common.DataConstants.General;
+    using static Common.ValidationErrors.General;
 
     [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class SalariesController : Controller
@@ -21,6 +24,17 @@ namespace PaymentsBudgetSystem.Controllers
 
         public async Task<IActionResult> Payment(int year, int month)
         {
+            if (year < YearMinValue || year > YearMaxValue)
+            {
+                ModelState.AddModelError("", String.Format(InvalidYearError, null, YearMinValue, YearMaxValue));
+                year = DateTime.Now.Year;
+            }
+            if (month < 1 || month > 12)
+            {
+                ModelState.AddModelError("", InvalidMonthError);
+                month = 1;
+            }
+
             SalariesPaymentViewModel model = await paymentService.CreatePayrollAsync(User.Id(), year, month);
 
             return View(model);
