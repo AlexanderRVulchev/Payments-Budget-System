@@ -7,7 +7,6 @@
     ViewBag.Title = "Извършено плащане за Издръжка";
 }
 
-<h2 class="text-center text-success">@ViewBag.Title</h2>
 <hr />
 
 @if (TempData["SuccessMessage"] != null)
@@ -24,8 +23,8 @@
 </strong>
 
 <div class="d-flex justify-content-center">
-    <div class="card shadow w-50">
-        <p class="card-header text-center font-weight-bold">Име на получателя: @Model.Beneficiary.Name</p>
+    <div class="card mt-4 shadow">
+        <p class="card-header text-center green-box-title">Име на получателя: @Model.Beneficiary.Name</p>
         <div class="card-body ml-3 mr-3">
             <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">IBAN: </span>@Model.Beneficiary.BankAccount</p>
             <p class="border-left-info pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Булстат: </span>@Model.Beneficiary.Identifier</p>

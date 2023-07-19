@@ -79,7 +79,7 @@
                         <div class="col-5 border-left-success border-bottom-light align-items-center">
                             <label asp-for="@Model.Description" class="form-label-add-edit">Описание: </label>
                         </div>
-                        <div clclass="col-7">
+                        <div class="col-7">
                             <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="3"></textarea>
                             <span asp-validation-for="@Model.Description" class="text-danger"></span>
                         </div>
@@ -89,14 +89,14 @@
             <input type="hidden" asp-for="@Model.ParagraphType" class="form-control" value="@Model.ParagraphType" />
             <input type="hidden" asp-for="@Model.BeneficiaryId" class="form-control" value="@Model.Beneficiary.Id" />
 
-            <div class="col-4 offset-4">
-                <input class="btn btn-success mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+            <div class="col-8 offset-2">
+                <input class="btn btn-success mt-3 mb-2 w-100 p-3 fw-bold" type="submit" value="Извършване на плащането" />
             </div>
         </form>
-        </>
     </div>
+</div>
 
 
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     }
