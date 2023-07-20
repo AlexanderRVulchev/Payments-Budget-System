@@ -9,7 +9,5 @@
         public const int LastNameMaxLength = 25;
 
         public const int EgnFixedLength = 10;
-
-        public const decimal MinimumWage = 780.0m;
     }
 }
