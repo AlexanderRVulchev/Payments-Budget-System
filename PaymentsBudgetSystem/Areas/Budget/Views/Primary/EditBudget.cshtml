@@ -3,10 +3,10 @@
 @model EditBudgetFormModel
 
 @{
-    ViewBag.Title = "Годишни Бюджети";
+    ViewBag.Title = "Разпределение на Бюджет";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="justify-content-center mt-4 font-weight-bold bg-light border-bottom-secondary border-left-secondary mb-3 pbs-box text-center" style="color: darkgray; font-family: 'Times New Roman'">@ViewBag.Title</h2>
 <hr />
 
 @if (TempData["SuccessMessage"] != null)
@@ -22,32 +22,21 @@
     </div>
 </strong>
 
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
-        <h4 class="text-center">Консолидиран бюджет</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Година</th>
-                    <th scope="col">Разпределен лимит</th>
-                    <th scope="col">Неразпределен лимит</th>
-                    <th scope="col">Общо</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                <tr>
-                    <th scope="row"></th>
-                    <td>@Model.ConsolidatedBudget.FiscalYear</td>
-                    <td>@Model.ConsolidatedBudget.Allocated.ToString("N") лв.</td>
-                    <td>@Model.ConsolidatedBudget.Unallocated.ToString("N") лв.</td>
-                    <td>@Model.ConsolidatedBudget.TotalLimit.ToString("N") лв.</td>
-                </tr>
-            </tbody>
-        </table>
+
+<div class="row justify-content-center">
+    <div class="col-xl-4 offset-xl-1 col-lg-5 col-sm-12">
+        <div class="info-box container">
+            <div class="green-box-title text-center">Консолидиран бюджет</div>
+            <p class="border-left-success pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Година: </span>@Model.ConsolidatedBudget.FiscalYear</p>
+            <p class="border-left-success pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Разпределен лимит: </span>@Model.ConsolidatedBudget.Allocated.ToString("N") лв.</p>
+            <p class="border-left-success pl-2 border-bottom-light"><span class="font-italic font-weight-bolder">Неразпределен лимит: </span>@Model.ConsolidatedBudget.Unallocated.ToString("N") лв.</p>
+            <div class="card-footer">
+                <p class="font-monospace text-center"><span class="font-italic font-weight-bolder">Общо: </span>@Model.ConsolidatedBudget.TotalLimit.ToString("N") лв</p>
+            </div>
+        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12 container">
+    <div class="col-xl-6 col-sm-12 container">
         <img id="picture" src="/Fin.png" />
     </div>
 </div>
@@ -60,38 +49,40 @@
 </style>
 
 
-<h4 class="text-center">Индивидуални бюджети за @Model.ConsolidatedBudget.FiscalYear г.</h4>
+<h4 class="text-center mt-2 bg-white" style="border-top: solid; border-bottom: solid">Индивидуални бюджети за @Model.ConsolidatedBudget.FiscalYear г.</h4>
 
 <div class="row border border-2 border-dashed border-success">
     @foreach (var budget in Model.IndividualBudgetsData)
     {
-        <form class="input-group-sm col-3" asp-action="EditBudget" method="post">
-            <div class="pbs-box">
-                <h6>@budget.Name</h6>
-                <p>Усвоени заплати: @budget.SalariesExpenses</p>
-                <p>
-                    <label asp-for="@budget.SalariesLimit" class="form-label">Лимит заплати: </label>
-                    <input type="number" asp-for="@Model.NewSalaryLimit" class="form-control" value="@budget.SalariesLimit" />
-                    <span asp-validation-for="@Model.NewSalaryLimit" class="text-danger"></span>
-                </p>
-                <p>Усвоена издръжка: @budget.SupportExpenses</p>
-                <p>
-                    <label asp-for="@budget.SupportLimit" class="form-label">Лимит издръжка: </label>
-                    <input type="number" asp-for="@Model.NewSupportLimit" class="form-control" value="@budget.SupportLimit" />
-                    <span asp-validation-for="@Model.NewSupportLimit" class="text-danger"></span>
-                </p>
-                <p>Усвоени активи: @budget.AssetsExpenses</p>
-                <p>
-                    <label asp-for="@budget.AssetsLimit" class="form-label">Лимит капиталови: </label>
-                    <input type="number" asp-for="@Model.NewAssetsLimit" class="form-control" value="@budget.AssetsLimit" />
-                    <span asp-validation-for="@Model.NewAssetsLimit" class="text-danger"></span>
-                </p>
-                <p>
-                    <input type="hidden" asp-for="@Model.FiscalYear" class="form-control" value="@Model.FiscalYear" />
-                    <input type="hidden" asp-for="@Model.Id" class="form-control" value="@budget.Id.ToString()" />
-                </p>
-                <div class="mb-3 text-center">
-                    <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Преразпредели бюджет" />
+        <form class="input-group-sm col-xl-3 col-lg-4 col-md-6 col-sm-12" asp-action="EditBudget" method="post">
+            <div class="info-box">
+                <div class="info-box-title text-center" style="font-size: 18px">@budget.Name</div>
+                <div class="card-body">
+                    <div class="info-box-line bg-white pl-2 border-left-warning">Усвоени заплати: @budget.SalariesExpenses.ToString("n")</div>
+                    <p>
+                        <label asp-for="@budget.SalariesLimit" class="form-label info-box-line pl-2 border-left-info">Лимит заплати: </label>
+                        <input type="number" asp-for="@Model.NewSalaryLimit" class="form-control" value="@budget.SalariesLimit.ToString("f0")" />
+                        <span asp-validation-for="@Model.NewSalaryLimit" class="text-danger"></span>
+                    </p>
+                    <div class="info-box-line bg-white pl-2 border-left-warning">Усвоена издръжка: @budget.SupportExpenses.ToString("n")</div>
+                    <p>
+                        <label asp-for="@budget.SupportLimit" class="form-label info-box-line pl-2 border-left-info">Лимит издръжка: </label>
+                        <input type="number" asp-for="@Model.NewSupportLimit" class="form-control" value="@budget.SupportLimit.ToString("f0")" />
+                        <span asp-validation-for="@Model.NewSupportLimit" class="text-danger"></span>
+                    </p>
+                    <div class="info-box-line bg-white pl-2 border-left-warning">Усвоени активи: @budget.AssetsExpenses.ToString("n")</div>
+                    <p>
+                        <label asp-for="@budget.AssetsLimit" class="form-label info-box-line pl-2 border-left-info">Лимит активи: </label>
+                        <input type="number" asp-for="@Model.NewAssetsLimit" class="form-control" value="@budget.AssetsLimit.ToString("f0")" />
+                        <span asp-validation-for="@Model.NewAssetsLimit" class="text-danger"></span>
+                    </p>
+                    <p>
+                        <input type="hidden" asp-for="@Model.FiscalYear" class="form-control" value="@Model.FiscalYear" />
+                        <input type="hidden" asp-for="@Model.Id" class="form-control" value="@budget.Id.ToString()" />
+                    </p>
+                    <div class="mb-3 text-center">
+                        <input class="btn btn-warning mb-2 w-100 p-3 fw-bold text-wrap" type="submit" value="Преразпредели бюджет" />
+                    </div>
                 </div>
             </div>
         </form>

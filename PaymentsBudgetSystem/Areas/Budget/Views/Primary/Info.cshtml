@@ -7,7 +7,7 @@
 }
 
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="justify-content-center mt-4 font-weight-bold bg-light border-bottom-secondary border-left-secondary mb-3 pbs-box text-center" style="color: darkgray; font-family: 'Times New Roman'">@ViewBag.Title</h2>
 <hr />
 
 @if (TempData["SuccessMessage"] != null)
@@ -23,99 +23,99 @@
     </div>
 </strong>
 
-<div class="text-center row">
-    <div class="col-5">
-        <h4 class="text-center">Индивидуални бюджети</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Година</th>
-                    <th scope="col">Лимит Заплати</th>
-                    <th scope="col">Лимит Издръжка</th>
-                    <th scope="col">Лимит Капиталови</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                @foreach (var budget in Model.IndividualBudgets)
-                {
+<div class="text-center row justify-content-center">
+    <div class="shadow info-box mt-2">
+        <h4 class="info-box-title text-center">Индивидуални бюджети</h4>
+        <div class="card-body">
+            <table class="table bg-black table-responsive table-bordered" style="color: #0F0F0F">
+                <thead>
                     <tr>
-                        <th scope="row"></th>
-                        <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("N") лв.</td>
-                        <td>@budget.SupportLimit.ToString("N") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("N") лв.</td>
+                        <th scope="col">Година</th>
+                        <th scope="col">Лимит Заплати</th>
+                        <th scope="col">Лимит Издръжка</th>
+                        <th scope="col">Лимит Активи</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var budget in Model.IndividualBudgets)
+                    {
+                        <tr>
+                            <td>@budget.FiscalYear</td>
+                            <td>@budget.SalariesLimit.ToString("N") лв.</td>
+                            <td>@budget.SupportLimit.ToString("N") лв.</td>
+                            <td>@budget.AssetsLimit.ToString("N") лв.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="col-7">
-        <h4 class="text-center">Консолидирани бюджети</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Година</th>
-                    <th scope="col">Разпределен лимит</th>
-                    <th scope="col">Неразпределен лимит</th>
-                    <th scope="col">Общо</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                @foreach (var budget in Model.ConsolidatedBudgets)
-                {
-                    <tr>
-                        <th scope="row"></th>
-                        <td>@budget.FiscalYear</td>
-                        <td>@budget.Allocated.ToString("N") лв.</td>
-                        <td>@budget.Unallocated.ToString("N") лв.</td>
-                        <td>@budget.TotalLimit.ToString("N") лв.</td>
-                        <td>
-                            <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-year="@budget.FiscalYear">Промяна</a>
-                            </span>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <div class="row">
-            <div class="pbs-box col-lg-3 offset-1">
+    <div class="card col-lg-3 offset-1 shadow mt-2">
+        <div>
+            <p class="align-content-lg-start form-box-title">Добавяне на нов бюджет</p>
+        </div>
+        <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
+            <div class="card-body">
                 <div>
-                    <p class="align-content-lg-start">Добавяне на нов бюджет</p>
+                    <label asp-for="NewBudgetYear" class="form-label form-box-line">Година: </label>
+                    <input type="number" asp-for="NewBudgetYear" class="form-control mb-2" value="" />
+                    <span asp-validation-for="NewBudgetYear" class="text-danger"></span>
+
+                    <label asp-for="NewBudgetFunds" class="form-label form-box-line">Средства: </label>
+                    <input type="number" asp-for="NewBudgetFunds" class="form-control mb-2" value="" />
+                    <span asp-validation-for="NewBudgetFunds" class="text-danger"></span>
                 </div>
-                <form class="input-group-sm" method="post" asp-area="Budget" asp-controller="Primary" asp-action="Info">
-                    <div>
-                        <label asp-for="NewBudgetYear" class="form-label">Година: </label>
-                        <input type="number" asp-for="NewBudgetYear" class="form-control" value="" />
-                        <span asp-validation-for="NewBudgetYear" class="text-danger"></span>
-
-                        <label asp-for="NewBudgetFunds" class="form-label">Средства: </label>
-                        <input type="number" asp-for="NewBudgetFunds" class="form-control" value="" />
-                        <span asp-validation-for="NewBudgetFunds" class="text-danger"></span>
-                    </div>
-
-                    <div>
-                        <input class="btn btn-primary" type="submit" value="Добавяне" />
-                    </div>
-                </form>
             </div>
+            <div class="card-footer">
+                <div>
+                    <input class="btn btn-primary text-wrap mt-2" type="submit" value="Добавяне" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-3">
+    <div class="shadow info-box">
+        <h4 class="text-center info-box-title">Консолидирани бюджети</h4>
+        <div class="card-body">
+            <table class="table table-bordered table-responsive text-black" style="color: #0F0F0F">
+                <thead>
+                    <tr>
+                        <th scope="col">Година</th>
+                        <th scope="col">Разпределен лимит</th>
+                        <th scope="col">Неразпределен лимит</th>
+                        <th scope="col">Общо</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var budget in Model.ConsolidatedBudgets)
+                    {
+                        <tr>
+                            <td>@budget.FiscalYear</td>
+                            <td>@budget.Allocated.ToString("N") лв.</td>
+                            <td>@budget.Unallocated.ToString("N") лв.</td>
+                            <td>@budget.TotalLimit.ToString("N") лв.</td>
+                            <td>
+                                <span style="float:left">
+                                    <a class="nav-link btn-warning" asp-area="Budget" asp-controller="Primary" asp-action="EditBudget" asp-route-year="@budget.FiscalYear">Промяна</a>
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 <style>
     .form-control {
-        width: 150px;        
+        width: 150px;
         margin: 0 auto;
     }
-
-
 </style>
 
 

@@ -6,7 +6,7 @@
     ViewBag.Title = "Годишни Бюджети";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="justify-content-center mt-4 font-weight-bold bg-light border-bottom-secondary border-left-secondary mb-3 pbs-box text-center" style="color: darkgray; font-family: 'Times New Roman'">@ViewBag.Title</h2>
 <hr />
 
 <strong>
@@ -15,31 +15,32 @@
     </div>
 </strong>
 
-<div class="text-center row">
-    <div class="col-6">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Година</th>
-                    <th scope="col">Лимит Заплати</th>
-                    <th scope="col">Лимит Издръжка</th>
-                    <th scope="col">Лимит Капиталови</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                @foreach (var budget in Model)
-                {
+<div class="text-center row justify-content-center">
+    <div class="shadow info-box mt-2">
+        <h4 class="info-box-title text-center">Индивидуални бюджети</h4>
+        <div class="card-body">
+            <table class="table bg-black table-responsive table-bordered" style="color: #0F0F0F">
+                <thead>
                     <tr>
-                        <th scope="row"></th>
-                        <td>@budget.FiscalYear</td>
-                        <td>@budget.SalariesLimit.ToString("n") лв.</td>
-                        <td>@budget.SupportLimit.ToString("n") лв.</td>
-                        <td>@budget.AssetsLimit.ToString("n") лв.</td>
+                        <th scope="col">Година</th>
+                        <th scope="col">Лимит Заплати</th>
+                        <th scope="col">Лимит Издръжка</th>
+                        <th scope="col">Лимит Капиталови</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var budget in Model)
+                    {
+                        <tr>
+                            <td>@budget.FiscalYear</td>
+                            <td>@budget.SalariesLimit.ToString("n") лв.</td>
+                            <td>@budget.SupportLimit.ToString("n") лв.</td>
+                            <td>@budget.AssetsLimit.ToString("n") лв.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
