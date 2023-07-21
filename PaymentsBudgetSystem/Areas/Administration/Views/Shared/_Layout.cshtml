@@ -1,4 +1,6 @@
-﻿@using static PaymentsBudgetSystem.Common.RoleNames;
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using static PaymentsBudgetSystem.Common.RoleNames;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,13 +8,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Система за Бюджет и Разплащания</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <link href="~/Content/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PaymentsBudgetSystem.styles.css" asp-append-version="true" />
+
 </head>
-<body>
+<body class="pbs-bg">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Система за Бюджет и Разплащания</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,15 +26,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <ul class="navbar-nav flex-grow-1 justify-content-center">
+                        <li class="font-weight-bold h4">
+                            @User.FindFirstValue(ClaimTypes.Email)
                         </li>
                     </ul>
-
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -36,66 +38,26 @@
     </header>
 
     <style>
-        .btn {
-            margin: 15px;
-            border-color: green;
+        .pbs-bg {
+            background-color: beige;
         }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 85vh;
+        }
+
     </style>
-
-
-    <div class="row align-items-md-baseline" id="frame">
-        <div class="navbar-expand-md btn-group-vertical col-md-2">
-            <button class="btn btn-lg btn-outline-info">
-                @if (User.IsInRole(PrimaryRoleName))
-                {
-                    <a class="nav-link text-dark" asp-area="Budget" asp-controller="Primary" asp-action="Info">Бюджет</a>
-                }
-                else if (User.IsInRole(SecondaryRoleName))
-                {
-                    <a class="nav-link text-dark" asp-area="Budget" asp-controller="Secondary" asp-action="Info">Бюджет</a>
-                }
-            </button>
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Beneficiaries" asp-action="Info">Контрагенти</a>
-            </button>
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Info">Персонал</a>
-            </button>
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Assets" asp-action="Info">Активи</a>
-            </button>
-            <hr />
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Gateway" asp-action="ChoosePayment">Банков превод</a>
-            </button>
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="" asp-controller="CashPayment" asp-action="Payment">Каса</a> 
-            </button>
-            <hr />
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Information" asp-action="Info">Справка</a>
-            </button>
-            <button class="btn btn-lg btn-outline-info">
-                <a class="nav-link text-dark" asp-area="Reports" asp-controller="Report" asp-action="ReportInquiry">Отчет</a>
-            </button>
-        </div>
-
-        <style>
-            .pb-3 {
-                background-color: beige
-            }
-        </style>
-
-
-        <div class="container col-md-10">
+          
+        <div class="wrapper container-fluid col-12 col-md-8 col-lg-10">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
         </div>
 
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer bg-light text-muted">
         <div class="container">
             &copy; @DateTime.UtcNow.Year - Система за Бюджет и Разплащания
         </div>
