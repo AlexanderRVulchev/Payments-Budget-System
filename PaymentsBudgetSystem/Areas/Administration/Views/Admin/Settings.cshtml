@@ -11,15 +11,15 @@
         style="color: darkgray; font-family: 'Times New Roman'">
         @ViewBag.Title
     </h3>
-
 </div>
-<hr />
+
 
 <div class="row">
     <div class="container d-flex justify-content-end col-xl-3 offset-xl-9 col-lg-5 offset-lg-7 col-sm-12">
-        <a class="btn btn-outline-primary btn-lg" asp-action="Reports">Към Изтриване на отчети</a>
+        <a class="btn btn-outline-primary btn-lg" asp-action="Reports">Изтриване на отчети</a>
     </div>
 </div>
+<hr />
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -37,7 +37,7 @@
 
 <form class="input-group-sm" method="post" asp-area="Administration" asp-controller="Admin" asp-action="Settings">
     <div class="row">
-        <table class="table table-responsive col-6 offset-3">
+        <table class="table table-responsive pbs-box col-6 offset-3" style="color: #0F0F0F;">
             <tbody>
                 <tr>
                     <td>
