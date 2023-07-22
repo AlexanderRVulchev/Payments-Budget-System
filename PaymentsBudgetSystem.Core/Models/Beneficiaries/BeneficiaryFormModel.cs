@@ -26,6 +26,7 @@ namespace PaymentsBudgetSystem.Core.Models.Beneficiaries
 
         [Required(ErrorMessage = FieldIsRequired)]
         [Display(Name = "Банкова сметка")]
+        [StringLength(BeneficiaryBankAccountMaxLength, ErrorMessage = StringMaxLengthValidationError)]
         [RegularExpression(BankAccountRegex, ErrorMessage = BeneficiaryInvalidBankAccount)]
         public string BankAccount { get; set; } = null!;
     }

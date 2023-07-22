@@ -26,7 +26,6 @@
 </strong>
 
 <div class="text-center align-items-center justify-content-center row">
-    <div class="row justify-content-center">
         <div class="pbs-box col-lg-5">
             <div class="row card justify-content-center">
                 <p class="align-content-lg-start text-wrap info-box-title">Индивидуални отчети</p>
@@ -64,11 +63,18 @@
                         <div class="row card justify-content-center">
                             <div class="card-title form-box-title text-center">Запазени отчети</div>
                             <div class="card-body">
-                                @foreach (var report in Model.IndividualReports)
+                                @if (Model.IndividualReports.Any())
                                 {
-                                    <a class="btn btn-info mb-3" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
-                                        Отчет м. @report.Month @report.Year г.
-                                    </a>
+                                    @foreach (var report in Model.IndividualReports)
+                                    {
+                                        <a class="btn btn-info mb-3" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                            Отчет м. @report.Month @report.Year г.
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                <p class="text-center">Няма запазени отчети</p>
                                 }
                             </div>
                         </div>
@@ -116,11 +122,18 @@
                             <div class="row card justify-content-center">
                                 <div class="card-title form-box-title text-center">Запазени отчети</div>
                                 <div class="card-body">
-                                    @foreach (var report in Model.ConsolidatedReports)
+                                    @if (Model.ConsolidatedReports.Any())
                                     {
-                                        <a class="btn btn-info mb-3" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
-                                            Отчет м. @report.Month @report.Year г.
-                                        </a>
+                                        @foreach (var report in Model.ConsolidatedReports)
+                                        {
+                                            <a class="btn btn-info mb-3" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                                Отчет м. @report.Month @report.Year г.
+                                            </a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="text-center">Няма запазени отчети</p>
                                     }
                                 </div>
                             </div>
@@ -129,7 +142,6 @@
                 </div>
             </div>
         }
-    </div>
 </div>
 
 @section Scripts {

@@ -94,13 +94,34 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         [Test]
         public async Task ProcessPayment_ReturnsViewWithCorrectModelIfModelStateIsInvalid()
         {
-            controller.ModelState.AddModelError("", "");
+            //controller.ModelState.AddModelError("", "");
+            mockPaymentService
+                .Setup(s => s.CreatePayrollAsync(testUserId, testModel.Year, testModel.Month))
+                .ReturnsAsync(new SalariesPaymentViewModel
+                {
+                    Amount = 0,
+                    Month = 1,
+                    Year = 2023,
+                    TotalNetSalaryJobContract = 2500,
+                    TotalNetSalaryStateOfficial = 4000,
+                    TotalIncomeTax = 550
+                });
 
-            var result = await controller.ProcessPayment(testModel);
+            var model = new SalariesPaymentViewModel
+            {
+                Amount = 0,
+                Month = 1,
+                Year = 2023,
+                TotalNetSalaryJobContract = 2500,
+                TotalNetSalaryStateOfficial = 4000,
+                TotalIncomeTax = 550,
+            };
+
+            var result = await controller.ProcessPayment(model);
             var viewResult = result as ViewResult;
 
             Assert.IsNotNull(viewResult);
-            AssertObjectEquality(viewResult.Model, testModel);
+            AssertObjectEquality(viewResult.Model, model);
         }
 
         [Test]
