@@ -102,18 +102,7 @@
 
                     @foreach (var beneficiary in Model.Beneficiaries)
                     {
-                        <tr>
-                            <th scope="row"></th>
-                            <td>@beneficiary.Name</td>
-                            <td>@beneficiary.Identifier</td>
-                            <td>@beneficiary.Address</td>
-                            <td>@beneficiary.BankAccount</td>
-                            <td>
-                                <span style="float:left">
-                                    <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.BeneficiaryId">Промяна</a>
-                                </span>
-                            </td>
-                        </tr>
+                        <partial name="_BeneficiaryInfoPartial" model="@beneficiary" />
                     }
 
                 </tbody>

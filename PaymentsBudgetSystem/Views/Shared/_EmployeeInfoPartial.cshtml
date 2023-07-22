@@ -1,0 +1,26 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Employees
+@model EmployeeViewModel
+
+<tr>
+    <td>@Model.FirstName</td>
+    <td>@Model.LastName</td>
+    <td>@Model.Egn</td>
+    <td>@Model.MonthlySalary лв.</td>
+    <td>@Model.DateEmployed.ToShortDateString()</td>
+    <td>
+        @if (Model.DateLeft != null)
+        {
+            @Model.DateLeftToString;
+        }
+        else
+        {
+            <div>няма</div>
+        }
+    </td>
+    <td>@Model.TotalIncome лв.</td>
+    <td>
+        <span style="float:left">
+            <a class="nav-link btn-warning" asp-area="" asp-controller="Employees" asp-action="Edit" asp-route-id="@Model.EmployeeId">Промяна</a>
+        </span>
+    </td>
+</tr>

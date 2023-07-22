@@ -18,16 +18,16 @@
 </head>
 <body class="pbs-bg">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                <a class="navbar-brand text-light font-weight-bolder" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
-                        <li class="font-weight-bold h4">
+                        <li class="font-weight-bold h4 text-light">
                             @User.FindFirstValue(ClaimTypes.Email)
                         </li>
                     </ul>
@@ -101,8 +101,8 @@
 
     </div>
 
-    <footer class="border-top footer bg-light text-muted" style="position: sticky; bottom: 0;">
-        <div class="container">
+    <footer class="border-top footer bg-dark text-muted" style="position: sticky; bottom: 0;">
+        <div class="container text-light">
             &copy; @DateTime.UtcNow.Year - Система за Бюджет и Разплащания
         </div>
     </footer>

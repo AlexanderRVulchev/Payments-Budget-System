@@ -109,24 +109,7 @@
 
                         @foreach (var asset in Model.Assets)
                         {
-                            <tr>
-                                <th scope="row"></th>
-                                <td>@asset.Name</td>
-                                <td>@asset.ReportValue.ToString("n")</td>
-                                <td>@asset.BalanceValue.ToString("n")</td>
-                                <td>@asset.AmortizationValue.ToString("n")</td>
-                                <td>@asset.DateAquired.ToShortDateString()</td>
-                                <td>
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@asset.PaymentId">Информация</a>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span style="float:left">
-                                        <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@asset.AssetId" asp-route-year="@DateTime.Now.Year">Детайли</a>
-                                    </span>
-                                </td>
-                            </tr>
+                            <partial name="_AssetInfoPartial" model="@asset"/>
                         }
 
                     </tbody>

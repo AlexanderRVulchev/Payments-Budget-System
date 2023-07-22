@@ -1,0 +1,15 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Beneficiaries
+@model BeneficiaryViewModel
+
+<tr>
+    <th scope="row"></th>
+    <td>@Model.Name</td>
+    <td>@Model.Identifier</td>
+    <td>@Model.Address</td>
+    <td>@Model.BankAccount</td>
+    <td>
+        <span style="float:left">
+            <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@Model.BeneficiaryId">Промяна</a>
+        </span>
+    </td>
+</tr>

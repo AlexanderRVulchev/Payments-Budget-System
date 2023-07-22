@@ -1,0 +1,56 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Information
+@using PaymentsBudgetSystem.Data.Entities.Enums
+@model PaymentInformationItemModel
+
+<tr>
+    <td>@Model.Date.ToShortDateString()</td>
+    <td>@Model.ReceiverName</td>
+    @{
+        if (Model.PaymentType == PaymentType.Salaries)
+        {
+            <td>Заплати</td>
+        }
+        else if (Model.PaymentType == PaymentType.Support)
+        {
+            <td>Издръжка</td>
+        }
+        else if (Model.PaymentType == PaymentType.Assets)
+        {
+            <td>Активи</td>
+        }
+        else if (Model.PaymentType == PaymentType.Cash)
+        {
+            <td>Каса</td>
+        }
+    }
+    <td>@Model.Amount.ToString("n")</td>
+    <td>@Model.Description</td>
+    <td>
+        @{
+            if (Model.PaymentType == PaymentType.Salaries)
+            {
+                <span style="float:left">
+                    <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@Model.PaymentId">Преглед</a>
+                </span>
+            }
+            else if (Model.PaymentType == PaymentType.Support)
+            {
+                <span style="float:left">
+                    <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@Model.PaymentId">Преглед</a>
+                </span>
+            }
+            else if (Model.PaymentType == PaymentType.Assets)
+            {
+                <span style="float:left">
+                    <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@Model.PaymentId">Преглед</a>
+                </span>
+            }
+            else if (Model.PaymentType == PaymentType.Cash)
+            {
+                <span style="float:left">
+                    <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@Model.PaymentId">Преглед</a>
+                </span>
+            }
+        }
+    </td>
+</tr>

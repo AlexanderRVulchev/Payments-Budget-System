@@ -1,0 +1,21 @@
+﻿@using PaymentsBudgetSystem.Core.Models.Assets
+@model AssetInfoViewModel
+
+<tr>
+    <th scope="row"></th>
+    <td>@Model.Name</td>
+    <td>@Model.ReportValue.ToString("n")</td>
+    <td>@Model.BalanceValue.ToString("n")</td>
+    <td>@Model.AmortizationValue.ToString("n")</td>
+    <td>@Model.DateAquired.ToShortDateString()</td>
+    <td>
+        <span style="float:left">
+            <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@Model.PaymentId">Информация</a>
+        </span>
+    </td>
+    <td>
+        <span style="float:left">
+            <a class="nav-link btn-info" asp-area="" asp-controller="Assets" asp-action="Details" asp-route-id="@Model.AssetId" asp-route-year="@DateTime.Now.Year">Детайли</a>
+        </span>
+    </td>
+</tr>

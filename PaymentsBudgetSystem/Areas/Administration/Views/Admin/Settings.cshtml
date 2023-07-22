@@ -36,8 +36,8 @@
 
 
 <form class="input-group-sm" method="post" asp-area="Administration" asp-controller="Admin" asp-action="Settings">
-    <div class="row">
-        <table class="table align-content-center pbs-box col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-12" style="color: #0F0F0F;">
+    <div class="row justify-content-center">
+        <table class="table align-content-center pbs-box col-xl-5 col-sm-12" style="color: #0F0F0F;">
             <tbody>
                 <tr>
                     <td>
@@ -102,6 +102,13 @@
                         <input type="number" asp-for="InsurancePensionEmployerPercentage" class="form-control" value="@Model.InsurancePensionEmployerPercentage.ToString("n")" />
                     </td>
                 </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table align-content-center pbs-box col-xl-5 ml-4 col-md-12" style="color: #0F0F0F;">
+            <tbody>
+
                 <tr>
                     <td>
                         <label asp-for="InsurancePensionEmployeePercentage" class="form-label">Фонд Пенсии - служител: </label>
@@ -165,10 +172,12 @@
                         <input type="number" asp-for="MinimumWage" class="form-control" value="@Model.MinimumWage.ToString("n")" />
                     </td>
                 </tr>
+                
             </tbody>
         </table>
 
     </div>
+    <hr />
     <div class="row justify-content-center">
         <input class="btn btn-primary btn-lg" type="submit" value="Запази промените" asp-area="Administration" asp-controller="Admin" asp-action="Settings">
     </div>
