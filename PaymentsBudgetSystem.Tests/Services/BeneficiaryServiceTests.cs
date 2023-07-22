@@ -91,7 +91,7 @@ namespace PaymentsBudgetSystem.Tests.Services
         }
 
         [Test]
-        public async Task AddBeneficiary_ThrowsForExistingBeneficiary()
+        public void AddBeneficiary_ThrowsForExistingBeneficiary()
         {
             var testModel = new BeneficiaryFormModel
             {

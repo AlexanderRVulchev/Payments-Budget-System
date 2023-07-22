@@ -19,7 +19,7 @@ namespace PaymentsBudgetSystem.Core.Models.Support
         public Guid BeneficiaryId { get; set; }
 
         [Display(Name = "Сума")]
-        [Range(DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(MoneyMinValue, MoneyMaxValue, ErrorMessage = RangeValidationError)]
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = FieldIsRequired)]

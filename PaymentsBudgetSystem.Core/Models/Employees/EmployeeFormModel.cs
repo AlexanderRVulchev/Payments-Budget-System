@@ -30,7 +30,7 @@ namespace PaymentsBudgetSystem.Core.Models.Employees
 
         [Required(ErrorMessage = FieldIsRequired)]
         [Display(Name = "Брутна заплата")]
-        [Range(DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(MoneyMinValue, MoneyMaxValue, ErrorMessage = RangeValidationError)]
         public decimal MonthlySalary { get; set; }
 
         [Required(ErrorMessage = FieldIsRequired)]

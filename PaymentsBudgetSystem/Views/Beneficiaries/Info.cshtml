@@ -83,43 +83,45 @@
         </div>
     </div>
 
-    <div class="col-xl-9 col-lg-6 col-md-12">
-        <h4 class="text-center info-box-title">Информация за контрагенти</h4>
-        <table class="table text-center table-striped table-responsive" style="color: #0F0F0F">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Име</th>
-                    <th scope="col">Булстат</th>
-                    <th scope="col">Адрес</th>
-                    <th scope="col">Банкова сметка</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-
-                @foreach (var beneficiary in Model.Beneficiaries)
-                {
+    @if (Model.Beneficiaries.Any())
+    {
+        <div class="col-xl-9 col-lg-6 col-md-12">
+            <h4 class="text-center info-box-title">Информация за контрагенти</h4>
+            <table class="table text-center table-striped table-responsive" style="color: #0F0F0F">
+                <thead>
                     <tr>
-                        <th scope="row"></th>
-                        <td>@beneficiary.Name</td>
-                        <td>@beneficiary.Identifier</td>
-                        <td>@beneficiary.Address</td>
-                        <td>@beneficiary.BankAccount</td>
-                        <td>
-                            <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.BeneficiaryId">Промяна</a>
-                            </span>
-                        </td>
+                        <th scope="col"></th>
+                        <th scope="col">Име</th>
+                        <th scope="col">Булстат</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Банкова сметка</th>
+                        <th scope="col"></th>
                     </tr>
-                }
+                </thead>
+                <tbody class="table-group-divider">
 
-            </tbody>
-        </table>
-        <div class="row justify-content-center">
-            <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                <div>
-                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                    @foreach (var beneficiary in Model.Beneficiaries)
+                    {
+                        <tr>
+                            <th scope="row"></th>
+                            <td>@beneficiary.Name</td>
+                            <td>@beneficiary.Identifier</td>
+                            <td>@beneficiary.Address</td>
+                            <td>@beneficiary.BankAccount</td>
+                            <td>
+                                <span style="float:left">
+                                    <a class="nav-link btn-warning" asp-area="" asp-controller="Beneficiaries" asp-action="Edit" asp-route-id="@beneficiary.BeneficiaryId">Промяна</a>
+                                </span>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="row justify-content-center">
+                <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
                          @(Model.Page == 1 ? "disabled" : string.Empty)"
                        asp-action="Info"
                        asp-route-name="@Model.NameFilter"
@@ -129,14 +131,14 @@
                        asp-route-bankAccount="@Model.BankAccountFilter"
                        asp-route-attribute="@((int)Model.SortAttribute)"
                        asp-route-page="@(Model.Page - 1)">
-                        Предишна
-                    </a>
-                </div>
-                <div class="font-monospace ml-5 mr-5">
-                    Страница @Model.Page / @Model.NumberOfPages
-                </div>
-                <div>
-                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                            Предишна
+                        </a>
+                    </div>
+                    <div class="font-monospace ml-5 mr-5">
+                        Страница @Model.Page / @Model.NumberOfPages
+                    </div>
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
                          @(Model.Page == Model.NumberOfPages || !Model.Beneficiaries.Any() ? "disabled" : string.Empty)"
                        asp-action="Info"
                        asp-route-name="@Model.NameFilter"
@@ -146,12 +148,19 @@
                        asp-route-bankAccount="@Model.BankAccountFilter"
                        asp-route-attribute="@((int)Model.SortAttribute)"
                        asp-route-page="@(Model.Page + 1)">
-                        Следваща
-                    </a>
+                            Следваща
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="col-xl-9 col-lg-6 col-md-12">
+            <p class="text-center card text-secondary border-bottom-secondary info-box-title">Няма намерени резултати</p>
+        </div>
+    }
 </div>
 
 

@@ -81,56 +81,58 @@
     </div>
 
     <div class="col-xl-9 col-md-12">
-        <h4 class="text-center form-box-title">Информация за служители</h4>
-        <table class="table table-bordered table-striped table-responsive text-center" style="color: #0F0F0F">
-            <thead>
-                <tr>
-                    <th scope="col">Име</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">ЕГН</th>
-                    <th scope="col">Брутна заплата</th>
-                    <th scope="col">Дата на назначаване</th>
-                    <th scope="col">Дата на освобождаване</th>
-                    <th scope="col">Общо възнаграждения</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-
-                @foreach (var employee in Model.Employees)
-                {
+        @if (Model.Employees.Any())
+        {
+            <h4 class="text-center form-box-title">Информация за служители</h4>
+            <table class="table table-bordered table-striped table-responsive text-center" style="color: #0F0F0F">
+                <thead>
                     <tr>
-                        <td>@employee.FirstName</td>
-                        <td>@employee.LastName</td>
-                        <td>@employee.Egn</td>
-                        <td>@employee.MonthlySalary лв.</td>
-                        <td>@employee.DateEmployed.ToShortDateString()</td>
-                        <td>
-                            @if (employee.DateLeft != null)
-                            {
-                                @employee.DateLeftToString
-                                ;
-                            }
-                            else
-                            {
-                                <div>няма</div>
-                            }
-                        </td>
-                        <td>@employee.TotalIncome лв.</td>
-                        <td>
-                            <span style="float:left">
-                                <a class="nav-link btn-warning" asp-area="" asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.EmployeeId">Промяна</a>
-                            </span>
-                        </td>
+                        <th scope="col">Име</th>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">ЕГН</th>
+                        <th scope="col">Брутна заплата</th>
+                        <th scope="col">Дата на назначаване</th>
+                        <th scope="col">Дата на освобождаване</th>
+                        <th scope="col">Общо възнаграждения</th>
+                        <th scope="col"></th>
                     </tr>
-                }
+                </thead>
+                <tbody class="table-group-divider">
 
-            </tbody>
-        </table>
-        <div class="row justify-content-center">
-            <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                <div>
-                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <tr>
+                            <td>@employee.FirstName</td>
+                            <td>@employee.LastName</td>
+                            <td>@employee.Egn</td>
+                            <td>@employee.MonthlySalary лв.</td>
+                            <td>@employee.DateEmployed.ToShortDateString()</td>
+                            <td>
+                                @if (employee.DateLeft != null)
+                                {
+                                    @employee.DateLeftToString
+                                    ;
+                                }
+                                else
+                                {
+                                    <div>няма</div>
+                                }
+                            </td>
+                            <td>@employee.TotalIncome лв.</td>
+                            <td>
+                                <span style="float:left">
+                                    <a class="nav-link btn-warning" asp-area="" asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.EmployeeId">Промяна</a>
+                                </span>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="row justify-content-center">
+                <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
                          @(Model.Page == 1 ? "disabled" : string.Empty)"
                        asp-action="Info"
                        asp-route-firstName="@Model.FirstName"
@@ -139,14 +141,14 @@
                        asp-route-sortAttribute="@((int)Model.SortAttribute)"
                        asp-route-sortBy="@((int)Model.SortBy)"
                        asp-route-page="@(Model.Page - 1)">
-                        Предишна
-                    </a>
-                </div>
-                <div class="font-monospace ml-5 mr-5">
-                    Страница @Model.Page / @Model.NumberOfPages
-                </div>
-                <div>
-                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                            Предишна
+                        </a>
+                    </div>
+                    <div class="font-monospace ml-5 mr-5">
+                        Страница @Model.Page / @Model.NumberOfPages
+                    </div>
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
                          @(Model.Page == Model.NumberOfPages || !Model.Employees.Any() ? "disabled" : string.Empty)"
                        asp-action="Info"
                        asp-route-firstName="@Model.FirstName"
@@ -155,11 +157,16 @@
                        asp-route-sortAttribute="@((int)Model.SortAttribute)"
                        asp-route-sortBy="@((int)Model.SortBy)"
                        asp-route-page="@(Model.Page + 1)">
-                        Следваща
-                    </a>
+                            Следваща
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <p class="text-center card text-secondary border-bottom-secondary info-box-title">Няма намерени резултати</p>
+        }
     </div>
 </div>
 

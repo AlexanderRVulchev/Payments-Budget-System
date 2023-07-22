@@ -65,11 +65,18 @@
                         <h5 class="card-title font-weight-bold info-box-line">Индивидуални отчети</h5>
                     </div>
                     <div class="card-body">
-                        @foreach (var report in Model.ReportAnnotationCollection.IndividualReports)
+                        @if (Model.ReportAnnotationCollection.IndividualReports.Any())
                         {
-                            <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
-                                Отчет м. @report.Month @report.Year г.
-                            </a>
+                            @foreach (var report in Model.ReportAnnotationCollection.IndividualReports)
+                            {
+                                <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                    Отчет м. @report.Month @report.Year г.
+                                </a>
+                            }
+                        }
+                        else if (Model.SelectedInstitutionId != null)
+                        {
+                            <p class="text-center card text-secondary border-bottom-secondary">Няма индивидуални отчети</p>
                         }
                     </div>
                 </div>
@@ -81,11 +88,18 @@
                         <h5 class="card-title font-weight-bold info-box-line">Консолидирани отчети</h5>
                     </div>
                     <div class="card-body">
-                        @foreach (var report in Model.ReportAnnotationCollection.ConsolidatedReports)
+                        @if (Model.ReportAnnotationCollection.ConsolidatedReports.Any())
                         {
-                            <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
-                                Отчет м. @report.Month @report.Year г.
-                            </a>
+                            @foreach (var report in Model.ReportAnnotationCollection.ConsolidatedReports)
+                            {
+                                <a class="btn btn-info mb-2" asp-area="Reports" asp-controller="Report" asp-action="LoadReport" asp-route-id="@report.ReportId">
+                                    Отчет м. @report.Month @report.Year г.
+                                </a>
+                            }
+                        }
+                        else if (Model.SelectedInstitutionId != null)
+                        {
+                            <p class="text-center card text-secondary border-bottom-secondary">Няма консолидирани отчети</p>
                         }
                     </div>
                 </div>

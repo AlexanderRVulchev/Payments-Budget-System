@@ -76,81 +76,83 @@
         </div>
     </div>
     <div class="col-xl-9 col-sm-12">
-        <h4 class="text-center info-box-title">Обща информация за извършени плащания</h4>
-        <table class="table table-bordered table-striped text-center table-responsive" style="color: #0F0F0F">
-            <thead>
-                <tr>
-                    <th scope="col">Дата</th>
-                    <th scope="col">Получател</th>
-                    <th scope="col">Вид плащане</th>
-                    <th scope="col">Стойност</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                @foreach (var payment in Model.Payments)
-                {
+        @if (Model.Payments.Any())
+        {
+            <h4 class="text-center info-box-title">Обща информация за извършени плащания</h4>
+            <table class="table table-bordered table-striped text-center table-responsive" style="color: #0F0F0F">
+                <thead>
                     <tr>
-                        <td>@payment.Date.ToShortDateString()</td>
-                        <td>@payment.ReceiverName</td>
-                        @{
-                            if (payment.PaymentType == PaymentType.Salaries)
-                            {
-                                <td>Заплати</td>
-                            }
-                            else if (payment.PaymentType == PaymentType.Support)
-                            {
-                                <td>Издръжка</td>
-                            }
-                            else if (payment.PaymentType == PaymentType.Assets)
-                            {
-                                <td>Активи</td>
-                            }
-                            else if (payment.PaymentType == PaymentType.Cash)
-                            {
-                                <td>Каса</td>
-                            }
-                        }
-                        <td>@payment.Amount.ToString("n")</td>
-                        <td>@payment.Description</td>
-                        <td>
+                        <th scope="col">Дата</th>
+                        <th scope="col">Получател</th>
+                        <th scope="col">Вид плащане</th>
+                        <th scope="col">Стойност</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var payment in Model.Payments)
+                    {
+                        <tr>
+                            <td>@payment.Date.ToShortDateString()</td>
+                            <td>@payment.ReceiverName</td>
                             @{
                                 if (payment.PaymentType == PaymentType.Salaries)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                    <td>Заплати</td>
                                 }
                                 else if (payment.PaymentType == PaymentType.Support)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                    <td>Издръжка</td>
                                 }
                                 else if (payment.PaymentType == PaymentType.Assets)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                    <td>Активи</td>
                                 }
                                 else if (payment.PaymentType == PaymentType.Cash)
                                 {
-                                    <span style="float:left">
-                                        <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
-                                    </span>
+                                    <td>Каса</td>
                                 }
                             }
-                        </td>
-                    </tr>
-                }
+                            <td>@payment.Amount.ToString("n")</td>
+                            <td>@payment.Description</td>
+                            <td>
+                                @{
+                                    if (payment.PaymentType == PaymentType.Salaries)
+                                    {
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="Salaries" asp-action="Details" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
+                                    }
+                                    else if (payment.PaymentType == PaymentType.Support)
+                                    {
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="Support" asp-action="SupportPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
+                                    }
+                                    else if (payment.PaymentType == PaymentType.Assets)
+                                    {
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="AssetPayment" asp-action="AssetPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
+                                    }
+                                    else if (payment.PaymentType == PaymentType.Cash)
+                                    {
+                                        <span style="float:left">
+                                            <a class="nav-link btn-warning" asp-area="" asp-controller="CashPayment" asp-action="CashPaymentDetails" asp-route-id="@payment.PaymentId">Преглед</a>
+                                        </span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
 
-            </tbody>
-        </table>
-        <div class="row justify-content-center">
-            <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-                <div>
-                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                </tbody>
+            </table>
+            <div class="row justify-content-center">
+                <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
                           @(Model.Page == 1 ? "disabled" : string.Empty)"
                        asp-action="Info"
                        asp-route-from="@Model.StartDate"
@@ -162,14 +164,14 @@
                        asp-route-amountMax="@Model.AmountMax"
                        asp-route-page="@(Model.Page - 1)"
                        asp-route-receiver="@Model.ReceiverNameFilter">
-                        Предишна
-                    </a>
-                </div>
-                <div class="font-monospace ml-5 mr-5">
-                    Страница @Model.Page / @Model.NumberOfPages
-                </div>
-                <div>
-                    <a class="btn btn-success mb-2 w-100 p-3 fw-bold
+                            Предишна
+                        </a>
+                    </div>
+                    <div class="font-monospace ml-5 mr-5">
+                        Страница @Model.Page / @Model.NumberOfPages
+                    </div>
+                    <div>
+                        <a class="btn btn-success mb-2 w-100 p-3 fw-bold
                            @(Model.Page == Model.NumberOfPages || !Model.Payments.Any() ? "disabled" : string.Empty)"
                        asp-action="Info"
                        asp-route-from="@Model.StartDate"
@@ -181,11 +183,16 @@
                        asp-route-amountMax="@Model.AmountMax"
                        asp-route-page="@(Model.Page + 1)"
                        asp-route-receiver="@Model.ReceiverNameFilter">
-                        Следваща
-                    </a>
+                            Следваща
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <p class="text-center card text-secondary border-bottom-secondary info-box-title">Няма намерени резултати</p>
+        }
     </div>
 </div>
 
