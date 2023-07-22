@@ -45,16 +45,16 @@
                 <h6 class="text-center">Изберете Вашият Първостепенен РБ:</h6>
 
                 <div>
-                    <label asp-for="InputForPrimary" class="form-label-add-edit">Избор</label>
                     <select asp-for="InputForPrimary" class="form-control" aria-required="true">
                         <option value="0">--Без избор-- Регистриране като Първостепенен РБ</option>
-                        @foreach (var name in Model.PrimaryInstitutionName)
-                        {
+                        @{
                             int counter = 1;
-                            <option value="@counter">@name</option>
-                            counter++;
+                            @foreach (var name in Model.PrimaryInstitutionName)
+                            {
+                                <option value="@counter">@name</option>
+                                counter++;
+                            }
                         }
-
                     </select>
                     <script>
                         $(document).ready(function () {

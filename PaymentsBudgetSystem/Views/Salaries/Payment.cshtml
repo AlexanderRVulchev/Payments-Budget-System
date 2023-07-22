@@ -65,7 +65,7 @@
             </form>
 
             <div class="mt-5 mb-1 container" style="align-content: center">
-                <form method="post" asp-controller="Salaries" asp-action="ProcessPayment">
+                <form method="post" asp-area="" asp-controller="Salaries" asp-action="ProcessPayment">
                     <input hidden asp-for="@Model.Year" value="@Model.Year" />
                     <input hidden asp-for="@Model.Month" value="@Model.Month" />
                     <div class="border-primary align-content-center text-center">

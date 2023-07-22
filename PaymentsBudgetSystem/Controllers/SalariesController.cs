@@ -43,9 +43,10 @@ namespace PaymentsBudgetSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessPayment(SalariesPaymentViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (model.Amount < 0.01m)
             {
-                return View(model);
+                ModelState.AddModelError("", PaymentMoneyCannotBeZeroOrLess);
+                return View(nameof(Payment), model);
             }
 
             model = await paymentService.CreatePayrollAsync(User.Id(), model.Year, model.Month);

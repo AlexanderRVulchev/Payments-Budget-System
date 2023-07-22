@@ -45,13 +45,20 @@
                                 <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Контрагент</label>
                             </div>
                             <div class="col-8">
-                                <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
-                                    @foreach (var beneficiary in Model.Beneficiaries)
-                                    {
-                                        <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
-                                    }
-                                </select>
-                                <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
+                                @if (Model.Beneficiaries.Any())
+                                {
+                                    <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
+                                        @foreach (var beneficiary in Model.Beneficiaries)
+                                        {
+                                            <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">Няма контрагенти. Моля, създайте нов контрагент за да извършвате плащания</p>
+                                }
                             </div>
                         </div>
 
@@ -59,7 +66,10 @@
                         <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
                     </div>
                     <div class="card-footer">
-                        <input class="col-4 offset-4 btn btn-success mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                        @if (Model.Beneficiaries.Any())
+                        {
+                            <input class="col-4 offset-4 btn btn-success mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                        }
                     </div>
                 </div>
             </form>
@@ -88,13 +98,20 @@
                                 <label asp-for="SelectedBeneficiary" class="form-label-add-edit">Контрагент</label>
                             </div>
                             <div class="col-8">
-                                <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
-                                    @foreach (var beneficiary in Model.Beneficiaries)
-                                    {
-                                        <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
-                                    }
-                                </select>
-                                <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
+                                @if (Model.Beneficiaries.Any())
+                                {
+                                    <select asp-for="SelectedBeneficiary" class="form-control" aria-required="true">
+                                        @foreach (var beneficiary in Model.Beneficiaries)
+                                        {
+                                            <option value="@beneficiary.BeneficiaryId">@beneficiary.Name</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="SelectedBeneficiary" class="text-danger"></span>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">Няма контрагенти. Моля, създайте нов контрагент за да извършвате плащания</p>
+                                }
                             </div>
                         </div>
 
@@ -102,7 +119,10 @@
                         <input type="hidden" asp-for="SalaryMonth" class="form-control" value="1" />
                     </div>
                     <div class="card-footer">
-                        <input class="col-4 offset-4 btn btn-warning mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                        @if (Model.Beneficiaries.Any())
+                        {
+                            <input class="col-4 offset-4 btn btn-warning mt-2 mb-2 w-100 p-3 fw-bold" type="submit" value="Напред ->" />
+                        }
                     </div>
                 </div>
             </form>
