@@ -12,6 +12,8 @@ namespace PaymentsBudgetSystem
     using static Common.DataConstants.User;
     using PaymentsBudgetSystem.Extensions;
     using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Mvc;
+    using PaymentsBudgetSystem.ModelBinders;
 
     public class Program
     {
@@ -19,7 +21,6 @@ namespace PaymentsBudgetSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<PBSystemDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -38,13 +39,16 @@ namespace PaymentsBudgetSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PBSystemDbContext>();
 
-
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/User/Login";
             });
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
             builder.Services.AddApplicationServices();
 
@@ -76,8 +80,9 @@ namespace PaymentsBudgetSystem
             });
 
             app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
             app.MapRazorPages();
 
             app.SeedRoles().Wait();

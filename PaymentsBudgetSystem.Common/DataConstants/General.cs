@@ -2,8 +2,8 @@
 {
     public class General
     {
-        public const string DecimalMoneyMinValue = "0.01";
-        public const string DecimalMoneyMaxValue = "99999999999.0";
+        public const double DecimalMoneyMinValue = 0.01;
+        public const double DecimalMoneyMaxValue = 99999999999.0;
 
         public const string ValidDateFormat = "dd.MM.yyyy";
 

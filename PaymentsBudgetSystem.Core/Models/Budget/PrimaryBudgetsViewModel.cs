@@ -14,7 +14,7 @@ namespace PaymentsBudgetSystem.Core.Models.Budget
         [Range(1990, 2100, ErrorMessage = InvalidYearError)]
         public int NewBudgetYear { get; set; }
 
-        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Средства")]
         public decimal NewBudgetFunds { get; set; }
     }

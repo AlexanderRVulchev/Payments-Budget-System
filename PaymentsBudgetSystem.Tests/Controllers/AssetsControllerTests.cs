@@ -103,6 +103,18 @@ namespace PaymentsBudgetSystem.Tests.Controllers
         }
 
         [Test]
+        [TestCase(1)]
+        [TestCase(2200)]
+        public async Task Details_OnGet_ReturnsViewWithDefaultYearIfYearIsInvalid(int testYear)
+        {
+            var result = await controller.Details(testAssetId, testYear);
+            var viewResult = result as ViewResult;
+
+            Assert.IsNotNull(viewResult);
+            AssertObjectEquality(viewResult.Model, new AssetDetailsViewModel());
+        }
+
+        [Test]
         public async Task Details_OnGet_RedirectsToErrorInCaseOfInvalidAssetId()
         {
             var invalidAssetId = Guid.NewGuid();

@@ -21,7 +21,7 @@ namespace PaymentsBudgetSystem.Core.Models.Cash
         public int CashOrderNumber { get; set; }
 
         [Required]
-        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = PaymentMoneyCannotBeZeroOrLess)]
+        [Range(DecimalMoneyMinValue, DecimalMoneyMaxValue, ErrorMessage = PaymentMoneyCannotBeZeroOrLess)]
         [Display(Name = "Сума")]        
         public decimal Amount { get; set; }
 

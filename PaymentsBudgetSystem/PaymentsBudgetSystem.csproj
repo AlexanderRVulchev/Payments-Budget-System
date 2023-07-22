@@ -14,28 +14,24 @@
     <Compile Remove="Areas\Budget\Models\**" />
     <Compile Remove="Areas\Reports\Data\**" />
     <Compile Remove="Areas\Reports\Models\**" />
-    <Compile Remove="ModelBinders\**" />
     <Content Remove="Areas\Administration\Data\**" />
     <Content Remove="Areas\Administration\Models\**" />
     <Content Remove="Areas\Budget\Data\**" />
     <Content Remove="Areas\Budget\Models\**" />
     <Content Remove="Areas\Reports\Data\**" />
     <Content Remove="Areas\Reports\Models\**" />
-    <Content Remove="ModelBinders\**" />
     <EmbeddedResource Remove="Areas\Administration\Data\**" />
     <EmbeddedResource Remove="Areas\Administration\Models\**" />
     <EmbeddedResource Remove="Areas\Budget\Data\**" />
     <EmbeddedResource Remove="Areas\Budget\Models\**" />
     <EmbeddedResource Remove="Areas\Reports\Data\**" />
     <EmbeddedResource Remove="Areas\Reports\Models\**" />
-    <EmbeddedResource Remove="ModelBinders\**" />
     <None Remove="Areas\Administration\Data\**" />
     <None Remove="Areas\Administration\Models\**" />
     <None Remove="Areas\Budget\Data\**" />
     <None Remove="Areas\Budget\Models\**" />
     <None Remove="Areas\Reports\Data\**" />
     <None Remove="Areas\Reports\Models\**" />
-    <None Remove="ModelBinders\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +55,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="ModelBinders\" />
   </ItemGroup>
 
   <ItemGroup>

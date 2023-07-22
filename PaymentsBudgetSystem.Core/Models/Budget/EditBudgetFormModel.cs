@@ -15,15 +15,15 @@ namespace PaymentsBudgetSystem.Core.Models.Budget
 
         public Guid Id { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Лимит заплати")]
         public decimal NewSalaryLimit { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Лимит издръжка")]
         public decimal NewSupportLimit { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Лимит Капиталови")]
         public decimal NewAssetsLimit { get; set; }
     }

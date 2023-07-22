@@ -48,7 +48,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         [Display(Name = "Количество")]
         public int Position1Quantity { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Единична стойност на актива")]
         public decimal Position1SingleAssetValue { get; set; }
 
@@ -62,7 +62,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         [Display(Name = "Количество")]
         public int Position2Quantity { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Единична стойност на актива")]
         public decimal Position2SingleAssetValue { get; set; }
 
@@ -76,7 +76,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         [Display(Name = "Количество")]
         public int Position3Quantity { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Единична стойност на актива")]
         public decimal Position3SingleAssetValue { get; set; }
 
@@ -90,7 +90,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         [Display(Name = "Количество")]
         public int Position4Quantity { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Единична стойност на актива")]
         public decimal Position4SingleAssetValue { get; set; }
 
@@ -104,7 +104,7 @@ namespace PaymentsBudgetSystem.Core.Models.Assets
         [Display(Name = "Количество")]
         public int Position5Quantity { get; set; }
 
-        [Range(typeof(decimal), "0", DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
+        [Range(0, DecimalMoneyMaxValue, ErrorMessage = RangeValidationError)]
         [Display(Name = "Единична стойност на актива")]
         public decimal Position5SingleAssetValue { get; set; }
     }

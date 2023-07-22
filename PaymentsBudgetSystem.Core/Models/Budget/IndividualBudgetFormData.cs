@@ -14,17 +14,17 @@ namespace PaymentsBudgetSystem.Core.Models.Budget
 
         public int FiscalYear { get; set; }
 
-        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue)]
+        [Range(0, DecimalMoneyMaxValue)]
         public decimal SalariesLimit { get; set; }
 
         public decimal SalariesExpenses { get; set; }
 
-        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue)]
+        [Range(0, DecimalMoneyMaxValue)]
         public decimal SupportLimit { get; set; }
 
         public decimal SupportExpenses { get; set; }
 
-        [Range(typeof(decimal), DecimalMoneyMinValue, DecimalMoneyMaxValue)]
+        [Range(0, DecimalMoneyMaxValue)]
         public decimal AssetsLimit { get; set; }
 
         public decimal AssetsExpenses { get; set; }

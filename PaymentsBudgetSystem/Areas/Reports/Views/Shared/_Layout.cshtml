@@ -50,7 +50,7 @@
 
     </style>
 
-    <div class="row" id="frame">
+    <div class="row container-fluid" id="frame">
         @if (User?.Identity?.IsAuthenticated ?? false)
         {
             <nav class="col-12 col-md-4 col-lg-2 d-md-block btn-group-vertical sidebar">
@@ -101,7 +101,7 @@
 
     </div>
 
-    <footer class="border-top footer bg-light text-muted">
+    <footer class="border-top footer bg-light text-muted" style="position: sticky; bottom: 0;">
         <div class="container">
             &copy; @DateTime.UtcNow.Year - Система за Бюджет и Разплащания
         </div>

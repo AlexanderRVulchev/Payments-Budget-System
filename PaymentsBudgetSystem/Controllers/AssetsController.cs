@@ -10,6 +10,7 @@ namespace PaymentsBudgetSystem.Controllers
 
     using static Common.RoleNames;
     using static Common.DataConstants.General;
+    using static Common.ValidationErrors.General;
 
     [Authorize(Roles = PrimaryAndSecondaryRoleNames)]
     public class AssetsController : Controller
@@ -64,6 +65,12 @@ namespace PaymentsBudgetSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id, int year)
         {
+            if (year < YearMinValue || year > YearMaxValue)
+            {
+                ModelState.AddModelError("", String.Format(InvalidYearError, null, YearMinValue, YearMaxValue));
+                year = DateTime.Now.Year;
+            }
+
             try
             {
                 var model = await assetService.GetAssetDetailsAsync(User.Id(), id, year);
