@@ -268,4 +268,3 @@ If the application cannot process a request properly, or the user engages in par
 ![ErrorAsset](https://github.com/AlexanderRVulchev/Payments-Budget-System/assets/106471266/cc680465-8ecc-4d40-a328-c7830223a2eb)
 
 <a href="#table-of-contents">Back to index table</a>
-<a href="overview"> link </a>
