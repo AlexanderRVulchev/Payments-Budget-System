@@ -1,7 +1,6 @@
 ﻿namespace PaymentsBudgetSystem.Core.Contracts
 {
     using Models.Administration;
-    using PaymentsBudgetSystem.Core.Models.Report;
 
     public interface IAdminService
     {

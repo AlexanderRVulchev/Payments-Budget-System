@@ -12,7 +12,7 @@ using PaymentsBudgetSystem.Data;
 namespace PaymentsBudgetSystem.Data.Migrations
 {
     [DbContext(typeof(PBSystemDbContext))]
-    [Migration("20230709144253_TestMigration")]
+    [Migration("20230724155910_TestMigration")]
     partial class TestMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1022,8 +1022,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("Paragraph")
                         .HasColumnType("int");
@@ -1269,10 +1269,11 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("InvoiceDate")
+                    b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InvoiceNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AssetPaymentId");
@@ -1294,7 +1295,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             AssetPaymentId = new Guid("0636467d-e3aa-4b48-5643-08db804e8f7e"),
                             BeneficiaryId = new Guid("3bbaa90d-9c3d-4a84-c5fe-08db804fefc7"),
-                            DeliveryDate = new DateTime(2023, 1, 8, 10, 49, 2, 57, DateTimeKind.Unspecified).AddTicks(8480)
+                            DeliveryDate = new DateTime(2023, 1, 8, 10, 49, 2, 57, DateTimeKind.Unspecified).AddTicks(8480),
+                            InvoiceDate = new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InvoiceNumber = "0000032660"
                         },
                         new
                         {
@@ -1308,7 +1311,9 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             AssetPaymentId = new Guid("ed82c4f5-4c19-44f4-564a-08db804e8f7e"),
                             BeneficiaryId = new Guid("46b32cd0-8754-4b38-2b2b-08db80453a86"),
-                            DeliveryDate = new DateTime(2023, 4, 10, 11, 12, 12, 297, DateTimeKind.Unspecified).AddTicks(1277)
+                            DeliveryDate = new DateTime(2023, 4, 10, 11, 12, 12, 297, DateTimeKind.Unspecified).AddTicks(1277),
+                            InvoiceDate = new DateTime(2023, 3, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InvoiceNumber = "0100000012"
                         },
                         new
                         {
@@ -1727,6 +1732,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InvoiceNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SupportPaymentId");
@@ -2152,15 +2158,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "586513cb-2bad-4ea3-ae33-7b8954efb167",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7c0cdd0c-0c05-4dd8-8925-32ef67b7f442",
+                            ConcurrencyStamp = "0657203a-0f3c-4255-a17c-6587d706134d",
                             Email = "Администратор",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Админитратор",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAELUwL9tJWahJkT86rjegmWEeVwcTY17TogG8DImA8YkBf5wNCBfmtCoubA2Gnt5MTg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHxWrSwI5z6BQoTxDyN2K2K8ZErgYvK3SvaP43g6grSBG35eyjdfeKpd8gqwil1Ejw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "10f5cd77-da42-4d63-874b-f792170f08ca",
+                            SecurityStamp = "7b01ce09-ccb6-4ed6-847d-0f86d0cbf294",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -2168,15 +2174,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "33fb1d42-a747-4860-b3ce-7e33a0421a0d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e13db6bc-a1d9-4b80-b0df-3b24d7ab8bd9",
+                            ConcurrencyStamp = "7ee94d07-5691-4941-b193-1600c44a63ff",
                             Email = "Областна администрация София",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Областна администрация София",
                             NormalizedUserName = "SF",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKs3J3v7vSpIF/6imQ52H04dD1BHnz2i5s+ueE/rPB1pAAFlQm0SmVuJTD6caYQiNg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM86sdcAaU0BO1O6Ur5Qvv/tTQYabIyAsF4XWfRcO2R5hwmYqxXqVCQOeoC7QSlnZA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f4a0494a-578a-4a43-af14-150988e3b179",
+                            SecurityStamp = "7218281b-b726-4590-950c-955e42049315",
                             TwoFactorEnabled = false,
                             UserName = "sf"
                         },
@@ -2184,15 +2190,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "9c3aa9ca-3546-4a5a-a327-d1a0555dc2d3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6e12a596-3d34-49aa-ad8c-ba6c656f14cb",
+                            ConcurrencyStamp = "c8b357cc-640e-49e1-a214-2140640ab454",
                             Email = "Министерски съвет",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Министерски съвет",
                             NormalizedUserName = "MC",
-                            PasswordHash = "AQAAAAEAACcQAAAAELWA5nErLer/uq40eq0iyCpfKRCVUWpPaXb8zrzRiEvX/plP6fwxuuQoNZxjOZ7ezg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENwiXmlEjNkgYmdBfSLRxRhMbp6rwF2cjX9/RIHqX4+nJQWMsvXSL+CkWtWbNDjwsg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5eed5c1f-37ce-4c7a-8708-ba6d7b860272",
+                            SecurityStamp = "03ccaf30-5bb3-48c8-9f80-4af4ad248d7e",
                             TwoFactorEnabled = false,
                             UserName = "mc"
                         },
@@ -2200,15 +2206,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "a01f638b-535d-48bc-9cee-ec31217088b9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "69e16a75-7a9e-47d1-8af7-27d6476d05e8",
+                            ConcurrencyStamp = "e20a77c0-c61a-467b-aeae-b09ef13527a4",
                             Email = "Министерство на труда и социалната политика",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Министерство на труда и социалната политика",
                             NormalizedUserName = "MTSP",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIqk09BpsEWNKiyUpVHWgTY3A9IGWMqD9uHBzTK6odwfW+hTpebYWnVeI4oiGLk0wA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEAMTj28FY192KKhCpZx5MkSPn7WCVk0kzB2WOidRuA0uAbXLn0/M68IyBD+UWbk8Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8330be88-50be-4462-8533-8ebaa228ea7c",
+                            SecurityStamp = "eb7ad5dc-ea12-48b0-b11f-364ee384e02d",
                             TwoFactorEnabled = false,
                             UserName = "mtsp"
                         },
@@ -2216,15 +2222,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "f9e9db47-f25b-411f-ad79-2b2715dd132f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "47a95526-065b-4ad0-831b-b77d8ab4aa0a",
+                            ConcurrencyStamp = "b14fead2-07d8-4f73-a874-61cca078af4d",
                             Email = "Държавна агенция Архиви",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Държавна агенция Архиви",
                             NormalizedUserName = "DAA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPsE0hkBcj5mblXAu4PsU/xeO9jcbTh+v7/FnSrZsg1mib4xvf+URhot1jaesob6ig==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGH4hdldZ7s3pVospnVUqcRKtIvupX/FO0sIOnLd5BkF5a3nnPl0Qgxw678fr2pw1w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "589d89ad-3eeb-49d6-bbc8-656461141595",
+                            SecurityStamp = "3a388c69-131b-415a-81a2-c4c75a165c12",
                             TwoFactorEnabled = false,
                             UserName = "daa"
                         });

@@ -280,7 +280,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                     PaymentType = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Paragraph = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ReceiverName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -364,8 +364,8 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 {
                     AssetPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeneficiaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -423,7 +423,7 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 {
                     SupportPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeneficiaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -475,11 +475,11 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "33fb1d42-a747-4860-b3ce-7e33a0421a0d", 0, "e13db6bc-a1d9-4b80-b0df-3b24d7ab8bd9", "Областна администрация София", false, false, null, "Областна администрация София", null, "SF", "AQAAAAEAACcQAAAAEKs3J3v7vSpIF/6imQ52H04dD1BHnz2i5s+ueE/rPB1pAAFlQm0SmVuJTD6caYQiNg==", null, false, "f4a0494a-578a-4a43-af14-150988e3b179", false, "sf" },
-                    { "586513cb-2bad-4ea3-ae33-7b8954efb167", 0, "7c0cdd0c-0c05-4dd8-8925-32ef67b7f442", "Администратор", false, false, null, "Админитратор", null, "admin", "AQAAAAEAACcQAAAAELUwL9tJWahJkT86rjegmWEeVwcTY17TogG8DImA8YkBf5wNCBfmtCoubA2Gnt5MTg==", null, false, "10f5cd77-da42-4d63-874b-f792170f08ca", false, "admin" },
-                    { "9c3aa9ca-3546-4a5a-a327-d1a0555dc2d3", 0, "6e12a596-3d34-49aa-ad8c-ba6c656f14cb", "Министерски съвет", false, false, null, "Министерски съвет", null, "MC", "AQAAAAEAACcQAAAAELWA5nErLer/uq40eq0iyCpfKRCVUWpPaXb8zrzRiEvX/plP6fwxuuQoNZxjOZ7ezg==", null, false, "5eed5c1f-37ce-4c7a-8708-ba6d7b860272", false, "mc" },
-                    { "a01f638b-535d-48bc-9cee-ec31217088b9", 0, "69e16a75-7a9e-47d1-8af7-27d6476d05e8", "Министерство на труда и социалната политика", false, false, null, "Министерство на труда и социалната политика", null, "MTSP", "AQAAAAEAACcQAAAAEIqk09BpsEWNKiyUpVHWgTY3A9IGWMqD9uHBzTK6odwfW+hTpebYWnVeI4oiGLk0wA==", null, false, "8330be88-50be-4462-8533-8ebaa228ea7c", false, "mtsp" },
-                    { "f9e9db47-f25b-411f-ad79-2b2715dd132f", 0, "47a95526-065b-4ad0-831b-b77d8ab4aa0a", "Държавна агенция Архиви", false, false, null, "Държавна агенция Архиви", null, "DAA", "AQAAAAEAACcQAAAAEPsE0hkBcj5mblXAu4PsU/xeO9jcbTh+v7/FnSrZsg1mib4xvf+URhot1jaesob6ig==", null, false, "589d89ad-3eeb-49d6-bbc8-656461141595", false, "daa" }
+                    { "33fb1d42-a747-4860-b3ce-7e33a0421a0d", 0, "7ee94d07-5691-4941-b193-1600c44a63ff", "Областна администрация София", false, false, null, "Областна администрация София", null, "SF", "AQAAAAEAACcQAAAAEM86sdcAaU0BO1O6Ur5Qvv/tTQYabIyAsF4XWfRcO2R5hwmYqxXqVCQOeoC7QSlnZA==", null, false, "7218281b-b726-4590-950c-955e42049315", false, "sf" },
+                    { "586513cb-2bad-4ea3-ae33-7b8954efb167", 0, "0657203a-0f3c-4255-a17c-6587d706134d", "Администратор", false, false, null, "Админитратор", null, "admin", "AQAAAAEAACcQAAAAEHxWrSwI5z6BQoTxDyN2K2K8ZErgYvK3SvaP43g6grSBG35eyjdfeKpd8gqwil1Ejw==", null, false, "7b01ce09-ccb6-4ed6-847d-0f86d0cbf294", false, "admin" },
+                    { "9c3aa9ca-3546-4a5a-a327-d1a0555dc2d3", 0, "c8b357cc-640e-49e1-a214-2140640ab454", "Министерски съвет", false, false, null, "Министерски съвет", null, "MC", "AQAAAAEAACcQAAAAENwiXmlEjNkgYmdBfSLRxRhMbp6rwF2cjX9/RIHqX4+nJQWMsvXSL+CkWtWbNDjwsg==", null, false, "03ccaf30-5bb3-48c8-9f80-4af4ad248d7e", false, "mc" },
+                    { "a01f638b-535d-48bc-9cee-ec31217088b9", 0, "e20a77c0-c61a-467b-aeae-b09ef13527a4", "Министерство на труда и социалната политика", false, false, null, "Министерство на труда и социалната политика", null, "MTSP", "AQAAAAEAACcQAAAAEEAMTj28FY192KKhCpZx5MkSPn7WCVk0kzB2WOidRuA0uAbXLn0/M68IyBD+UWbk8Q==", null, false, "eb7ad5dc-ea12-48b0-b11f-364ee384e02d", false, "mtsp" },
+                    { "f9e9db47-f25b-411f-ad79-2b2715dd132f", 0, "b14fead2-07d8-4f73-a874-61cca078af4d", "Държавна агенция Архиви", false, false, null, "Държавна агенция Архиви", null, "DAA", "AQAAAAEAACcQAAAAEGH4hdldZ7s3pVospnVUqcRKtIvupX/FO0sIOnLd5BkF5a3nnPl0Qgxw678fr2pw1w==", null, false, "3a388c69-131b-415a-81a2-c4c75a165c12", false, "daa" }
                 });
 
             migrationBuilder.InsertData(
@@ -635,11 +635,11 @@ namespace PaymentsBudgetSystem.Data.Migrations
                 columns: new[] { "AssetPaymentId", "BeneficiaryId", "DeliveryDate", "InvoiceDate", "InvoiceNumber" },
                 values: new object[,]
                 {
-                    { new Guid("0636467d-e3aa-4b48-5643-08db804e8f7e"), new Guid("3bbaa90d-9c3d-4a84-c5fe-08db804fefc7"), new DateTime(2023, 1, 8, 10, 49, 2, 57, DateTimeKind.Unspecified).AddTicks(8480), null, null },
+                    { new Guid("0636467d-e3aa-4b48-5643-08db804e8f7e"), new Guid("3bbaa90d-9c3d-4a84-c5fe-08db804fefc7"), new DateTime(2023, 1, 8, 10, 49, 2, 57, DateTimeKind.Unspecified).AddTicks(8480), new DateTime(2022, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "0000032660" },
                     { new Guid("27ed4479-0a41-45ad-5646-08db804e8f7e"), new Guid("052c29cb-b9c6-42e9-2b2a-08db80453a86"), new DateTime(2023, 2, 12, 11, 4, 16, 897, DateTimeKind.Unspecified).AddTicks(9321), new DateTime(2022, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "0000004521" },
                     { new Guid("4bc8062d-af15-47fe-564e-08db804e8f7e"), new Guid("1dde604d-8bae-4785-c601-08db804fefc7"), new DateTime(2023, 6, 2, 11, 21, 58, 94, DateTimeKind.Unspecified).AddTicks(7357), new DateTime(2023, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "1000602000" },
                     { new Guid("7b4ec9b1-9022-4c9c-5640-08db804e8f7e"), new Guid("3450ab68-623a-42de-2b22-08db80453a86"), new DateTime(2023, 1, 12, 10, 38, 16, 241, DateTimeKind.Unspecified).AddTicks(2308), new DateTime(2022, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "0005189987" },
-                    { new Guid("ed82c4f5-4c19-44f4-564a-08db804e8f7e"), new Guid("46b32cd0-8754-4b38-2b2b-08db80453a86"), new DateTime(2023, 4, 10, 11, 12, 12, 297, DateTimeKind.Unspecified).AddTicks(1277), null, null }
+                    { new Guid("ed82c4f5-4c19-44f4-564a-08db804e8f7e"), new Guid("46b32cd0-8754-4b38-2b2b-08db80453a86"), new DateTime(2023, 4, 10, 11, 12, 12, 297, DateTimeKind.Unspecified).AddTicks(1277), new DateTime(2023, 3, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "0100000012" }
                 });
 
             migrationBuilder.InsertData(

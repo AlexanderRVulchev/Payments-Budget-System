@@ -24,12 +24,14 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     background-color: #f8f9fa;
     padding: 10px;
+    border: 1px solid grey;
 }
 .info-box {
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    border: 1px solid grey;
 }
 
 .info-box-title {
@@ -50,6 +52,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
     padding: 10px;
+    border: 1px solid grey;
 }
 
 .form-box-title {
@@ -70,6 +73,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
     padding: 10px;
+    border: 1px solid grey;
 }
 
 .green-box-title {
