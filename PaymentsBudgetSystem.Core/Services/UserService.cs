@@ -91,5 +91,8 @@ namespace PaymentsBudgetSystem.Core.Services
                     InstitutionName = u.Name
                 })
                 .ToListAsync();
+
+        public async Task<bool> UsernameAlreadyExists(string username)
+            => await context.Users.AnyAsync(u => u.UserName == username);                    
     }
 }

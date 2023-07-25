@@ -11,5 +11,7 @@
         Task RelateSecondaryToPrimaryUserAsync(string primaryId, string secondaryId);
 
         Task<List<InstitutionSelectModel>> GetAllUsersWithSavedReportsAsync();
+
+        Task<bool> UsernameAlreadyExists(string username);
     }
 }

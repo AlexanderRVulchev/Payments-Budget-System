@@ -120,5 +120,12 @@ namespace PaymentsBudgetSystem.Tests.Services
             Assert.That(result.Count, Is.EqualTo(1));
         }
 
+        [Test]
+        public async Task UsernameAlreadyExists_ReturnsFalseIfUsernameExists()
+        {
+            var result = await userService.UsernameAlreadyExists("primary test user name");
+            Assert.IsFalse(result);
+        }
+
     }
 }

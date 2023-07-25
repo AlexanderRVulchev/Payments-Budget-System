@@ -54,6 +54,11 @@ namespace PaymentsBudgetSystem.Controllers
         {
             var primaryUsersIdsAndNames = await userService.GetPrimaryIdsAndNamesAsync();
 
+            if (await userService.UsernameAlreadyExists(model.UserName))
+            {
+                ModelState.AddModelError("", "Потребителското име вече е заето");                
+            }
+                        
             if (!ModelState.IsValid)
             {
                 model.PrimaryInstitutionName = primaryUsersIdsAndNames
@@ -62,7 +67,6 @@ namespace PaymentsBudgetSystem.Controllers
 
                 return View(model);
             }
-
 
             if (model.InputForPrimary < 0 || model.InputForPrimary > primaryUsersIdsAndNames.Count())
             {

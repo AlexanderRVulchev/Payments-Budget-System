@@ -15,7 +15,7 @@ namespace PaymentsBudgetSystem.Core.Models.User
         [Required(ErrorMessage = FieldIsRequired)]
         [DataType(DataType.Password)]
         [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength, ErrorMessage = StringLengthValidationError)]
-        [Display(Name = "Паролата")]
+        [Display(Name = "Парола")]
         public string Password { get; set; } = null!;
 
         [Required(ErrorMessage = FieldIsRequired)]
