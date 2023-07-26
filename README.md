@@ -70,6 +70,9 @@ Password: 1111
     <li>
     <a href="#bank-payment---monthly-salaries">Bank payment - Monthly salaries</a>
   </li>
+  <li>
+    <a href="#cash-payment">Cash payment
+  </li>
     <li>
     <a href="#payment-information-page">Payment information page</a>
   </li>
@@ -193,6 +196,20 @@ After choosing year and month for the salaries, the application will accrue all 
 ![SalariesPayment-1](https://github.com/AlexanderRVulchev/Payments-Budget-System/assets/106471266/6c6669df-62f5-43dc-adb3-672d6d94194a)
 ![SalariesPayment-2](https://github.com/AlexanderRVulchev/Payments-Budget-System/assets/106471266/fcbfa8b0-b6e8-43a2-98dd-20e8eafd6b27)
 <a href="#table-of-contents">Back to index table</a>
+
+## Cash payment
+### Initiating the cash payment
+
+You can make cash payments to your employees.
+
+![CashPayment](https://github.com/AlexanderRVulchev/Payments-Budget-System/assets/106471266/44a91975-56b5-4e0c-a80a-b683f86f81e0)
+
+### Cash payment details
+Upon successful payment, a success message will be displayed along with information about the payment. Cash payments have their own seperate column in the reports.
+
+![CashPaymentDetails](https://github.com/AlexanderRVulchev/Payments-Budget-System/assets/106471266/59392be5-08ff-41b5-be70-b7395b63f10d)
+<a href="#table-of-contents">Back to index table</a>
+
 ## Payment information page
 
 On this page, users can view all their payments. The results can be filtered by date and amount paid, and ordered in ascending or descending order. Pagination is implemented. Clicking on View ("Преглед") will display different information depending on the payment type. For salaries payment, a detailed payroll will be displayed. For payment for asset acquisition - a list of all purchased assets etc..
@@ -215,7 +232,6 @@ On the budget distribution page, Primary users can view the total expense limit 
 ## Reports
 ### Report Inquiry page
 On the report inquiry page, users can view their saved reports and generate new ones by selecting the year and month. A report will be generated that will reflect all expenses from the start of the target year, to the last day of the selected month.</br>
-Generated reports are not persisted anywhere.</br>
 Users can choose to save the report and by doing so, they make the report public so it can be viewed by Guests.
 Secondary users can generate and save individual reports.</br>
 Primary users can also generate and save consolidated reports, which include not only their own financial transactions, but also transactions made by all their Secondary users.
