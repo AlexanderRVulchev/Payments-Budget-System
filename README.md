@@ -2,6 +2,18 @@
 ## Overview
 "Payments and Budget System" is a web application with educational and demonstrative purposes. It mimics (in a much smaller scale) systems used by the institutions in the government sector to make payments and manage their annual budget. You can make different bank payments, cash payments, manage beneficiaries, hire and lay off employees, pay salaries with social security and tax deductions, acquire and manage assets, create and save financial reports and redistribute budget funds between institutions.
 
+## Technologies used
+<ul>
+  <li>.NET Core 6.0</li>
+  <li>ASP.NET Core</li>
+  <li>Entity Framework Core</li>
+  <li>HTML, CSS, Bootstrap</li>
+  <li>MS SQL Server</li>
+  <li>NUnit</li>
+  <li>Moq</li>
+  <li>EP Plus (a .NET library for managing Excel files)</li>
+</ul>
+
 ## Users
 There are 4 types of users with different access to the application's functionality:
 
