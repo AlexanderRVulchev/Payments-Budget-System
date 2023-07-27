@@ -101,7 +101,7 @@ namespace PaymentsBudgetSystem.Areas.Budget.Controllers
             var budgetToEdit = fullConsolidatedBudget.IndividualBudgetsData.Where(b => b.Id == model.Id).First();
 
             if (model.NewSalaryLimit < budgetToEdit.SalariesExpenses ||
-                model.NewSupportLimit < budgetToEdit.SupportLimit ||
+                model.NewSupportLimit < budgetToEdit.SupportExpenses ||
                 model.NewAssetsLimit < budgetToEdit.AssetsExpenses)
             {
                 ModelState.AddModelError("", ExpensesCannotExceedLimit);
