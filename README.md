@@ -12,6 +12,7 @@
   <li>NUnit</li>
   <li>Moq</li>
   <li>EP Plus (a .NET library for managing Excel files)</li>
+  <li>JS</li>
 </ul>
 
 ## Users
