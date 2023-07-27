@@ -12,7 +12,7 @@ using PaymentsBudgetSystem.Data;
 namespace PaymentsBudgetSystem.Data.Migrations
 {
     [DbContext(typeof(PBSystemDbContext))]
-    [Migration("20230724155910_TestMigration")]
+    [Migration("20230727182611_TestMigration")]
     partial class TestMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2158,15 +2158,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "586513cb-2bad-4ea3-ae33-7b8954efb167",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0657203a-0f3c-4255-a17c-6587d706134d",
+                            ConcurrencyStamp = "b5572419-062d-4a70-bb8d-1017db690b8a",
                             Email = "Администратор",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Админитратор",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHxWrSwI5z6BQoTxDyN2K2K8ZErgYvK3SvaP43g6grSBG35eyjdfeKpd8gqwil1Ejw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG4diDtbOUMBqM2lz7UpBJlax2gpfN1LTPc3GATM7IAju9kHCK13vGwMaVs2IgbSrg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7b01ce09-ccb6-4ed6-847d-0f86d0cbf294",
+                            SecurityStamp = "e4f42c6c-59f4-4ec3-a437-690a8e916ff5",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -2174,15 +2174,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "33fb1d42-a747-4860-b3ce-7e33a0421a0d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ee94d07-5691-4941-b193-1600c44a63ff",
+                            ConcurrencyStamp = "f9966d6f-5e53-4b3f-9f90-6c76bd75ee76",
                             Email = "Областна администрация София",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Областна администрация София",
                             NormalizedUserName = "SF",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM86sdcAaU0BO1O6Ur5Qvv/tTQYabIyAsF4XWfRcO2R5hwmYqxXqVCQOeoC7QSlnZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENBZkqRxsCU4UFwfJaGkDcwcbOlUGrDvU5RORhi9OT8cDNQmQVFz2h9FR0LivtqL3g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7218281b-b726-4590-950c-955e42049315",
+                            SecurityStamp = "edcb60f8-3143-4795-867e-2b790fcccb7c",
                             TwoFactorEnabled = false,
                             UserName = "sf"
                         },
@@ -2190,15 +2190,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "9c3aa9ca-3546-4a5a-a327-d1a0555dc2d3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8b357cc-640e-49e1-a214-2140640ab454",
+                            ConcurrencyStamp = "cc933b0c-7e3f-455a-85b7-9e27c95bb3f4",
                             Email = "Министерски съвет",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Министерски съвет",
                             NormalizedUserName = "MC",
-                            PasswordHash = "AQAAAAEAACcQAAAAENwiXmlEjNkgYmdBfSLRxRhMbp6rwF2cjX9/RIHqX4+nJQWMsvXSL+CkWtWbNDjwsg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC6PsWK7JUSt9ZBPKoaeouf6EGclckml9SDgo0Kn6CumQDVLaJZAvrO9lRVtpiL4UA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "03ccaf30-5bb3-48c8-9f80-4af4ad248d7e",
+                            SecurityStamp = "4710c2d3-b62b-4457-8f5a-f7a6d3b8ce24",
                             TwoFactorEnabled = false,
                             UserName = "mc"
                         },
@@ -2206,15 +2206,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "a01f638b-535d-48bc-9cee-ec31217088b9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e20a77c0-c61a-467b-aeae-b09ef13527a4",
+                            ConcurrencyStamp = "aeb3ff3c-aa27-4700-88f5-8a2052607861",
                             Email = "Министерство на труда и социалната политика",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Министерство на труда и социалната политика",
                             NormalizedUserName = "MTSP",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEAMTj28FY192KKhCpZx5MkSPn7WCVk0kzB2WOidRuA0uAbXLn0/M68IyBD+UWbk8Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ4ZrZgU0e5sI3vSzCitjANgTkudwztk+xwV4FZKC4498HVlx69Mnq0fcRg68xRF2w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eb7ad5dc-ea12-48b0-b11f-364ee384e02d",
+                            SecurityStamp = "fcf2f3dc-12c3-42ee-878e-60dc28f0826d",
                             TwoFactorEnabled = false,
                             UserName = "mtsp"
                         },
@@ -2222,15 +2222,15 @@ namespace PaymentsBudgetSystem.Data.Migrations
                         {
                             Id = "f9e9db47-f25b-411f-ad79-2b2715dd132f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b14fead2-07d8-4f73-a874-61cca078af4d",
+                            ConcurrencyStamp = "e3321b37-db6c-47e2-bc61-a8d5a94fc822",
                             Email = "Държавна агенция Архиви",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "Държавна агенция Архиви",
                             NormalizedUserName = "DAA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGH4hdldZ7s3pVospnVUqcRKtIvupX/FO0sIOnLd5BkF5a3nnPl0Qgxw678fr2pw1w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAKHjuL3J9wKxppAjbFAvyekv4iPrQVkhPKgHcLydHLCddxDZhKe//tInXwiu9h6Yg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3a388c69-131b-415a-81a2-c4c75a165c12",
+                            SecurityStamp = "c7916a16-8e86-4a16-8ddd-ce64d2f76552",
                             TwoFactorEnabled = false,
                             UserName = "daa"
                         });

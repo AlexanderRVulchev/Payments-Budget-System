@@ -10,6 +10,8 @@ namespace PaymentsBudgetSystem.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<UserDependancy> builder)
         {
+            builder.HasKey(ud => new { ud.PrimaryUserId, ud.SecondaryUserId });
+
             builder.HasData(SeedUserDependancies());
         }
 

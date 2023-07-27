@@ -10,6 +10,11 @@ namespace PaymentsBudgetSystem.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<CashPaymentDetails> builder)
         {
+            builder
+                .HasOne(c => c.Payment)
+                .WithOne(p => p.CashDetails)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasData(SeedCashPaymentDetails());
         }
 

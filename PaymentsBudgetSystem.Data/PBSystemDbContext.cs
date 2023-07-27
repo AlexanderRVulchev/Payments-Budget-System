@@ -14,62 +14,6 @@ namespace PaymentsBudgetSystem.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder
-                .Entity<UserDependancy>()
-                .HasKey(ud => new { ud.PrimaryUserId, ud.SecondaryUserId });
-
-            builder
-                .Entity<CashPaymentDetails>()
-                .HasOne(c => c.Payment)
-                .WithOne(p => p.CashDetails)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .Entity<PaymentSalaryDetails>()
-                .HasOne(c => c.Payment)
-                .WithMany(p => p.SalariesDetails)
-                .HasForeignKey(c => c.PaymentId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .Entity<PaymentSupportDetails>()
-                .HasOne(c => c.Payment)
-                .WithOne(p => p.SupportDetails)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .Entity<PaymentAssetsDetails>()
-                .HasOne(c => c.Payment)
-                .WithOne(p => p.AssetsDetails)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .Entity<Asset>()
-                .HasOne(a => a.PaymentAssetsDetails)
-                .WithMany(p => p.Assets)
-                .HasForeignKey(a => a.PaymentAssetDetailsId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new GlobalSettingsConfiguration());
-            builder.ApplyConfiguration(new ConsolidatedBudgetsConfiguration());
-            builder.ApplyConfiguration(new IndividualBudgetsConfiguration());
-            builder.ApplyConfiguration(new UsersDependanciesConfiguration());
-            builder.ApplyConfiguration(new ReportsConfiguration());
-            builder.ApplyConfiguration(new PaymentsConfiguration());
-            builder.ApplyConfiguration(new BeneficiariesConfiguration());
-            builder.ApplyConfiguration(new EmployeesConfiguration());
-            builder.ApplyConfiguration(new CashPaymentDetailsConfiguration());
-            builder.ApplyConfiguration(new PaymentAssetDetailsConfiguration());
-            builder.ApplyConfiguration(new PaymentSalariesDetailsConfiguration());
-            builder.ApplyConfiguration(new PaymentSupportDetailsConfiguration());
-            builder.ApplyConfiguration(new AssetsConfiguration());
-
-            base.OnModelCreating(builder);
-        }
-
         public DbSet<Asset> Assets { get; set; } = null!;
 
         public DbSet<Beneficiary> Beneficiaries { get; set; } = null!;
@@ -95,5 +39,25 @@ namespace PaymentsBudgetSystem.Data
         public DbSet<Report> Reports { get; set; } = null!;
 
         public DbSet<UserDependancy> UsersDependancies { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new GlobalSettingsConfiguration());
+            builder.ApplyConfiguration(new ConsolidatedBudgetsConfiguration());
+            builder.ApplyConfiguration(new IndividualBudgetsConfiguration());
+            builder.ApplyConfiguration(new UsersDependanciesConfiguration());
+            builder.ApplyConfiguration(new ReportsConfiguration());
+            builder.ApplyConfiguration(new PaymentsConfiguration());
+            builder.ApplyConfiguration(new BeneficiariesConfiguration());
+            builder.ApplyConfiguration(new EmployeesConfiguration());
+            builder.ApplyConfiguration(new CashPaymentDetailsConfiguration());
+            builder.ApplyConfiguration(new PaymentAssetDetailsConfiguration());
+            builder.ApplyConfiguration(new PaymentSalariesDetailsConfiguration());
+            builder.ApplyConfiguration(new PaymentSupportDetailsConfiguration());
+            builder.ApplyConfiguration(new AssetsConfiguration());
+
+            base.OnModelCreating(builder);
+        }
     }
 }

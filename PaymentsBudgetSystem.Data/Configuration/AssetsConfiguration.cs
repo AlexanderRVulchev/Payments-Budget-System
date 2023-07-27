@@ -10,6 +10,12 @@ namespace PaymentsBudgetSystem.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Asset> builder)
         {
+            builder
+                .HasOne(a => a.PaymentAssetsDetails)
+                .WithMany(p => p.Assets)
+                .HasForeignKey(a => a.PaymentAssetDetailsId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasData(SeedAssets());
         }
 

@@ -9,6 +9,12 @@ namespace PaymentsBudgetSystem.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<PaymentSalaryDetails> builder)
         {
+            builder
+                .HasOne(c => c.Payment)
+                .WithMany(p => p.SalariesDetails)
+                .HasForeignKey(c => c.PaymentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasData(SeedPaymentSalariesDetails());
         }
 
