@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PaymentsBudgetSystem.Common\PaymentsBudgetSystem.Common.csproj" />
     <ProjectReference Include="..\PaymentsBudgetSystem.Data\PaymentsBudgetSystem.Data.csproj" />
   </ItemGroup>

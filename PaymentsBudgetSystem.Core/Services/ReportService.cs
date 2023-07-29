@@ -7,7 +7,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Data;
     using Data.Entities;
     using Models.Report;
-
+    using OfficeOpenXml;
     using static Common.ExceptionMessages.Payment;
     using static Common.ExceptionMessages.Report;
 
@@ -230,6 +230,45 @@ namespace PaymentsBudgetSystem.Core.Services
             }
 
             await context.SaveChangesAsync();
+        }
+
+        public void FillCellValuesInWorksheet(ExcelWorksheet worksheet, ReportDataModel reportModel)
+        {
+            worksheet.Cells["C3"].Value = reportModel.Year;
+
+            worksheet.Cells["B16"].Value = reportModel.IsConsolidated
+                ? "Консолидиран отчет"
+                : "Индивидуален отчет";
+
+            string startPeriodText = "1." + reportModel.Year.ToString() + " г.";
+            string endPeriodText = reportModel.Month.ToString() + "." + reportModel.Year.ToString() + " г.";
+
+            worksheet.Cells["E13"].Value = startPeriodText;
+            worksheet.Cells["F13"].Value = endPeriodText;
+
+            worksheet.Cells["G25"].Value = reportModel.Bank0101;
+            worksheet.Cells["G26"].Value = reportModel.Bank0102;
+
+            worksheet.Cells["I27"].Value = reportModel.Transfer0551;
+            worksheet.Cells["I28"].Value = reportModel.Transfer0560;
+            worksheet.Cells["I29"].Value = reportModel.Transfer0580;
+            worksheet.Cells["I30"].Value = reportModel.Transfer0590;
+
+            worksheet.Cells["H32"].Value = reportModel.Cash1015;
+            worksheet.Cells["H33"].Value = reportModel.Cash1020;
+            worksheet.Cells["H34"].Value = reportModel.Cash1051;
+
+            worksheet.Cells["G32"].Value = reportModel.Bank1015;
+            worksheet.Cells["G33"].Value = reportModel.Bank1020;
+            worksheet.Cells["G34"].Value = reportModel.Bank1051;
+
+            worksheet.Cells["G36"].Value = reportModel.Bank5100;
+            worksheet.Cells["G37"].Value = reportModel.Bank5200;
+            worksheet.Cells["G38"].Value = reportModel.Bank5300;
+
+            worksheet.Cells["E24"].Value = reportModel.SalariesLimit;
+            worksheet.Cells["E31"].Value = reportModel.SupportLimit;
+            worksheet.Cells["E35"].Value = reportModel.AssetsLimit;
         }
     }
 }

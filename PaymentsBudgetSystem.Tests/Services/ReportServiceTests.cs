@@ -8,6 +8,7 @@ namespace PaymentsBudgetSystem.Tests.Services
     using Data;
     using Data.Entities;
     using Data.Entities.Enums;
+    using OfficeOpenXml;
 
     internal class ReportServiceTests
     {
@@ -287,6 +288,45 @@ namespace PaymentsBudgetSystem.Tests.Services
                 .SaveIndividualReportAsync(primaryTestUserId, testModel);
 
             Assert.That(await context.Reports.CountAsync(), Is.EqualTo(reportsCount));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void FillCellValuesInWorksheet_PopulatesTheReportCellsCorrectly(bool isConsolidated)
+        {
+            decimal supportLimitTestValue = 1000;
+            decimal bank0102TestValue = 500;
+            decimal transfer0560TestValue = 1200;
+            decimal cash1051TestValue = 250;
+
+            ReportDataModel testModel = new ReportDataModel
+            {
+                SupportLimit = supportLimitTestValue,
+                Bank0102 = bank0102TestValue,
+                Transfer0560 = transfer0560TestValue,
+                Cash1051 = cash1051TestValue,
+                IsConsolidated = isConsolidated
+            };
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using ExcelPackage excelPackage = new();
+            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Sheet1");
+
+            reportService.FillCellValuesInWorksheet(worksheet, testModel);
+
+            Assert.That(worksheet.Cells["E31"].Value, Is.EqualTo(supportLimitTestValue));
+            Assert.That(worksheet.Cells["G26"].Value, Is.EqualTo(bank0102TestValue));
+            Assert.That(worksheet.Cells["I28"].Value, Is.EqualTo(transfer0560TestValue));
+            Assert.That(worksheet.Cells["H34"].Value, Is.EqualTo(cash1051TestValue));
+            if (isConsolidated)
+            {
+                Assert.That(worksheet.Cells["B16"].Value, Is.EqualTo("Консолидиран отчет"));
+            }
+            else
+            {
+                Assert.That(worksheet.Cells["B16"].Value, Is.EqualTo("Индивидуален отчет"));
+            }
         }
     }
 }
