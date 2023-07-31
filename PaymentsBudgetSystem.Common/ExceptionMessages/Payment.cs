@@ -12,7 +12,7 @@
 
         public const string InvoiceDateCannotBeInTheFuture = "Датата на фактурата не може да бъде след плащането по нея";
 
-        public const string NoBudgetCreated = "Няма утвърден бюджет за текущата годината. Не могат да се извършват плащания без бюджет";
+        public const string NoBudgetCreated = "Няма утвърден бюджет за текущата година. Не могат да се извършват плащания без бюджет. Създайте бюджет за текущата година.";
 
         public const string PaymentExceedsBudgetLimit = "Разходите не могат да превишават утвърденият план за {0} по бюджета. Свободни средства: {1} лв.";
     }
