@@ -25,7 +25,6 @@ namespace PaymentsBudgetSystem.Core.Services
             reportService = _reportService;
         }
 
-
         public async Task DeleteReportByIdAsync(Guid reportId)
         {
             Report report = await context

@@ -1,19 +1,15 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PaymentsBudgetSystem.Data;
 
 namespace PaymentsBudgetSystem
 {
     using Data;
     using Data.Entities;
-    using Core.Contracts;
-    using Core.Services;
+    using Extensions;
+    using ModelBinders;
 
     using static Common.DataConstants.User;
-    using PaymentsBudgetSystem.Extensions;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Mvc;
-    using PaymentsBudgetSystem.ModelBinders;
 
     public class Program
     {

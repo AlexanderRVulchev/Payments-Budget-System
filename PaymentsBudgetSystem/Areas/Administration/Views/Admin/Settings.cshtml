@@ -95,7 +95,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label asp-for="InsurancePensionEmployerPercentage" class="form-label">Фонд Пенсии - работодател: </label>
+                        <label asp-for="InsurancePensionEmployerPercentage" class="form-label">Фонд Пенсии - процент работодател: </label>
                         <div><span asp-validation-for="InsurancePensionEmployerPercentage" class="text-danger"></span></div>
                     </td>
                     <td>
@@ -111,7 +111,7 @@
 
                 <tr>
                     <td>
-                        <label asp-for="InsurancePensionEmployeePercentage" class="form-label">Фонд Пенсии - служител: </label>
+                        <label asp-for="InsurancePensionEmployeePercentage" class="form-label">Фонд Пенсии - процент служител: </label>
                         <div><span asp-validation-for="InsurancePensionEmployeePercentage" class="text-danger"></span></div>
                     </td>
                     <td>
@@ -120,7 +120,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label asp-for="HealthInsuranceEmployerPercentage" class="form-label">Здравно осигуряване - работодател: </label>
+                        <label asp-for="HealthInsuranceEmployerPercentage" class="form-label">Здравно осигуряване - процент работодател: </label>
                         <div><span asp-validation-for="HealthInsuranceEmployerPercentage" class="text-danger"></span></div>
                     </td>
                     <td>
@@ -129,7 +129,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label asp-for="HealthInsuranceEmployeePercentage" class="form-label">Здравно осигуряване - служител: </label>
+                        <label asp-for="HealthInsuranceEmployeePercentage" class="form-label">Здравно осигуряване - процент служител: </label>
                         <div><span asp-validation-for="HealthInsuranceEmployeePercentage" class="text-danger"></span></div>
                     </td>
                     <td>
@@ -138,7 +138,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label asp-for="AdditionalInsuranceEmployerPercentage" class="form-label">Oсигуряване в УПФ - работодател: </label>
+                        <label asp-for="AdditionalInsuranceEmployerPercentage" class="form-label">Oсигуряване в УПФ - процент работодател: </label>
                         <div><span asp-validation-for="AdditionalInsuranceEmployerPercentage" class="text-danger"></span></div>
                     </td>
                     <td>
@@ -147,7 +147,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label asp-for="AdditionalInsuranceEmployeePercentage" class="form-label">Oсигуряване в УПФ - служител: </label>
+                        <label asp-for="AdditionalInsuranceEmployeePercentage" class="form-label">Oсигуряване в УПФ - процент служител: </label>
                         <div><span asp-validation-for="AdditionalInsuranceEmployeePercentage" class="text-danger"></span></div>
                     </td>
                     <td>
@@ -169,7 +169,7 @@
                         <div><span asp-validation-for="MinimumWage" class="text-danger"></span></div>
                     </td>
                     <td>
-                        <input type="number" asp-for="MinimumWage" class="form-control" value="@Model.MinimumWage.ToString("n")" />
+                        <input type="number" asp-for="MinimumWage" class="form-control" value="@Model.MinimumWage.ToString("f2")" />
                     </td>
                 </tr>
                 
