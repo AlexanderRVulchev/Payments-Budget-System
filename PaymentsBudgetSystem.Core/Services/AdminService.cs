@@ -38,7 +38,6 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<DeleteReportFormModel> GetAllReportsAsync()
         {
-            // Get all institutions which have reports
             var institutions = await context
                 .Users
                 .Where(u => u.Reports.Any())
@@ -51,7 +50,6 @@ namespace PaymentsBudgetSystem.Core.Services
 
             var model = new DeleteReportFormModel();
 
-            // Fill the model with all reports, grouped by institutions
             foreach (var institution in institutions)
             {
                 var institutionReportsCollection = new ReportInquiryViewModel

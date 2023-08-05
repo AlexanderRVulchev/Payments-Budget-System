@@ -23,6 +23,7 @@ namespace PaymentsBudgetSystem.Core.Services
             reportService = _reportService;
         }
 
+
         public async Task AddConsolidatedBudgetAsync(string userId, int newBudgetYear, decimal newBudgetFunds)
         {
             bool budgetAlreadyExists = context.ConsolidatedBudgets
