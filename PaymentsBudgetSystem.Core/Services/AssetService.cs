@@ -30,7 +30,9 @@ namespace PaymentsBudgetSystem.Core.Services
                 { 11, "Нематериални активи" }
             };
 
-            var assets = await context
+            // Get all the user's assets, aquired before or during the provided month and year.
+            // Assets, which are aquired after that should not be displayed, since they did not exist at that time.
+            var userActiveAssets = await context
                 .Assets
                 .Where(a => a.UserId == userId &&
                     (a.DateAquired.Year < model.InfoYear ||
@@ -48,6 +50,7 @@ namespace PaymentsBudgetSystem.Core.Services
                 })
                 .ToListAsync();
 
+            // We need the settings to calculate each asset's amortization plan - amortization percentages, life of assets in months etc..
             var settings = await context
                  .GlobalSettings
                  .Select(gs => new GlobalSettingDataModel
@@ -58,15 +61,19 @@ namespace PaymentsBudgetSystem.Core.Services
                  })
                  .ToListAsync();
 
+            // Calculate each asset's amortization plan
             Calculator calculator = new();
-            foreach (var asset in assets)
+            foreach (var asset in userActiveAssets)
             {
                 calculator.CalculateAssetDataByYearAndMonth(model.InfoYear, model.InfoMonth, asset, settings);
             }
 
+            // Sort assets according to user's input
             Sorter sorter = new();
-            model.Assets = sorter.SortAssets(assets, model.SortAttribute, model.SortBy);
+            model.Assets = sorter.SortAssets(userActiveAssets, model.SortAttribute, model.SortBy);
 
+            // Apply pagination to the results.
+            // The model should contain only the items, which will be displayed, not all results.
             model.NumberOfPages = (model.Assets.Count / ItemsPerPage);
 
             if (model.Assets.Count % ItemsPerPage > 0)
@@ -91,22 +98,26 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<AssetDetailsViewModel> GetAssetDetailsAsync(string userId, Guid id, int year)
         {
-            var entity = await context
+            // Get the asset entity
+            var assetEntity = await context
                 .Assets
                 .Where(a => a.Id == id)
                 .Include(a => a.PaymentAssetsDetails)
                 .ThenInclude(pad => pad.Beneficiary)
                 .FirstOrDefaultAsync();
-
-            if (entity == null)
+                        
+            // Throw exception if the asset does not exist.
+            if (assetEntity == null)
             {
                 throw new InvalidOperationException(InvalidAsset);
             }
-            if (entity.UserId != userId)
+            // The user should not have access to other users' assets
+            if (assetEntity.UserId != userId)
             {
                 throw new InvalidOperationException(AssetAccessDenied);
             }
 
+            // We need the settings to calculate the asset's amortization plan - amortization percentages, life of the asset etc.
             var settings = await context
                  .GlobalSettings
                  .Select(gs => new GlobalSettingDataModel
@@ -119,18 +130,19 @@ namespace PaymentsBudgetSystem.Core.Services
 
             var monthlyInfoModels = new List<AssetInfoViewModel>();
 
+            // Calculate amortization plan for each month of the specified year
+            // and populate the model accordingly.
             for (int month = 1; month <= 12; month++)
             {
-
                 var assetInfoModel = new AssetInfoViewModel
                 {
-                    DateAquired = entity.DateAquired,
-                    ReportValue = entity.ReportValue,
-                    Type = entity.Type
+                    DateAquired = assetEntity.DateAquired,
+                    ReportValue = assetEntity.ReportValue,
+                    Type = assetEntity.Type
                 };
 
-                if (entity.DateAquired.Year < year ||
-                   (entity.DateAquired.Year == year && entity.DateAquired.Month <= month))
+                if (assetEntity.DateAquired.Year < year ||
+                   (assetEntity.DateAquired.Year == year && assetEntity.DateAquired.Month <= month))
                 {
                     Calculator calculator = new();
                     assetInfoModel = calculator.CalculateAssetDataByYearAndMonth(year, month, assetInfoModel, settings);
@@ -145,13 +157,13 @@ namespace PaymentsBudgetSystem.Core.Services
 
             return new AssetDetailsViewModel
             {
-                AssetId = entity.Id,
-                BeneficiaryId = entity.PaymentAssetsDetails.BeneficiaryId,
-                BeneficiaryName = entity.PaymentAssetsDetails.Beneficiary.Name,
-                DateAquired = entity.DateAquired,
-                Name = entity.Description,
-                ParagraphType = entity.Type,
-                ReportValue = entity.ReportValue,
+                AssetId = assetEntity.Id,
+                BeneficiaryId = assetEntity.PaymentAssetsDetails.BeneficiaryId,
+                BeneficiaryName = assetEntity.PaymentAssetsDetails.Beneficiary.Name,
+                DateAquired = assetEntity.DateAquired,
+                Name = assetEntity.Description,
+                ParagraphType = assetEntity.Type,
+                ReportValue = assetEntity.ReportValue,
                 Year = year,
                 AssetMonthlyStatus = monthlyInfoModels
             };

@@ -38,6 +38,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
         public async Task<DeleteReportFormModel> GetAllReportsAsync()
         {
+            // Get all institutions which have reports
             var institutions = await context
                 .Users
                 .Where(u => u.Reports.Any())
@@ -50,6 +51,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
             var model = new DeleteReportFormModel();
 
+            // Fill the model with all reports, grouped by institutions
             foreach (var institution in institutions)
             {
                 var institutionReportsCollection = new ReportInquiryViewModel
@@ -65,6 +67,7 @@ namespace PaymentsBudgetSystem.Core.Services
 
             return model;
         }
+
 
         public async Task<GlobalSettingsEditModel> GetGlobalSettingsAsync()
         {
@@ -88,11 +91,12 @@ namespace PaymentsBudgetSystem.Core.Services
                 HealthInsuranceEmployerPercentage = settings[(int)GlobalSetting.HealthInsuranceEmployer - 1].SettingValue * 100,
                 HealthInsuranceEmployeePercentage = settings[(int)GlobalSetting.HealthInsuranceEmployee - 1].SettingValue * 100,
                 TaxRate = settings[(int)GlobalSetting.TaxRate - 1].SettingValue * 100,
-                MinimumWage = settings[(int)GlobalSetting.MinimumWage - 1].SettingValue,            
+                MinimumWage = settings[(int)GlobalSetting.MinimumWage - 1].SettingValue,
             };
 
             return model;
         }
+
 
         public async Task SaveGlobalSettingsAsync(GlobalSettingsEditModel model)
         {

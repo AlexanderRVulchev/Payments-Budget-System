@@ -6,7 +6,7 @@ namespace PaymentsBudgetSystem.Core.Services
     using Core.Models.Budget;
     using Data;
     using Data.Entities;
-    using Microsoft.AspNetCore.Authentication;
+
     using static Common.ExceptionMessages.Budget;
 
     public class BudgetService : IBudgetService
@@ -47,12 +47,14 @@ namespace PaymentsBudgetSystem.Core.Services
                 .Select(ud => ud.SecondaryUserId)
                 .ToArrayAsync();
 
-            var newBudgetEntities = new List<IndividualBudget>();
-            newBudgetEntities.Add(new IndividualBudget
+            var newBudgetEntities = new List<IndividualBudget>
             {
-                UserId = userId,
-                FiscalYear = newBudgetYear
-            });
+                new IndividualBudget
+                {
+                    UserId = userId,
+                    FiscalYear = newBudgetYear
+                }
+            };
 
             foreach (var secondaryId in secondaryIds)
             {
