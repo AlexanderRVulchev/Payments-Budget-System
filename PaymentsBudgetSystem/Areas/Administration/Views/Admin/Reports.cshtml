@@ -74,7 +74,7 @@
                             {
                                 <div class="text-md-center col-6 mt-2 mb-2">
                                     Отчет м. @report.Month @report.Year г.
-                                    <input class="btn btn-outline-danger" type="submit" asp-action="DeleteReport" value="Изтриване">
+                                    <a class="btn btn-outline-danger" asp-route-id="@report.ReportId" asp-action="DeleteReport">Изтриване</a>
                                 </div>
                             }
                         </div>
