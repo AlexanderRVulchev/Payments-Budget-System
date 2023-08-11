@@ -2,6 +2,8 @@
 ## Overview
 "Payments and Budget System" is a web application with educational and demonstrative purposes. It mimics (in a much smaller scale) systems used by the institutions in the government sector to make payments and manage their annual budget. You can make different bank payments, cash payments, manage beneficiaries, hire and lay off employees, pay salaries with social security and tax deductions, acquire and manage assets, create and save financial reports and redistribute budget funds between institutions.
 
+<b>The application is deployed at: https://paymentsbudgetsystem.azurewebsites.net</b>
+
 ## Technologies used
 <ul>
   <li>.NET Core 6.0</li>
