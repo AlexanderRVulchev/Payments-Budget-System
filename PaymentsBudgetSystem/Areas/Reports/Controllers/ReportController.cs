@@ -110,6 +110,7 @@ namespace PaymentsBudgetSystem.Areas.Reports.Controllers
             {
                 reportModel.Year = model.Year;
                 reportModel.Month = model.Month;
+                reportModel.IsConsolidated = model.IsConsolidated;
             };
 
             await reportService.SaveIndividualReportAsync(User.Id(), reportModel);
